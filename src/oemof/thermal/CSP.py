@@ -128,8 +128,6 @@ def csp_precalc(df, periods,
     eta_c = calc_eta_c(eta_0, c_1, c_2, k,
                        col_inlet_temp, col_outlet_temp, data['t_amb'], col_ira)
     data['eta_c'] = eta_c
-
-    data.to_csv('weather_data_end.csv', sep=';')
     return data
 
 
