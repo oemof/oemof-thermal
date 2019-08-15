@@ -4,7 +4,6 @@ facade will be in another file"""
 import pvlib
 import pandas as pd
 
-
 def csp_precalc(df, periods,
                 lat, long, tz,
                 col_tilt, col_azimuth, x, a1, a2,
@@ -120,6 +119,7 @@ def csp_precalc(df, periods,
         data['ira_on_col'] = ira_on_col
 
     col_ira = calc_col_ira(data['ira_on_col'], x)
+    col_ira = col_ira.fillna(0)
     data['col_ira'] = col_ira
 
     k = calc_k(a1, a2, data['aoi'])
