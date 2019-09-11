@@ -8,7 +8,7 @@ output is a list as well and may serve as input (conversion_factor) for a
 oemof.solph.transformer.
 """
 
-import compression_heatpumps_and_chillers as cmpr_hp_chiller
+import oemof.thermal.compression_heatpumps_and_chillers as cmpr_hp_chiller
 
 # Ambient temperatures in degC for a single day (24h)
 temp_ambient = [24, 24, 24, 25, 25, 25,
