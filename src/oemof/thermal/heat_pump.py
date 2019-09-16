@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import pandas as pd
+import traceback
 
 def get_cop(heatbuilding, heatpump_type = "Air", water_temp = 60):
     """ Calculation of the coefficient of performance depending
@@ -36,8 +37,7 @@ def get_cop(heatbuilding, heatpump_type = "Air", water_temp = 60):
             cop_lst.append(cop)
     
     else:
-        # TODO Raise Error
-        print("Heatpump type is not defined")
+        traceback.print_exc("Heatpump type is not defined")
         return None
 
     heatbuilding.cop = pd.DataFrame({"cop" : cop_lst})
