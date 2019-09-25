@@ -91,43 +91,45 @@ def csp_precalc(df, periods,
         time=date_time_index,
         latitude=lat,
         longitude=long)
-    data['apparent_zenith'] = solposition['apparent_zenith']
-    data['azimuth'] = solposition['azimuth']
+    data['apparent_zenith'] = solposition['apparent_zenith']  # just for information. Can be removed, if it is wanted
+    data['azimuth'] = solposition['azimuth']  # just for information. Can be removed, if it is wanted
 
     tracking_data = pvlib.tracking.singleaxis(
         solposition['apparent_zenith'], solposition['azimuth'],
         axis_tilt=col_tilt, axis_azimuth=col_azimuth)
-    data['surface_tilt'] = tracking_data['surface_tilt']
-    data['surface_azimuth'] = tracking_data['surface_azimuth']
-    data['tracker_theta'] = tracking_data['tracker_theta']
+    data['surface_tilt'] = tracking_data['surface_tilt']  # just for information. Can be removed, if it is wanted
+    data['surface_azimuth'] = tracking_data['surface_azimuth']  # just for information. Can be removed, if it is wanted
+    data['tracker_theta'] = tracking_data['tracker_theta']  # just for information. Can be removed, if it is wanted
     data['aoi'] = tracking_data['aoi']
 
     if irradiance == 'horizontal':
         poa_horizontal_ratio = pvlib.irradiance.poa_horizontal_ratio(
             tracking_data['surface_tilt'], tracking_data['surface_azimuth'],
             solposition['apparent_zenith'], solposition['azimuth'])
-        data['poa_horizontal_ratio'] = poa_horizontal_ratio
+        data['poa_horizontal_ratio'] = poa_horizontal_ratio # just for information. Can be removed, if it is wanted
 
-        ira_on_col = data['E_dir_hor'] * data['poa_horizontal_ratio']
-        data['ira_on_col'] = ira_on_col
+        ira_on_col = data['E_dir_hor'] * poa_horizontal_ratio
+        data['ira_on_col'] = ira_on_col  # just for information. Can be removed, if it is wanted
 
     elif irradiance == 'normal':
         ira_on_col = pvlib.irradiance.beam_coponent(
             tracking_data['surface_tilt'], tracking_data['surface_azimuth'],
             solposition['apparent_zenith'], solposition['azimuth'], data['dni']
         )
-        data['ira_on_col'] = ira_on_col
+        data['ira_on_col'] = ira_on_col  # just for information. Can be removed, if it is wanted
 
-    col_ira = calc_col_ira(data['ira_on_col'], x)
+    col_ira = calc_col_ira(ira_on_col, x)
     col_ira = col_ira.fillna(0)
-    data['col_ira'] = col_ira
+    data['col_ira'] = col_ira  # just for information. Can be removed, if it is wanted
 
-    k = calc_k(a1, a2, data['aoi'])
-    data['k'] = k
+    k = calc_k(a1, a2, tracking_data['aoi'])
+    data['k'] = k  # just for information. Can be removed, if it is wanted
 
     eta_c = calc_eta_c(eta_0, c_1, c_2, k,
                        col_inlet_temp, col_outlet_temp, data['t_amb'], col_ira)
-    data['eta_c'] = eta_c
+    data['eta_c'] = eta_c  # just for information. Can be removed, if it is wanted
+    col_heat = col_ira * eta_c
+    data['col_heat'] = col_heat
     return data
 
 
