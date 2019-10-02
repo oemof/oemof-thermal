@@ -2,15 +2,14 @@
 import pandas as pd
 import traceback
 
-def get_cop(heatbuilding, heatpump_type = "Air", water_temp = 60):
+def get_cop(temperature, heatpump_type = "Air", water_temp = 60):
     """ Calculation of the coefficient of performance depending
     on the outside temperature
     
     Parameters
     ----------
-    heatbuilding: object
-        HeatBuilding object from demandlib.bdew countaining the index 
-        and outside temperature
+    temperature: time series
+        countaining the outside temperature
     heatpump_type: string
         defines the technology used. Ground is more efficient than Air.
     water_temp: int
@@ -25,13 +24,13 @@ def get_cop(heatbuilding, heatpump_type = "Air", water_temp = 60):
     cop_lst = []
     
     if heatpump_type == "Air":
-        for tmp in heatbuilding.temperature:
+        for tmp in temperature:
             cop = (6.81 - 0.121 * (water_temp - tmp)
                    + 0.00063 * (water_temp - tmp)**2)
             cop_lst.append(cop)
     
     elif heatpump_type == "Ground":
-        for tmp in heatbuilding.temperature:
+        for tmp in temperature:
             cop = (8.77 - 0.15 * (water_temp - tmp)
                    + 0.000734 * (water_temp - tmp)**2)
             cop_lst.append(cop)
@@ -40,8 +39,7 @@ def get_cop(heatbuilding, heatpump_type = "Air", water_temp = 60):
         traceback.print_exc("Heatpump type is not defined")
         return None
 
-    heatbuilding.cop = pd.DataFrame({"cop" : cop_lst})
-    heatbuilding.cop.set_index(heatbuilding.df.index, inplace = True)
+    cop = pd.DataFrame({"cop" : cop_lst}, index=temperature.index)
 
             
-    return heatbuilding.cop
+    return cop
