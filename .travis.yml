@@ -1,7 +1,12 @@
-dist: xenial   # required for Python >= 3.7
 language: python
-python:
-  - '3.6'
+
+matrix:
+  include:
+    - python: 3.5
+    - python: 3.6
+    - python: 3.7
+      dist: xenial
+
 
 # To install packages which are not on pip
 #before_install:
@@ -18,6 +23,7 @@ install:
 script:
   - flake8
   - pylint */*.py
+  - pytest
 #jobs:
 #  include:
 #    - stage: "Tests"                # naming the Tests stage
