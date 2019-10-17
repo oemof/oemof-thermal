@@ -1,9 +1,9 @@
 import pytest
 
+from oemof.thermal.chp import allocate_emissions
+
 
 def test_allocate_emissions():
-    from oemof.thermal.chp import allocate_emissions
-
     emissions_dict = {}
     for method in ['iea', 'efficiency', 'finnish']:
         emissions_dict[method] = allocate_emissions(
