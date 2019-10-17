@@ -9,7 +9,7 @@ def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 
-setup(name='oemof-thermal',
+setup(name='oemof.thermal',
       version='0.0.0',
       author='oemof developer group',
       author_email='oemof@rl-institut.de',
