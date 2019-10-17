@@ -17,7 +17,6 @@ def allocate_emissions(total_emissions, eta_el, eta_th, method, **kwargs):
     to specified method.
 
     Reference:
-
     Mauch, W., Corradini, R., Wiesmeyer, K., Schwentzek, M. (2010).
     Allokationsmethoden für spezifische CO2-Emissionen von Strom und Waerme aus KWK-Anlagen.
     Energiewirtschaftliche Tagesfragen, 55(9), 12–14.
