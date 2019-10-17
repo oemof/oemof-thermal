@@ -18,6 +18,7 @@ matrix:
 # command to install dependencies
 install:
   - pip install -r tests/test_requirements.txt
+  - pip install -e .
 
 # commands to run tests 
 script:
