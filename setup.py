@@ -16,7 +16,7 @@ setup(name='oemof.thermal',
       description=(
           'Thermal energy components for'
           'the open energy modelling framework.'
-          ),
+      ),
       url='https://github.com/oemof/oemof-thermal',
       long_description=read('README.rst'),
       packages=["oemof"] + ["oemof." + p for p in find_packages("src/oemof")],
