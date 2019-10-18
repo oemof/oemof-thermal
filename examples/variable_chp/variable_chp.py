@@ -174,8 +174,7 @@ noded['variable_chp_gas'] = solph.components.ExtractionTurbineCHP(
     inputs={noded['bgas']: solph.Flow(nominal_value=10e10)},
     outputs={noded['bel']: solph.Flow(), noded['bth']: solph.Flow()},
     conversion_factors={noded['bel']: 0.3, noded['bth']: 0.5},
-    conversion_factor_full_condensation={noded['bel']: 0.5}
-    )
+    conversion_factor_full_condensation={noded['bel']: 0.5})
 
 ##########################################################################
 # Optimise the energy system
