@@ -66,7 +66,7 @@ def calculate_capacities(height, diameter, temp_h, temp_c, nonusable_storage_vol
 
 def calculate_losses(nominal_storage_capacity, u_value, surface, temp_h, temp_c, temp_env):
     r"""
-    Calculates loss rate and constant losses for a stratified thermal storage.
+    Calculates loss rate and fixed losses for a stratified thermal storage.
 
     Parameters
     ----------
@@ -80,9 +80,9 @@ def calculate_losses(nominal_storage_capacity, u_value, surface, temp_h, temp_c,
     Returns
     -------
     loss_rate : numeric
-    loss_constant : numeric
+    fixed_losses : numeric
     """
     loss_rate = 1/nominal_storage_capacity * u_value * surface * (temp_h - temp_c)
-    loss_constant = u_value * surface * (temp_c - temp_env)
+    fixed_losses = u_value * surface * (temp_c - temp_env) * 1 / nominal_storage_capacity
 
-    return loss_rate, loss_constant
+    return loss_rate, fixed_losses
