@@ -4,59 +4,66 @@ facade will be in another file"""
 import pvlib
 import pandas as pd
 
+
 def csp_precalc(df, periods,
                 lat, long, tz,
-                col_tilt, col_azimuth, x, a1, a2,
+                collector_tilt, collector_azimuth, x, a1, a2,
                 eta_0, c_1, c_2,
-                col_inlet_temp, col_outlet_temp,
-                irradiance='horizontal',
+                collector_inlet_temp, collector_outlet_temp,
+                irradiance_method='horizontal',
                 date_col='date', irradiance_col='E_dir_hor',
                 t_amb_col='t_amb'):
     """
-    Calculates collectors efficiency and irradiance according to [1]
+    Calculates collectors efficiency and irradiance according to [1] and the
+    heat of the thermal collector
 
     Parameters
     ---------
-    df: dataframe
-        holding values for time, the irradiance and the ambient temp.
-    periods: numeric
+    :param df: dataframe
+        holding values for time, the irradiance and the ambient temperature
+    :param periods: numeric
         defines the number of timesteps
-    lat, long: numeric
-        latitude and longitude of the location
-    tz: string
+    :param lat: numeric, latitude of the location
+    :param long: numeric, longitude of the location
+    :param tz: string
         pytz timezone of the location
-    col_tilt, col_azimuth: numeric
-        the tilt and azimuth of the collector. Azimuth according to pvlib
-        in decimal degrees East of North
-    x: numeric
+    :param collector_tilt: numeric, the tilt of the collector.
+    :param collector_azimuth: numeric
+        the azimuth of the collector. Azimuth according to pvlib in decimal
+        degrees East of North
+    :param x: numeric
         Cleanliness of the collector (between 0 and 1)
-    a1, a2: numeric
-        parameters for the incident angle modifier
-    eta_0: numeric
+    :param a1: numeric, parameter for the incident angle modifier
+    :param a2: numeric, parameter for the incident angle modifier
+    :param eta_0: numeric
         optical efficiency of the collector
-    c_1, c_2: numeric
-        thermal loss parameters
-    col_inlet_temp, col_outlet_temp: numeric or series with length periods
-        collectors inlet and outlet temperatures
-    irradiance: string, default 'horizontal'
+    :param c_1: numeric, thermal loss parameter
+    :param c_2: numeric, thermal loss parameter
+    :param collector_inlet_temp: numeric or series with length periods
+        collectors inlet temperature
+    :param collector_outlet_temp: numeric or series with length periods
+        collectors outlet temperature
+    :param irradiance_method: string, default 'horizontal'
         values: 'horizontal' or 'normal'
         describes, if the horizontal direct irradiance or the direct normal
-        irradiance is used
-    date_col, irradiance_col, t_amb_col: string
-        describes the name of the columns in the dataframe df
-        defaults: 'date', 'E_dir_hor', 't_amb'
+        irradiance is given and used for Calculation
+    :param date_col: string, default: 'date'
+        describes the name of the column in the dataframe df
+    :param irradiance_col: string, default: 'E_dir_hor'
+        describes the name of the column in the dataframe df
+    :param t_amb_col: string, default: 't_amb_col'
+        describes the name of the column in the dataframe df
 
     Returns
     -------
     DataFrame
         The DataFrame will have the following columns:
-        col_ira
+        collector_irradiance
         eta_c
-    right now, the dataframe have more columns to test the function. will be
-    removed later
+        collector_heat
 
-    col_ira: the irradiance on collector after all losses which occur before
-    the light hits the collectors surface
+    collector_irradiance: the irradiance on collector after all losses which
+    occur before the light hits the collectors surface
 
     proposal of values
     -------
@@ -74,83 +81,112 @@ def csp_precalc(df, periods,
 
     date_time_index = pd.date_range(df.loc[0, date_col], periods=periods,
                                     freq='H', tz=tz)
+    # Creation of input-DF with 3 columns, depending on irradiance_method
     datainput = df.iloc[:periods]
 
-    if irradiance == 'horizontal':
+    if irradiance_method == 'horizontal':
         data = pd.DataFrame({'date': date_time_index,
                              'E_dir_hor': datainput[irradiance_col],
                              't_amb': datainput[t_amb_col]})
-    elif irradiance == 'normal':
+    elif irradiance_method == 'normal':
         data = pd.DataFrame({'date': date_time_index,
                              'dni': datainput[irradiance_col],
                              't_amb': datainput[t_amb_col]})
+    else:
+        raise AttributeError("irradiance_method must be 'horizontal' or"
+                             "'normal'")
 
     data.set_index('date', inplace=True)
 
-    solposition = pvlib.solarposition.get_solarposition(
+    # Calculation of geometrical position of collector with the pvlib
+    solarposition = pvlib.solarposition.get_solarposition(
         time=date_time_index,
         latitude=lat,
         longitude=long)
-    data['apparent_zenith'] = solposition['apparent_zenith']  # just for information. Can be removed, if it is wanted
-    data['azimuth'] = solposition['azimuth']  # just for information. Can be removed, if it is wanted
 
     tracking_data = pvlib.tracking.singleaxis(
-        solposition['apparent_zenith'], solposition['azimuth'],
-        axis_tilt=col_tilt, axis_azimuth=col_azimuth)
-    data['surface_tilt'] = tracking_data['surface_tilt']  # just for information. Can be removed, if it is wanted
-    data['surface_azimuth'] = tracking_data['surface_azimuth']  # just for information. Can be removed, if it is wanted
-    data['tracker_theta'] = tracking_data['tracker_theta']  # just for information. Can be removed, if it is wanted
-    data['aoi'] = tracking_data['aoi']
+        solarposition['apparent_zenith'], solarposition['azimuth'],
+        axis_tilt=collector_tilt, axis_azimuth=collector_azimuth)
 
-    if irradiance == 'horizontal':
+    # Calculation of the irradiance which hits the collectors surface
+    if irradiance_method == 'horizontal':
         poa_horizontal_ratio = pvlib.irradiance.poa_horizontal_ratio(
             tracking_data['surface_tilt'], tracking_data['surface_azimuth'],
-            solposition['apparent_zenith'], solposition['azimuth'])
-        data['poa_horizontal_ratio'] = poa_horizontal_ratio # just for information. Can be removed, if it is wanted
+            solarposition['apparent_zenith'], solarposition['azimuth'])
 
-        ira_on_col = data['E_dir_hor'] * poa_horizontal_ratio
-        data['ira_on_col'] = ira_on_col  # just for information. Can be removed, if it is wanted
+        irradiance_on_collector = data['E_dir_hor'] * poa_horizontal_ratio
 
-    elif irradiance == 'normal':
-        ira_on_col = pvlib.irradiance.beam_coponent(
+    elif irradiance_method == 'normal':
+        irradiance_on_collector = pvlib.irradiance.beam_coponent(
             tracking_data['surface_tilt'], tracking_data['surface_azimuth'],
-            solposition['apparent_zenith'], solposition['azimuth'], data['dni']
-        )
-        data['ira_on_col'] = ira_on_col  # just for information. Can be removed, if it is wanted
+            solarposition['apparent_zenith'], solarposition['azimuth'],
+            data['dni'])
 
-    col_ira = calc_col_ira(ira_on_col, x)
-    col_ira = col_ira.fillna(0)
-    data['col_ira'] = col_ira  # just for information. Can be removed, if it is wanted
+    # Calculation of the irradiance which reaches the collector after all
+    # losses (cleaniness)
+    collector_irradiance = calc_collector_irradiance(
+        irradiance_on_collector, x)
+    collector_irradiance = collector_irradiance.fillna(0)
+    data['collector_irradiance'] = collector_irradiance
 
-    k = calc_k(a1, a2, tracking_data['aoi'])
-    data['k'] = k  # just for information. Can be removed, if it is wanted
+    # Calculation of the incidence angle modifier
+    iam = calc_iam(a1, a2, tracking_data['aoi'])
 
-    eta_c = calc_eta_c(eta_0, c_1, c_2, k,
-                       col_inlet_temp, col_outlet_temp, data['t_amb'], col_ira)
-    data['eta_c'] = eta_c  # just for information. Can be removed, if it is wanted
-    col_heat = col_ira * eta_c
-    data['col_heat'] = col_heat
+    # Calculation of the collectors efficiency
+    eta_c = calc_eta_c(eta_0, c_1, c_2, iam,
+                       collector_inlet_temp, collector_outlet_temp,
+                       data['t_amb'], collector_irradiance)
+    data['eta_c'] = eta_c
+
+    # Calculation of the collectors heat
+    collector_heat = collector_irradiance * eta_c
+    data['collector_heat'] = collector_heat
     return data
 
 
-def calc_col_ira(ira_on_col, x):
-    col_ira = ira_on_col * x**1.5
-    return col_ira
+def calc_collector_irradiance(irradiance_on_collector, x):
+    """
+    Subtractes the losses of dirtiness from the irradiance on the collector
+    :param irradiance_on_collector: irradiance which hits collectors surface
+    :param x: Cleanliness of the collector (between 0 and 1)
+    :return: collector_irradiance (irradiance on collector after all losses)
+    """
+    collector_irradiance = irradiance_on_collector * x**1.5
+    return collector_irradiance
 
 
-def calc_k(a1, a2, aoi):
-    k = 1 - a1 * abs(aoi) - a2 * aoi**2
-    return k
+def calc_iam(a1, a2, aoi):
+    """
+    Calculates the incidence angle modifier
+    :param a1: parameter 1 for the incident angle modifier
+    :param a2: parameter 2 for the incident angle modifier
+    :param aoi: angle of incidence
+    :return: incidence angle modifier
+    """
+    iam = 1 - a1 * abs(aoi) - a2 * aoi**2
+    return iam
 
 
-def calc_eta_c(eta_0, c_1, c_2, k,
-               col_inlet_temp, col_outlet_temp, t_amb,
-               col_ira):
-    delta_t = (col_inlet_temp+col_outlet_temp)/2 - t_amb
+def calc_eta_c(eta_0, c_1, c_2, iam,
+               collector_inlet_temp, collector_outlet_temp, t_amb,
+               collector_irradiance):
+    """
+    Calculates collectors efficiency
+    :param eta_0: optical efficiency of the collector
+    :param c_1: thermal loss parameter
+    :param c_2: thermal loss parameter
+    :param iam: incidence angle modifier
+    :param collector_inlet_temp: collectors inlet temperature
+    :param collector_outlet_temp: collectors outlet temperature
+    :param t_amb: ambient temperature
+    :param collector_irradiance: irradiance on collector after all losses
+    :return: collectors efficiency
+    """
+    delta_t = (collector_inlet_temp + collector_outlet_temp) / 2 - t_amb
     eta_c = pd.Series()
-    for index, value in col_ira.items():
+    for index, value in collector_irradiance.items():
         if value > 0:
-            eta = eta_0 * k[index] - c_1 * delta_t[
+            eta = eta_0 * iam[index] - c_1 * delta_t[
                 index] / value - c_2 * delta_t[index] ** 2 / value
             if eta > 0:
                 eta_c[index] = eta
