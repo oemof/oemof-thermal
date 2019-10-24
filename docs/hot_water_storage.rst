@@ -82,6 +82,10 @@ using `calculate_capacities`.
 
    nominal_storage_capacity, surface, max_storage_level, min_storage_level = calculate_capacities()
 
+.. .. include:: ../src/oemof/thermal/stratified_thermal_storage.py
+  :start-after:  calculate_capacities-equations:
+  :end-before: Parameters
+
 .. include:: ../src/oemof/thermal/stratified_thermal_storage.py
   :start-after:  calculate_capacities-equations:
   :end-before: Parameters
