@@ -6,9 +6,9 @@ Heat pipeline
 
 A simplified model for a heat pipeline in oemof-solph.
 
-.. 	image:: _pics/stratified_thermal_storage.svg
+.. 	image:: _pics/heat_pipeline.svg
    :width: 70 %
-   :alt: stratified_thermal_storage.svg
+   :alt: heat_pipeline.svg
    :align: center
 
 Workflow
