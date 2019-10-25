@@ -132,13 +132,13 @@ fig, (ax1, ax2) = plt.subplots(2, 1)
 
 df[[('shortage', 'bus_heat', 'flow'),
     ('heat_source', 'bus_heat', 'flow'),
-    ('thermal_storage', 'bus_heat', 'flow')]].plot.bar(ax=ax1, stacked=True, color=['y', 'b', 'k'])
+    ('thermal_storage', 'bus_heat', 'flow')]].plot.area(ax=ax1, stacked=True, color=['y', 'b', 'k'])
 
-(-df[('bus_heat', 'thermal_storage', 'flow')]).plot.bar(ax=ax1, stacked=True, color='g')
+(-df[('bus_heat', 'thermal_storage', 'flow')]).plot.area(ax=ax1, color='g')
 
-df[('bus_heat', 'heat_demand', 'flow')].plot(ax=ax1, linestyle='', marker='o', color='r')
+df[('bus_heat', 'heat_demand', 'flow')].plot(ax=ax1, linestyle='-', marker='o', color='r')
 
-df[('thermal_storage', 'None', 'capacity')].plot.bar(ax=ax2, stacked=True)
+df[('thermal_storage', 'None', 'capacity')].plot.area(ax=ax2)
 
 ax1.set_title('Heat flow to and from heat bus')
 # ax1.set_ylim(-50, 50)
