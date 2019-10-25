@@ -68,9 +68,9 @@ periods = 100
 datetimeindex = pd.date_range('1/1/2019', periods=periods, freq='H')
 x = np.arange(periods)
 demand_timeseries = np.zeros(periods)
-demand_timeseries[-5:] = 100000
+demand_timeseries[-5:] = 1
 heat_feedin_timeseries = np.zeros(periods)
-heat_feedin_timeseries[:10] = 100000
+heat_feedin_timeseries[:10] = 1
 
 energysystem = EnergySystem(timeindex=datetimeindex)
 
@@ -124,9 +124,7 @@ string_results = outputlib.processing.convert_keys_to_strings(results)
 sequences = {k:v['sequences'] for k, v in string_results.items()}
 df = pd.concat(sequences, axis=1)
 
-# print and plot results
-df = df.reset_index()
-print(df)
+# plot results
 
 fig, (ax1, ax2) = plt.subplots(2, 1)
 
@@ -141,7 +139,7 @@ df[('bus_heat', 'heat_demand', 'flow')].plot(ax=ax1, linestyle='-', marker='o', 
 df[('thermal_storage', 'None', 'capacity')].plot.area(ax=ax2)
 
 ax1.set_title('Heat flow to and from heat bus')
-# ax1.set_ylim(-50, 50)
+ax1.set_ylim(-2, 2)
 ax1.legend(loc='center left', bbox_to_anchor=(1.0, 0.5))
 
 ax2.set_title('Storage content')
