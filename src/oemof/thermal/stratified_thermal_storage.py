@@ -53,11 +53,13 @@ def calculate_capacities(height, diameter, temp_h, temp_c, nonusable_storage_vol
 
     .. calculate_capacities-equations:
 
+    :math:`Q_N = \pi \frac{d^2}{4} \cdot h \cdot c \cdot \rho \cdot \left( T_{H} - T_{C} \right)`
+
+    :math:`A = \pi d h + 2 \pi \frac{d^2}{4}`
+
     :math:`Q_{max} = Q_N \cdot (1-\beta/2)`
 
     :math:`Q_{min} = Q_N \cdot \beta/2`
-
-    :math:`Q_N = \frac{d^2}{4} \cdot \pi \cdot h \cdot c \cdot \rho \cdot \left( T_{H} - T_{C} \right)`
 
     Parameters
     ----------
