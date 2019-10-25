@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from oemof.thermal.stratified_thermal_storage import (calculate_storage_u_value,
+                                                      calculate_storage_dimensions,
                                                       calculate_capacities,
                                                       calculate_losses)
 from oemof.solph import (Source, Sink, Transformer, Bus, Flow,
@@ -19,9 +20,13 @@ u_value = calculate_storage_u_value(
     input_data['alpha_inside'],
     input_data['alpha_outside'])
 
-nominal_storage_capacity, surface, max_storage_level, min_storage_level = calculate_capacities(
+volume, surface = calculate_storage_dimensions(
     input_data['height'],
-    input_data['diameter'],
+    input_data['diameter']
+)
+
+nominal_storage_capacity, max_storage_level, min_storage_level = calculate_capacities(
+    volume,
     input_data['temp_h'],
     input_data['temp_c'],
     input_data['nonusable_storage_volume'],
@@ -43,10 +48,11 @@ maximum_heat_flow_discharging = 2
 def print_results():
     parameter = {
         'U-value [W/(m2*K)]': u_value,
+        'Volume [m3]': volume,
+        'Surface [m2]': surface,
         'Nominal storage capacity [MWh]': nominal_storage_capacity,
         'Max. heat flow charging [MW]': maximum_heat_flow_charging,
         'Max. heat flow discharging [MW]': maximum_heat_flow_discharging,
-        'Surface [m2]': surface,
         'Max storage level [-]': max_storage_level,
         'Min storage_level [-]': min_storage_level,
         'Loss rate [-]': loss_rate,

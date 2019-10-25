@@ -45,7 +45,35 @@ def calculate_storage_u_value(s_iso, lamb_iso, alpha_inside, alpha_outside):
     return u_value
 
 
-def calculate_capacities(height, diameter, temp_h, temp_c, nonusable_storage_volume,
+def calculate_storage_dimensions(height, diameter):
+    r"""
+    Calculates volume and total surface of a hot water storage.
+
+    :math:`A = \pi d h + 2 \pi \frac{d^2}{4}`
+
+    Parameters
+    ----------
+    height : numeric
+        Height of the storage [m]
+
+    diameter : numeric
+        Diameter of the storage [m]
+
+    Returns
+    -------
+    volume : numeric
+        Volume of storage
+
+    surface : numeric
+        Total surface of storage [m2]
+    """
+    volume = diameter**2 * 1/4 * np.pi * height
+    surface = np.pi * diameter * height + 2 * np.pi * diameter**2 * 1/4
+
+    return volume, surface
+
+
+def calculate_capacities(volume, temp_h, temp_c, nonusable_storage_volume,
                          heat_capacity=4180, density=971.78):
     r"""
     Calculates the nominal storage capacity, surface area, minimum
@@ -55,19 +83,14 @@ def calculate_capacities(height, diameter, temp_h, temp_c, nonusable_storage_vol
 
     :math:`Q_N = \pi \frac{d^2}{4} \cdot h \cdot c \cdot \rho \cdot \left( T_{H} - T_{C} \right)`
 
-    :math:`A = \pi d h + 2 \pi \frac{d^2}{4}`
-
     :math:`Q_{max} = Q_N \cdot (1-\beta/2)`
 
     :math:`Q_{min} = Q_N \cdot \beta/2`
 
     Parameters
     ----------
-    height : numeric
-        Height of the storage [m]
-
-    diameter : numeric
-        Diameter of the storage [m]
+    volume :numeric
+        Volume of the storage[m]
 
     temp_h : numeric
         Temperature of hot storage medium [deg C]
@@ -90,9 +113,6 @@ def calculate_capacities(height, diameter, temp_h, temp_c, nonusable_storage_vol
     nominal_storage_capacity : numeric
         Maximum amount of stored thermal energy [MWh]
 
-    surface : numeric
-        Total surface of storage [m2]
-
     max_storage_level : numeric
         Maximal storage content relative to nominal storage capacity [-]
 
@@ -100,12 +120,11 @@ def calculate_capacities(height, diameter, temp_h, temp_c, nonusable_storage_vol
         Minimal storage content relative to nominal storage capacity [-]
 
     """
-    nominal_storage_capacity = 1e-6 * 1/3600 * diameter**2 * 1/4 * np.pi * height * heat_capacity * density * (temp_h - temp_c)
+    nominal_storage_capacity = 1e-6 * 1/3600 * volume * heat_capacity * density * (temp_h - temp_c)
     max_storage_level = (1 - nonusable_storage_volume/2)
     min_storage_level = nonusable_storage_volume/2
-    surface = np.pi * diameter * height + 2 * np.pi * diameter**2 * 1/4
 
-    return nominal_storage_capacity, surface, max_storage_level, min_storage_level
+    return nominal_storage_capacity, max_storage_level, min_storage_level
 
 
 def calculate_losses(nominal_storage_capacity, u_value, surface, temp_h, temp_c, temp_env):
