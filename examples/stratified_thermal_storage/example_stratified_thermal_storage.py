@@ -39,23 +39,23 @@ loss_rate, fixed_losses = calculate_losses(
 
 def print_results():
     parameter = {
-        'U-value': u_value,
-        'Nominal storage capacity': nominal_storage_capacity,
-        'Surface': surface,
-        'Max storage level': max_storage_level,
-        'Min storage_level': min_storage_level,
-        'Loss rate': loss_rate,
-        'Fixed losses': fixed_losses
+        'U-value [W/(m2*K)]': u_value,
+        'Nominal storage capacity [MWh]': nominal_storage_capacity,
+        'Surface [m2]': surface,
+        'Max storage level [-]': max_storage_level,
+        'Min storage_level [-]': min_storage_level,
+        'Loss rate [-]': loss_rate,
+        'Fixed losses [-]': fixed_losses
     }
 
     dash = '-' * 42
 
     print(dash)
-    print('{:>25s}{:>15s}'.format('Parameter name', 'Value'))
+    print('{:>30s}{:>15s}'.format('Parameter name', 'Value'))
     print(dash)
 
     for name, param in parameter.items():
-        print('{:>25s}{:>15.3f}'.format(name, param))
+        print('{:>30s}{:>15.3f}'.format(name, param))
 
     print(dash)
 
