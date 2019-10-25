@@ -147,7 +147,7 @@ def calculate_losses(nominal_storage_capacity, u_value, surface, temp_h, temp_c,
         Fixed losses related to storage surface
         independent of storage content [1/h]
     """
-    loss_rate =    u_value * surface * (temp_h - temp_c)   * 1 / nominal_storage_capacity
-    fixed_losses = u_value * surface * (temp_c - temp_env) * 1 / nominal_storage_capacity
+    loss_rate =    u_value * surface * (temp_h - temp_c)   * 1e-6 / nominal_storage_capacity
+    fixed_losses = u_value * surface * (temp_c - temp_env) * 1e-6 / nominal_storage_capacity
 
     return loss_rate, fixed_losses
