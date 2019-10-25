@@ -36,11 +36,16 @@ loss_rate, fixed_losses = calculate_losses(
     input_data['temp_c'],
     input_data['temp_env'])
 
+maximum_heat_flow_charging = 2
+maximum_heat_flow_discharging = 2
+
 
 def print_results():
     parameter = {
         'U-value [W/(m2*K)]': u_value,
         'Nominal storage capacity [MWh]': nominal_storage_capacity,
+        'Max. heat flow charging [MW]': maximum_heat_flow_charging,
+        'Max. heat flow discharging [MW]': maximum_heat_flow_discharging,
         'Surface [m2]': surface,
         'Max storage level [-]': max_storage_level,
         'Min storage_level [-]': min_storage_level,
@@ -51,11 +56,11 @@ def print_results():
     dash = '-' * 42
 
     print(dash)
-    print('{:>30s}{:>15s}'.format('Parameter name', 'Value'))
+    print('{:>32s}{:>15s}'.format('Parameter name', 'Value'))
     print(dash)
 
     for name, param in parameter.items():
-        print('{:>30s}{:>15.3f}'.format(name, param))
+        print('{:>32s}{:>15.3f}'.format(name, param))
 
     print(dash)
 
@@ -100,8 +105,11 @@ heat_demand = Sink(
 
 thermal_storage = GenericStorage(
     label='thermal_storage',
-    inputs={bus_heat: Flow(variable_costs=0.0001)},
-    outputs={bus_heat: Flow()},
+    inputs={bus_heat: Flow(
+        nominal_value=maximum_heat_flow_charging,
+        variable_costs=0.0001)},
+    outputs={bus_heat: Flow(
+        nominal_value=maximum_heat_flow_discharging)},
     nominal_storage_capacity=nominal_storage_capacity,
     min_storage_level=min_storage_level,
     max_storage_level=max_storage_level,
