@@ -5,7 +5,7 @@ import pvlib
 import pandas as pd
 
 
-def solarcollector_precalc(df, periods,
+def flat_plate_precalc(df, periods,
                            lat, long, tz,
                            col_tilt, col_azimuth,
                            eta_0, c_1, c_2,
@@ -13,13 +13,13 @@ def solarcollector_precalc(df, periods,
                            date_col='date', irradiance_global_col='ghi',
                            irradiance_diffuse_col='dhi',  t_amb_col='t_amb'):
     """
-    Calculates collectors efficiency and irradiance
+    Calculates collectors efficiency and irradiance of a flat plate collector
 
     Parameters
     ---------
     df: dataframe
         holding values for time, the global and diffuse horizontal irradiance
-        and the ambient temp.
+        and the ambient temp (in Celsius degrees).
     periods: numeric
         defines the number of timesteps
     lat, long: numeric
@@ -47,8 +47,7 @@ def solarcollector_precalc(df, periods,
         The DataFrame will have the following columns:
         col_ira
         eta_c
-    right now, the dataframe have more columns to test the function. will be
-    removed later
+        collector_heat
 
     col_ira: the irradiance on tilted collector
     eta_c: efficiency of the collector
@@ -89,6 +88,8 @@ def solarcollector_precalc(df, periods,
     eta_c = calc_eta_c(eta_0, c_1, c_2, col_inlet_temp, delta_t_n,
                        data['t_amb'], total_irradiation['poa_global'])
     data['eta_c'] = eta_c
+    collectors_heat = eta_c * total_irradiation['poa_global']
+    data["collectors_heat"] = collectors_heat
     return data
 
 
