@@ -39,7 +39,7 @@ def calculate_storage_u_value(s_iso, lamb_iso, alpha_inside, alpha_outside):
     u_value : numeric
         Thermal transmittance (U-value) [W/(m2*K)]
     """
-    denominator = 1 / alpha_inside + s_iso * 1e3 / lamb_iso + 1 / alpha_outside
+    denominator = 1 / alpha_inside + s_iso * 1e-3 / lamb_iso + 1 / alpha_outside
     u_value = 1 / denominator
 
     return u_value
