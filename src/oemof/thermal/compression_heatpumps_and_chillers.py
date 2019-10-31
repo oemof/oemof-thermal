@@ -1,8 +1,33 @@
+# -*- coding: utf-8 -
 
+"""
+This module provides functions to calculate compression heat pumps and
+compression chillers.
+This file is part of project oemof (github.com/oemof/oemof-thermal). It's
+copyrighted by the contributors recorded in the version control history of the
+file, available from its original location:
+oemof-thermal/src/oemof/thermal/stratified_thermal_storage.py
+"""
 
 def calc_cops(t_high, t_low, quality_grade,
               consider_icing=False, factor_icing=None, mode=None):
+    r"""
+    Calculates the Coefficient of Performance (COP) of heat pumps and chillers.
 
+    Parameters
+    ----------
+    t_high:
+    t_low:
+    quality_grade:
+    consider_icing:
+    factor_icing:
+    mode:
+
+    Returns
+    -------
+    cops
+        COP or List of COPs
+    """
     # Expand length of lists with temperatures and convert unit to Kelvin.
     length = max([len(t_high), len(t_low)])
     if len(t_high) == 1:
