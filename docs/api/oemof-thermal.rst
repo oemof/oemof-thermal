@@ -1,5 +1,5 @@
-oemof\_heat\_components package
-===============================
+compression\_heatpumps\_and\_chillers module
+==========================================================
 
 .. automodule:: oemof.thermal.compression_heatpumps_and_chillers
     :members:
