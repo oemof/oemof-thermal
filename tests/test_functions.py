@@ -1,2 +1,3 @@
 def test_dummy():
-    assert 1 == 1
+    a = 2 * 0.5
+    assert a == 1
