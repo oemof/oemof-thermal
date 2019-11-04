@@ -3,30 +3,56 @@
 """
 This module provides functions to calculate compression heat pumps and
 compression chillers.
+
 This file is part of project oemof (github.com/oemof/oemof-thermal). It's
 copyrighted by the contributors recorded in the version control history of the
 file, available from its original location:
 oemof-thermal/src/oemof/thermal/stratified_thermal_storage.py
 """
 
+
+
 def calc_cops(t_high, t_low, quality_grade,
               consider_icing=False, factor_icing=None, mode=None):
     r"""
     Calculates the Coefficient of Performance (COP) of heat pumps and chillers.
 
+    ====================== ======================== =======================
+    math. symbol           attribute                explanation
+    ====================== ======================== =======================
+    :math:`T_{high}`       :py:obj:`t_high`         Temperature of the high temperature reservoir in degC
+    :math:`T_{low}`        :py:obj:`low`            Temperature of the low temperature reservoir in degC
+    :math:`q`              :py:obj:`quality_grade`  Quality grade
+    ====================== ======================== =======================
+
+    Note
+    ----
+    This is a note!
+
     Parameters
     ----------
-    t_high:
-    t_low:
+    t_high : list of numerical values
+        Temperature of the high temperature reservoir in degC
+    t_low : list of numerical values
+        Temperature of the low temperature reservoir in degC
     quality_grade:
-    consider_icing:
+        [0..1]
+    consider_icing : boolean
+        Activates a threshold-temperature.
+        Below that temperature the COP drops. [True/False]
     factor_icing:
-    mode:
+        Sets the relative COP drop caused by icing. [0..1]
+    mode : string
+        Two possible modes: "heat_pump" or "chiller"
+    t_threshold:
+        Temperature below which icing at heat exchanger occurs
 
     Returns
     -------
-    cops
-        COP or List of COPs
+    cops : list of numerical values
+        List of Coefficients of Performance (COPs)
+
+
     """
     # Expand length of lists with temperatures and convert unit to Kelvin.
     length = max([len(t_high), len(t_low)])
