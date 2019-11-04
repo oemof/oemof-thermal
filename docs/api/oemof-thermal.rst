@@ -6,3 +6,16 @@ compression\_heatpumps\_and\_chillers module
     :undoc-members:
     :show-inheritance:
 
+csp module
+==========================================================
+.. automodule:: oemof.thermal.csp
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+stratified_thermal_storage module
+==========================================================
+.. automodule:: oemof.thermal.stratified_thermal_storage
+    :members:
+    :undoc-members:
+    :show-inheritance:
