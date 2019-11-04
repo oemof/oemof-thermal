@@ -9,7 +9,7 @@ Welcome to the development of heat components for oemof!
 Contents:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    overview
    concentrating_solar_power
