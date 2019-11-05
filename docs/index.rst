@@ -16,7 +16,9 @@ Contents:
    heat_pump
    hot_water_storage
    solar_thermal_collector
+   comp
    api
+
 
 
 Indices and tables
