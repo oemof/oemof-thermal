@@ -7,45 +7,43 @@ compression chillers.
 This file is part of project oemof (github.com/oemof/oemof-thermal). It's
 copyrighted by the contributors recorded in the version control history of the
 file, available from its original location:
-oemof-thermal/src/oemof/thermal/stratified_thermal_storage.py
+oemof-thermal/src/oemof/thermal/compression_heatpumps_and_chillers.py
 """
 
 
 
-def calc_cops(t_high, t_low, quality_grade,
+def calc_cops(t_high, t_low, quality_grade, t_threshold_icing=2,
               consider_icing=False, factor_icing=None, mode=None):
     r"""
-    Calculates the Coefficient of Performance (COP) of heat pumps and chillers.
-
-    ====================== ======================== =======================
-    math. symbol           attribute                explanation
-    ====================== ======================== =======================
-    :math:`T_{high}`       :py:obj:`t_high`         Temperature of the high temperature reservoir in degC
-    :math:`T_{low}`        :py:obj:`low`            Temperature of the low temperature reservoir in degC
-    :math:`q`              :py:obj:`quality_grade`  Quality grade
-    ====================== ======================== =======================
+    Calculates the Coefficient of Performance (COP) of heat pumps and chillers
+    based on the Carnot efficiency (ideal process) and a scale-down factor.
 
     Note
     ----
-    This is a note!
+    Applications of air-source heat pumps should consider icing
+    at the heat exchanger at air-temperatures around :math:`2^\circ C` .
+    Icing causes a reduction of the efficiency.
 
     Parameters
     ----------
     t_high : list of numerical values
-        Temperature of the high temperature reservoir in degC
+        Temperature of the high temperature reservoir in :math:`^\circ C`
     t_low : list of numerical values
-        Temperature of the low temperature reservoir in degC
-    quality_grade:
-        [0..1]
+        Temperature of the low temperature reservoir in :math:`^\circ C`
+    quality_grade : numerical value
+        Factor that scales down the efficiency of the real heat pump
+        (or chiller) process from the ideal process (Carnot efficiency), where
+         a factor of 1 means teh real process is equal to the ideal one.
     consider_icing : boolean
-        Activates a threshold-temperature.
-        Below that temperature the COP drops. [True/False]
-    factor_icing:
-        Sets the relative COP drop caused by icing. [0..1]
+        Activates a threshold-temperature (default 'False')
+    factor_icing: numerical value
+        Sets the relative COP drop caused by icing, where 1 stands for no
+        efficiency-drop.
     mode : string
-        Two possible modes: "heat_pump" or "chiller"
+        Two possible modes: "heat_pump" or "chiller" (default 'None')
     t_threshold:
-        Temperature below which icing at heat exchanger occurs
+        Temperature in :math:`^\circ C` below which icing at heat exchanger
+        occurs (default 2)
 
     Returns
     -------
@@ -54,7 +52,8 @@ def calc_cops(t_high, t_low, quality_grade,
 
 
     """
-    # Expand length of lists with temperatures and convert unit to Kelvin.
+    # Make both lists (t_low and t_high) have the same length and
+    # convert unit to Kelvin.
     length = max([len(t_high), len(t_low)])
     if len(t_high) == 1:
         list_t_high_K = [t_high[0]+273.15]*length
@@ -65,7 +64,7 @@ def calc_cops(t_high, t_low, quality_grade,
     elif len(t_low) == length:
         list_t_low_K = [t+273.15 for t in t_low]
 
-    # Calculate COPs depending on selected mode.
+    # Calculate COPs depending on selected mode (without considering icing).
     if not consider_icing:
         if mode == "heat_pump":
             cops = [quality_grade * t_h/(t_h-t_l) for
@@ -74,16 +73,15 @@ def calc_cops(t_high, t_low, quality_grade,
             cops = [quality_grade * t_l/(t_h-t_l) for
                     t_h, t_l in zip(list_t_high_K, list_t_low_K)]
 
-    # Temperatures below 2 degC lead to icing at evaporator in
-    # heat pumps working with ambient air as heat source.
+    # Calculate COPs of a heat pump and lower COP when icing occurs.
     elif consider_icing:
         if mode == "heat_pump":
             cops = []
             for t_h, t_l in zip(list_t_high_K, list_t_low_K):
-                if t_l < 2+273.15:
+                if t_l < t_threshold_icing+273.15:
                     f_icing = factor_icing
                     cops = cops + [f_icing*quality_grade * t_h/(t_h-t_l)]
-                if t_l >= 2+273.15:
+                if t_l >= t_threshold_icing+273.15:
                     cops = cops + [quality_grade * t_h / (t_h - t_l)]
         elif mode == "chiller":
             # Combining 'consider_icing' and mode 'chiller' is not possible!
@@ -93,22 +91,102 @@ def calc_cops(t_high, t_low, quality_grade,
 
 
 def calc_max_Q_dot_chill(nominal_conditions, cops):
+    r"""
+    Calculates the maximal cooling capacity (relative value) of a chiller.
+
+    Note
+    ----
+    This function assumes the cooling capacity of a chiller can exceed the
+    rated nominal capacity (e.g., from the technical specification sheet).
+    That means: The value of :py:obj:`max_Q_chill` can be greater than 1.
+    Make sure your actual chiller is capable of doing so.
+    If not, use 1 for the maximal cooling capacity.
+
+    Parameters
+    ----------
+    nominal_conditions : dict
+        Dictionary describing one operating point (e.g., operation under STC)
+        of the chiller by its
+        cooling capacity, its electricity consumption and its COP
+        ('nominal_Q_chill', 'nominal_el_consumption' and 'nominal_cop')
+    cops : list of numerical values
+        Actual COP
+
+    Returns
+    -------
+    max_Q_chill : list of numerical values
+        Maximal cooling capacity (relative value). Value is equal or greater
+        than 0 and can be greater than 1.
+
+
+    """
     nominal_cop = (nominal_conditions['nominal_Q_chill'] /
                    nominal_conditions['nominal_el_consumption'])
     max_Q_chill=[actual_cop/nominal_cop for actual_cop in cops]
-    print(nominal_cop)
     return max_Q_chill
 
 
 def calc_max_Q_dot_heat(nominal_conditions, cops):
+    r"""
+        Calculates the maximal heating capacity (relative value) of a
+        heat pump.
+
+        Note
+        ----
+        This function assumes the heating capacity of a heat pump can exceed
+        the rated nominal capacity (e.g., from the technical specification
+        sheet). That means: The value of :py:obj:`max_Q_hot` can be greater
+        than 1.
+        Make sure your actual heat pump is capable of doing so.
+        If not, use 1 for the maximal heating capacity.
+
+        Parameters
+        ----------
+        nominal_conditions : dict
+            Dictionary describing one operating point (e.g., operation
+            under STC) of the heat pump by its
+            heating capacity, its electricity consumption and its COP
+            ('nominal_Q_hot', 'nominal_el_consumption' and 'nominal_cop')
+        cops : list of numerical values
+            Actual COP
+
+        Returns
+        -------
+        max_Q_hot : list of numerical values
+            Maximal heating capacity (relative value). Value is equal or
+            greater than 0 and can be greater than 1.
+
+        """
     nominal_cop = (nominal_conditions['nominal_Q_hot'] /
                    nominal_conditions['nominal_el_consumption'])
     max_Q_hot=[actual_cop/nominal_cop for actual_cop in cops]
-    print(nominal_cop)
     return max_Q_hot
 
 
 def calc_chiller_quality_grade(nominal_conditions):
+    r"""
+    Calculates the quality grade for a given point of operation.
+
+    Note
+    ----
+    This function is rather experimental.
+    Please do not use it to estimate the quality grade of a real machine.
+    A single point of operation might not be representative!
+
+    Parameters
+    ----------
+    nominal_conditions : dict
+        Dictionary describing one operating point (e.g., operation under STC)
+        of the chiller by its
+        cooling capacity, its electricity consumption and its COP
+        ('nominal_Q_chill', 'nominal_el_consumption' and 'nominal_cop')
+
+    Returns
+    -------
+    q_grade : numerical value
+        Quality grade
+
+    """
     t_h = nominal_conditions['t_high_nominal']+273.15
     t_l =nominal_conditions['t_low_nominal']+273.15
     nominal_cop = (nominal_conditions['nominal_Q_chill'] /
