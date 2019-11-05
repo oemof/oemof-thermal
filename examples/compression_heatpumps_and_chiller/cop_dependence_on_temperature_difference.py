@@ -2,6 +2,7 @@
 Example on how to use the 'calc_cops' function to get the
 COPs of a heat pump.
 
+This example plots the temperature dependency of the COP.
 """
 
 import oemof.thermal.compression_heatpumps_and_chillers as cmpr_hp_chiller
@@ -135,7 +136,7 @@ axs.annotate('quality grade 35%,\nT_sink 65 degC',
              arrowprops=dict(arrowstyle="->",
                              connectionstyle="arc3"))
 
-plt.savefig('cop_dependence_on_temp_difference.png', dpi=300)
-# plt.show()
+#plt.savefig('cop_dependence_on_temp_difference.png', dpi=300)
+plt.show()
 print("")
 

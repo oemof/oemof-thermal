@@ -1,6 +1,7 @@
 """
 Example on how to use the 'calc_cops' function to get the
-COPs of an exemplary air-source heat pump (ASHP).
+COPs of an exemplary air-source heat pump (ASHP) and use the
+pre-calculated COPs in a solph.Transformer.
 
 We use the ambient air as low temperature heat reservoir.
 """
@@ -54,6 +55,7 @@ cops_ASHP = cmpr_hp_chiller.calc_cops(
     quality_grade=0.4,
     mode='heat_pump',
     consider_icing=True,
+    t_threshold_icing=2,
     factor_icing=0.8)
 
 # Air-Source Heat Pump
