@@ -54,11 +54,11 @@ backup = solph.Source(
     outputs={bth: solph.Flow(variable_costs=backup_costs)})
 
 consumer = solph.Sink(
-        label='demand',
-        inputs={bth: solph.Flow(
-            fixed=True,
-            actual_value=data_precalc['Cooling_load_kW'],
-            nominal_value=1)})
+    label='demand',
+    inputs={bth: solph.Flow(
+        fixed=True,
+        actual_value=data_precalc['Cooling_load_kW'],
+        nominal_value=1)})
 
 
 ambience_sol = solph.Sink(
@@ -72,7 +72,7 @@ collector = solph.Transformer(
         bel: solph.Flow()},
     outputs={bth: solph.Flow()},
     conversion_factors={
-        bcol: 1-elec_consumption,
+        bcol: 1 - elec_consumption,
         bel: elec_consumption,
         bth: eta_losses})
 
@@ -101,4 +101,3 @@ df = pd.DataFrame()
 df = df.append(collector['sequences'])
 df = df.join(thermal_bus['sequences'], lsuffix='_1')
 df.to_csv(path + '/CSP_results/thermal_bus.csv', sep=';')
-
