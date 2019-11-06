@@ -11,7 +11,6 @@ oemof-thermal/src/oemof/thermal/compression_heatpumps_and_chillers.py
 """
 
 
-
 def calc_cops(t_high, t_low, quality_grade, t_threshold_icing=2,
               consider_icing=False, factor_icing=None, mode=None):
     r"""
@@ -56,21 +55,21 @@ def calc_cops(t_high, t_low, quality_grade, t_threshold_icing=2,
     # convert unit to Kelvin.
     length = max([len(t_high), len(t_low)])
     if len(t_high) == 1:
-        list_t_high_K = [t_high[0]+273.15]*length
+        list_t_high_K = [t_high[0] + 273.15] * length
     elif len(t_high) == length:
-        list_t_high_K = [t+273.15 for t in t_high]
+        list_t_high_K = [t + 273.15 for t in t_high]
     if len(t_low) == 1:
-        list_t_low_K = [t_low[0]+273.15]*length
+        list_t_low_K = [t_low[0] + 273.15] * length
     elif len(t_low) == length:
-        list_t_low_K = [t+273.15 for t in t_low]
+        list_t_low_K = [t + 273.15 for t in t_low]
 
     # Calculate COPs depending on selected mode (without considering icing).
     if not consider_icing:
         if mode == "heat_pump":
-            cops = [quality_grade * t_h/(t_h-t_l) for
+            cops = [quality_grade * t_h / (t_h - t_l) for
                     t_h, t_l in zip(list_t_high_K, list_t_low_K)]
         elif mode == "chiller":
-            cops = [quality_grade * t_l/(t_h-t_l) for
+            cops = [quality_grade * t_l / (t_h - t_l) for
                     t_h, t_l in zip(list_t_high_K, list_t_low_K)]
 
     # Calculate COPs of a heat pump and lower COP when icing occurs.
@@ -78,10 +77,10 @@ def calc_cops(t_high, t_low, quality_grade, t_threshold_icing=2,
         if mode == "heat_pump":
             cops = []
             for t_h, t_l in zip(list_t_high_K, list_t_low_K):
-                if t_l < t_threshold_icing+273.15:
+                if t_l < t_threshold_icing + 273.15:
                     f_icing = factor_icing
-                    cops = cops + [f_icing*quality_grade * t_h/(t_h-t_l)]
-                if t_l >= t_threshold_icing+273.15:
+                    cops = cops + [f_icing * quality_grade * t_h / (t_h - t_l)]
+                if t_l >= t_threshold_icing + 273.15:
                     cops = cops + [quality_grade * t_h / (t_h - t_l)]
         elif mode == "chiller":
             # Combining 'consider_icing' and mode 'chiller' is not possible!
@@ -120,9 +119,9 @@ def calc_max_Q_dot_chill(nominal_conditions, cops):
 
 
     """
-    nominal_cop = (nominal_conditions['nominal_Q_chill'] /
-                   nominal_conditions['nominal_el_consumption'])
-    max_Q_chill=[actual_cop/nominal_cop for actual_cop in cops]
+    nominal_cop = (nominal_conditions['nominal_Q_chill'] / nominal_conditions[
+        'nominal_el_consumption'])
+    max_Q_chill = [actual_cop / nominal_cop for actual_cop in cops]
     return max_Q_chill
 
 
@@ -157,9 +156,9 @@ def calc_max_Q_dot_heat(nominal_conditions, cops):
             greater than 0 and can be greater than 1.
 
         """
-    nominal_cop = (nominal_conditions['nominal_Q_hot'] /
-                   nominal_conditions['nominal_el_consumption'])
-    max_Q_hot=[actual_cop/nominal_cop for actual_cop in cops]
+    nominal_cop = (nominal_conditions['nominal_Q_hot'] / nominal_conditions[
+        'nominal_el_consumption'])
+    max_Q_hot = [actual_cop / nominal_cop for actual_cop in cops]
     return max_Q_hot
 
 
@@ -187,9 +186,9 @@ def calc_chiller_quality_grade(nominal_conditions):
         Quality grade
 
     """
-    t_h = nominal_conditions['t_high_nominal']+273.15
-    t_l =nominal_conditions['t_low_nominal']+273.15
-    nominal_cop = (nominal_conditions['nominal_Q_chill'] /
-                   nominal_conditions['nominal_el_consumption'])
-    q_grade = nominal_cop / (t_l/(t_h-t_l))
+    t_h = nominal_conditions['t_high_nominal'] + 273.15
+    t_l = nominal_conditions['t_low_nominal'] + 273.15
+    nominal_cop = (nominal_conditions['nominal_Q_chill'] / nominal_conditions[
+        'nominal_el_consumption'])
+    q_grade = nominal_cop / (t_l / (t_h - t_l))
     return q_grade

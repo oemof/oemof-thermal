@@ -19,7 +19,7 @@ temp_difference_industrial = range(20, 142, 2)
 temperature_diff_q_grade = range(5, 147, 2)
 
 # Quality grades
-quality_grades = [q/10 for q in range(2, 11, 2)]
+quality_grades = [q / 10 for q in range(2, 11, 2)]
 
 cops = pd.DataFrame()
 
@@ -37,7 +37,7 @@ cops[temp_high] = cmpr_hp_chiller.calc_cops(
 # (sink temperature above 100 degC and higher quality grade)
 cops['temperature_difference_industrial'] = temp_difference_industrial
 temp_l_ind = [temp_high_industrial - temp_diff for
-          temp_diff in temp_difference_industrial]
+              temp_diff in temp_difference_industrial]
 cops[temp_high_industrial] = cmpr_hp_chiller.calc_cops(
     t_high=[temp_high_industrial],
     t_low=temp_l_ind,
@@ -66,21 +66,21 @@ fig, axs = plt.subplots(1, 1)
 # fig.set_size_inches(10, 6, forward=True)
 fig.set_size_inches(6, 6, forward=True)
 plt.plot(cops['temperature_difference_industrial'],
-             cops[temp_high_industrial],
-             linestyle='-',
-             color='red',
+         cops[temp_high_industrial],
+         linestyle='-',
+         color='red',
          label='COP of a high temperature heat pump')
 plt.plot(cops['temperature_difference'],
-            cops[temp_high],
-            linestyle='-',
-            color='blue',
-            label='COP of a heat pump for domestic hot water')
+         cops[temp_high],
+         linestyle='-',
+         color='blue',
+         label='COP of a heat pump for domestic hot water')
 
 for q in quality_grades:
-        plt.plot(cops_q_grade['temperature_diff'],
-                cops_q_grade[q],
-                linestyle='dotted',
-                color='grey')
+    plt.plot(cops_q_grade['temperature_diff'],
+             cops_q_grade[q],
+             linestyle='dotted',
+             color='grey')
 axs.set_ylim(0, 12)
 axs.set_xlim(0, 145)
 plt.title('COP Dependence on Temperature Difference')
@@ -88,43 +88,43 @@ plt.xlabel('Temperature Difference in K')
 plt.ylabel('Coefficient of Performance (COP)')
 plt.legend(loc='upper right')
 bbox_props = dict(boxstyle="round", fc="w", ec="1.0", alpha=0.9)
-textcol='0.3'
-textsize=10
+textcol = '0.3'
+textsize = 10
 axs.text(47, 7.2, "100%",
          ha="center",
          va="center",
          size=textsize,
          rotation=-60,
          color=textcol,
-        bbox=bbox_props)
+         bbox=bbox_props)
 axs.text(57, 5.85, "(Carnot)",
          ha="center",
          va="center",
          size=textsize,
          rotation=-52,
          color=textcol,
-        bbox=bbox_props)
+         bbox=bbox_props)
 axs.text(30, 9.1, "quality grade",
          ha="center",
          va="center",
          size=textsize,
          rotation=-76,
          color=textcol,
-        bbox=bbox_props)
+         bbox=bbox_props)
 axs.text(39, 6.8, "80%",
          ha="center",
          va="center",
          size=textsize,
          rotation=-70,
          color=textcol,
-        bbox=bbox_props)
+         bbox=bbox_props)
 axs.text(12, 5.7, "20%",
          ha="center",
          va="center",
          size=textsize,
          rotation=-70,
          color=textcol,
-        bbox=bbox_props)
+         bbox=bbox_props)
 axs.annotate('quality grade 45%,\nT_sink 110 degC',
              xy=(97, 1.8),
              xytext=(95, 4),
@@ -136,7 +136,6 @@ axs.annotate('quality grade 35%,\nT_sink 65 degC',
              arrowprops=dict(arrowstyle="->",
                              connectionstyle="arc3"))
 
-#plt.savefig('cop_dependence_on_temp_difference.png', dpi=300)
+# plt.savefig('cop_dependence_on_temp_difference.png', dpi=300)
 plt.show()
 print("")
-

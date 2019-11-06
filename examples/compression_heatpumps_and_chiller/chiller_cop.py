@@ -25,4 +25,3 @@ cops_chiller = cmpr_hp_chiller.calc_cops(t_high=temp_ambient,
 print("")
 print("Coefficients of Performance (COP): ", *cops_chiller, sep='\n')
 print("")
-

@@ -52,8 +52,8 @@ energysystem.add(solph.Source(
 energysystem.add(solph.Sink(
     label='demand',
     inputs={b_th_high: solph.Flow(actual_value=data['demand_heat'],
-                               fixed=True,
-                               nominal_value=1)}))
+                                  fixed=True,
+                                  nominal_value=1)}))
 
 # Pre-Calculate COPs
 cops_GSHP = cmpr_hp_chiller.calc_cops(
@@ -67,8 +67,8 @@ energysystem.add(solph.Transformer(
     label="GSHP",
     inputs={b_el: solph.Flow(), b_th_low: solph.Flow()},
     outputs={b_th_high: solph.Flow(nominal_value=25, variable_costs=5)},
-    conversion_factors={b_el: [1/cop for cop in cops_GSHP],
-                        b_th_low: [(cop-1)/cop for cop in cops_GSHP]}))
+    conversion_factors={b_el: [1 / cop for cop in cops_GSHP],
+                        b_th_low: [(cop - 1) / cop for cop in cops_GSHP]}))
 
 model = solph.Model(energysystem)
 
@@ -127,8 +127,3 @@ print('********* Main results *********')
 print(electricity_bus['sequences'].sum(axis=0))
 print(heat_bus['sequences'].sum(axis=0))
 print("heat from environment:", env_heat.sum())
-
-## Display calculated COPs
-# print("")
-# print("Coefficients of Performance (COP): ", *cops_GSHP, sep='\n')
-# print("")

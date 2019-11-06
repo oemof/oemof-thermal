@@ -138,4 +138,3 @@ plt.show()
 print('********* Main results *********')
 print(electricity_bus['sequences'].sum(axis=0))
 print(heat_bus['sequences'].sum(axis=0))
-
