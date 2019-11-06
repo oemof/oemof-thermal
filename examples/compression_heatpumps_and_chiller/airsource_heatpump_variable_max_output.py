@@ -109,7 +109,7 @@ ASHP_input = string_results[
     'electricity', 'ASHP']['sequences'].values
 
 # Absolute values of maximal heating capacity
-max_Q_dot_heating_abs = [nominal_conditions['nominal_Q_hot']*max_heating for
+max_Q_dot_heating_abs = [nominal_conditions['nominal_Q_hot'] * max_heating for
                          max_heating in max_Q_dot_heating]
 
 fig2, axs = plt.subplots(3, 1, figsize=(8, 5), sharex=True)
@@ -139,7 +139,3 @@ print('********* Main results *********')
 print(electricity_bus['sequences'].sum(axis=0))
 print(heat_bus['sequences'].sum(axis=0))
 
-## Display calculated COPs
-# print("")
-# print("Coefficients of Performance (COP): ", *cops_ASHP, sep='\n')
-# print("")

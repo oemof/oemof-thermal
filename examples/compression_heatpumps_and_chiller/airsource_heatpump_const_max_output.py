@@ -119,7 +119,3 @@ print('********* Main results *********')
 print(electricity_bus['sequences'].sum(axis=0))
 print(heat_bus['sequences'].sum(axis=0))
 
-## Display calculated COPs
-# print("")
-# print("Coefficients of Performance (COP): ", *cops_ASHP, sep='\n')
-# print("")
