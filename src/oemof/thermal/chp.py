@@ -13,8 +13,8 @@ oemof-thermal/src/oemof/thermal/stratified_thermal_storage.py
 
 def allocate_emissions(total_emissions, eta_el, eta_th, method, **kwargs):
     r"""
-    Function to allocate emissions caused in cogeneration to the products electrical energy and heat according
-    to specified method.
+    Function to allocate emissions caused in cogeneration to the products electrical energy
+    and heat according to specified method.
 
     Reference:
     Mauch, W., Corradini, R., Wiesmeyer, K., Schwentzek, M. (2010).
@@ -47,27 +47,27 @@ def allocate_emissions(total_emissions, eta_el, eta_th, method, **kwargs):
             total emissions allocated to heat according to specified `method`.
 
     """
-    if method is 'iea':
-        allocated_emissions_electricity = total_emissions * eta_el * 1/(eta_el + eta_th)
-        allocated_emissions_heat = total_emissions * eta_th * 1/(eta_el + eta_th)
+    if method == 'iea':
+        allocated_emissions_electricity = total_emissions * eta_el * 1 / (eta_el + eta_th)
+        allocated_emissions_heat = total_emissions * eta_th * 1 / (eta_el + eta_th)
 
-    elif method is 'efficiency':
-        allocated_emissions_electricity = total_emissions * eta_th * 1/(eta_el + eta_th)
-        allocated_emissions_heat = total_emissions * eta_el * 1/(eta_el + eta_th)
+    elif method == 'efficiency':
+        allocated_emissions_electricity = total_emissions * eta_th * 1 / (eta_el + eta_th)
+        allocated_emissions_heat = total_emissions * eta_el * 1 / (eta_el + eta_th)
 
-    elif method is 'finnish':
+    elif method == 'finnish':
         if kwargs is not None and kwargs.keys() >= {'eta_el_ref', 'eta_th_ref'}:
             eta_el_ref = kwargs.get('eta_el_ref')
             eta_th_ref = kwargs.get('eta_th_ref')
         else:
             raise ValueError('Must specify eta_el_ref, eta_th_ref when using finnish method.')
 
-        pee = 1 - 1/((eta_el/eta_el_ref) + (eta_th/eta_th_ref))
-        allocated_emissions_electricity = total_emissions * (1 - pee) * (eta_el/eta_el_ref)
-        allocated_emissions_heat = total_emissions * (1 - pee) * (eta_th/eta_th_ref)
+        pee = 1 - 1 / ((eta_el / eta_el_ref) + (eta_th / eta_th_ref))
+        allocated_emissions_electricity = total_emissions * (1 - pee) * (eta_el / eta_el_ref)
+        allocated_emissions_heat = total_emissions * (1 - pee) * (eta_th / eta_th_ref)
 
     else:
-        raise ValueError(f"Method '{method}' is not available. " +
+        raise ValueError(f"Method '{method}' is not available. "
                          "Please choose from ['iea', finnish', 'efficiency']")
 
     return allocated_emissions_electricity, allocated_emissions_heat

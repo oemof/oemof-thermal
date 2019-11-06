@@ -1,5 +1,3 @@
-import pytest
-
 from oemof.thermal.chp import allocate_emissions
 
 
