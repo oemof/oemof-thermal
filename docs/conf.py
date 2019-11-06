@@ -63,7 +63,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'oemof'
+project = u'oemof.thermal'
 copyright = u'2014-2019, oemof developer group'
 author = u'oemof developer group'
 

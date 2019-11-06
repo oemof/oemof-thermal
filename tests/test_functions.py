@@ -1,6 +1,11 @@
 from oemof.thermal.chp import allocate_emissions
 
 
+def test_dummy():
+    a = 2 * 0.5
+    assert a == 1
+
+
 def test_allocate_emissions():
     emissions_dict = {}
     for method in ['iea', 'efficiency', 'finnish']:
