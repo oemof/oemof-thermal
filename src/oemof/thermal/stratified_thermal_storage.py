@@ -67,8 +67,8 @@ def calculate_storage_dimensions(height, diameter):
     surface : numeric
         Total surface of storage [m2]
     """
-    volume = diameter**2 * 1/4 * np.pi * height
-    surface = np.pi * diameter * height + 2 * np.pi * diameter**2 * 1/4
+    volume = diameter**2 * 1 / 4 * np.pi * height
+    surface = np.pi * diameter * height + 2 * np.pi * diameter**2 * 1 / 4
 
     return volume, surface
 
@@ -120,9 +120,9 @@ def calculate_capacities(volume, temp_h, temp_c, nonusable_storage_volume,
         Minimal storage content relative to nominal storage capacity [-]
 
     """
-    nominal_storage_capacity = 1e-6 * 1/3600 * volume * heat_capacity * density * (temp_h - temp_c)
-    max_storage_level = (1 - nonusable_storage_volume/2)
-    min_storage_level = nonusable_storage_volume/2
+    nominal_storage_capacity = 1e-6 / 3600 * volume * heat_capacity * density * (temp_h - temp_c)
+    max_storage_level = (1 - nonusable_storage_volume / 2)
+    min_storage_level = nonusable_storage_volume / 2
 
     return nominal_storage_capacity, max_storage_level, min_storage_level
 
@@ -166,7 +166,7 @@ def calculate_losses(nominal_storage_capacity, u_value, surface, temp_h, temp_c,
         Fixed losses related to storage surface
         independent of storage content [1/h]
     """
-    loss_rate =    u_value * surface * (temp_h - temp_c)   * 1e-6 / nominal_storage_capacity
+    loss_rate = u_value * surface * (temp_h - temp_c) * 1e-6 / nominal_storage_capacity
     fixed_losses = u_value * surface * (temp_c - temp_env) * 1e-6 / nominal_storage_capacity
 
     return loss_rate, fixed_losses

@@ -108,7 +108,7 @@ optimization_model.solve(solver=solver)
 # get results
 results = outputlib.processing.results(optimization_model)
 string_results = outputlib.processing.convert_keys_to_strings(results)
-sequences = {k:v['sequences'] for k, v in string_results.items()}
+sequences = {k: v['sequences'] for k, v in string_results.items()}
 df = pd.concat(sequences, axis=1)
 
 # plot storage_content vs. time
