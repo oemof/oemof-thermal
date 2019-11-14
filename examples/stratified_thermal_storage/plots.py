@@ -81,8 +81,25 @@ energysystem = EnergySystem(timeindex=datetimeindex)
 
 bus_heat = Bus(label='bus_heat')
 
-thermal_storage = GenericStorage(
-    label='thermal_storage',
+thermal_storage_1 = GenericStorage(
+    label='thermal_storage_1',
+    inputs={bus_heat: Flow(
+        nominal_value=maximum_heat_flow_charging,
+        variable_costs=0.0001)},
+    outputs={bus_heat: Flow(
+        nominal_value=maximum_heat_flow_discharging)},
+    nominal_storage_capacity=nominal_storage_capacity,
+    min_storage_level=min_storage_level,
+    max_storage_level=max_storage_level,
+    initial_storage_level=0.9,
+    loss_rate=loss_rate,
+    inflow_conversion_factor=1.,
+    outflow_conversion_factor=1.,
+    balanced=False
+)
+
+thermal_storage_2 = GenericStorage(
+    label='thermal_storage_2',
     inputs={bus_heat: Flow(
         nominal_value=maximum_heat_flow_charging,
         variable_costs=0.0001)},
@@ -99,7 +116,7 @@ thermal_storage = GenericStorage(
     balanced=False
 )
 
-energysystem.add(bus_heat, thermal_storage)
+energysystem.add(bus_heat, thermal_storage_1, thermal_storage_2)
 
 # create and solve the optimization model
 optimization_model = Model(energysystem)
@@ -113,14 +130,15 @@ df = pd.concat(sequences, axis=1)
 
 # plot storage_content vs. time
 fig, ax = plt.subplots()
-df[('thermal_storage', 'None', 'capacity')].plot.area(ax=ax)
+df[('thermal_storage_1', 'None', 'capacity')].plot(ax=ax)
+df[('thermal_storage_2', 'None', 'capacity')].plot(ax=ax)
 ax.set_title('Storage content')
 ax.set_xlabel('Timesteps')
 ax.legend(loc='center left', bbox_to_anchor=(1.0, 0.5))
 plt.tight_layout()
 plt.show()
 
-storage_content = df[('thermal_storage', 'None', 'capacity')][10:-5].values
+storage_content = df[('thermal_storage_1', 'None', 'capacity')][10:-5].values
 losses = - storage_content[1:] + storage_content[:-1]
 
 #   losses vs storage content
