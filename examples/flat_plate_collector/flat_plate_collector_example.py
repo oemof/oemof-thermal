@@ -17,7 +17,18 @@ periods = 48
 elec_consumption = 0.02
 backup_costs = 40
 eta_losses = 0.05
+latitude = 52.2443
+longitude = 10.5594
+timezone = 'Europe/Berlin'
+tilt = 10
+azimuth = 20
+eta_0 = 0.73
+c_1 = 1.7
+c_2 = 0.016
+col_inlet_temp = 20
+delta_t_n = 10
 
+# Read data for flat collector and heat demand
 path = os.path.dirname(os.path.abspath(os.path.join(__file__, '..', '..')))
 dataframe = pd.read_csv(path + '/CSP_data/data_flat_collector.csv', sep=';')
 demand_df = pd.read_csv(path + '/CSP_data/heat_demand.csv', sep=';')
@@ -25,10 +36,10 @@ demand = list(demand_df['heat_demand'].iloc[:periods])
 
 precalc_data = flat_plate_precalc(
     dataframe, periods,
-    52.2443, 10.5594, 'Europe/Berlin',
-    10, 20,
-    0.73, 1.7, 0.016,
-    20, 10,
+    latitude, longitude, timezone,
+    tilt, azimuth,
+    eta_0, c_1, c_2,
+    col_inlet_temp, delta_t_n,
     date_col='hour', irradiance_global_col='global_horizontal_W_m2',
     irradiance_diffuse_col='diffuse_horizontal_W_m2',  t_amb_col='t_amb')
 
