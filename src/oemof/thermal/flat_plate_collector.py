@@ -18,28 +18,28 @@ def flat_plate_precalc(df, periods,
     Parameters
     ---------
     df: dataframe
-        holding values for time, the global and diffuse horizontal irradiance
+        Holds values for the time, the global and diffuse horizontal irradiance,
         and the ambient temp (in Celsius degrees).
     periods: numeric
-        defines the number of timesteps
+        Defines the number of timesteps.
     lat, long: numeric
-        latitude and longitude of the location
+        Latitude and longitude of the location.
     tz: string
-        pytz timezone of the location
+        Pytz timezone of the location.
     col_tilt, col_azimuth: numeric
-        the tilt and azimuth of the collector. Azimuth according to pvlib
-        in decimal degrees East of North
+        The tilt and azimuth of the collector. Azimuth according to pvlib
+        in decimal degrees East of North.
     eta_0: numeric
-        optical efficiency of the collector
+        Optical efficiency of the collector.
     c_1, c_2: numeric
-        thermal loss parameters
+        Thermal loss parameters.
     col_inlet_temp: numeric or series with length periods
-        collectors inlet temperature
+        Collectors inlet temperature.
     delta_t_n:
-        temperature difference between collector inlet and mean temperature
+        Temperature difference between collector inlet and mean temperature.
     date_col, irradiance_global_col, irradiance_diffuse_col, t_amb_col: string
-        describes the name of the columns in the dataframe df
-        defaults: 'date', 'ghi', 'dhi', 't_amb'
+        Describes the name of the columns in the dataframe df.
+        Defaults: 'date', 'ghi', 'dhi', 't_amb'
 
     Returns
     -------
@@ -90,6 +90,7 @@ def flat_plate_precalc(df, periods,
     data['eta_c'] = eta_c
     collectors_heat = eta_c * total_irradiation['poa_global']
     data["collectors_heat"] = collectors_heat
+
     return data
 
 
