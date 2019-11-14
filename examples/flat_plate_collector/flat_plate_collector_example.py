@@ -13,6 +13,7 @@ import pandas as pd
 import os
 import oemof.outputlib as outputlib
 
+# Define parameters
 periods = 48
 elec_consumption = 0.02
 backup_costs = 40
@@ -34,6 +35,8 @@ dataframe = pd.read_csv(path + '/CSP_data/data_flat_collector.csv', sep=';')
 demand_df = pd.read_csv(path + '/CSP_data/heat_demand.csv', sep=';')
 demand = list(demand_df['heat_demand'].iloc[:periods])
 
+# Calculate global irradiance on the collector area
+# and collector efficiency depending on the temperature difference
 precalc_data = flat_plate_precalc(
     dataframe, periods,
     latitude, longitude, timezone,
@@ -46,6 +49,7 @@ precalc_data = flat_plate_precalc(
 precalc_data.to_csv(path + '/CSP_results/flate_plate_precalcs.csv', sep=';')
 
 
+# Create component
 bth = solph.Bus(label='thermal', balanced=True)
 bel = solph.Bus(label='electricity')
 bcol = solph.Bus(label='solar')
