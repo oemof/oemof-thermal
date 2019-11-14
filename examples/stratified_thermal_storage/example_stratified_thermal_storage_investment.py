@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import numpy as np
 
@@ -11,7 +12,11 @@ from oemof.solph.components import GenericStorage
 import oemof.outputlib as outputlib
 
 
-input_data = pd.read_csv('stratified_thermal_storage.csv', index_col=0, header=0)['var_value']
+data_path = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)),
+    'stratified_thermal_storage.csv')
+
+input_data = pd.read_csv(data_path, index_col=0, header=0)['var_value']
 
 u_value = calculate_storage_u_value(
     input_data['s_iso'],
