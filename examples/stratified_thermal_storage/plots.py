@@ -128,6 +128,11 @@ string_results = outputlib.processing.convert_keys_to_strings(results)
 sequences = {k: v['sequences'] for k, v in string_results.items()}
 df = pd.concat(sequences, axis=1)
 
+storage_content = df.loc[:, [('thermal_storage_1', 'None', 'capacity'),
+                             ('thermal_storage_2', 'None', 'capacity')]]
+
+losses = - storage_content.iloc[1:,:].values + storage_content.iloc[:-1, :].values
+
 # plot storage_content vs. time
 fig, ax = plt.subplots()
 df[('thermal_storage_1', 'None', 'capacity')].plot(ax=ax)
@@ -138,12 +143,9 @@ ax.legend(loc='center left', bbox_to_anchor=(1.0, 0.5))
 plt.tight_layout()
 plt.show()
 
-storage_content = df[('thermal_storage_1', 'None', 'capacity')][10:-5].values
-losses = - storage_content[1:] + storage_content[:-1]
-
 #   losses vs storage content
 fig, ax = plt.subplots()
-plt.scatter(storage_content[:-1], losses)
+plt.scatter(storage_content[1:], losses)
 ax.set_title('Losses vs. storage content')
 ax.set_xlabel('Storage content [MWh]')
 ax.set_ylabel('Losses [MWh]')
