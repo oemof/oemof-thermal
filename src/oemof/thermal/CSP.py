@@ -20,11 +20,11 @@ def csp_precalc(df, periods,
     Parameters
     ----------
     df: dataframe
-        holding values for time, the irradiance and the ambient temperature
+        Holds values for time, the irradiance and the ambient temperature.
     periods: numeric
-        defines the number of timesteps
+        Defines the number of timesteps.
     lat: numeric
-        latitude of the location
+       Latitude of the location.
     long: numeric
         longitude of the location
     tz: string
@@ -53,7 +53,7 @@ def csp_precalc(df, periods,
     irradiance_method: string, default 'horizontal'
             valid values are: 'horizontal' or 'normal'. Describes, if the
             horizontal direct irradiance or the direct normal irradiance is
-            given and used for Calculation
+            given and used for calculation
     date_col: string, default: 'date'
             describes the name of the column in the dataframe df
     irradiance_col: string, default: 'E_dir_hor'
@@ -75,7 +75,7 @@ def csp_precalc(df, periods,
 
     **proposal of values**
 
-    if you have no idea, which values your collector have, here are values,
+    If you have no idea, which values your collector have, here are values,
     which were measured in [1] for a collector:
     a1: -0.00159, a2: 0.0000977,
     eta_0: 0.816, c1: 0.0622, c2: 0.00023,
@@ -132,7 +132,7 @@ def csp_precalc(df, periods,
             data['dni'])
 
     # Calculation of the irradiance which reaches the collector after all
-    # losses (cleaniness)
+    # losses (cleanliness)
     collector_irradiance = calc_collector_irradiance(
         irradiance_on_collector, x)
     collector_irradiance = collector_irradiance.fillna(0)
@@ -150,6 +150,7 @@ def csp_precalc(df, periods,
     # Calculation of the collectors heat
     collector_heat = collector_irradiance * eta_c
     data['collector_heat'] = collector_heat
+    
     return data
 
 

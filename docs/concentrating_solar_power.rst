@@ -5,8 +5,8 @@ Concentrating solar power
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The precalculations for the concentrating solar power calculate the heat of the
-solar collector based on the horizontal direct irradiance or the direct normal
-irradiance and information about the collector and the location. The processing
+solar collector based on the direct horizontal irradiance (DHI) or the direct normal
+irradiance (DNI) and information about the collector and the location. The processing
 of the irradiance data is done by the pvlib, which calculates the direct
 irradiance on the collector. This irradiance is reduced by dust and dirt on the
 collector with:
@@ -14,7 +14,7 @@ collector with:
 .. math::
     E_{coll} = E_{on_coll} \cdot X^{3/2}
 
-The efficiency on the collector is calculated with
+The efficiency of the collector is calculated with
 
 .. math::
     \eta_C = \eta_0 * \kappa(\varTheta) - c_1 \cdot \frac{\Delta T}{E_{coll}}\
