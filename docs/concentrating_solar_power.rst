@@ -20,8 +20,9 @@ The efficiency on the collector is calculated with
     \eta_C = \eta_0 * \kappa(\varTheta) - c_1 \cdot \frac{\Delta T}{E_{coll}}\
     - d_2 \cdot \frac{{\Delta T}^2}{E_{coll}}
 
-    \text{with}
+with
 
+.. math::
     \kappa(\varTheta) = 1 - a_1 \cdot \vert\varTheta\vert - a_2 * \vert\varTheta\vert^2
 
 In the end, the irradiance on the collector is multiplied with the efficiency
@@ -29,3 +30,4 @@ to get the collectors heat. These three values are returned.
 Losses, which occur after the heat absorption in the collector (e.g. losses in
 pipes) have to be taken into account in the component, which uses the
 precalculation (see the example).
+
