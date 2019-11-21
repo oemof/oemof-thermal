@@ -17,16 +17,32 @@ import oemof.outputlib as outputlib
 path = os.path.dirname(os.path.abspath(os.path.join(__file__, '..', '..')))
 dataframe = pd.read_csv(path + '/CSP_data/data_CSP.csv', sep=';')
 dataframe['Datum'] = pd.to_datetime(dataframe['Datum'])
+
 periods = 8760
+latitude = 23.614328
+longitude = 58.545284
+timezone = 'Asia/Muscat'
+collector_tilt = 10
+collector_azimuth = 180
+x = 0.9
+a_1 = -0.00159
+a_2 = 0.0000977
+eta_0 = 0.816
+c_1 = 0.0622
+c_2 = 0.00023
+temp_collector_inlet = 435
+temp_collector_outlet = 500
+
 data_precalc = csp_precalc(dataframe, periods,
-                           23.614328, 58.545284, 'Asia/Muscat',
-                           10, 180, 0.9, -0.00159, 0.0000977,
-                           0.816, 0.0622, 0.00023,
-                           435, 500,
+                           latitude, longitude, timezone,
+                           collector_tilt, collector_azimuth, x, a_1, a_2,
+                           eta_0, c_1, c_2,
+                           temp_collector_inlet, temp_collector_outlet,
                            date_col='Datum')
 
-data_precalc['Cooling_load_kW'] = list(dataframe['Cooling_load_kW'].iloc[:periods])
-data_precalc.to_csv(path + '/CSP_results/precalcs.csv', sep=';')
+data_precalc['Cooling_load_kW'] = list(
+    dataframe['Cooling_load_kW'].iloc[:periods])
+data_precalc.to_csv(path + '/CSP_results/precalcs.csv')
 
 # regular oemof_system
 
@@ -42,7 +58,7 @@ col_heat = solph.Source(
     label='collector_heat',
     outputs={bcol: solph.Flow(
         fixed=True,
-        actual_value=data_precalc['col_heat'],
+        actual_value=data_precalc['collector_heat'],
         nominal_value=1)})
 
 el_grid = solph.Source(
@@ -77,12 +93,12 @@ collector = solph.Transformer(
         bth: eta_losses})
 
 date_time_index = pd.date_range('1/1/2003', periods=periods,
-                                freq='H', tz='Asia/Muscat')
+                                freq='H', tz=timezone)
 
 energysystem = solph.EnergySystem(timeindex=date_time_index)
 
-energysystem.add(bth, bcol, bel, col_heat, el_grid, backup, consumer, ambience_sol,
-                 collector)
+energysystem.add(bth, bcol, bel, col_heat, el_grid, backup, consumer,
+                 ambience_sol, collector)
 
 model = solph.Model(energysystem)
 
@@ -100,4 +116,4 @@ thermal_bus = outputlib.views.node(energysystem.results['main'], 'thermal')
 df = pd.DataFrame()
 df = df.append(collector['sequences'])
 df = df.join(thermal_bus['sequences'], lsuffix='_1')
-df.to_csv(path + '/CSP_results/thermal_bus.csv', sep=';')
+df.to_csv(path + '/CSP_results/thermal_bus.csv')
