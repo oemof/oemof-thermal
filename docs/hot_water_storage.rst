@@ -20,6 +20,12 @@ A simplified 2-zone-model of a stratified thermal energy storage.
 * There is no distinction between outside temperature and ground temperature.
 * Material properties are constant.
 
+The equation describing the change of storage content is the following:
+
+.. math::
+  Q_t = Q_{t-1} - UA \Bigg(\frac{Q_t-1}{Q_N} \Delta T_{HC} + \Delta T_{C0}\Bigg)\Delta t
+  + \dot{Q}_{in,t}\eta_{in}\Delta t - \frac{\dot{Q}_{out}}{\eta_{out}}\Delta t.
+
 In the case of investment, the diameter d is given and the height can be
 adapted to adapt the nominal capacity of the storage. With this assumption,
 all relations stay linear.
