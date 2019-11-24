@@ -63,7 +63,7 @@ def print_results():
         'Fixed losses [-]': fixed_losses
     }
 
-    dash = '-' * 42
+    dash = '-' * 50
 
     print(dash)
     print('{:>32s}{:>15s}'.format('Parameter name', 'Value'))
@@ -79,7 +79,7 @@ print_results()
 
 # Set up an energy system model
 solver = 'cbc'
-periods = 500
+periods = 1000
 datetimeindex = pd.date_range('1/1/2019', periods=periods, freq='H')
 
 energysystem = EnergySystem(timeindex=datetimeindex)
@@ -139,7 +139,7 @@ storage_content = df.loc[:, [('thermal_storage_1', 'None', 'capacity'),
 losses = - storage_content.iloc[1:,:].values + storage_content.iloc[:-1, :].values
 
 # plot storage_content vs. time
-fig, ax = plt.subplots()
+fig, ax = plt.subplots(figsize=(8, 5))
 df[('thermal_storage_1', 'None', 'capacity')].plot(ax=ax)
 df[('thermal_storage_2', 'None', 'capacity')].plot(ax=ax)
 ax.set_title('Storage content')
