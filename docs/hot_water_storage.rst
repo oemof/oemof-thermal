@@ -124,6 +124,15 @@ Finally, the parameters can be used to define a storage component.
         outflow_conversion_factor=1.
     )
 
+The following figure shows a comparison of results of a common storage implementation using
+only a loss rate vs. the stratified thermal storage implementation.
+(see `here <https://github.com/oemof/oemof-thermal/tree/dev/examples/stratified_thermal_storage>`_
+for source code).
+
+.. 	image:: _pics/compare_storage_models.svg
+   :width: 70 %
+   :alt: compare_storage_models.svg
+   :align: center
 
 For investment, :math:`Q_N` is not fixed in advance.
 :math:`A = \pi d h + 2 \pi \frac{d^2}{4}` The same as for :math:`Q_N` applies to :math:`A`
