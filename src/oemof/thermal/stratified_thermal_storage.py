@@ -49,6 +49,8 @@ def calculate_storage_dimensions(height, diameter):
     r"""
     Calculates volume and total surface of a hot water storage.
 
+    :math:`V = \pi \frac{d^2}{4} \cdot h`
+
     :math:`A = \pi d h + 2 \pi \frac{d^2}{4}`
 
     Parameters
