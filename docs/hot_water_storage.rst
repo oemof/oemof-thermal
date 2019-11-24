@@ -137,21 +137,6 @@ for source code).
 For investment, :math:`Q_N` is not fixed in advance.
 :math:`A = \pi d h + 2 \pi \frac{d^2}{4}` The same as for :math:`Q_N` applies to :math:`A`
 
-Variables:
-
-:math:`Q_t`: Storage level at time :math:`t`
-:math:`\dot{Q}_{in,t}`: Charging power at time :math:`t`
-:math:`\dot{Q}_{out,t}`: Discharging power at time :math:`t`
-:math:`Q_N`, in case of investment
-
-The following constraints are implemented:
-
-:math:`Q_t >= Q_{min}`
-
-:math:`Q_t <= Q_{max}`
-
-:math:`Q_t = Q_{t-1} - UA(\frac{Q_t-1}{Q_N} \Delta T_{HC} + \Delta T_{C0})\Delta t + \dot{Q}_{in,t}\eta_{in}\Delta t - \frac{\dot{Q}_{out}}{\eta_{out}}\Delta t`
-
 These two constraints apply in case of investment optimization:
 
 :math:`A = \frac{4 Q_N}{d \cdot c \cdot \rho \cdot \Delta T_{HC}} + \frac{d^2}{2} \cdot \pi`
