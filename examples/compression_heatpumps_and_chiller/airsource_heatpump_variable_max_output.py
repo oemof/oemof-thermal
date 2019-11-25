@@ -125,7 +125,7 @@ axs[2].plot([-1, number_of_time_steps],
             linestyle='--',
             color='red',
             label='threshold temperature')
-axs[2].text(x=number_of_time_steps-1,
+axs[2].text(x=number_of_time_steps - 1,
             y=temp_threshold_icing,
             s='threshold temperature',
             ha='right',
@@ -158,6 +158,7 @@ print("Total electricity consumption: {:2.1f}".format(
     ASHP_input.sum(axis=0)[0]))
 print("Total heat output: {:2.1f}".format(
     ASHP_output.sum(axis=0)[0]))
-print("Average Coefficient of Performance (COP): {:2.2f}".format(np.mean(cops_ASHP)))
+print("Average Coefficient of Performance (COP): {:2.2f}".format(
+    np.mean(cops_ASHP)))
 print("Seasonal Performance Factor (SPF): {:2.2f}".format(
-    ASHP_output.sum(axis=0)[0]/ASHP_input.sum(axis=0)[0]))
+    ASHP_output.sum(axis=0)[0] / ASHP_input.sum(axis=0)[0]))

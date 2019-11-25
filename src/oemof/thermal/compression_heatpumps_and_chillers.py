@@ -119,8 +119,8 @@ def calc_max_Q_dot_chill(nominal_conditions, cops):
 
 
     """
-    nominal_cop = (nominal_conditions['nominal_Q_chill']
-                   / nominal_conditions['nominal_el_consumption'])
+    nominal_cop = (nominal_conditions['nominal_Q_chill'] / nominal_conditions[
+        'nominal_el_consumption'])
     max_Q_chill = [actual_cop / nominal_cop for actual_cop in cops]
     return max_Q_chill
 
