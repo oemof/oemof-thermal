@@ -13,9 +13,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 solver = 'cbc'
-debug = False
 number_of_time_steps = 24
-periods = number_of_time_steps
 solver_verbose = False
 
 date_time_index = pd.date_range('1/1/2012', periods=number_of_time_steps,
@@ -57,8 +55,8 @@ energysystem.add(solph.Sink(
 
 # Pre-Calculate COPs
 cops_GSHP = cmpr_hp_chiller.calc_cops(
-    t_high=[40],
-    t_low=data['ground_temperature'],
+    temp_high=[40],
+    temp_low=data['ground_temperature'],
     quality_grade=0.4,
     mode='heat_pump')
 

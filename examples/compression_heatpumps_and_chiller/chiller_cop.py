@@ -16,12 +16,16 @@ temp_ambient = [24, 24, 24, 25, 25, 25,
                 35, 34, 27, 26, 25, 24,
                 24, 24, 24, 24, 24, 23]
 
-cops_chiller = cmpr_hp_chiller.calc_cops(t_high=temp_ambient,
-                                         t_low=[18],
+cops_chiller = cmpr_hp_chiller.calc_cops(temp_high=temp_ambient,
+                                         temp_low=[18],
                                          quality_grade=0.3,
                                          mode='chiller')
 
 
 print("")
-print("Coefficients of Performance (COP): ", *cops_chiller, sep='\n')
+print("Coefficients of Performance (COP):")
+t = 1
+for cop_chiller in cops_chiller:
+    print(t, "h: {:2.2f}".format(cop_chiller))
+    t += 1
 print("")

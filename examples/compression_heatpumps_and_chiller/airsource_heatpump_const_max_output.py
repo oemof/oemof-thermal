@@ -12,11 +12,10 @@ import oemof.solph as solph
 import oemof.outputlib as outputlib
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
 
 solver = 'cbc'
-debug = False
 number_of_time_steps = 24
-periods = number_of_time_steps
 solver_verbose = False
 
 date_time_index = pd.date_range('1/1/2012', periods=number_of_time_steps,
@@ -35,7 +34,7 @@ b_heat = solph.Bus(label="heat")
 energysystem.add(b_el, b_heat)
 
 energysystem.add(solph.Source(
-    label='el_grid',
+    label='grid_el',
     outputs={b_el: solph.Flow(variable_costs=10)}))
 
 energysystem.add(solph.Source(
@@ -48,14 +47,16 @@ energysystem.add(solph.Sink(
                                fixed=True,
                                nominal_value=1)}))
 
+temp_threshold_icing = 2
+
 # Pre-Calculate COPs
 cops_ASHP = cmpr_hp_chiller.calc_cops(
-    t_high=[40],
-    t_low=data['ambient_temperature'],
+    temp_high=[40],
+    temp_low=data['ambient_temperature'],
     quality_grade=0.4,
     mode='heat_pump',
     consider_icing=True,
-    t_threshold_icing=2,
+    temp_threshold_icing=temp_threshold_icing,
     factor_icing=0.8)
 
 # Air-Source Heat Pump
@@ -99,7 +100,20 @@ fig2, axs = plt.subplots(3, 1, figsize=(8, 5), sharex=True)
 axs[0].plot(ASHP_output, label='heat output')
 axs[0].plot(demand_h, linestyle='--', label='heat demand')
 axs[1].plot(cops_ASHP, linestyle='-.')
-axs[2].plot(data['ambient_temperature'])
+axs[2].plot([-1, number_of_time_steps],
+            [temp_threshold_icing, temp_threshold_icing],
+            linestyle='--',
+            color='red',
+            label='threshold temperature')
+axs[2].text(x=number_of_time_steps-1,
+            y=temp_threshold_icing,
+            s='threshold temperature',
+            ha='right',
+            va='center',
+            color='red',
+            fontsize=10,
+            bbox=dict(facecolor='white', edgecolor='white', alpha=1.0))
+axs[2].plot(data['ambient_temperature'], label='ambient temperature')
 axs[0].set_title('Heat Output and Demand')
 axs[1].set_title('Coefficient of Performance')
 axs[2].set_title('Source Temperature (Ambient)')
@@ -108,6 +122,7 @@ axs[0].legend()
 axs[0].grid()
 axs[1].grid()
 axs[2].grid()
+axs[0].set_xlim(0, number_of_time_steps)
 axs[0].set_ylabel('Heat flow in kW')
 axs[1].set_ylabel('COP')
 axs[2].set_ylabel('Temperature in $°$C')
@@ -116,5 +131,10 @@ plt.tight_layout()
 plt.show()
 
 print('********* Main results *********')
-print(electricity_bus['sequences'].sum(axis=0))
-print(heat_bus['sequences'].sum(axis=0))
+print("Total electricity consumption: {:2.1f}".format(
+    ASHP_input.sum(axis=0)[0]))
+print("Total heat output: {:2.1f}".format(
+    ASHP_output.sum(axis=0)[0]))
+print("Average Coefficient of Performance (COP): {:2.2f}".format(np.mean(cops_ASHP)))
+print("Seasonal Performance Factor (SPF): {:2.2f}".format(
+    ASHP_output.sum(axis=0)[0]/ASHP_input.sum(axis=0)[0]))

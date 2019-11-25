@@ -26,10 +26,10 @@ cops = pd.DataFrame()
 # COPs of ax exemplary heat pump for domestic hot water
 # (sink temperature below 100 degC)
 cops['temperature_difference'] = temp_difference
-temp_l = [temp_high - temp_diff for temp_diff in temp_difference]
+list_temp_low = [temp_high - temp_diff for temp_diff in temp_difference]
 cops[temp_high] = cmpr_hp_chiller.calc_cops(
-    t_high=[temp_high],
-    t_low=temp_l,
+    temp_high=[temp_high],
+    temp_low=list_temp_low,
     quality_grade=0.35,
     mode='heat_pump')
 
@@ -39,22 +39,22 @@ cops['temperature_difference_industrial'] = temp_difference_industrial
 temp_l_ind = [temp_high_industrial - temp_diff for
               temp_diff in temp_difference_industrial]
 cops[temp_high_industrial] = cmpr_hp_chiller.calc_cops(
-    t_high=[temp_high_industrial],
-    t_low=temp_l_ind,
+    temp_high=[temp_high_industrial],
+    temp_low=temp_l_ind,
     quality_grade=0.45,
     mode='heat_pump')
 
 # COPs for varying quality grades
 cops_q_grade = pd.DataFrame()
 cops_q_grade['temperature_diff'] = temperature_diff_q_grade
-temp_l_q_grade = [temp_high - temp_diff_q for
-                  temp_diff_q in temperature_diff_q_grade]
+list_temp_low_q_grade = [temp_high - temp_diff_q for
+                         temp_diff_q in temperature_diff_q_grade]
 for q in quality_grades:
-    temp_l = [temp_high - temp_diff_q for
-              temp_diff_q in temperature_diff_q_grade]
+    list_temp_low = [temp_high - temp_diff_q for
+                     temp_diff_q in temperature_diff_q_grade]
     cops_q_grade[q] = cmpr_hp_chiller.calc_cops(
-        t_high=[temp_high],
-        t_low=temp_l_q_grade,
+        temp_high=[temp_high],
+        temp_low=list_temp_low_q_grade,
         quality_grade=q,
         mode='heat_pump')
 

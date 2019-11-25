@@ -11,7 +11,7 @@ oemof-thermal/src/oemof/thermal/compression_heatpumps_and_chillers.py
 """
 
 
-def calc_cops(t_high, t_low, quality_grade, t_threshold_icing=2,
+def calc_cops(temp_high, temp_low, quality_grade, temp_threshold_icing=2,
               consider_icing=False, factor_icing=None, mode=None):
     r"""
     Calculates the Coefficient of Performance (COP) of heat pumps and chillers
@@ -25,9 +25,9 @@ def calc_cops(t_high, t_low, quality_grade, t_threshold_icing=2,
 
     Parameters
     ----------
-    t_high : list of numerical values
+    temp_high : list of numerical values
         Temperature of the high temperature reservoir in :math:`^\circ C`
-    t_low : list of numerical values
+    temp_low : list of numerical values
         Temperature of the low temperature reservoir in :math:`^\circ C`
     quality_grade : numerical value
         Factor that scales down the efficiency of the real heat pump
@@ -51,36 +51,36 @@ def calc_cops(t_high, t_low, quality_grade, t_threshold_icing=2,
 
 
     """
-    # Make both lists (t_low and t_high) have the same length and
+    # Make both lists (temp_low and temp_high) have the same length and
     # convert unit to Kelvin.
-    length = max([len(t_high), len(t_low)])
-    if len(t_high) == 1:
-        list_t_high_K = [t_high[0] + 273.15] * length
-    elif len(t_high) == length:
-        list_t_high_K = [t + 273.15 for t in t_high]
-    if len(t_low) == 1:
-        list_t_low_K = [t_low[0] + 273.15] * length
-    elif len(t_low) == length:
-        list_t_low_K = [t + 273.15 for t in t_low]
+    length = max([len(temp_high), len(temp_low)])
+    if len(temp_high) == 1:
+        list_temp_high_K = [temp_high[0] + 273.15] * length
+    elif len(temp_high) == length:
+        list_temp_high_K = [t + 273.15 for t in temp_high]
+    if len(temp_low) == 1:
+        list_temp_low_K = [temp_low[0] + 273.15] * length
+    elif len(temp_low) == length:
+        list_temp_low_K = [t + 273.15 for t in temp_low]
 
     # Calculate COPs depending on selected mode (without considering icing).
     if not consider_icing:
         if mode == "heat_pump":
             cops = [quality_grade * t_h / (t_h - t_l) for
-                    t_h, t_l in zip(list_t_high_K, list_t_low_K)]
+                    t_h, t_l in zip(list_temp_high_K, list_temp_low_K)]
         elif mode == "chiller":
             cops = [quality_grade * t_l / (t_h - t_l) for
-                    t_h, t_l in zip(list_t_high_K, list_t_low_K)]
+                    t_h, t_l in zip(list_temp_high_K, list_temp_low_K)]
 
     # Calculate COPs of a heat pump and lower COP when icing occurs.
     elif consider_icing:
         if mode == "heat_pump":
             cops = []
-            for t_h, t_l in zip(list_t_high_K, list_t_low_K):
-                if t_l < t_threshold_icing + 273.15:
+            for t_h, t_l in zip(list_temp_high_K, list_temp_low_K):
+                if t_l < temp_threshold_icing + 273.15:
                     f_icing = factor_icing
                     cops = cops + [f_icing * quality_grade * t_h / (t_h - t_l)]
-                if t_l >= t_threshold_icing + 273.15:
+                if t_l >= temp_threshold_icing + 273.15:
                     cops = cops + [quality_grade * t_h / (t_h - t_l)]
         elif mode == "chiller":
             # Combining 'consider_icing' and mode 'chiller' is not possible!
@@ -119,8 +119,8 @@ def calc_max_Q_dot_chill(nominal_conditions, cops):
 
 
     """
-    nominal_cop = (nominal_conditions['nominal_Q_chill'] / nominal_conditions[
-        'nominal_el_consumption'])
+    nominal_cop = (nominal_conditions['nominal_Q_chill']
+                   / nominal_conditions['nominal_el_consumption'])
     max_Q_chill = [actual_cop / nominal_cop for actual_cop in cops]
     return max_Q_chill
 
