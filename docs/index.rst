@@ -12,11 +12,11 @@ Contents:
    :maxdepth: 1
 
    overview
+   docu_template
    concentrating_solar_power
-   heat_pump
    hot_water_storage
    solar_thermal_collector
-   comp
+   compression_heat_pumps_and_chillers
    api
 
 
