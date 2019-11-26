@@ -8,16 +8,19 @@ SPDX-License-Identifier: GPL-3.0-or-later
 """
 
 from oemof import solph
+from oemof.tools import economics
 from oemof.thermal.CSP import csp_precalc
 import pandas as pd
 import os
 import oemof.outputlib as outputlib
 
-# part of the precaluculations
+### precaluculation ###
+
 path = os.path.dirname(os.path.abspath(os.path.join(__file__, '..', '..')))
 dataframe = pd.read_csv(path + '/CSP_data/data_CSP.csv', sep=';')
 dataframe['Datum'] = pd.to_datetime(dataframe['Datum'])
 
+# parameters for the precalculation
 periods = 8760
 latitude = 23.614328
 longitude = 58.545284
@@ -40,30 +43,36 @@ data_precalc = csp_precalc(dataframe, periods,
                            temp_collector_inlet, temp_collector_outlet,
                            date_col='Datum')
 
-data_precalc['Cooling_load_kW'] = list(
-    dataframe['Cooling_load_kW'].iloc[:periods])
+data_precalc['ES_load_actual_entsoe_power_statistics'] = list(
+    dataframe['ES_load_actual_entsoe_power_statistics'].iloc[:periods])
 data_precalc.to_csv(path + '/CSP_results/precalcs.csv')
 
-# regular oemof_system
+### regular oemof_system ###
 
+# parameters for energy system
 eta_losses = 0.8
 elec_consumption = 0.05
 backup_costs = 1000
+cap_loss = 0.02
+conversion_storage = 0.95
+costs_storage = economics.annuity(20, 20, 0.06)
 
+# busses
 bth = solph.Bus(label='thermal', balanced=True)
 bel = solph.Bus(label='electricity')
 bcol = solph.Bus(label='solar')
 
+#sources and sinks
 col_heat = solph.Source(
     label='collector_heat',
     outputs={bcol: solph.Flow(
         fixed=True,
         actual_value=data_precalc['collector_heat'],
-        nominal_value=1)})
+        nominal_value=100)})
 
 el_grid = solph.Source(
     label='grid',
-    outputs={bel: solph.Flow()})
+    outputs={bel: solph.Flow(variable_costs=1000)})
 
 backup = solph.Source(
     label='backup',
@@ -71,11 +80,10 @@ backup = solph.Source(
 
 consumer = solph.Sink(
     label='demand',
-    inputs={bth: solph.Flow(
+    inputs={bel: solph.Flow(
         fixed=True,
-        actual_value=data_precalc['Cooling_load_kW'],
+        actual_value=data_precalc['ES_load_actual_entsoe_power_statistics'],
         nominal_value=1)})
-
 
 ambience_sol = solph.Sink(
     label='ambience_sol',
@@ -92,13 +100,28 @@ collector = solph.Transformer(
         bel: elec_consumption,
         bth: eta_losses})
 
+turbine = solph.Transformer(
+    label='turbine',
+    inputs={bth: solph.Flow()},
+    outputs={bel: solph.Flow()},
+    conversion_factors={bel: 0.4})
+
+storage = solph.components.GenericStorage(
+    label='storage_th',
+    inputs={bth: solph.Flow()},
+    outputs={bth: solph.Flow()},
+    loss_rate=cap_loss,
+    inflow_conversion_factor=conversion_storage,
+    outflow_conversion_factor=conversion_storage,
+    investment=solph.Investment(ep_costs=costs_storage))
+
 date_time_index = pd.date_range('1/1/2003', periods=periods,
                                 freq='H', tz=timezone)
 
 energysystem = solph.EnergySystem(timeindex=date_time_index)
 
 energysystem.add(bth, bcol, bel, col_heat, el_grid, backup, consumer,
-                 ambience_sol, collector)
+                 ambience_sol, collector, turbine, storage)
 
 model = solph.Model(energysystem)
 
@@ -111,9 +134,9 @@ model.solve(solver='cbc', solve_kwargs={'tee': True})
 energysystem.results['main'] = outputlib.processing.results(model)
 energysystem.results['meta'] = outputlib.processing.meta_results(model)
 
-collector = outputlib.views.node(energysystem.results['main'], 'collector')
+collector = outputlib.views.node(energysystem.results['main'], 'electricity')
 thermal_bus = outputlib.views.node(energysystem.results['main'], 'thermal')
 df = pd.DataFrame()
 df = df.append(collector['sequences'])
 df = df.join(thermal_bus['sequences'], lsuffix='_1')
-df.to_csv(path + '/CSP_results/thermal_bus.csv')
+df.to_csv(path + '/CSP_results/CSP_results.csv')
