@@ -60,5 +60,5 @@ target/
 .idea
 
 # data from Franzi
-CSP_data/
+data/
 CSP_results/
