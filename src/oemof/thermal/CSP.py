@@ -150,7 +150,7 @@ def csp_precalc(df, periods,
     # Calculation of the collectors heat
     collector_heat = collector_irradiance * eta_c
     data['collector_heat'] = collector_heat
-    
+
     return data
 
 
