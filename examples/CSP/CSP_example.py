@@ -14,7 +14,7 @@ import pandas as pd
 import os
 import oemof.outputlib as outputlib
 
-### precaluculation ###
+# precaluculation #
 
 path = os.path.dirname(os.path.abspath(os.path.join(__file__, '..', '..')))
 dataframe = pd.read_csv(path + '/CSP_data/data_CSP.csv', sep=';')
@@ -47,7 +47,7 @@ data_precalc['ES_load_actual_entsoe_power_statistics'] = list(
     dataframe['ES_load_actual_entsoe_power_statistics'].iloc[:periods])
 data_precalc.to_csv(path + '/CSP_results/precalcs.csv')
 
-### regular oemof_system ###
+# regular oemof_system #
 
 # parameters for energy system
 eta_losses = 0.8
