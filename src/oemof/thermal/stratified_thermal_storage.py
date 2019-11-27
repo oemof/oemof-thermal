@@ -35,7 +35,7 @@ def calculate_storage_u_value(s_iso, lamb_iso, alpha_inside, alpha_outside):
         Heat transfer coefficient at the outer surface of the storage [W/(m2*K)]
 
     Returns
-    ------
+    -------
     u_value : numeric
         Thermal transmittance (U-value) [W/(m2*K)]
     """
@@ -142,7 +142,7 @@ def calculate_losses(u_value, diameter, temp_h, temp_c, temp_env,
 
     :math:`\gamma = U \frac{4}{D\rho c \Delta T_{HC}}\Delta T_{C0}\Delta t`
 
-    :math:`\delta = U \frac{\pi D^2}{4}\Big(\Delta T_{H0} + \Delta T_{C0}\Big)`
+    :math:`\delta = U \frac{\pi D^2}{4}\Big(\Delta T_{H0} + \Delta T_{C0}\Big)\Delta t`
 
     Parameters
     ----------
