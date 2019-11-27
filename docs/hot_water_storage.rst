@@ -146,7 +146,9 @@ Loss terms are precalculated by the following function.
 
 .. code-block:: python
 
-    loss_rate, fixed_losses = calculate_losses()
+    loss_rate, fixed_losses, fixed_absolute_losses = calculate_losses(
+        u_value, diameter, temp_h, temp_c, temp_env,
+        time_increment, heat_capacity, density)
 
 
 .. include:: ../src/oemof/thermal/stratified_thermal_storage.py
