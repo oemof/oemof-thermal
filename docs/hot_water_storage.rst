@@ -76,6 +76,8 @@ These parameters are input to the component:
     :math:`T_0`               :py:obj:`temp_env`                                        Environment temperature
                                                                                         timeseries
 
+    :math:`Q_N`               :py:obj:`nominal_storage_capacity`                        Maximum amount of stored thermal energy
+
     :math:`U`                 :py:obj:`u_value`                                         Thermal transmittance
 
     :math:`s_{iso}`           :py:obj:`s_iso`                                           Thickness of isolation layer
