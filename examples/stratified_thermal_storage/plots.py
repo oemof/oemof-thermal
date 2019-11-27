@@ -136,7 +136,7 @@ df = pd.concat(sequences, axis=1)
 storage_content = df.loc[:, [('thermal_storage_1', 'None', 'capacity'),
                              ('thermal_storage_2', 'None', 'capacity')]]
 
-losses = - storage_content.iloc[1:,:].values + storage_content.iloc[:-1, :].values
+losses = - storage_content.iloc[1:, :].values + storage_content.iloc[:-1, :].values
 
 # plot storage_content vs. time
 fig, ax = plt.subplots(figsize=(8, 5))

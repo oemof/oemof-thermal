@@ -37,7 +37,7 @@ with
 .. math::
   \beta &= \frac{UA}{Q_N} \Delta T_{HC}\Delta t
 
-  \gamma &= UA \Delta T_{H0} \Delta t
+  \gamma &= UA \Delta T_{H0} \Delta t.
 
 
 
