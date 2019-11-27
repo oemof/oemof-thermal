@@ -131,26 +131,25 @@ def calculate_capacities(volume, temp_h, temp_c, nonusable_storage_volume,
     return nominal_storage_capacity, max_storage_level, min_storage_level
 
 
-def calculate_losses(nominal_storage_capacity, u_value, surface, temp_h, temp_c, temp_env):
+def calculate_losses(u_value, diameter, temp_h, temp_c, temp_env,
+                     time_increment=1, heat_capacity=4180, density=971.78):
     r"""
     Calculates loss rate and fixed losses for a stratified thermal storage.
 
     .. calculate_losses-equations:
 
-    :math:`\beta =  U \cdot \frac{A}{Q_N} \cdot \Delta T_{HC}`
+    :math:`\beta = U \frac{4}{D\rho c}\Delta t`
 
-    :math:`\gamma = U \cdot \frac{A}{Q_N} \cdot \Delta T_{C0}`
+    :math:`\gamma = U \frac{4}{D\rho c \Delta T_{HC}}\Delta T_{C0}\Delta t`
+
+    :math:`\delta = U \frac{\pi D^2}{4}\Big(\Delta T_{H0} + \Delta T_{C0}\Big)`
 
     Parameters
     ----------
-    nominal_storage_capacity : numeric
-        Maximum amount of stored thermal energy [MWh]
-
     u_value : numeric
         Thermal transmittance of storage envelope [W/(m2*K)]
 
-    surface : numeric
-        Total surface of storage [m2]
+    diameter
 
     temp_h : numeric
         Temperature of hot storage medium [deg C]
@@ -161,16 +160,30 @@ def calculate_losses(nominal_storage_capacity, u_value, surface, temp_h, temp_c,
     temp_env : numeric
         Temperature outside of the storage [deg C]
 
+    time_increment : numeric
+        Time increment of the :class:`oemof.solph.EnergySystem` [h]
+
+    heat_capacity: numeric
+        Average specific heat capacity of storage medium [J/(kg*K)]
+
+    density : numeric
+        Average density of storage medium [kg/m3]
+
     Returns
     -------
     loss_rate : numeric
-        Loss rate of storage content [1/h]
+        Loss rate of storage content [-]
 
     fixed_losses : numeric
-        Fixed losses related to storage surface
-        independent of storage content [1/h]
-    """
-    loss_rate = u_value * surface * (temp_h - temp_c) * 1e-6 / nominal_storage_capacity
-    fixed_losses = u_value * surface * (temp_c - temp_env) * 1e-6 / nominal_storage_capacity
+        Fixed losses related to nominal storage capacity
+        independent of storage content [-]
 
-    return loss_rate, fixed_losses
+    fixed_absolute_losses : numeric
+        Fixed losses independent of storage content
+        and nominal storage capacity [MWh]
+    """
+    loss_rate = 4 * u_value * (temp_h - temp_c) * 1 / (diameter * density * heat_capacity) * time_increment
+    fixed_losses = 4 * u_value * 1 / (diameter * density * heat_capacity) * (temp_c - temp_env) * time_increment
+    fixed_absolute_losses = np.pi * diameter**2 * 0.25 * (temp_h + temp_c - 2 * temp_env) * time_increment
+
+    return loss_rate, fixed_losses, fixed_absolute_losses
