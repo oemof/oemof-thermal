@@ -13,9 +13,17 @@ def csp_precalc(df, periods,
                 irradiance_method='horizontal',
                 date_col='date', irradiance_col='E_dir_hor',
                 temp_amb_col='t_amb'):
-    """
+    r"""
     Calculates collectors efficiency and irradiance according to [1] and the
-    heat of the thermal collector
+    heat of the thermal collector. For the calculation of irradiance pvlib [2]
+    is used.
+
+    :math:`Q_{coll} = E_{coll} \cdot \eta_C`
+
+    functions used
+     * calc_collector_irradiance
+     * calc_iam
+     * calc_eta_c
 
     Parameters
     ----------
@@ -86,6 +94,10 @@ def csp_precalc(df, periods,
     collector demon-stration loop - towards a new benchmark in parabolic \
     trough qualification, SolarPACES 2013
 
+    [2] William F. Holmgren, Clifford W. Hansen, and Mark A. Mikofski.
+    “pvlib python: a python package for modeling solar energy systems.”
+    Journal of Open Source Software, 3(29), 884, (2018).
+    https://doi.org/10.21105/joss.00884
     """
 
     date_time_index = pd.date_range(df.loc[0, date_col], periods=periods,
@@ -155,8 +167,12 @@ def csp_precalc(df, periods,
 
 
 def calc_collector_irradiance(irradiance_on_collector, x):
-    """
-    Subtractes the losses of dirtiness from the irradiance on the collector
+    r"""
+    Subtracts the losses of dirtiness from the irradiance on the collector
+
+    .. calc_collector_irradiance_equation:
+
+    :math:`E_{coll} = E^*_{coll} \cdot X^{3/2}`
 
     Parameters
     ----------
@@ -169,15 +185,19 @@ def calc_collector_irradiance(irradiance_on_collector, x):
     -------
     collector_irradiance: series of numeric
         Irradiance on collector after all losses.
-
     """
     collector_irradiance = irradiance_on_collector * x**1.5
     return collector_irradiance
 
 
 def calc_iam(a_1, a_2, aoi):
-    """
+    r"""
     Calculates the incidence angle modifier
+
+    .. calc_iam_equation:
+
+    :math:`\kappa(\varTheta) = 1 - a_1 \cdot \vert\varTheta\vert- a_2
+    * \vert\varTheta\vert^2`
 
     Parameters
     ----------
@@ -190,7 +210,7 @@ def calc_iam(a_1, a_2, aoi):
 
     Returns
     -------
-    Iicidence angle modifier: series of numeric
+    Incidence angle modifier: series of numeric
 
     """
     iam = 1 - a_1 * abs(aoi) - a_2 * aoi**2
@@ -200,8 +220,13 @@ def calc_iam(a_1, a_2, aoi):
 def calc_eta_c(eta_0, c_1, c_2, iam,
                temp_collector_inlet, temp_collector_outlet, temp_amb,
                collector_irradiance):
-    """
+    r"""
     Calculates collectors efficiency
+
+    .. calc_eta_c_equation:
+
+    :math:`\eta_C = \eta_0 \cdot \kappa(\varTheta) - c_1 \cdot
+    \frac{\Delta T}{E_{coll}} - d_2 \cdot \frac{{\Delta T}^2}{E_{coll}}`
 
     Parameters
     ----------
@@ -215,7 +240,7 @@ def calc_eta_c(eta_0, c_1, c_2, iam,
         Incidence angle modifier.
     temp_collector_inlet: numeric, in °C
         Collectors inlet temperature.
-    temp_collector_outlet: mumeric, in °C
+    temp_collector_outlet: numeric, in °C
         Collectors outlet temperature.
     temp_amb: series of numeric, in °C
         Ambient temperature.
