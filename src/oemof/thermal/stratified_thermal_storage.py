@@ -85,9 +85,9 @@ def calculate_capacities(volume, temp_h, temp_c, nonusable_storage_volume,
 
     :math:`Q_N = \pi \frac{d^2}{4} \cdot h \cdot c \cdot \rho \cdot \left( T_{H} - T_{C} \right)`
 
-    :math:`Q_{max} = Q_N \cdot (1-\beta/2)`
+    :math:`Q_{max} = Q_N \cdot (1-v_{nonusable}/2)`
 
-    :math:`Q_{min} = Q_N \cdot \beta/2`
+    :math:`Q_{min} = Q_N \cdot v_{nonusable}/2`
 
     Parameters
     ----------
