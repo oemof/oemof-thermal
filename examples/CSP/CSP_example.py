@@ -56,6 +56,9 @@ backup_costs = 1000
 cap_loss = 0.02
 conversion_storage = 0.95
 costs_storage = economics.annuity(20, 20, 0.06)
+costs_electricity = 1000
+conversion_factor_turbine = 0.4
+size_collector = 1000
 
 # busses
 bth = solph.Bus(label='thermal', balanced=True)
@@ -68,11 +71,11 @@ col_heat = solph.Source(
     outputs={bcol: solph.Flow(
         fixed=True,
         actual_value=data_precalc['collector_heat'],
-        nominal_value=100)})
+        nominal_value=size_collector)})
 
 el_grid = solph.Source(
     label='grid',
-    outputs={bel: solph.Flow(variable_costs=1000)})
+    outputs={bel: solph.Flow(variable_costs=costs_electricity)})
 
 backup = solph.Source(
     label='backup',
@@ -104,7 +107,7 @@ turbine = solph.Transformer(
     label='turbine',
     inputs={bth: solph.Flow()},
     outputs={bel: solph.Flow()},
-    conversion_factors={bel: 0.4})
+    conversion_factors={bel: conversion_factor_turbine})
 
 storage = solph.components.GenericStorage(
     label='storage_th',
