@@ -106,10 +106,20 @@ The thermal transmittance is precalculated using `calculate_u_value`.
 
 .. code-block:: python
 
-    u_value = calculate_storage_u_value()
+    u_value = calculate_storage_u_value(s_iso, lamb_iso, alpha_inside, alpha_outside)
 
 .. include:: ../src/oemof/thermal/stratified_thermal_storage.py
   :start-after:  calculate_storage_u_value-equations:
+  :end-before: Parameters
+
+The dimensions of the storage are calculated with `calculate_storage_dimensions`
+
+.. code-block:: python
+
+  calculate_storage_dimensions(height, diameter)
+
+.. include:: ../src/oemof/thermal/stratified_thermal_storage.py
+  :start-after:  calculate_storage_dimensions-equations:
   :end-before: Parameters
 
 The nominal storage capacity, minimum and maximum storage level are precalculated upon initialization
@@ -117,7 +127,9 @@ using `calculate_capacities`.
 
 .. code-block:: python
 
-   nominal_storage_capacity, max_storage_level, min_storage_level = calculate_capacities()
+   nominal_storage_capacity, max_storage_level, min_storage_level = calculate_capacities(
+       volume, temp_h, temp_c, nonusable_storage_volume, heat_capacity, density
+   )
 
 .. .. include:: ../src/oemof/thermal/stratified_thermal_storage.py
   :start-after:  calculate_capacities-equations:
