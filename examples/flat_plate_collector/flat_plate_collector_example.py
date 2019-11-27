@@ -35,7 +35,7 @@ eta_0 = 0.73
 c_1 = 1.7
 c_2 = 0.016
 temp_collector_inlet = 20
-delta_t_n = 10
+delta_temp_n = 10
 
 # Define further parameters
 eta_losses = 0.05
@@ -54,7 +54,7 @@ precalc_data = flat_plate_precalc(
     latitude, longitude, timezone,
     collector_tilt, collector_azimuth,
     eta_0, c_1, c_2,
-    temp_collector_inlet, delta_t_n,
+    temp_collector_inlet, delta_temp_n,
     date_col='hour', irradiance_global_column='global_horizontal_W_m2',
     irradiance_diffuse_column='diffuse_horizontal_W_m2', temp_amb_column='t_amb')
 
