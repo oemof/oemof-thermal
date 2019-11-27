@@ -16,8 +16,8 @@ import oemof.outputlib as outputlib
 
 # precaluculation #
 
-path = os.path.dirname(os.path.abspath(os.path.join(__file__, '..', '..')))
-dataframe = pd.read_csv(path + '/CSP_data/data_CSP.csv', sep=';')
+# path = os.path.dirname(os.path.abspath(os.path.join(__file__, '..', '..')))
+dataframe = pd.read_csv('CSP_data/data_CSP.csv', sep=';')
 dataframe['Datum'] = pd.to_datetime(dataframe['Datum'])
 
 # parameters for the precalculation
@@ -45,7 +45,7 @@ data_precalc = csp_precalc(dataframe, periods,
 
 data_precalc['ES_load_actual_entsoe_power_statistics'] = list(
     dataframe['ES_load_actual_entsoe_power_statistics'].iloc[:periods])
-data_precalc.to_csv(path + '/CSP_results/precalcs.csv')
+data_precalc.to_csv('CSP_results/precalcs.csv')
 
 # regular oemof_system #
 
@@ -142,4 +142,4 @@ thermal_bus = outputlib.views.node(energysystem.results['main'], 'thermal')
 df = pd.DataFrame()
 df = df.append(collector['sequences'])
 df = df.join(thermal_bus['sequences'], lsuffix='_1')
-df.to_csv(path + '/CSP_results/CSP_results.csv')
+df.to_csv('CSP_results/CSP_results.csv')
