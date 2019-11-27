@@ -11,12 +11,10 @@ from oemof import solph
 from oemof.tools import economics
 from oemof.thermal.CSP import csp_precalc
 import pandas as pd
-import os
 import oemof.outputlib as outputlib
 
 # precaluculation #
 
-# path = os.path.dirname(os.path.abspath(os.path.join(__file__, '..', '..')))
 dataframe = pd.read_csv('CSP_data/data_CSP.csv', sep=';')
 dataframe['Datum'] = pd.to_datetime(dataframe['Datum'])
 
