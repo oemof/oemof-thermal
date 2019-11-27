@@ -52,36 +52,47 @@ These parameters are input to the component:
     ========================= ==================================================== ==== =========
     :math:`h`                 :py:obj:`height`                                          Height (if not investment)
 
-    :math:`d`                                                                           Diameter
+    :math:`d`                 :py:obj:`diameter`                                        Diameter
 
-    :math:`\rho`                                                                        Density of storage medium
+    :math:`A`                 :py:obj:`surface`                                         Storage surface
 
-    :math:`c`                                                                           Heat capacity of storage medium
+    :math:`V`                 :py:obj:`volume`                                          Storage volume
 
-    :math:`T_H`                                                                         Hot temperature level
+    :math:`v_{nonuseable}`    :py:obj:`nonusable_storage_volume`                        Factor describing non-usable
+                                                                                        storage volume
+                                                                                        (:math:`0<v_{nonusable}<1`)
 
-    :math:`T_C`                                                                         Cold temperature
+    :math:`\rho`              :py:obj:`density`                                         Density of storage medium
 
-    :math:`T_0`                                                                         Environment temperature
+    :math:`c`                 :py:obj:`heat_capacity`                                   Heat capacity of storage medium
+
+    :math:`T_H`               :py:obj:`temp_h`                                          Hot temperature level
+
+    :math:`T_C`               :py:obj:`temp_c`                                          Cold temperature
+
+    :math:`T_0`               :py:obj:`temp_env`                                        Environment temperature
                                                                                         timeseries
 
-    :math:`U`                                                                           Thermal transmittance
+    :math:`U`                 :py:obj:`u_value`                                         Thermal transmittance
 
-    :math:`\eta_{in}`                                                                   Charging efficiency
+    :math:`s_{iso}`           :py:obj:`s_iso`                                           Thickness of isolation layer
 
-    :math:`\eta_{out}`                                                                  Discharging efficiency
+    :math:`\lambda_{iso}`     :py:obj:`lamb_iso`                                        Heat conductivity of isolation material
 
-    :math:`\beta`                                                                       Factor describing the usable
-                                                                                        storage volume
-                                                                                        (:math:`0<\beta<1`)
+    :math:`\alpha_i`          :py:obj:`alpha_inside`                                    Heat transfer coefficient inside
 
-    :math:`s_{iso}`:          :py:obj:`s_iso`                                           Thickness of isolation layer
+    :math:`\alpha_o`          :py:obj:`alpha_outside`                                   Heat transfer coefficient outside
 
-    :math:`\lambda_{iso}`:    :py:obj:`height`                                          Heat conductivity of isolation material
+    :math:`\beta`             :py:obj:`loss_rate`                                       Relative loss of storage content
+                                                                                        within one timestep
 
-    :math:`\alpha_{inside}`:  :py:obj:`height`                                          Heat transfer coefficient inside
+    :math:`\gamma`            :py:obj:`fixed_losses`                                    Fixed losses as share of
+                                                                                        nominal storage capacity
 
-    :math:`\alpha_{outside}`: :py:obj:`height`                                          Heat transfer coefficient outside
+
+    :math:`\eta_{in}`         :py:obj:`inflow_conversion_factor`                        Charging efficiency
+
+    :math:`\eta_{out}`        :py:obj:`outflow_conversion_factor`                       Discharging efficiency
 
     ========================= ==================================================== ==== =========
 
