@@ -13,41 +13,58 @@ import pandas as pd
 import os
 import oemof.outputlib as outputlib
 
-# Define parameters
-periods = 48
-elec_consumption = 0.02
-backup_costs = 40
-eta_losses = 0.05
-latitude = 52.2443
-longitude = 10.5594
-timezone = 'Europe/Berlin'
-tilt = 10
-azimuth = 20
-eta_0 = 0.73
-c_1 = 1.7
-c_2 = 0.016
-col_inlet_temp = 20
-delta_t_n = 10
+# DATA AND PARAMETERS
+######################################################################
 
 # Read data for flat collector and heat demand
 path = os.path.dirname(os.path.abspath(os.path.join(__file__, '..', '..')))
-dataframe = pd.read_csv(path + '/CSP_data/data_flat_collector.csv', sep=';')
-demand_df = pd.read_csv(path + '/CSP_data/heat_demand.csv', sep=';')
+dataframe = pd.read_csv(path +
+        '/examples/flat_plate_collector/data/data_flat_collector.csv', sep=';')
+demand_df = pd.read_csv(path +
+        '/examples/flat_plate_collector/data/heat_demand.csv', sep=';')
 demand = list(demand_df['heat_demand'].iloc[:periods])
+
+# Define parameters for the precalculation
+periods = 48
+latitude = 52.2443
+longitude = 10.5594
+timezone = 'Europe/Berlin'
+collector_tilt = 10
+collector_azimuth = 20
+eta_0 = 0.73
+c_1 = 1.7
+c_2 = 0.016
+temp_collector_inlet = 20
+delta_t_n = 10
+
+# Define further parameters
+eta_losses = 0.05
+elec_consumption = 0.02
+backup_costs = 40
+
+######################################################################
+
+# PRECALCULATION
+######################################################################
 
 # Calculate global irradiance on the collector area
 # and collector efficiency depending on the temperature difference
 precalc_data = flat_plate_precalc(
     dataframe, periods,
     latitude, longitude, timezone,
-    tilt, azimuth,
+    collector_tilt, collector_azimuth,
     eta_0, c_1, c_2,
-    col_inlet_temp, delta_t_n,
-    date_col='hour', irradiance_global_col='global_horizontal_W_m2',
-    irradiance_diffuse_col='diffuse_horizontal_W_m2',  t_amb_col='t_amb')
+    temp_collector_inlet, delta_t_n,
+    date_col='hour', irradiance_global_column='global_horizontal_W_m2',
+    irradiance_diffuse_column='diffuse_horizontal_W_m2', temp_amb_column='t_amb')
 
-precalc_data.to_csv(path + '/CSP_results/flate_plate_precalcs.csv', sep=';')
+precalc_data.to_csv(path +
+        '/examples/flat_plate_collector/results/flate_plate_precalcs.csv', sep=';')
 
+######################################################################
+
+# COMPONENT
+######################################################################
 
 # Create component
 bth = solph.Bus(label='thermal', balanced=True)
@@ -122,4 +139,5 @@ thermal_bus = outputlib.views.node(energysystem.results['main'], 'thermal')
 df = pd.DataFrame()
 df = df.append(collector['sequences'])
 df = df.join(thermal_bus['sequences'], lsuffix='_1')
-df.to_csv(path + '/CSP_results/thermal_bus_flat_plate.csv', sep=';')
+df.to_csv(path +
+        '/examples/flat_plate_collector/results/thermal_bus_flat_plate.csv', sep=';')
