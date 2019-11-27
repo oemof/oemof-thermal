@@ -10,30 +10,31 @@ def flat_plate_precalc(df, periods,
                            col_tilt, col_azimuth,
                            eta_0, c_1, c_2,
                            col_inlet_temp, delta_t_n,
-                           date_col='date', irradiance_global_col='ghi',
-                           irradiance_diffuse_col='dhi',  t_amb_col='t_amb'):
+                           date_col='date',
+                           irradiance_global_col='ghi',
+                           irradiance_diffuse_col='dhi',
+                           t_amb_col='t_amb'):
     """
     Calculates collectors efficiency and irradiance of a flat plate collector
 
     Parameters
     ---------
     df: dataframe
-        Holds values for the time, the global and diffuse horizontal irradiance,
-        and the ambient temp (in Celsius degrees).
+        Holds values for time, the global and diffuse horizontal irradiance and the ambient temp (in Celsius degrees).
     periods: numeric
         Defines the number of timesteps.
     lat, long: numeric
         Latitude and longitude of the location.
     tz: string
-        Pytz timezone of the location.
+        pytz timezone of the location.
     col_tilt, col_azimuth: numeric
-        The tilt and azimuth of the collector. Azimuth according to pvlib
+        Tilt and azimuth of the collector. Azimuth according to pvlib
         in decimal degrees East of North.
     eta_0: numeric
         Optical efficiency of the collector.
     c_1, c_2: numeric
         Thermal loss parameters.
-    col_inlet_temp: numeric or series with length periods
+    col_inlet_temp: numeric or series with length of periods
         Collectors inlet temperature.
     delta_t_n:
         Temperature difference between collector inlet and mean temperature.
@@ -49,8 +50,12 @@ def flat_plate_precalc(df, periods,
         eta_c
         collector_heat
 
-    col_ira: the irradiance on tilted collector
-    eta_c: efficiency of the collector
+    col_ira:
+        The irradiance on the tilted collector.
+    eta_c:
+        The efficiency of the collector.
+    collector_heat:
+        The heat power output of the collector.
 
     """
 
