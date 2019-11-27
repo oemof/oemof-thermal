@@ -23,8 +23,23 @@ A simplified 2-zone-model of a stratified thermal energy storage.
 The equation describing the change of storage content is the following:
 
 .. math::
-  Q_t = Q_{t-1} - UA \Bigg(\frac{Q_t-1}{Q_N} \Delta T_{HC} + \Delta T_{C0}\Bigg)\Delta t
-  + \dot{Q}_{in,t}\eta_{in}\Delta t - \frac{\dot{Q}_{out}}{\eta_{out}}\Delta t.
+  Q_t = Q_{t-1} - UA \Bigg(\frac{Q_{t-1}}{Q_N} \Delta T_{HC} + \Delta T_{C0}\Bigg)\Delta t
+  + \dot{Q}_{in,t}\eta_{in}\Delta t - \frac{\dot{Q}_{out,t}}{\eta_{out}}\Delta t,
+
+which is of the form
+
+.. math::
+  Q_t = Q_{t-1} (1 - \beta) - \gamma
+  + \dot{Q}_{in,t}\eta_{in}\Delta t - \frac{\dot{Q}_{out,t}}{\eta_{out}}\Delta t,
+
+with
+
+.. math::
+  \beta &= \frac{UA}{Q_N} \Delta T_{HC}\Delta t
+
+  \gamma &= UA \Delta T_{H0} \Delta t
+
+
 
 In the case of investment, the diameter d is given and the height can be
 adapted to adapt the nominal capacity of the storage. With this assumption,
