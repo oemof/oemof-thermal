@@ -135,9 +135,9 @@ def calculate_losses(nominal_storage_capacity, u_value, surface, temp_h, temp_c,
 
     .. calculate_losses-equations:
 
-    :math:`\beta =  U \cdot A \cdot \Delta T_{HC} / Q_N`
+    :math:`\beta =  U \cdot \frac{A}{Q_N} \cdot \Delta T_{HC}`
 
-    :math:`\gamma = U \cdot A \cdot \Delta T_{C0} / Q_N`
+    :math:`\gamma = U \cdot \frac{A}{Q_N} \cdot \Delta T_{C0}`
 
     Parameters
     ----------

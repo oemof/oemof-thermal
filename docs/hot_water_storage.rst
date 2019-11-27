@@ -29,15 +29,15 @@ The equation describing the change of storage content is the following:
 which is of the form
 
 .. math::
-  Q_t = Q_{t-1} (1 - \beta) - \gamma
+  Q_t = Q_{t-1} (1 - \beta) - \gamma Q_N
   + \dot{Q}_{in,t}\eta_{in}\Delta t - \frac{\dot{Q}_{out,t}}{\eta_{out}}\Delta t,
 
 with
 
 .. math::
-  \beta &= \frac{UA}{Q_N} \Delta T_{HC}\Delta t
+  \beta &= U\frac{A}{Q_N} \Delta T_{HC}\Delta t
 
-  \gamma &= UA \Delta T_{H0} \Delta t.
+  \gamma &= U\frac{A}{Q_N} \Delta T_{H0} \Delta t.
 
 
 
