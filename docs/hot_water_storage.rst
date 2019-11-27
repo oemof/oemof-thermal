@@ -41,7 +41,7 @@ with
 
   \gamma &= U \frac{4}{D\rho c \Delta T_{HC}}\Delta T_{C0}\Delta t
 
-  \delta &= U \frac{\pi D^2}{4}\Big(\Delta T_{H0} + \Delta T_{C0}\Big).
+  \delta &= U \frac{\pi D^2}{4}\Big(\Delta T_{H0} + \Delta T_{C0}\Big) \Delta t.
 
 
 In the case of investment, the diameter d is given and the height can be
@@ -94,6 +94,9 @@ These parameters are input to the component:
     :math:`\gamma`            :py:obj:`fixed_losses`                                    Fixed losses as share of
                                                                                         nominal storage capacity
 
+    :math:`\delta`            :py:obj:`fixed_absolute_losses`                           Fixed absolue losses independent
+                                                                                        of storage content or
+                                                                                        or nominal storage capacity
 
     :math:`\eta_{in}`         :py:obj:`inflow_conversion_factor`                        Charging efficiency
 
