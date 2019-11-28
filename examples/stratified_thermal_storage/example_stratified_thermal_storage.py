@@ -3,12 +3,13 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-from oemof.thermal.stratified_thermal_storage import (calculate_storage_u_value,
-                                                      calculate_storage_dimensions,
-                                                      calculate_capacities,
-                                                      calculate_losses)
-from oemof.solph import (Source, Sink, Bus, Flow,
-                         Model, EnergySystem)
+from oemof.thermal.stratified_thermal_storage import (
+    calculate_storage_u_value,
+    calculate_storage_dimensions,
+    calculate_capacities,
+    calculate_losses,
+)
+from oemof.solph import Source, Sink, Bus, Flow, Model, EnergySystem
 from oemof.solph.components import GenericStorage
 import oemof.outputlib as outputlib
 
@@ -38,10 +39,9 @@ nominal_storage_capacity, max_storage_level, min_storage_level = calculate_capac
     input_data['heat_capacity'],
     input_data['density'])
 
-loss_rate, fixed_losses = calculate_losses(
-    nominal_storage_capacity,
+loss_rate, fixed_losses_relative, fixed_losses_absolute = calculate_losses(
     u_value,
-    surface,
+    input_data['diameter'],
     input_data['temp_h'],
     input_data['temp_c'],
     input_data['temp_env'])
@@ -61,7 +61,8 @@ def print_results():
         'Max storage level [-]': max_storage_level,
         'Min storage_level [-]': min_storage_level,
         'Loss rate [-]': loss_rate,
-        'Fixed losses [-]': fixed_losses
+        'Fixed relative losses [-]': fixed_losses_relative,
+        'Fixed absolute losses [MWh]': fixed_losses_absolute,
     }
 
     dash = '-' * 42
@@ -125,9 +126,10 @@ thermal_storage = GenericStorage(
     min_storage_level=min_storage_level,
     max_storage_level=max_storage_level,
     loss_rate=loss_rate,
-    fixed_losses=fixed_losses,
-    inflow_conversion_factor=1.,
-    outflow_conversion_factor=1.
+    fixed_losses_relative=fixed_losses_relative,
+    fixed_losses_absolute=fixed_losses_absolute,
+    inflow_conversion_factor=1.0,
+    outflow_conversion_factor=1.0,
 )
 
 energysystem.add(bus_heat, heat_source, shortage, excess, heat_demand, thermal_storage)
@@ -144,7 +146,6 @@ sequences = {k: v['sequences'] for k, v in string_results.items()}
 df = pd.concat(sequences, axis=1)
 
 # plot results
-
 fig, (ax1, ax2) = plt.subplots(2, 1)
 
 df[[('shortage', 'bus_heat', 'flow'),
