@@ -14,7 +14,7 @@ Contents:
    overview
    concentrating_solar_power
    heat_pump
-   hot_water_storage
+   stratified_thermal_storage
    solar_thermal_collector
    api
 

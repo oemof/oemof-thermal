@@ -1,8 +1,8 @@
-.. _hot_water_storage_label:
+.. _stratified_thermal_storage_label:
 
-~~~~~~~~~~~~~~~~~
-Hot water storage
-~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+Stratified thermal storage
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A simplified 2-zone-model of a stratified thermal energy storage.
 
