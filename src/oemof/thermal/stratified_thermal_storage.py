@@ -173,20 +173,22 @@ def calculate_losses(u_value, diameter, temp_h, temp_c, temp_env,
 
     Returns
     -------
-    loss_rate : numeric
-        Loss rate of storage content [-]
 
-    fixed_losses : numeric
-        Fixed losses related to nominal storage capacity
-        independent of storage content [-]
+    loss_rate : numeric (sequence or scalar)
+        The relative loss of the storage capacity between two consecutive
+        timesteps [-]
 
-    fixed_absolute_losses : numeric
-        Fixed losses independent of storage content
-        and nominal storage capacity [MWh]
+    fixed_losses_relative : numeric (sequence or scalar)
+        Losses independent of state of charge between two consecutive
+        timesteps relative to nominal storage capacity [-]
+
+    fixed_losses_absolute : numeric (sequence or scalar)
+        Losses independent of state of charge and independent of
+        nominal storage capacity between two consecutive timesteps [MWh]
     """
     loss_rate = 4 * u_value * (temp_h - temp_c) * 1 / (diameter * density * heat_capacity) * time_increment
-    fixed_losses = 4 * u_value * 1 / (diameter * density * heat_capacity) * (temp_c - temp_env) * time_increment
-    fixed_absolute_losses = np.pi * diameter**2 * 0.25 * (temp_h + temp_c - 2 * temp_env) * time_increment
-    fixed_absolute_losses *= 1e-6  # [Wh] to [MWh]
+    fixed_losses_relative = 4 * u_value * 1 / (diameter * density * heat_capacity) * (temp_c - temp_env) * time_increment
+    fixed_losses_absolute = np.pi * diameter**2 * 0.25 * (temp_h + temp_c - 2 * temp_env) * time_increment
+    fixed_losses_absolute *= 1e-6  # [Wh] to [MWh]
 
-    return loss_rate, fixed_losses, fixed_absolute_losses
+    return loss_rate, fixed_losses_relative, fixed_losses_absolute

@@ -146,7 +146,7 @@ Loss terms are precalculated by the following function.
 
 .. code-block:: python
 
-    loss_rate, fixed_losses, fixed_absolute_losses = calculate_losses(
+    loss_rate, fixed_losses_relative, fixed_losses_absolute = calculate_losses(
         u_value, diameter, temp_h, temp_c, temp_env,
         time_increment, heat_capacity, density)
 
@@ -167,25 +167,18 @@ Finally, the parameters can be used to define a storage component.
         min_storage_level=min_storage_level,
         max_storage_level=max_storage_level,
         loss_rate=loss_rate,
-        fixed_losses=fixed_losses,
+        fixed_losses_relative=fixed_losses_relative,
+        fixed_losses_absolute=fixed_losses_absolute,
         inflow_conversion_factor=1.,
         outflow_conversion_factor=1.
     )
 
 The following figure shows a comparison of results of a common storage implementation using
-only a loss rate vs. the stratified thermal storage implementation.
-(see `here <https://github.com/oemof/oemof-thermal/tree/dev/examples/stratified_thermal_storage>`_
-for source code).
+only a loss rate vs. the stratified thermal storage implementation
+(`source code
+<https://github.com/oemof/oemof-thermal/tree/dev/examples/stratified_thermal_storage>`_).
 
 .. 	image:: _pics/compare_storage_models.svg
    :width: 70 %
    :alt: compare_storage_models.svg
    :align: center
-
-For investment, :math:`Q_N` is not fixed in advance.
-:math:`A = \pi d h + 2 \pi \frac{d^2}{4}` The same as for :math:`Q_N` applies to :math:`A`
-
-These two constraints apply in case of investment optimization:
-
-:math:`A = \frac{4 Q_N}{d \cdot c \cdot \rho \cdot \Delta T_{HC}} + \frac{d^2}{2} \cdot \pi`
-:math:`h = \frac{Q_N}{\frac{d^2}{4} \cdot \pi \cdot c \cdot \rho \cdot \left( T_{H} - T_{C} \right)}`
