@@ -37,10 +37,9 @@ nominal_storage_capacity, max_storage_level, min_storage_level = calculate_capac
     input_data['heat_capacity'],
     input_data['density'])
 
-loss_rate, fixed_losses = calculate_losses(
-    nominal_storage_capacity,
+loss_rate, fixed_losses_relative, fixed_losses_absolute = calculate_losses(
     u_value,
-    surface,
+    input_data['diameter'],
     input_data['temp_h'],
     input_data['temp_c'],
     input_data['temp_env'])
@@ -60,7 +59,8 @@ def print_results():
         'Max storage level [-]': max_storage_level,
         'Min storage_level [-]': min_storage_level,
         'Loss rate [-]': loss_rate,
-        'Fixed losses [-]': fixed_losses
+        'Fixed relative losses [-]': fixed_losses_relative,
+        'Fixed absolute losses [MWh]': fixed_losses_absolute,
     }
 
     dash = '-' * 50
@@ -115,7 +115,8 @@ thermal_storage_2 = GenericStorage(
     max_storage_level=max_storage_level,
     initial_storage_level=0.9,
     loss_rate=loss_rate,
-    fixed_losses=fixed_losses,
+    fixed_losses_relative=fixed_losses_relative,
+    fixed_losses_absolute=fixed_losses_absolute,
     inflow_conversion_factor=1.,
     outflow_conversion_factor=1.,
     balanced=False
