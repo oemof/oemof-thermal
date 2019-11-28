@@ -124,7 +124,8 @@ def calculate_capacities(volume, temp_h, temp_c, nonusable_storage_volume,
         Minimal storage content relative to nominal storage capacity [-]
 
     """
-    nominal_storage_capacity = 1e-6 / 3600 * volume * heat_capacity * density * (temp_h - temp_c)
+    nominal_storage_capacity = 1 / 3600 * volume * heat_capacity * density * (temp_h - temp_c)
+    nominal_storage_capacity *= 1e-6  # [Wh] to [MWh]
     max_storage_level = (1 - nonusable_storage_volume / 2)
     min_storage_level = nonusable_storage_volume / 2
 
@@ -149,7 +150,8 @@ def calculate_losses(u_value, diameter, temp_h, temp_c, temp_env,
     u_value : numeric
         Thermal transmittance of storage envelope [W/(m2*K)]
 
-    diameter
+    diameter : numeric
+        Diameter of the storage [m]
 
     temp_h : numeric
         Temperature of hot storage medium [deg C]
@@ -185,5 +187,6 @@ def calculate_losses(u_value, diameter, temp_h, temp_c, temp_env,
     loss_rate = 4 * u_value * (temp_h - temp_c) * 1 / (diameter * density * heat_capacity) * time_increment
     fixed_losses = 4 * u_value * 1 / (diameter * density * heat_capacity) * (temp_c - temp_env) * time_increment
     fixed_absolute_losses = np.pi * diameter**2 * 0.25 * (temp_h + temp_c - 2 * temp_env) * time_increment
+    fixed_absolute_losses *= 1e-6  # [Wh] to [MWh]
 
     return loss_rate, fixed_losses, fixed_absolute_losses
