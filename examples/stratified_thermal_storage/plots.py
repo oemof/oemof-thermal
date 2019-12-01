@@ -109,7 +109,7 @@ storage_list.append(GenericStorage(
     balanced=False
 ))
 
-for i, nominal_storage_capacity in enumerate([3,5,10]):
+for i, nominal_storage_capacity in enumerate([3, 5, 10]):
     print(i)
     storage_list.append(GenericStorage(
         label=f'thermal_storage_{i+1}',
@@ -139,11 +139,14 @@ optimization_model.solve(solver=solver)
 # get results
 results = outputlib.processing.results(optimization_model)
 
-storage_content = outputlib.views.node_weight_by_type(results, GenericStorage).reset_index(drop=True)
+storage_content = outputlib.views.node_weight_by_type(results, GenericStorage)\
+    .reset_index(drop=True)
 
-storage_content.columns = storage_content.columns.set_levels([k.label for k in storage_content.columns.levels[0]], level=0)
+storage_content.columns = storage_content.columns\
+    .set_levels([k.label for k in storage_content.columns.levels[0]], level=0)
 
-losses = - storage_content.iloc[1:, :].reset_index(drop=True) + storage_content.iloc[:-1, :].reset_index(drop=True)
+losses = - storage_content.iloc[1:, :].reset_index(drop=True)\
+    + storage_content.iloc[:-1, :].reset_index(drop=True)
 
 losses.columns = losses.columns.set_levels(['losses'], level=1)
 

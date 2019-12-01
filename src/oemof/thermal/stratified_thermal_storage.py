@@ -186,9 +186,19 @@ def calculate_losses(u_value, diameter, temp_h, temp_c, temp_env,
         Losses independent of state of charge and independent of
         nominal storage capacity between two consecutive timesteps [MWh]
     """
-    loss_rate = 4 * u_value * (temp_h - temp_c) * 1 / (diameter * density * heat_capacity) * time_increment
-    fixed_losses_relative = 4 * u_value * 1 / (diameter * density * heat_capacity) * (temp_c - temp_env) * time_increment
-    fixed_losses_absolute = np.pi * diameter**2 * 0.25 * (temp_h + temp_c - 2 * temp_env) * time_increment
+    loss_rate = (
+        4 * u_value * (temp_h - temp_c) * 1 / (diameter * density * heat_capacity) * time_increment
+    )
+
+    fixed_losses_relative = (
+        4 * u_value * 1 / (diameter * density * heat_capacity)
+        * (temp_c - temp_env) * time_increment
+    )
+
+    fixed_losses_absolute = (
+        np.pi * diameter**2 * 0.25 * (temp_h + temp_c - 2 * temp_env) * time_increment
+    )
+
     fixed_losses_absolute *= 1e-6  # [Wh] to [MWh]
 
     return loss_rate, fixed_losses_relative, fixed_losses_absolute
