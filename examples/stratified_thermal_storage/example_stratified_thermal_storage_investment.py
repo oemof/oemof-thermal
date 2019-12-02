@@ -82,7 +82,6 @@ print_results()
 solver = 'cbc'
 periods = 100
 datetimeindex = pd.date_range('1/1/2019', periods=periods, freq='H')
-x = np.arange(periods)
 demand_timeseries = np.zeros(periods)
 demand_timeseries[-5:] = 1
 heat_feedin_timeseries = np.zeros(periods)

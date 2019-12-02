@@ -65,7 +65,7 @@ def print_results():
         'Fixed absolute losses [MWh]': fixed_losses_absolute,
     }
 
-    dash = '-' * 42
+    dash = '-' * 50
 
     print(dash)
     print('{:>32s}{:>15s}'.format('Parameter name', 'Value'))
@@ -83,7 +83,6 @@ print_results()
 solver = 'cbc'
 periods = 100
 datetimeindex = pd.date_range('1/1/2019', periods=periods, freq='H')
-x = np.arange(periods)
 demand_timeseries = np.zeros(periods)
 demand_timeseries[-5:] = 1
 heat_feedin_timeseries = np.zeros(periods)
