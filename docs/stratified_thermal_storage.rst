@@ -48,61 +48,73 @@ In the case of investment, the diameter d is given and the height can be
 adapted to adapt the nominal capacity of the storage. With this assumption,
 all relations stay linear.
 
-These parameters are input to the component:
+These parameters are part of the stratified thermal storage:
 
-    ========================= ==================================================== ==== =========
-    symbol                    attribute                                            type explanation
-    ========================= ==================================================== ==== =========
-    :math:`h`                 :py:obj:`height`                                          Height (if not investment)
+    ========================= ===================================== ==== ===========
+    symbol                    attribute                             type explanation
+    ========================= ===================================== ==== ===========
+    :math:`h`                 :py:obj:`height`                           Height
+                                                                         (if not investment)
 
-    :math:`d`                 :py:obj:`diameter`                                        Diameter
+    :math:`d`                 :py:obj:`diameter`                         Diameter
 
-    :math:`A`                 :py:obj:`surface`                                         Storage surface
+    :math:`A`                 :py:obj:`surface`                          Storage surface
 
-    :math:`V`                 :py:obj:`volume`                                          Storage volume
+    :math:`V`                 :py:obj:`volume`                           Storage volume
 
-    :math:`v_{nonuseable}`    :py:obj:`nonusable_storage_volume`                        Factor describing non-usable
-                                                                                        storage volume
-                                                                                        (:math:`0<v_{nonusable}<1`)
+    :math:`v_{nonuseable}`    :py:obj:`nonusable_storage_volume`         Factor describing
+                                                                         non-usable
+                                                                         storage volume
+                                                                         (:math:`0<v_{nonusable}<1`)
 
-    :math:`\rho`              :py:obj:`density`                                         Density of storage medium
+    :math:`\rho`              :py:obj:`density`                          Density of storage
+                                                                         medium
 
-    :math:`c`                 :py:obj:`heat_capacity`                                   Heat capacity of storage medium
+    :math:`c`                 :py:obj:`heat_capacity`                    Heat capacity of
+                                                                         storage medium
 
-    :math:`T_H`               :py:obj:`temp_h`                                          Hot temperature level
+    :math:`T_H`               :py:obj:`temp_h`                           Hot temperature level
 
-    :math:`T_C`               :py:obj:`temp_c`                                          Cold temperature
+    :math:`T_C`               :py:obj:`temp_c`                           Cold temperature
 
-    :math:`T_0`               :py:obj:`temp_env`                                        Environment temperature
-                                                                                        timeseries
+    :math:`T_0`               :py:obj:`temp_env`                         Environment temperature
+                                                                         timeseries
 
-    :math:`Q_N`               :py:obj:`nominal_storage_capacity`                        Maximum amount of stored thermal energy
+    :math:`Q_N`               :py:obj:`nominal_storage_capacity`         Maximum amount of
+                                                                         stored thermal energy
 
-    :math:`U`                 :py:obj:`u_value`                                         Thermal transmittance
+    :math:`U`                 :py:obj:`u_value`                          Thermal transmittance
 
-    :math:`s_{iso}`           :py:obj:`s_iso`                                           Thickness of isolation layer
+    :math:`s_{iso}`           :py:obj:`s_iso`                            Thickness of isolation
+                                                                         layer
 
-    :math:`\lambda_{iso}`     :py:obj:`lamb_iso`                                        Heat conductivity of isolation material
+    :math:`\lambda_{iso}`     :py:obj:`lamb_iso`                         Heat conductivity of
+                                                                         isolation material
 
-    :math:`\alpha_i`          :py:obj:`alpha_inside`                                    Heat transfer coefficient inside
+    :math:`\alpha_i`          :py:obj:`alpha_inside`                     Heat transfer
+                                                                         coefficient inside
 
-    :math:`\alpha_o`          :py:obj:`alpha_outside`                                   Heat transfer coefficient outside
+    :math:`\alpha_o`          :py:obj:`alpha_outside`                    Heat transfer
+                                                                         coefficient outside
 
-    :math:`\beta`             :py:obj:`loss_rate`                                       Relative loss of storage content
-                                                                                        within one timestep
+    :math:`\beta`             :py:obj:`loss_rate`                        Relative loss of
+                                                                         storage content
+                                                                         within one timestep
 
-    :math:`\gamma`            :py:obj:`fixed_losses`                                    Fixed losses as share of
-                                                                                        nominal storage capacity
+    :math:`\gamma`            :py:obj:`fixed_losses`                     Fixed losses as share
+                                                                         of nominal storage
+                                                                         capacity
 
-    :math:`\delta`            :py:obj:`fixed_absolute_losses`                           Fixed absolue losses independent
-                                                                                        of storage content or
-                                                                                        or nominal storage capacity
+    :math:`\delta`            :py:obj:`fixed_absolute_losses`            Fixed absolue losses
+                                                                         independent of storage
+                                                                         content or nominal
+                                                                         storage capacity
 
-    :math:`\eta_{in}`         :py:obj:`inflow_conversion_factor`                        Charging efficiency
+    :math:`\eta_{in}`         :py:obj:`inflow_conversion_factor`         Charging efficiency
 
-    :math:`\eta_{out}`        :py:obj:`outflow_conversion_factor`                       Discharging efficiency
+    :math:`\eta_{out}`        :py:obj:`outflow_conversion_factor`        Discharging efficiency
 
-    ========================= ==================================================== ==== =========
+    ========================= ===================================== ==== ===========
 
 
 The thermal transmittance is precalculated using `calculate_u_value`.
@@ -179,6 +191,6 @@ only a loss rate vs. the stratified thermal storage implementation
 <https://github.com/oemof/oemof-thermal/tree/dev/examples/stratified_thermal_storage>`_).
 
 .. 	image:: _pics/compare_storage_models.svg
-   :width: 70 %
+   :width: 100 %
    :alt: compare_storage_models.svg
    :align: center
