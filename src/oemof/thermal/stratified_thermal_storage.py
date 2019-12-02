@@ -53,7 +53,7 @@ def calculate_storage_dimensions(height, diameter):
 
     :math:`V = \pi \frac{d^2}{4} \cdot h`
 
-    :math:`A = \pi d h + 2 \pi \frac{d^2}{4}`
+    :math:`A = \pi d h + \pi \frac{d^2}{2}`
 
     Parameters
     ----------
@@ -72,7 +72,7 @@ def calculate_storage_dimensions(height, diameter):
         Total surface of storage [m2]
     """
     volume = diameter**2 * 1 / 4 * np.pi * height
-    surface = np.pi * diameter * height + 2 * np.pi * diameter**2 * 1 / 4
+    surface = np.pi * diameter * height + np.pi * diameter**2 * 0.5
 
     return volume, surface
 
