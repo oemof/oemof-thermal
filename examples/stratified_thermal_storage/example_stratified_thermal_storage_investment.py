@@ -128,7 +128,7 @@ thermal_storage = GenericStorage(
     fixed_losses_absolute=fixed_losses_absolute,
     inflow_conversion_factor=1.,
     outflow_conversion_factor=1.,
-    investment=Investment(ep_costs=400)
+    investment=Investment(ep_costs=400, minimum=1)
 )
 
 energysystem.add(bus_heat, heat_source, shortage, excess, heat_demand, thermal_storage)
