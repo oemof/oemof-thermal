@@ -93,7 +93,7 @@ bus_heat = Bus(label='bus_heat')
 storage_list = []
 
 storage_list.append(GenericStorage(
-    label='thermal_storage_0',
+    label='simple_thermal_storage',
     inputs={bus_heat: Flow(
         nominal_value=maximum_heat_flow_charging,
         variable_costs=0.0001)},
@@ -102,17 +102,16 @@ storage_list.append(GenericStorage(
     nominal_storage_capacity=nominal_storage_capacity,
     min_storage_level=min_storage_level,
     max_storage_level=max_storage_level,
-    initial_storage_level=0.9,
-    loss_rate=loss_rate,
+    initial_storage_level=3 / nominal_storage_capacity,
+    loss_rate=0.001,
     inflow_conversion_factor=1.,
     outflow_conversion_factor=1.,
     balanced=False
 ))
 
-for i, nominal_storage_capacity in enumerate([3, 5, 10]):
-    print(i)
+for i, nominal_storage_capacity in enumerate([10, 15, 20]):
     storage_list.append(GenericStorage(
-        label=f'thermal_storage_{i+1}',
+        label=f'stratified_thermal_storage_{nominal_storage_capacity}_MWh',
         inputs={bus_heat: Flow(
             nominal_value=maximum_heat_flow_charging,
             variable_costs=0.0001)},
@@ -121,7 +120,7 @@ for i, nominal_storage_capacity in enumerate([3, 5, 10]):
         nominal_storage_capacity=nominal_storage_capacity,
         min_storage_level=min_storage_level,
         max_storage_level=max_storage_level,
-        initial_storage_level=0.9,
+        initial_storage_level=3 / nominal_storage_capacity,
         loss_rate=loss_rate,
         fixed_losses_relative=fixed_losses_relative,
         fixed_losses_absolute=fixed_losses_absolute,
@@ -157,19 +156,28 @@ storage_df = pd.concat([storage_content, losses], 1)
 storage_df = storage_df.reindex(sorted(storage_df.columns), axis=1)
 
 # plot storage_content vs. time
-fig, ax = plt.subplots(figsize=(8, 5))
-storage_content.plot(ax=ax)
-ax.set_title('Storage content')
-ax.set_xlabel('Timesteps')
-ax.legend(loc='center left', bbox_to_anchor=(1.0, 0.5))
-plt.tight_layout()
-plt.show()
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
+storage_content.plot(ax=ax1)
+ax1.set_title('Storage content')
+ax1.set_xlabel('Timesteps')
+ax1.set_ylabel('Storage content [MWh]')
+ax1.grid(alpha=0.3)
+ax1.get_legend().remove()
 
 # plot losses vs storage content
-fig, ax = plt.subplots()
-for storage in (storage.label for storage in storage_list):
-    ax.scatter(storage_df[(storage, 'capacity')], storage_df[(storage, 'losses')])
-ax.set_title('Losses vs. storage content')
-ax.set_xlabel('Storage content [MWh]')
-ax.set_ylabel('Losses [MWh]')
-plt.show()
+for storage_label in (storage.label for storage in storage_list):
+    ax2.scatter(
+        storage_df[(storage_label, 'capacity')],
+        storage_df[(storage_label, 'losses')],
+        label=storage_label,
+        s=1
+    )
+ax2.set_xlim(0, 3.2)
+ax2.set_ylim(0, 0.0035)
+ax2.set_title('Losses vs. storage content')
+ax2.set_xlabel('Storage content [MWh]')
+ax2.set_ylabel('Losses [MW]')
+ax2.grid(alpha=0.3)
+ax2.legend(loc='center left', bbox_to_anchor=(1.0, 0.5))
+plt.tight_layout()
+plt.savefig('compare_storage_models.svg')
