@@ -74,7 +74,7 @@ for i in range(len(temp_amb_series)):
 fig, ax = plt.subplots()
 ax.plot(temp_amb_series, df_result['eta_c'],
         label='efficiency depending on ambient temperature')
-ax.plot(temp_amb_series, [eta_0]*24, label='constant efficiency')
+ax.plot(temp_amb_series, [eta_0] * 24, label='constant efficiency')
 ax.set_ylim(0, 1)
 ax.set(xlabel='ambient temperature', ylabel='eta_collector',
        title='collectors efficiency')
