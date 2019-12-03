@@ -18,6 +18,8 @@ def csp_precalc(df, periods,
     heat of the thermal collector. For the calculation of irradiance pvlib [2]
     is used.
 
+    .. csp_precalc_equation:
+
     :math:`Q_{coll} = E_{coll} \cdot \eta_C`
 
     functions used
