@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
+"""
+Example to show the functionality of the concentrating solar thermal collector
 
-"""Solar thermal collectors
-
-authors:
+authors: Franziska Pleissner
 
 SPDX-License-Identifier: GPL-3.0-or-later
 """
@@ -90,6 +90,7 @@ ambience_sol = solph.Sink(
     label='ambience_sol',
     inputs={bcol: solph.Flow()})
 
+# transformer and storages
 collector = solph.Transformer(
     label='collector',
     inputs={
@@ -116,6 +117,7 @@ storage = solph.components.GenericStorage(
     outflow_conversion_factor=conversion_storage,
     investment=solph.Investment(ep_costs=costs_storage))
 
+# build the system and solve the problem
 date_time_index = pd.date_range('1/1/2003', periods=periods,
                                 freq='H', tz=timezone)
 
