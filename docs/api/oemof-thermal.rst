@@ -8,7 +8,7 @@ compression\_heatpumps\_and\_chillers module
 
 csp module
 ==========================================================
-.. automodule:: oemof.thermal.csp
+.. automodule:: oemof.thermal.CSP
     :members:
     :undoc-members:
     :show-inheritance:
