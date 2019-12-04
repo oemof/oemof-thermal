@@ -7,6 +7,12 @@ Concentrating solar power
 The precalculations for the concentrating solar power calculate the heat of the
 solar collector based on the direct horizontal irradiance (DHI) or the direct
 normal irradiance (DNI) and information about the collector and the location.
+The following scheme shows the calculation procedure.
+
+.. 	image:: _pics/scheme.png
+   :width: 100 %
+   :alt: scheme.png
+   :align: center
 
 The processing of the irradiance data is done by the pvlib, which calculates
 the direct irradiance on the collector. This irradiance is reduced by dust and
