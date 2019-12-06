@@ -23,6 +23,18 @@ def calc_cops(temp_high, temp_low, quality_grade, temp_threshold_icing=2,
     at the heat exchanger at air-temperatures around :math:`2^\circ C` .
     Icing causes a reduction of the efficiency.
 
+    .. calc_cops-equations:
+
+        mode='heat_pump'
+
+        :math:`COP = \eta \cdot \frac{T_\mathrm{high}}{T_\mathrm{high} - T_\mathrm{low}}`
+
+        :math:`COP = f_\mathrm{icing} \cdot\eta\cdot\frac{T_\mathrm{high}}{T_\mathrm{high} - T_\mathrm{low}}`
+
+        mode='chiller'
+
+        :math:`COP = \eta \cdot \frac{T_\mathrm{low}}{T_\mathrm{high} - T_\mathrm{low}}`
+
     Parameters
     ----------
     temp_high : list of numerical values
@@ -101,6 +113,10 @@ def calc_max_Q_dot_chill(nominal_conditions, cops):
     Make sure your actual chiller is capable of doing so.
     If not, use 1 for the maximal cooling capacity.
 
+    .. calc_max_Q_dot_chill-equations:
+
+        :math:`\dot{Q}_\mathrm{chilled, max} = \frac{COP_\mathrm{actual}}{COP_\mathrm{nominal}}`
+
     Parameters
     ----------
     nominal_conditions : dict
@@ -139,6 +155,10 @@ def calc_max_Q_dot_heat(nominal_conditions, cops):
         Make sure your actual heat pump is capable of doing so.
         If not, use 1 for the maximal heating capacity.
 
+    .. calc_max_Q_dot_heat-equations:
+
+        :math:`\dot{Q}_\mathrm{hot, max} = \frac{COP_\mathrm{actual}}{COP_\mathrm{nominal}}`
+
         Parameters
         ----------
         nominal_conditions : dict
@@ -171,6 +191,10 @@ def calc_chiller_quality_grade(nominal_conditions):
     This function is rather experimental.
     Please do not use it to estimate the quality grade of a real machine.
     A single point of operation might not be representative!
+
+    .. calc_chiller_quality_grade-equations:
+
+        :math:`\eta = \frac{\dot{Q}_\mathrm{chilled,nominal}}{\dot{Q}_\mathrm{hot,nominal}} / \frac{T_\mathrm{high, nominal}}{T_\mathrm{high, nominal} - T_\mathrm{low, nominal}}`
 
     Parameters
     ----------
