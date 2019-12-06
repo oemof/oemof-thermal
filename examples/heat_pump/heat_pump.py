@@ -4,7 +4,8 @@ author: pyosch
 """
 import pandas as pd
 import numpy as np
-import heat_pump
+from oemof.thermal import heat_pump
+
 
 # generate test data
 temperature = pd.DataFrame(np.random.randint(-10, 20, size=(96, 1)),
