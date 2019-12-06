@@ -228,7 +228,7 @@ def calc_eta_c(eta_0, c_1, c_2, iam,
     .. calc_eta_c_equation:
 
     :math:`\eta_C = \eta_0 \cdot \kappa(\varTheta) - c_1 \cdot
-    \frac{\Delta T}{E_{coll}} - d_2 \cdot \frac{{\Delta T}^2}{E_{coll}}`
+    \frac{\Delta T}{E_{coll}} - c_2 \cdot \frac{{\Delta T}^2}{E_{coll}}`
 
     Parameters
     ----------
