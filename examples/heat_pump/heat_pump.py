@@ -4,7 +4,7 @@ author: pyosch
 """
 import pandas as pd
 import numpy as np
-from oemof.thermal import heat_pump
+import oemof.thermal.heat_pump as heat_pump
 
 
 # generate test data
