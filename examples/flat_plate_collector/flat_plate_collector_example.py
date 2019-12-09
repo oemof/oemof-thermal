@@ -15,7 +15,6 @@ import oemof.outputlib as outputlib
 
 # DATA AND PARAMETERS
 ######################################################################
-
 # Define parameters for the precalculation
 periods = 48
 latitude = 52.2443
@@ -41,12 +40,10 @@ demand = list(demand_df['heat_demand'].iloc[:periods])
 eta_losses = 0.05
 elec_consumption = 0.02
 backup_costs = 40
-
 ######################################################################
 
 # PRECALCULATION
 ######################################################################
-
 # Calculate global irradiance on the collector area
 # and collector efficiency depending on the temperature difference
 precalc_data = flat_plate_precalc(
@@ -60,17 +57,16 @@ precalc_data = flat_plate_precalc(
 
 precalc_data.to_csv(path +
         '/examples/flat_plate_collector/results/flate_plate_precalcs.csv', sep=';')
-
 ######################################################################
 
 # COMPONENT
 ######################################################################
-
 # Create busses
 bth = solph.Bus(label='thermal', balanced=True)
 bel = solph.Bus(label='electricity')
 bcol = solph.Bus(label='solar')
 
+# Create source for collector heat. Actual value is the precalculated collector heat.
 collector_heat = solph.Source(
     label='collector_heat',
     outputs={bcol: solph.Flow(
@@ -78,14 +74,17 @@ collector_heat = solph.Source(
         actual_value=precalc_data['collectors_heat'],
         nominal_value=24)})
 
+# Create source for electricity grid.
 el_grid = solph.Source(
     label='grid',
     outputs={bel: solph.Flow()})
 
+# Create source for backup heat supply.
 backup = solph.Source(
     label='backup',
     outputs={bth: solph.Flow(variable_costs=backup_costs)})
 
+# Create sink for heat demand.
 consumer = solph.Sink(
         label='demand',
         inputs={bth: solph.Flow(
@@ -93,10 +92,12 @@ consumer = solph.Sink(
             actual_value=demand,
             nominal_value=1)})
 
-ambience_sol = solph.Sink(
-    label='ambience_sol',
+# Create sink for collector excess heat.
+collector_excess_heat = solph.Sink(
+    label='collector_excess_heat',
     inputs={bcol: solph.Flow()})
 
+# Create collector transformer.
 collector = solph.Transformer(
     label='collector',
     inputs={
@@ -108,6 +109,7 @@ collector = solph.Transformer(
         bel: elec_consumption,
         bth: 1-eta_losses})
 
+# Create heat storage.
 storage = solph.components.GenericStorage(
     label='storage',
     inputs={bth: solph.Flow()},
@@ -121,7 +123,7 @@ date_time_index = pd.date_range('1/1/2003', periods=periods,
 energysystem = solph.EnergySystem(timeindex=date_time_index)
 
 energysystem.add(bth, bcol, bel, collector_heat, el_grid, backup, consumer,
-                 ambience_sol, storage, collector)
+                 collector_excess_heat, storage, collector)
 
 model = solph.Model(energysystem)
 
