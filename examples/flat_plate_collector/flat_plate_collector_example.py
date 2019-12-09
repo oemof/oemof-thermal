@@ -30,10 +30,13 @@ delta_temp_n = 10
 
 # Read data for flat collector and heat demand
 path = os.path.dirname(os.path.abspath(os.path.join(__file__, '..', '..')))
-dataframe = pd.read_csv(path +
-        '/examples/flat_plate_collector/data/data_flat_collector.csv', sep=';')
-demand_df = pd.read_csv(path +
-        '/examples/flat_plate_collector/data/heat_demand.csv', sep=';')
+dataframe = pd.read_csv(
+    path + '/examples/flat_plate_collector/data/data_flat_collector.csv',
+    sep=';',
+)
+demand_df = pd.read_csv(
+    path + '/examples/flat_plate_collector/data/heat_demand.csv', sep=';'
+)
 demand = list(demand_df['heat_demand'].iloc[:periods])
 
 # Define further parameters
@@ -47,16 +50,28 @@ backup_costs = 40
 # Calculate global irradiance on the collector area
 # and collector efficiency depending on the temperature difference
 precalc_data = flat_plate_precalc(
-    dataframe, periods,
-    latitude, longitude, timezone,
-    collector_tilt, collector_azimuth,
-    eta_0, c_1, c_2,
-    temp_collector_inlet, delta_temp_n,
-    date_col='hour', irradiance_global_col='global_horizontal_W_m2',
-    irradiance_diffuse_col='diffuse_horizontal_W_m2', t_amb_col='t_amb')
+    dataframe,
+    periods,
+    latitude,
+    longitude,
+    timezone,
+    collector_tilt,
+    collector_azimuth,
+    eta_0,
+    c_1,
+    c_2,
+    temp_collector_inlet,
+    delta_temp_n,
+    date_col='hour',
+    irradiance_global_col='global_horizontal_W_m2',
+    irradiance_diffuse_col='diffuse_horizontal_W_m2',
+    t_amb_col='t_amb',
+)
 
-precalc_data.to_csv(path +
-        '/examples/flat_plate_collector/results/flate_plate_precalcs.csv', sep=';')
+precalc_data.to_csv(
+    path + '/examples/flat_plate_collector/results/flate_plate_precalcs.csv',
+    sep=';',
+)
 ######################################################################
 
 # COMPONENT
@@ -69,61 +84,75 @@ bcol = solph.Bus(label='solar')
 # Create source for collector heat. Actual value is the precalculated collector heat.
 collector_heat = solph.Source(
     label='collector_heat',
-    outputs={bcol: solph.Flow(
-        fixed=True,
-        actual_value=precalc_data['collectors_heat'],
-        nominal_value=24)})
+    outputs={
+        bcol: solph.Flow(
+            fixed=True,
+            actual_value=precalc_data['collectors_heat'],
+            nominal_value=24,
+        )
+    },
+)
 
 # Create source for electricity grid.
-el_grid = solph.Source(
-    label='grid',
-    outputs={bel: solph.Flow()})
+el_grid = solph.Source(label='grid', outputs={bel: solph.Flow()})
 
 # Create source for backup heat supply.
 backup = solph.Source(
-    label='backup',
-    outputs={bth: solph.Flow(variable_costs=backup_costs)})
+    label='backup', outputs={bth: solph.Flow(variable_costs=backup_costs)}
+)
 
 # Create sink for heat demand.
 consumer = solph.Sink(
-        label='demand',
-        inputs={bth: solph.Flow(
-            fixed=True,
-            actual_value=demand,
-            nominal_value=1)})
+    label='demand',
+    inputs={bth: solph.Flow(fixed=True, actual_value=demand, nominal_value=1)},
+)
 
 # Create sink for collector excess heat.
 collector_excess_heat = solph.Sink(
-    label='collector_excess_heat',
-    inputs={bcol: solph.Flow()})
+    label='collector_excess_heat', inputs={bcol: solph.Flow()}
+)
 
 # Create collector transformer.
 collector = solph.Transformer(
     label='collector',
-    inputs={
-        bcol: solph.Flow(),
-        bel: solph.Flow()},
+    inputs={bcol: solph.Flow(), bel: solph.Flow()},
     outputs={bth: solph.Flow()},
     conversion_factors={
-        bcol: 1-elec_consumption,
+        bcol: 1 - elec_consumption,
         bel: elec_consumption,
-        bth: 1-eta_losses})
+        bth: 1 - eta_losses,
+    },
+)
 
 # Create heat storage.
 storage = solph.components.GenericStorage(
     label='storage',
     inputs={bth: solph.Flow()},
     outputs={bth: solph.Flow()},
-    loss_rate=0.001, nominal_storage_capacity=4000,
-    inflow_conversion_factor=0.98, outflow_conversion_factor=0.8)
+    loss_rate=0.001,
+    nominal_storage_capacity=4000,
+    inflow_conversion_factor=0.98,
+    outflow_conversion_factor=0.8,
+)
 
-date_time_index = pd.date_range('1/1/2003', periods=periods,
-                                freq='H', tz='Asia/Muscat')
+date_time_index = pd.date_range(
+    '1/1/2003', periods=periods, freq='H', tz='Asia/Muscat'
+)
 
 energysystem = solph.EnergySystem(timeindex=date_time_index)
 
-energysystem.add(bth, bcol, bel, collector_heat, el_grid, backup, consumer,
-                 collector_excess_heat, storage, collector)
+energysystem.add(
+    bth,
+    bcol,
+    bel,
+    collector_heat,
+    el_grid,
+    backup,
+    consumer,
+    collector_excess_heat,
+    storage,
+    collector,
+)
 
 model = solph.Model(energysystem)
 
@@ -141,5 +170,7 @@ thermal_bus = outputlib.views.node(energysystem.results['main'], 'thermal')
 df = pd.DataFrame()
 df = df.append(collector['sequences'])
 df = df.join(thermal_bus['sequences'], lsuffix='_1')
-df.to_csv(path +
-        '/examples/flat_plate_collector/results/thermal_bus_flat_plate.csv', sep=';')
+df.to_csv(
+    path + '/examples/flat_plate_collector/results/thermal_bus_flat_plate.csv',
+    sep=';',
+)
