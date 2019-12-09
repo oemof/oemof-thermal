@@ -12,6 +12,7 @@ from oemof.thermal.flat_plate_collector import flat_plate_precalc
 from oemof.tools import economics
 from demandlib import bdew as bdew
 from workalendar.europe import Germany
+from flat_plate_collector_plot_example import plot_collector_heat
 import pandas as pd
 import os
 import oemof.outputlib as outputlib
@@ -241,3 +242,6 @@ df.to_csv(
     path + '/examples/flat_plate_collector/results/thermal_bus_flat_plate.csv',
     sep=';',
 )
+
+
+plot_collector_heat(precalc_data, periods, eta_0)
