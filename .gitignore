@@ -59,9 +59,12 @@ target/
 # IDE
 .idea
 
+# png
+*.png
+
 # data from Franzi
 CSP_data/
 CSP_results/
 
 # results
-examples/flat_plate_collector/results/.
+examples/flat_plate_collector/results/
