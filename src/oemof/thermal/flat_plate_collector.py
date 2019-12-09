@@ -3,9 +3,7 @@
 """
 This module is designed to hold functions for calculating a solar thermal collector.
 
-This file is part of project oemof (github.com/oemof/oemof-thermal). It's copyrighted
-by the contributors recorded in the version control history of the file,
-available from its original location:
+This file is part of project oemof (github.com/oemof/oemof-thermal). It's copyrighted by the contributors recorded in the version control history of the file, available from its original location:
 oemof-thermal/src/oemof/thermal/flat_plate_collector.py
 """
 
@@ -23,7 +21,11 @@ def flat_plate_precalc(df, periods,
                            irradiance_diffuse_col='dhi',
                            t_amb_col='t_amb'):
     """
-    Calculates collectors efficiency and irradiance of a flat plate collector
+    Calculates collectors efficiency and irradiance of a flat plate collector.
+
+    ..calculate_collectors efficiency:
+
+    :math:``
 
     Parameters
     ---------
