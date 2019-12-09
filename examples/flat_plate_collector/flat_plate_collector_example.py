@@ -57,29 +57,44 @@ holidays = dict(cal.holidays(2018))
 
 # Create a DataFrame to hold the timeseries
 demand_df = pd.DataFrame(
-    index=pd.date_range(pd.datetime(2010, 1, 1, 0),
-                        periods=8760, freq='H'))
+    index=pd.date_range(pd.datetime(2010, 1, 1, 0), periods=8760, freq='H')
+)
 
 
 # Single family house (efh: Einfamilienhaus)
 demand_df['efh'] = bdew.HeatBuilding(
-    demand_df.index, holidays=holidays, temperature=temperature,
-                            shlp_type='EFH',
-                            building_class=1, wind_class=1, annual_heat_demand=25000,
-                            name='EFH').get_bdew_profile()
+    demand_df.index,
+    holidays=holidays,
+    temperature=temperature,
+    shlp_type='EFH',
+    building_class=1,
+    wind_class=1,
+    annual_heat_demand=25000,
+    name='EFH',
+).get_bdew_profile()
 
 # Multi family house (mfh: Mehrfamilienhaus)
 demand_df['mfh'] = bdew.HeatBuilding(
-    demand_df.index, holidays=holidays, temperature=temperature,
-                            shlp_type='MFH',
-                            building_class=2, wind_class=0, annual_heat_demand=80000,
-                            name='MFH').get_bdew_profile()
+    demand_df.index,
+    holidays=holidays,
+    temperature=temperature,
+    shlp_type='MFH',
+    building_class=2,
+    wind_class=0,
+    annual_heat_demand=80000,
+    name='MFH',
+).get_bdew_profile()
 
 # Industry, trade, service (ghd: Gewerbe, Handel, Dienstleistung)
 demand_df['ghd'] = bdew.HeatBuilding(
-    demand_df.index, holidays=holidays, temperature=temperature,
-                            shlp_type='ghd', wind_class=0, annual_heat_demand=140000,
-                            name='ghd').get_bdew_profile()
+    demand_df.index,
+    holidays=holidays,
+    temperature=temperature,
+    shlp_type='ghd',
+    wind_class=0,
+    annual_heat_demand=140000,
+    name='ghd',
+).get_bdew_profile()
 
 demand = demand_df.sum(axis=1)
 # --------------------------------------------------------------
@@ -138,7 +153,7 @@ collector_heat = solph.Source(
         bcol: solph.Flow(
             fixed=True,
             actual_value=precalc_data['collectors_heat'],
-            investment=solph.Investment(ep_costs=costs_collector)
+            investment=solph.Investment(ep_costs=costs_collector),
         )
     },
 )
@@ -184,7 +199,7 @@ storage = solph.components.GenericStorage(
     loss_rate=storage_loss_rate,
     inflow_conversion_factor=conversion_storage,
     outflow_conversion_factor=conversion_storage,
-    investment=solph.Investment(ep_costs=costs_storage)
+    investment=solph.Investment(ep_costs=costs_storage),
 )
 
 date_time_index = pd.date_range(
