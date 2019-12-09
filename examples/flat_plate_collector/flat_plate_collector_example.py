@@ -9,6 +9,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 from oemof import solph
 from oemof.thermal.flat_plate_collector import flat_plate_precalc
+from oemof.tools import economics
 import pandas as pd
 import os
 import oemof.outputlib as outputlib
@@ -39,10 +40,15 @@ demand_df = pd.read_csv(
 )
 demand = list(demand_df['heat_demand'].iloc[:periods])
 
-# Define further parameters
+# Define parameters for the energy system
 eta_losses = 0.05
 elec_consumption = 0.02
 backup_costs = 40
+costs_collector = economics.annuity(20, 20, 0.06)
+costs_storage = economics.annuity(20, 20, 0.06)
+costs_electricity = 1000
+storage_loss_rate = 0.001
+conversion_storage = 0.98
 ######################################################################
 
 # PRECALCULATION
@@ -88,13 +94,15 @@ collector_heat = solph.Source(
         bcol: solph.Flow(
             fixed=True,
             actual_value=precalc_data['collectors_heat'],
-            nominal_value=24,
+            investment=solph.Investment(ep_costs=costs_collector)
         )
     },
 )
 
 # Create source for electricity grid.
-el_grid = solph.Source(label='grid', outputs={bel: solph.Flow()})
+el_grid = solph.Source(
+    label='grid', outputs={bel: solph.Flow(variable_costs=costs_electricity)}
+)
 
 # Create source for backup heat supply.
 backup = solph.Source(
@@ -129,10 +137,10 @@ storage = solph.components.GenericStorage(
     label='storage',
     inputs={bth: solph.Flow()},
     outputs={bth: solph.Flow()},
-    loss_rate=0.001,
-    nominal_storage_capacity=4000,
-    inflow_conversion_factor=0.98,
-    outflow_conversion_factor=0.8,
+    loss_rate=storage_loss_rate,
+    inflow_conversion_factor=conversion_storage,
+    outflow_conversion_factor=conversion_storage,
+    investment=solph.Investment(ep_costs=costs_storage)
 )
 
 date_time_index = pd.date_range(
