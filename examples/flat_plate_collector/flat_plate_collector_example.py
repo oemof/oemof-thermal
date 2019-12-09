@@ -16,14 +16,6 @@ import oemof.outputlib as outputlib
 # DATA AND PARAMETERS
 ######################################################################
 
-# Read data for flat collector and heat demand
-path = os.path.dirname(os.path.abspath(os.path.join(__file__, '..', '..')))
-dataframe = pd.read_csv(path +
-        '/examples/flat_plate_collector/data/data_flat_collector.csv', sep=';')
-demand_df = pd.read_csv(path +
-        '/examples/flat_plate_collector/data/heat_demand.csv', sep=';')
-demand = list(demand_df['heat_demand'].iloc[:periods])
-
 # Define parameters for the precalculation
 periods = 48
 latitude = 52.2443
@@ -36,6 +28,14 @@ c_1 = 1.7
 c_2 = 0.016
 temp_collector_inlet = 20
 delta_temp_n = 10
+
+# Read data for flat collector and heat demand
+path = os.path.dirname(os.path.abspath(os.path.join(__file__, '..', '..')))
+dataframe = pd.read_csv(path +
+        '/examples/flat_plate_collector/data/data_flat_collector.csv', sep=';')
+demand_df = pd.read_csv(path +
+        '/examples/flat_plate_collector/data/heat_demand.csv', sep=';')
+demand = list(demand_df['heat_demand'].iloc[:periods])
 
 # Define further parameters
 eta_losses = 0.05
@@ -55,8 +55,8 @@ precalc_data = flat_plate_precalc(
     collector_tilt, collector_azimuth,
     eta_0, c_1, c_2,
     temp_collector_inlet, delta_temp_n,
-    date_col='hour', irradiance_global_column='global_horizontal_W_m2',
-    irradiance_diffuse_column='diffuse_horizontal_W_m2', temp_amb_column='t_amb')
+    date_col='hour', irradiance_global_col='global_horizontal_W_m2',
+    irradiance_diffuse_col='diffuse_horizontal_W_m2', t_amb_col='t_amb')
 
 precalc_data.to_csv(path +
         '/examples/flat_plate_collector/results/flate_plate_precalcs.csv', sep=';')
@@ -66,12 +66,12 @@ precalc_data.to_csv(path +
 # COMPONENT
 ######################################################################
 
-# Create component
+# Create busses
 bth = solph.Bus(label='thermal', balanced=True)
 bel = solph.Bus(label='electricity')
 bcol = solph.Bus(label='solar')
 
-col_heat = solph.Source(
+collector_heat = solph.Source(
     label='collector_heat',
     outputs={bcol: solph.Flow(
         fixed=True,
@@ -120,7 +120,7 @@ date_time_index = pd.date_range('1/1/2003', periods=periods,
 
 energysystem = solph.EnergySystem(timeindex=date_time_index)
 
-energysystem.add(bth, bcol, bel, col_heat, el_grid, backup, consumer,
+energysystem.add(bth, bcol, bel, collector_heat, el_grid, backup, consumer,
                  ambience_sol, storage, collector)
 
 model = solph.Model(energysystem)
