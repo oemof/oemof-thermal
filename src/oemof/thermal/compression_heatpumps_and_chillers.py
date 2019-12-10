@@ -27,13 +27,16 @@ def calc_cops(temp_high, temp_low, quality_grade, temp_threshold_icing=2,
 
         mode='heat_pump'
 
-        :math:`COP = \eta \cdot \frac{T_\mathrm{high}}{T_\mathrm{high} - T_\mathrm{low}}`
+        :math:`COP = \eta \cdot \frac{T_\mathrm{high}}{T_\mathrm{high}
+        - T_\mathrm{low}}`
 
-        :math:`COP = f_\mathrm{icing} \cdot\eta\cdot\frac{T_\mathrm{high}}{T_\mathrm{high} - T_\mathrm{low}}`
+        :math:`COP = f_\mathrm{icing} \cdot\eta
+        \cdot\frac{T_\mathrm{high}}{T_\mathrm{high} - T_\mathrm{low}}`
 
         mode='chiller'
 
-        :math:`COP = \eta \cdot \frac{T_\mathrm{low}}{T_\mathrm{high} - T_\mathrm{low}}`
+        :math:`COP = \eta \cdot \frac{T_\mathrm{low}}{T_\mathrm{high}
+        - T_\mathrm{low}}`
 
     Parameters
     ----------
@@ -115,7 +118,8 @@ def calc_max_Q_dot_chill(nominal_conditions, cops):
 
     .. calc_max_Q_dot_chill-equations:
 
-        :math:`\dot{Q}_\mathrm{chilled, max} = \frac{COP_\mathrm{actual}}{COP_\mathrm{nominal}}`
+        :math:`\dot{Q}_\mathrm{chilled, max}
+        = \frac{COP_\mathrm{actual}}{COP_\mathrm{nominal}}`
 
     Parameters
     ----------
@@ -157,7 +161,8 @@ def calc_max_Q_dot_heat(nominal_conditions, cops):
 
     .. calc_max_Q_dot_heat-equations:
 
-        :math:`\dot{Q}_\mathrm{hot, max} = \frac{COP_\mathrm{actual}}{COP_\mathrm{nominal}}`
+        :math:`\dot{Q}_\mathrm{hot, max}
+        = \frac{COP_\mathrm{actual}}{COP_\mathrm{nominal}}`
 
         Parameters
         ----------
@@ -194,7 +199,10 @@ def calc_chiller_quality_grade(nominal_conditions):
 
     .. calc_chiller_quality_grade-equations:
 
-        :math:`\eta = \frac{\dot{Q}_\mathrm{chilled,nominal}}{\dot{Q}_\mathrm{hot,nominal}} / \frac{T_\mathrm{high, nominal}}{T_\mathrm{high, nominal} - T_\mathrm{low, nominal}}`
+        :math:`\eta =
+        \frac{\dot{Q}_\mathrm{chilled,nominal}}{\dot{Q}_\mathrm{hot,nominal}} /
+        \frac{T_\mathrm{high, nominal}}{T_\mathrm{high, nominal}
+        - T_\mathrm{low, nominal}}`
 
     Parameters
     ----------
