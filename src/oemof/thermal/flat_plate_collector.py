@@ -47,7 +47,7 @@ def flat_plate_precalc(df, periods,
         Thermal loss parameters.
     temp_collector_inlet: numeric or series with length of periods
         Collectors inlet temperature.
-    delta_temp_n:
+    delta_temp_n: numeric
         Temperature difference between collector inlet and mean temperature.
     date_col, irradiance_global_col, irradiance_diffuse_col, temp_amb_col: string
         Describes the name of the columns in the dataframe df.
@@ -133,7 +133,8 @@ def calc_eta_c_flate_plate(eta_0, c_1, c_2, temp_collector_inlet,
         Thermal loss parameter 2.
     temp_collector_inlet: numeric, in °C
         Collectors inlet temperature.
-    delta_temp_n:
+    delta_temp_n: numeric
+        Temperature difference between collector inlet and mean temperature.
     temp_amb: series of numeric, in °C
         Ambient temperature.
     collector_irradiance: series of numeric
