@@ -17,6 +17,7 @@ Contents:
    hot_water_storage
    solar_thermal_collector
    compression_heat_pumps_and_chillers
+   examples
    api
 
 
