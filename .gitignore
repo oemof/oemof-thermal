@@ -58,7 +58,3 @@ target/
 
 # IDE
 .idea
-
-# data from Franzi
-data/
-CSP_results/
