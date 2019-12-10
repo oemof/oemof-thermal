@@ -5,11 +5,26 @@ Compression Heat Pumps and Chillers
 
 Simple calculations for compression heat pumps and chillers.
 
+
+Motivation and possible application
+___________________________________
+
+This module was developed to provide COP calculations
+based on temperatures for energy system optimizations with oemof.solph.
+
+A time series of pre-calculated COPs can be used as input for a transformer
+(an oemof.solph component) in an energy system optimization.
+Discover more possibilities to use this module with our examples:
+https://github.com/oemof/oemof-thermal/tree/dev/examples
+
+The Heat Pump Cycle
+___________________
+
 Compression heat pumps and chillers increase the temperature of a flow using
 a compressor that consumes electric power.
-The inlet heat flux comes from a low temperature heat reservoir (T\_low) and the
+The inlet heat flux comes from a low temperature source (T\_low) and the
 outlet has the temperature level of the high
-temperature heat reservoir (T\_high).
+temperature sink (T\_high).
 The same cycle can be used for heating (heat pump) or
 cooling (chiller).
 
@@ -31,18 +46,42 @@ electric work consumed:
         COP = \frac{\dot{Q}_\mathrm{useful}}{P_\mathrm{el}}
 
 The Carnot efficiency :math:`COP_\mathrm{Carnot}` describes the maximum
-theoretical efficiency.
-It depends on the temperature of the two heat reservoirs.
+theoretical efficiency (ideal process).
+It depends on the temperature difference between source and sink:
 
 .. math::
-        COP_\mathrm{Carnot} = \frac{T_\mathrm{high}}{T_\mathrm{high} - T_\mathrm{low}}
+        COP_\mathrm{Carnot, HP} = \frac{T_\mathrm{high}}{T_\mathrm{high} - T_\mathrm{low}}
 
-To determine the real COP of a machine a factor, the quality grade,
-is applied on the Carnor Efficiency:
+for heat pumps and
+
+.. math::
+        COP_\mathrm{Carnot, chiller} = \frac{T_\mathrm{low}}{T_\mathrm{high} - T_\mathrm{low}}
+
+for chillers.
+
+To determine the COP of a real machine a scale-down factor
+(the quality grade :math:`\eta`)
+is applied on the Carnot efficiency:
 
 .. math::
         COP = \eta \cdot COP_\mathrm{Carnot}
 
+with
+
+.. math::
+        0 \geq \eta \leq 1
+
+Typical values of quality grades are
+0.4 for air-source heat pumps,
+0.55 for ground-source ("brine-to-water") heat pumps using a ground heat exchanger,
+and 0.5 for heat pumps using groundwater as source. [1]_
+
+For high temperature heat pumps Arpagaus finds quality grades
+between 0.4 and 0.6. [2]_
+
+Fig.2 illustrates how the temperature difference affects the COP and
+how the choice of the quality grade allows to
+model different types of heat pumps.
 
 .. figure:: _pics/cop_dependence_on_temp_difference.png
     :width: 70 %
@@ -53,13 +92,14 @@ is applied on the Carnor Efficiency:
     Fig.2: COP dependence on temperature difference
     (Output of example `cop_dependence_on_temperature_difference.py`).
 
+Functions
+_________
 
+These arguments are input to the functions:
 
-These parameters are input to the functions:
-
-    ============================= ============================== ==== =============================
-    symbol                        attribute                      type explanation
-    ============================= ============================== ==== =============================
+    ============================= ============================== =============================
+    symbol                        attribute                      explanation
+    ============================= ============================== =============================
     :math:`COP`                   :py:obj:`cop`                         Coefficient of Performance
 
     :math:`T_\mathrm{high}`       :py:obj:`temp_high`                   Temperature of the high temp. heat reservoir
@@ -71,11 +111,11 @@ These parameters are input to the functions:
     :math:`T_\mathrm{icing}`      :py:obj:`temp_threshold_icing`        Temperature below which icing occurs
 
     :math:`f_\mathrm{icing}`      :py:obj:`factor_icing`                COP reduction caused by icing
-    ============================= ============================== ==== =============================
+    ============================= ============================== =============================
 
 
 
-The Coefficient of Performance (COP) is calculated using `calc_cops()`.
+**The Coefficient of Performance (COP) is calculated using `calc_cops()`**
 
 .. code-block:: python
 
@@ -91,7 +131,7 @@ The Coefficient of Performance (COP) is calculated using `calc_cops()`.
   :start-after:  calc_cops-equations:
   :end-before: Parameters
 
-The maximum cooling capacity can be calculated using `calc_max_Q_dot_chill()`.
+**The maximum cooling capacity can be calculated using `calc_max_Q_dot_chill()`.**
 
 .. code-block:: python
 
@@ -101,7 +141,7 @@ The maximum cooling capacity can be calculated using `calc_max_Q_dot_chill()`.
   :start-after:  calc_max_Q_dot_chill-equations:
   :end-before: Parameters
 
-The maximum heating capacity can be calculated using `calc_max_Q_dot_heat()`.
+**The maximum heating capacity can be calculated using `calc_max_Q_dot_heat()`**
 
 .. code-block:: python
 
@@ -111,7 +151,8 @@ The maximum heating capacity can be calculated using `calc_max_Q_dot_heat()`.
   :start-after:  calc_max_Q_dot_heat-equations:
   :end-before: Parameters
 
-The quality grade at nominal point of operation can be calculated using `calc_chiller_quality_grade()`.
+**The quality grade at nominal point of operation can be calculated using `calc_chiller_quality_grade()`**
+
 Do NOT use this function to determine the input for `calc_cops()`!
 
 .. code-block:: python
@@ -121,3 +162,12 @@ Do NOT use this function to determine the input for `calc_cops()`!
 .. include:: ../src/oemof/thermal/compression_heatpumps_and_chillers.py
   :start-after:  calc_chiller_quality_grade-equations:
   :end-before: Parameters
+
+
+References
+__________
+
+.. [1] VDE-Studie, "Potenziale für Strom im Wärmemarkt bis 2050 - Wärmeversorgung in flexiblen Energieversorgungssystemen mit hohen Anteilen an erneuerbaren Energien " (http://www.energiedialog2050.de/BASE/DOWNLOADS/VDE_ST_ETG_Warmemarkt_RZ-web.pdf)
+
+.. [2] C. Arpagaus, "Hochtemperatur Wärmepumpen"
+
