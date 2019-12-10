@@ -14,22 +14,15 @@ The processing of the irradiance data is done by the pvlib, which calculates the
 
 The efficiency of the collector is calculated with
 
-.. include:: ../src/oemof/thermal/CSP.py
-    :start-after:  calc_eta_c_equation:
+.. include:: ../src/oemof/thermal/flat_plate_collector.py
+    :start-after:  calc_eta_c_flate_plate_equation::
     :end-before: Parameters
-
- with
-
- .. include:: ../src/oemof/thermal/CSP.py
-     :start-after:  calc_iam_equation:
-     :end-before: Parameters
 
 In the end, the irradiance on the collector is multiplied with the efficiency to get the collectors heat.
 
-.. include:: ../src/oemof/thermal/CSP.py
-     :start-after:  csp_precalc_equation:
-     :end-before: functions used
-
+.. include:: ../src/oemof/thermal/flat_plate_collector.py
+     :start-after:  flat_plate_precalc_equation:
+     :end-before: Parameters
 The three values :math:`Q_{coll}`, :math:`\eta_C` and :math:`E_{coll}` are returned. Losses, which occur after the heat absorption in the collector (e.g. losses in pipes) have to be taken into account in the component, which uses the precalculation (see the example).
 
 The following table shows the variables used in the precalculation:
