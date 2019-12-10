@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- encoding: utf-8 -*-
 
-from setuptools import find_packages, setup
+from setuptools import find_namespace_packages, setup
 import os
 
 
@@ -19,7 +19,8 @@ setup(name='oemof.thermal',
       ),
       url='https://github.com/oemof/oemof-thermal',
       long_description=read('README.rst'),
-      packages=["oemof"] + ["oemof." + p for p in find_packages("src/oemof")],
+      packages=["oemof"] + [
+          "oemof." + p for p in find_namespace_packages("src/oemof")],
       package_dir={"": "src"},
       namespace_package=['oemof.thermal'],
       install_requires=['numpy >= 1.7.0, < 1.17',
