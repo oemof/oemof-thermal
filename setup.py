@@ -20,7 +20,7 @@ setup(name='oemof.thermal',
       url='https://github.com/oemof/oemof-thermal',
       long_description=read('README.rst'),
       packages=["oemof"] + [
-          "oemof." + p for p in find_packages("src/oemof/")],
+          "oemof." + p for p in find_packages("src/oemof")],
       package_dir={"": "src"},
       namespace_package=['oemof.thermal'],
       install_requires=['numpy >= 1.7.0, < 1.17',
