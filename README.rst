@@ -15,7 +15,7 @@ Quickstart
 
 Documentation
 =============
-https://oemof-heat-components.readthedocs.io
+https://oemof-thermal.readthedocs.io
 
 Contributing
 ============
