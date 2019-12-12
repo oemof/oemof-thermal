@@ -20,7 +20,7 @@ def plot_collector_heat(data_precalc, periods, eta_0):
     fig, ax = plt.subplots()
     ax.plot(t, heat_calc, label='CSP precalculation')
     ax.plot(t, heat_compare, label='constant efficiency')
-    ax.set(xlabel='time (h)', ylabel='Q_coll in kWh',
+    ax.set(xlabel='time in h', ylabel='Q_coll in kWh',
            title='Heat of the collector')
     ax.grid()
     ax.legend()
