@@ -3,14 +3,14 @@
 ~~~~~~~~~~~~~~~~~~~~~~~
 Solar thermal collector
 ~~~~~~~~~~~~~~~~~~~~~~~
-The precalculations for the solar thermal collector calculate the heat of the solar collector based on the direct horizontal (DHI) and the diffuse irradiance and information about the collector and the location. The following scheme shows the calculation procedure.
+The precalculations for the solar thermal collector calculate the heat of the solar collector based on the direct horizontal and the diffuse irradiance and information about the collector and the location. The following scheme shows the calculation procedure.
 
 .. image:: _pics/scheme.png
     :width: 100 %
     :alt: scheme.png
     :align: center
 
-The processing of the irradiance data is done by the pvlib, which calculates the direct irradiance on the collector according to the azimuth and tilt angle of the collector.
+The processing of the irradiance data is done by the pvlib, which calculates the direct and diffuse irradiance on the collector area according to the azimuth and tilt angle of the collector.
 
 The efficiency of the collector is calculated with
 
@@ -80,5 +80,8 @@ The following table shows the variables used in the precalculation:
 
 The following figure shows...
 
-FIGURE
+.. image:: _pics/compare_precalculations.png
+    :width: 100 %
+    :alt: scheme.png
+    :align: center
 
