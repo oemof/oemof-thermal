@@ -25,7 +25,7 @@ in your virtualenv. In your code, you can import modules like this, e.g.
 
 .. code:: python
 
-from oemof.thermal import concentrating_solar_power
+    from oemof.thermal import concentrating_solar_power
 
 
 Documentation
@@ -38,7 +38,7 @@ Contributing
 
 Everybody is welcome to contribute to the development of oemof.thermal. The `developer
 guidelines of oemof <https://oemof.readthedocs.io/en/stable/developing_oemof.html>`_
-are in most parts the same applicable to oemof.thermal.
+are in most parts equally applicable to oemof.thermal.
 
 License
 =======
