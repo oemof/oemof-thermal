@@ -27,6 +27,8 @@ in your virtualenv. In your code, you can import modules like e.g.:
 
     from oemof.thermal import concentrating_solar_power
 
+Also, have a look at the
+`examples <https://github.com/oemof/oemof-thermal/tree/dev/examples>`_.
 
 Documentation
 =============
