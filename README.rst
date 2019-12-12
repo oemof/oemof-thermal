@@ -2,7 +2,9 @@
 oemof.thermal
 #############
 
-Thermal energy components for oemof
+This package provides tools to model thermal energy components as an extension of
+oemof.solph, e.g. compression heat pumps, concentrating solar plants, thermal
+storages and solar thermal collectors.
 
 .. contents::
 
@@ -13,12 +15,30 @@ About
 Quickstart
 ==========
 
+Install oemof.thermal by running
+
+.. code:: bash
+
+    pip install oemof.thermal
+
+in your virtualenv. In your code, you can import modules like this, e.g.
+
+.. code:: python
+
+from oemof.thermal import concentrating_solar_power
+
+
 Documentation
 =============
-https://oemof-thermal.readthedocs.io
+
+Find the documentation at `<https://oemof-thermal.readthedocs.io>`_.
 
 Contributing
 ============
+
+Everybody is welcome to contribute to the development of oemof.thermal. The `developer
+guidelines of oemof <https://oemof.readthedocs.io/en/stable/developing_oemof.html>`_
+are in most parts the same applicable to oemof.thermal.
 
 License
 =======
