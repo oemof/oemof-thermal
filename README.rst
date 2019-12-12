@@ -21,7 +21,7 @@ Install oemof.thermal by running
 
     pip install oemof.thermal
 
-in your virtualenv. In your code, you can import modules like this, e.g.
+in your virtualenv. In your code, you can import modules like e.g.:
 
 .. code:: python
 
