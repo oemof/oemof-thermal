@@ -4,6 +4,28 @@
 Concentrating solar power
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Module to calculate the usable heat of a parabolic trough collector
+
+Motivation and possible application
+___________________________________
+
+This module was developed to provide the heat of a parabolic trough collector
+based on temperatures and collectors location, tilt and azimuth for energy
+system optimizations with oemof.solph.
+
+In
+https://github.com/oemof/oemof-thermal/tree/dev/examples
+you can find an example, how to use the modul to calculate a CSP power plant.
+A time series of pre-calculated heat can be used as input for a source
+(an oemof.solph component) and a transformer (an oemof.solph component) can be
+used to hold electrical power consumption and further thermal losses of the
+collector in an energy system optimization.
+In addition, you will find an example, which compares this precalculation fix a
+calculation with a constant efficiency.
+
+Concecept
+_________
+
 The precalculations for the concentrating solar power calculate the heat of the
 solar collector based on the direct horizontal irradiance (DHI) or the direct
 normal irradiance (DNI) and information about the collector and the location.
@@ -18,19 +40,19 @@ The processing of the irradiance data is done by the pvlib, which calculates
 the direct irradiance on the collector. This irradiance is reduced by dust and
 dirt on the collector with:
 
-.. include:: ../src/oemof/thermal/CSP.py
+.. include:: ../src/oemof/thermal/concentrating_solar_power.py
   :start-after:  calc_collector_irradiance_equation:
   :end-before: Parameters
 
 The efficiency of the collector is calculated with
 
-.. include:: ../src/oemof/thermal/CSP.py
+.. include:: ../src/oemof/thermal/concentrating_solar_power.py
   :start-after:  calc_eta_c_equation:
   :end-before: Parameters
 
 with
 
-.. include:: ../src/oemof/thermal/CSP.py
+.. include:: ../src/oemof/thermal/concentrating_solar_power.py
   :start-after:  calc_iam_equation:
   :end-before: Parameters
 
@@ -38,16 +60,19 @@ with
 In the end, the irradiance on the collector is multiplied with the efficiency
 to get the collectors heat.
 
-.. include:: ../src/oemof/thermal/CSP.py
+.. include:: ../src/oemof/thermal/concentrating_solar_power.py
   :start-after:  csp_precalc_equation:
   :end-before: functions used
 
 The three values :math:`Q_{coll}`, :math:`\eta_C` and :math:`E_{coll}` are
 returned. Losses, which occur after the heat absorption in the collector
-(e.g. losses in pipes) have to be taken into account in the component, which
-uses the precalculation (see the example).
+(e.g. losses in pipes) have to be taken into account in a later step
+(see the example).
 
-The following table shows the variables used in the precalculation:
+Functions
+_________
+
+These arguments are used in the formulas of the function:
 
     ========================= =================================================== ===========
     symbol                    argument                                            explanation
@@ -80,6 +105,13 @@ The following table shows the variables used in the precalculation:
 
     ========================= =================================================== ===========
 
+Please see the API for all Parameters, which have to be provided, also the ones
+which are not part of the described formulas.
+The needed dataframe must hold columns for a date, the ambient temperature and
+the irradiance. Depending on method, this must be the horizontal direct
+irradiance or the direct normal irradiance. There are parameters to define,
+which are the column names.
+
 .. code-block:: python
 
     data_precalc = csp_precalc(
@@ -98,3 +130,11 @@ this function in comparison to the heat calculated with a fix efficiency.
    :width: 100 %
    :alt: compare_precalculations.png
    :align: center
+
+References
+__________
+
+
+.. include:: ../src/oemof/thermal/concentrating_solar_power.py
+  :start-after: Reference**
+  :end-before: """
