@@ -38,7 +38,7 @@ data_precalc = csp_precalc(dataframe, periods,
                            collector_tilt, collector_azimuth, x, a_1, a_2,
                            eta_0, c_1, c_2,
                            temp_collector_inlet, temp_collector_outlet,
-                           date_col='Datum')
+                           date_col='Datum', temp_amb_col='t_amb')
 
 heat_calc = data_precalc['collector_heat']
 irradiance_on_collector = data_precalc['collector_irradiance'] / (x**1.5)
@@ -67,7 +67,7 @@ for i in range(len(temp_amb_series)):
         collector_tilt, collector_azimuth, x, a_1, a_2,
         eta_0, c_1, c_2,
         temp_collector_inlet, temp_collector_outlet,
-        date_col='Datum')
+        date_col='Datum', temp_amb_col='t_amb')
 
     df_result = df_result.append(data_precalc_temp_amb, ignore_index=True)
 

@@ -39,11 +39,10 @@ data_precalc = csp_precalc(dataframe, periods,
                            collector_tilt, collector_azimuth, x, a_1, a_2,
                            eta_0, c_1, c_2,
                            temp_collector_inlet, temp_collector_outlet,
-                           date_col='Datum')
+                           date_col='Datum', temp_amb_col='t_amb')
 
 data_precalc['ES_load_actual_entsoe_power_statistics'] = list(
     dataframe['ES_load_actual_entsoe_power_statistics'].iloc[:periods])
-data_precalc.to_csv('CSP_results/precalcs.csv')
 
 # regular oemof_system #
 
@@ -142,4 +141,4 @@ thermal_bus = outputlib.views.node(energysystem.results['main'], 'thermal')
 df = pd.DataFrame()
 df = df.append(collector['sequences'])
 df = df.join(thermal_bus['sequences'], lsuffix='_1')
-df.to_csv('CSP_results/CSP_results.csv')
+df.to_csv('CSP_results.csv')
