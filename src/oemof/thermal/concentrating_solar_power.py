@@ -68,7 +68,7 @@ def csp_precalc(df, periods,
         Describes the name of the column in the dataframe df.
     irradiance_col: string, default: 'E_dir_hor'
         Describes the name of the column in the dataframe df.
-    temp_amb_col: string, default: 't_amb_col'
+    temp_amb_col: string, default: 'temp_amb'
         Describes the name of the column in the dataframe df.
 
     Returns
