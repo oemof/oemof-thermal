@@ -9,7 +9,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 from oemof import solph
 from oemof.tools import economics
-from oemof.thermal.CSP import csp_precalc
+from oemof.thermal.concentrating_solar_power import csp_precalc
 import pandas as pd
 import oemof.outputlib as outputlib
 

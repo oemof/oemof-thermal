@@ -3,7 +3,7 @@ example, which shows the difference between the new approach and a fix
 efficiency
 """
 
-from oemof.thermal.CSP import csp_precalc
+from oemof.thermal.concentrating_solar_power import csp_precalc
 import pandas as pd
 import matplotlib.pyplot as plt
 
