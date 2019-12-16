@@ -131,7 +131,7 @@ precalc_data = flat_plate_precalc(
     date_col='hour',
     irradiance_global_col='global_horizontal_W_m2',
     irradiance_diffuse_col='diffuse_horizontal_W_m2',
-    t_amb_col='t_amb',
+    temp_amb_col='temp_amb',
 )
 
 precalc_data.to_csv(
