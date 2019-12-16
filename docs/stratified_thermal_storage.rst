@@ -25,7 +25,7 @@ The equation describing the change of storage content is the following:
 .. math::
   Q_t = Q_{t-1} \Big(1- U \frac{4}{D\rho c}\Delta t\Big)
   - U \frac{4Q_N}{D\rho c \Delta T_{HC}}\Delta T_{C0}\Delta t
-  - U \frac{\pi D^2}{4}\Big(\Delta T_{H0} + \Delta T_{C0}\Big)
+  - U \frac{\pi D^2}{4}\Big(\Delta T_{H0} + \Delta T_{C0}\Big)\Delta t
   + \dot{Q}_{in,t}\eta_{in}\Delta t - \frac{\dot{Q}_{out,t}}{\eta_{out}}\Delta t,
 
 which is of the form
@@ -75,7 +75,7 @@ These parameters are part of the stratified thermal storage:
 
     :math:`T_H`               :py:obj:`temp_h`                           Hot temperature level
 
-    :math:`T_C`               :py:obj:`temp_c`                           Cold temperature
+    :math:`T_C`               :py:obj:`temp_c`                           Cold temperature level
 
     :math:`T_0`               :py:obj:`temp_env`                         Environment temperature
                                                                          timeseries
@@ -105,7 +105,7 @@ These parameters are part of the stratified thermal storage:
                                                                          of nominal storage
                                                                          capacity
 
-    :math:`\delta`            :py:obj:`fixed_absolute_losses`            Fixed absolue losses
+    :math:`\delta`            :py:obj:`fixed_absolute_losses`            Fixed absolute losses
                                                                          independent of storage
                                                                          content or nominal
                                                                          storage capacity
