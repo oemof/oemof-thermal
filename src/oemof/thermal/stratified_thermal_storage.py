@@ -71,21 +71,22 @@ def calculate_storage_dimensions(height, diameter):
     surface : numeric
         Total surface of storage [m2]
     """
-    volume = diameter**2 * 1 / 4 * np.pi * height
-    surface = np.pi * diameter * height + np.pi * diameter**2 * 0.5
+    volume = 0.25 * np.pi * diameter ** 2 * height
+    surface = np.pi * diameter * height + 0.5 * np.pi * diameter ** 2
 
     return volume, surface
 
 
-def calculate_capacities(volume, temp_h, temp_c, nonusable_storage_volume,
-                         heat_capacity=4196, density=971.6):
+def calculate_capacities(
+    volume, temp_h, temp_c, nonusable_storage_volume, heat_capacity=4196, density=971.6
+):
     r"""
-    Calculates the nominal storage capacity, surface area, minimum
+    Calculates the nominal storage capacity, minimum
     and maximum storage level of a stratified thermal storage.
 
     .. calculate_capacities-equations:
 
-    :math:`Q_N = \pi \frac{d^2}{4} \cdot h \cdot c \cdot \rho \cdot \left( T_{H} - T_{C} \right)`
+    :math:`Q_N = V \cdot c \cdot \rho \cdot \left( T_{H} - T_{C} \right)`
 
     :math:`Q_{max} = Q_N \cdot (1-v_{nonusable}/2)`
 
@@ -94,7 +95,7 @@ def calculate_capacities(volume, temp_h, temp_c, nonusable_storage_volume,
     Parameters
     ----------
     volume :numeric
-        Volume of the storage[m]
+        Volume of the storage [m3]
 
     temp_h : numeric
         Temperature of hot storage medium [deg C]
@@ -124,16 +125,25 @@ def calculate_capacities(volume, temp_h, temp_c, nonusable_storage_volume,
         Minimal storage content relative to nominal storage capacity [-]
 
     """
-    nominal_storage_capacity = 1 / 3600 * volume * heat_capacity * density * (temp_h - temp_c)
-    nominal_storage_capacity *= 1e-6  # [Wh] to [MWh]
-    max_storage_level = (1 - nonusable_storage_volume / 2)
-    min_storage_level = nonusable_storage_volume / 2
+    nominal_storage_capacity = volume * heat_capacity * density * (temp_h - temp_c)
+    nominal_storage_capacity *= 1 / 3600  # J to Wh
+    nominal_storage_capacity *= 1e-6  # Wh to MWh
+    max_storage_level = 1 - 0.5 * nonusable_storage_volume
+    min_storage_level = 0.5 * nonusable_storage_volume
 
     return nominal_storage_capacity, max_storage_level, min_storage_level
 
 
-def calculate_losses(u_value, diameter, temp_h, temp_c, temp_env,
-                     time_increment=1, heat_capacity=4180, density=971.78):
+def calculate_losses(
+    u_value,
+    diameter,
+    temp_h,
+    temp_c,
+    temp_env,
+    time_increment=1,
+    heat_capacity=4180,
+    density=971.78,
+):
     r"""
     Calculates loss rate and fixed losses for a stratified thermal storage.
 
@@ -191,14 +201,14 @@ def calculate_losses(u_value, diameter, temp_h, temp_c, temp_env,
     )
 
     fixed_losses_relative = (
-        4 * u_value * 1 / (diameter * density * heat_capacity)
-        * (temp_c - temp_env) * time_increment
+        4 * u_value * (temp_c - temp_env) * 1 / (diameter * density * heat_capacity)
+        * time_increment
     )
 
     fixed_losses_absolute = (
-        np.pi * diameter**2 * 0.25 * (temp_h + temp_c - 2 * temp_env) * time_increment
+        0.25 * np.pi * diameter ** 2 * (temp_h + temp_c - 2 * temp_env) * time_increment
     )
 
-    fixed_losses_absolute *= 1e-6  # [Wh] to [MWh]
+    fixed_losses_absolute *= 1e-6  # Wh to MWh
 
     return loss_rate, fixed_losses_relative, fixed_losses_absolute
