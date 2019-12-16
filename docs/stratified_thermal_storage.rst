@@ -4,6 +4,10 @@
 Stratified thermal storage
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
+Concept
+-------
+
 A simplified 2-zone-model of a stratified thermal energy storage.
 
 .. 	image:: _pics/stratified_thermal_storage.svg
@@ -43,6 +47,11 @@ with
 
   \delta &= U \frac{\pi D^2}{4}\Big(\Delta T_{H0} + \Delta T_{C0}\Big) \Delta t.
 
+
+The three terms represent constant heat losses through the top and bottom surfaces
+(:math:`\delta`), losses via the lateral surface (:math:`\gamma`) depending on the
+height of the storage and losses depending on the part of that surface belonging to the
+hot part of the water body that depend on the state of charge (:math:`\beta`).
 
 In the case of investment, the diameter d is given and the height can be
 adapted to adapt the nominal capacity of the storage. With this assumption,
@@ -116,6 +125,9 @@ These parameters are part of the stratified thermal storage:
 
     ========================= ===================================== ==== ===========
 
+
+Usage
+-----
 
 The thermal transmittance is precalculated using `calculate_u_value`.
 
