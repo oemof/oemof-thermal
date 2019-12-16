@@ -17,13 +17,13 @@ In
 https://github.com/oemof/oemof-thermal/tree/dev/examples
 you can find an example, how to use the modul to calculate a CSP power plant.
 A time series of pre-calculated heat can be used as input for a source
-(an oemof.solph component) and a transformer (an oemof.solph component) can be
+(an oemof.solph component), and a transformer (an oemof.solph component) can be
 used to hold electrical power consumption and further thermal losses of the
 collector in an energy system optimization.
 In addition, you will find an example, which compares this precalculation fix a
 calculation with a constant efficiency.
 
-Concecept
+Concept
 _________
 
 The precalculations for the concentrating solar power calculate the heat of the
@@ -108,7 +108,7 @@ These arguments are used in the formulas of the function:
 Please see the API for all Parameters, which have to be provided, also the ones
 which are not part of the described formulas.
 The needed dataframe must hold columns for a date, the ambient temperature and
-the irradiance. Depending on method, this must be the horizontal direct
+the irradiance. Depending on the method, this must be the horizontal direct
 irradiance or the direct normal irradiance. There are parameters to define,
 which are the column names.
 
