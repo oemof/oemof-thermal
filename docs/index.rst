@@ -11,7 +11,7 @@ Contents:
 .. toctree::
    :maxdepth: 1
 
-   overview
+   getting_started
    concentrating_solar_power
    heat_pump
    hot_water_storage
