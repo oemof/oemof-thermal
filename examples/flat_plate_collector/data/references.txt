@@ -1,5 +1,0 @@
-Daten:
-Wetter: TMY, Daten vom GFZ
-Kältebedarf: synthetisch erzeugt. Bedarf ist exponentiell abhängig von der Außentemperatur. Die Parameter der Kunktion wurden durch Fitting der Omanzeitreihe erstellt.
-Strombedarf: Ensoe-E Zeitreihe für 2010 "ES_load_actual_entsoe_power_statistics". Einheit mit kW festgelegt, da es ja hauptsächlich um den Verlauf geht.
-Wärmevedarf: random Zahlen
