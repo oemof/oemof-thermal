@@ -3,8 +3,6 @@ import pandas as pd
 import numpy as np
 
 from oemof.thermal.stratified_thermal_storage import (calculate_storage_u_value,
-                                                      calculate_storage_dimensions,
-                                                      calculate_capacities,
                                                       calculate_losses)
 from oemof.solph import (Source, Sink, Bus, Flow,
                          Investment, Model, EnergySystem)
@@ -24,19 +22,6 @@ u_value = calculate_storage_u_value(
     input_data['alpha_inside'],
     input_data['alpha_outside'])
 
-volume, surface = calculate_storage_dimensions(
-    input_data['height'],
-    input_data['diameter']
-)
-
-nominal_storage_capacity, max_storage_level, min_storage_level = calculate_capacities(
-    volume,
-    input_data['temp_h'],
-    input_data['temp_c'],
-    input_data['nonusable_storage_volume'],
-    input_data['heat_capacity'],
-    input_data['density'])
-
 loss_rate, fixed_losses_relative, fixed_losses_absolute = calculate_losses(
     u_value,
     input_data['diameter'],
@@ -46,19 +31,16 @@ loss_rate, fixed_losses_relative, fixed_losses_absolute = calculate_losses(
 
 maximum_heat_flow_charging = 0.9
 maximum_heat_flow_discharging = 0.9
+max_storage_level = 0.975
+min_storage_level = 0.025
 
 
 def print_results():
     parameter = {
         'EQ-cost [Eur/]': 0,
         'U-value [W/(m2*K)]': u_value,
-        'Volume [m3]': volume,
-        'Surface [m2]': surface,
-        'Nominal storage capacity [MWh]': nominal_storage_capacity,
         'Max. heat flow charging [MW]': maximum_heat_flow_charging,
         'Max. heat flow discharging [MW]': maximum_heat_flow_discharging,
-        'Max storage level [-]': max_storage_level,
-        'Min storage_level [-]': min_storage_level,
         'Loss rate [-]': loss_rate,
         'Fixed relative losses [-]': fixed_losses_relative,
         'Fixed absolute losses [MWh]': fixed_losses_absolute,
@@ -71,7 +53,7 @@ def print_results():
     print(dash)
 
     for name, param in parameter.items():
-        print('{:>32s}{:>15.3f}'.format(name, param))
+        print('{:>32s}{:>15.5f}'.format(name, param))
 
     print(dash)
 

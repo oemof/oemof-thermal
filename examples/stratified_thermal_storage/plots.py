@@ -74,7 +74,7 @@ def print_results():
     print(dash)
 
     for name, param in parameter.items():
-        print('{:>32s}{:>15.9f}'.format(name, param))
+        print('{:>32s}{:>15.5f}'.format(name, param))
 
     print(dash)
 
