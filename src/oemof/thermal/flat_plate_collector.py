@@ -11,15 +11,24 @@ import pvlib
 import pandas as pd
 
 
-def flat_plate_precalc(df, periods,
-                       lat, long, tz,
-                       collector_tilt, collector_azimuth,
-                       eta_0, c_1, c_2,
-                       temp_collector_inlet, delta_temp_n,
-                       date_col='date',
-                       irradiance_global_col='ghi',
-                       irradiance_diffuse_col='dhi',
-                       temp_amb_col='temp_amb'):
+def flat_plate_precalc(
+    df,
+    periods,
+    lat,
+    long,
+    tz,
+    collector_tilt,
+    collector_azimuth,
+    eta_0,
+    c_1,
+    c_2,
+    temp_collector_inlet,
+    delta_temp_n,
+    date_col='date',
+    irradiance_global_col='ghi',
+    irradiance_diffuse_col='dhi',
+    temp_amb_col='temp_amb',
+):
     """
     Calculates collectors efficiency and irradiance of a flat plate collector.
 
@@ -70,25 +79,29 @@ def flat_plate_precalc(df, periods,
 
     """
 
-    date_time_index = pd.date_range(df.loc[0, date_col], periods=periods,
-                                    freq='H', tz=tz)
+    date_time_index = pd.date_range(
+        df.loc[0, date_col], periods=periods, freq='H', tz=tz
+    )
     datainput = df.iloc[:periods]
 
-    data = pd.DataFrame({'date': date_time_index,
-                         'ghi': datainput[irradiance_global_col],
-                         'dhi': datainput[irradiance_diffuse_col],
-                         'temp_amb': datainput[temp_amb_col]})
+    data = pd.DataFrame(
+        {
+            'date': date_time_index,
+            'ghi': datainput[irradiance_global_col],
+            'dhi': datainput[irradiance_diffuse_col],
+            'temp_amb': datainput[temp_amb_col],
+        }
+    )
 
     data.set_index('date', inplace=True)
 
     solposition = pvlib.solarposition.get_solarposition(
-        time=date_time_index,
-        latitude=lat,
-        longitude=long)
+        time=date_time_index, latitude=lat, longitude=long
+    )
 
-    dni = pvlib.irradiance.dni(ghi=data['ghi'],
-                               dhi=data['dhi'],
-                               zenith=solposition['apparent_zenith'])
+    dni = pvlib.irradiance.dni(
+        ghi=data['ghi'], dhi=data['dhi'], zenith=solposition['apparent_zenith']
+    )
 
     total_irradiation = pvlib.irradiance.get_total_irradiance(
         surface_tilt=collector_tilt,
@@ -97,13 +110,20 @@ def flat_plate_precalc(df, periods,
         solar_azimuth=solposition['azimuth'],
         dni=dni.fillna(0),  # fill NaN values with '0'
         ghi=data['ghi'],
-        dhi=data['dhi'])
+        dhi=data['dhi'],
+    )
 
     data['col_ira'] = total_irradiation['poa_global']
 
     eta_c = calc_eta_c_flate_plate(
-        eta_0, c_1, c_2, temp_collector_inlet, delta_temp_n, data['temp_amb'],
-        total_irradiation['poa_global'])
+        eta_0,
+        c_1,
+        c_2,
+        temp_collector_inlet,
+        delta_temp_n,
+        data['temp_amb'],
+        total_irradiation['poa_global'],
+    )
     data['eta_c'] = eta_c
     collectors_heat = eta_c * total_irradiation['poa_global']
     data["collectors_heat"] = collectors_heat
@@ -111,8 +131,15 @@ def flat_plate_precalc(df, periods,
     return data
 
 
-def calc_eta_c_flate_plate(eta_0, c_1, c_2, temp_collector_inlet,
-                           delta_temp_n, temp_amb, collector_irradiance):
+def calc_eta_c_flate_plate(
+    eta_0,
+    c_1,
+    c_2,
+    temp_collector_inlet,
+    delta_temp_n,
+    temp_amb,
+    collector_irradiance,
+):
     """
     Calculates collectors efficiency
 
@@ -150,8 +177,11 @@ def calc_eta_c_flate_plate(eta_0, c_1, c_2, temp_collector_inlet,
     eta_c = pd.Series()
     for index, value in collector_irradiance.items():
         if value > 0:
-            eta = eta_0 - c_1 * delta_t[index] / value - c_2 * delta_t[
-                index] ** 2 / value
+            eta = (
+                eta_0
+                - c_1 * delta_t[index] / value
+                - c_2 * delta_t[index] ** 2 / value
+            )
             if eta > 0:
                 eta_c[index] = eta
             else:
