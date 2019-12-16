@@ -3,20 +3,23 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
    
-Welcome to the development of heat components for oemof!
-========================================================
+Welcome oemof-thermal's documentation!
+======================================
 
 Contents:
 
 .. toctree::
    :maxdepth: 1
 
+
    getting_started
    concentrating_solar_power
-   heat_pump
    hot_water_storage
    solar_thermal_collector
+   compression_heat_pumps_and_chillers
+   examples
    api
+
 
 
 Indices and tables
