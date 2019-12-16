@@ -30,7 +30,8 @@ def flat_plate_precalc(
     temp_amb_col='temp_amb',
 ):
     """
-    Calculates collectors efficiency and irradiance of a flat plate collector.
+    Calculates collectors heat, efficiency and irradiance
+    of a flat plate collector.
 
     ..flat_plate_precalc_equation:
 
@@ -40,7 +41,7 @@ def flat_plate_precalc(
     ----------
     df: dataframe
         Holds values for time, the global and diffuse horizontal irradiance and
-        the ambient temp (in Celsius degrees).
+        the ambient temperature (in Celsius degrees).
     periods: numeric
         Defines the number of timesteps.
     lat, long: numeric

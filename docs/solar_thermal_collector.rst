@@ -3,14 +3,14 @@
 ~~~~~~~~~~~~~~~~~~~~~~~
 Solar thermal collector
 ~~~~~~~~~~~~~~~~~~~~~~~
-The precalculations for the solar thermal collector calculate the heat of the solar collector based on the direct horizontal and the diffuse irradiance and information about the collector and the location. The following scheme shows the calculation procedure.
+The precalculations for the solar thermal collector calculate the heat of the solar collector based on global and diffuse horizontal irradiance and information about the collector and the location. The following scheme shows the calculation procedure.
 
 .. image:: _pics/scheme.png
     :width: 100 %
     :alt: scheme.png
     :align: center
 
-The processing of the irradiance data is done by the pvlib, which calculates the direct and diffuse irradiance on the collector area according to the azimuth and tilt angle of the collector.
+The processing of the irradiance data is done by the pvlib, which calculates the total in-plane irradiance according to the azimuth and tilt angle of the collector.
 
 The efficiency of the collector is calculated with
 
@@ -42,6 +42,8 @@ The following table shows the variables used in the precalculation:
         :math:`\Delta T`          :py:obj:`delta_t`                                   Temperature difference (collector to ambience)
 
         :math:`\T_{collector in}` :py:obj:`temp_collector_inlet`                      Collectors inlet temperature
+
+        :math:`\{\Delta T}_n`     :py:obj:`delta_temp_n`                              Temperature difference between collector inlet and mean temperature.
 
         :math:`\T_{amb}`          :py:obj:`temp_amb`                                  Ambient temperature
 
