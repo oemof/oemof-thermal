@@ -24,6 +24,7 @@ def plot_collector_heat(data_precalc, periods, eta_0):
            title='Heat of the collector')
     ax.grid()
     ax.legend()
+    plt.show()
     plt.savefig('compare_precalculations.png')
 
     return
