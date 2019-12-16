@@ -149,11 +149,11 @@ def calculate_losses(
 
     .. calculate_losses-equations:
 
-    :math:`\beta = U \frac{4}{D\rho c}\Delta t`
+    :math:`\beta = U \frac{4}{d\rho c}\Delta t`
 
-    :math:`\gamma = U \frac{4}{D\rho c \Delta T_{HC}}\Delta T_{C0}\Delta t`
+    :math:`\gamma = U \frac{4}{d\rho c \Delta T_{HC}}\Delta T_{C0}\Delta t`
 
-    :math:`\delta = U \frac{\pi D^2}{4}\Big(\Delta T_{H0} + \Delta T_{C0}\Big)\Delta t`
+    :math:`\delta = U \frac{\pi d^2}{4}\Big(\Delta T_{H0} + \Delta T_{C0}\Big)\Delta t`
 
     Parameters
     ----------

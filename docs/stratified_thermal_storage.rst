@@ -27,9 +27,9 @@ A simplified 2-zone-model of a stratified thermal energy storage.
 The equation describing the change of storage content is the following:
 
 .. math::
-  Q_t = Q_{t-1} \Big(1- U \frac{4}{D\rho c}\Delta t\Big)
-  - U \frac{4Q_N}{D\rho c \Delta T_{HC}}\Delta T_{C0}\Delta t
-  - U \frac{\pi D^2}{4}\Big(\Delta T_{H0} + \Delta T_{C0}\Big)\Delta t
+  Q_t = Q_{t-1} \Big(1- U \frac{4}{d\rho c}\Delta t\Big)
+  - U \frac{4Q_N}{d\rho c \Delta T_{HC}}\Delta T_{C0}\Delta t
+  - U \frac{\pi d^2}{4}\Big(\Delta T_{H0} + \Delta T_{C0}\Big)\Delta t
   + \dot{Q}_{in,t}\eta_{in}\Delta t - \frac{\dot{Q}_{out,t}}{\eta_{out}}\Delta t,
 
 which is of the form
@@ -41,11 +41,11 @@ which is of the form
 with
 
 .. math::
-  \beta &= U \frac{4}{D\rho c}\Delta t
+  \beta &= U \frac{4}{d\rho c}\Delta t
 
-  \gamma &= U \frac{4}{D\rho c \Delta T_{HC}}\Delta T_{C0}\Delta t
+  \gamma &= U \frac{4}{d\rho c \Delta T_{HC}}\Delta T_{C0}\Delta t
 
-  \delta &= U \frac{\pi D^2}{4}\Big(\Delta T_{H0} + \Delta T_{C0}\Big) \Delta t.
+  \delta &= U \frac{\pi d^2}{4}\Big(\Delta T_{H0} + \Delta T_{C0}\Big) \Delta t.
 
 
 The three terms represent constant heat losses through the top and bottom surfaces
@@ -53,7 +53,7 @@ The three terms represent constant heat losses through the top and bottom surfac
 height of the storage and losses depending on the part of that surface belonging to the
 hot part of the water body that depend on the state of charge (:math:`\beta`).
 
-In the case of investment, the diameter d is given and the height can be
+In the case of investment, the diameter :math:`d` is given and the height can be
 adapted to adapt the nominal capacity of the storage. With this assumption,
 all relations stay linear.
 
