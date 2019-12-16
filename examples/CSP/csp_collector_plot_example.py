@@ -53,6 +53,7 @@ ax.set(xlabel='time (h)', ylabel='Q_coll',
        title='Heat of the collector')
 ax.grid()
 ax.legend()
+plt.show()
 plt.savefig('compare_precalculations.png')
 
 # plot showing the difference between a constant efficiency and the efficiency
@@ -80,4 +81,5 @@ ax.set(xlabel='ambient temperature', ylabel='eta_collector',
        title='collectors efficiency')
 ax.grid()
 ax.legend()
+plt.show()
 plt.savefig('compare_temp_dependency.png')
