@@ -243,5 +243,5 @@ df.to_csv(
     sep=';',
 )
 
-
+# Example plot
 plot_collector_heat(precalc_data, periods, eta_0)

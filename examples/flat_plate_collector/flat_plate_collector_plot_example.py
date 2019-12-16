@@ -1,5 +1,5 @@
 """
-Example, which shows the difference between the new approach and a fix efficiency.
+Example plots which can be called by the flat_plate_collector_example.py
 """
 
 import pandas as pd
