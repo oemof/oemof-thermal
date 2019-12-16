@@ -198,12 +198,14 @@ def calculate_losses(
     """
     loss_rate = (
         4 * u_value * 1 / (diameter * density * heat_capacity) * time_increment
+        * 3600  # Ws to Wh
     )
 
     fixed_losses_relative = (
         4 * u_value * (temp_c - temp_env)
         * 1 / ((diameter * density * heat_capacity) * (temp_h - temp_c))
         * time_increment
+        * 3600  # Ws to Wh
     )
 
     fixed_losses_absolute = (
