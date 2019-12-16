@@ -54,16 +54,26 @@ The following table shows the variables used in the precalculation:
 
 .. code-block:: python
 
-     data_precalc = csp_precalc(
-         dataframe, periods,
-         latitude, longitude, timezone,
-         collector_tilt, collector_azimuth, x, a_1, a_2,
-         eta_0, c_1, c_2,
-         temp_collector_inlet, temp_collector_outlet,
-         date_col='Datum'
-         )
+    precalc_data = flat_plate_precalc(
+        dataframe,
+        periods,
+        latitude,
+        longitude,
+        timezone,
+        collector_tilt,
+        collector_azimuth,
+        eta_0,
+        c_1,
+        c_2,
+        temp_collector_inlet,
+        delta_temp_n,
+        date_col='hour',
+        irradiance_global_col='global_horizontal_W_m2',
+        irradiance_diffuse_col='diffuse_horizontal_W_m2',
+        temp_amb_col='temp_amb',
+    )
 
-The following figure shows...
+The following figure shows the heat provided by the collector calculated with this function in comparison to the heat calculated with a fix efficiency.
 
 .. image:: _pics/compare_precalculations.png
     :width: 100 %
