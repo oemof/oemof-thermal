@@ -11,6 +11,14 @@ storages and solar thermal collectors.
 About
 =====
 
+The aim of oemof.thermal is to create a toolbox for building models of
+thermal energy systems. Modeling thermal energy systems requires specific preprocessing
+and postprocessing steps whose detail exceeds the generic formulation of components in
+oemof.solph. Currently, most of the functions collected here are intended to be used
+together with oemof.solph. However, in some instances they may be useful independently
+of oemof.solph.
+
+oemof.thermal is rather new and under active development. Contributions are welcome.
 
 Quickstart
 ==========
