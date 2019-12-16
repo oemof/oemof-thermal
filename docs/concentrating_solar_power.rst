@@ -20,8 +20,8 @@ A time series of pre-calculated heat can be used as input for a source
 (an oemof.solph component), and a transformer (an oemof.solph component) can be
 used to hold electrical power consumption and further thermal losses of the
 collector in an energy system optimization.
-In addition, you will find an example, which compares this precalculation fix a
-calculation with a constant efficiency.
+In addition, you will find an example, which compares this precalculation with
+a calculation with a constant efficiency.
 
 Concept
 _________
