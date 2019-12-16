@@ -121,7 +121,7 @@ def calc_eta_c_flate_plate(eta_0, c_1, c_2, temp_collector_inlet,
     :math:`\eta_C = \eta_0 - c_1 \cdot \frac{\Delta T}{E_{coll}}
     - c_2 \cdot \frac{{\Delta T}^2}{E_{coll}}`
     with
-    :math:`\Delta T = T_{collector in} + {\Delta T}_n - T_amb`
+    :math:`\Delta T = T_{collector in} + {\Delta T}_n - T_{amb}`
 
     Parameters
     ----------
