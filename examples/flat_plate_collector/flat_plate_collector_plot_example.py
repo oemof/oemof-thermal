@@ -2,7 +2,6 @@
 Example plots which can be called by the flat_plate_collector_example.py
 """
 
-import pandas as pd
 import matplotlib.pyplot as plt
 
 
