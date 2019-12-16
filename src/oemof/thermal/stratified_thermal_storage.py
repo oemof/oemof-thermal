@@ -197,16 +197,17 @@ def calculate_losses(
         nominal storage capacity between two consecutive timesteps [MWh]
     """
     loss_rate = (
-        4 * u_value * (temp_h - temp_c) * 1 / (diameter * density * heat_capacity) * time_increment
+        4 * u_value * 1 / (diameter * density * heat_capacity) * time_increment
     )
 
     fixed_losses_relative = (
-        4 * u_value * (temp_c - temp_env) * 1 / (diameter * density * heat_capacity)
+        4 * u_value * (temp_c - temp_env)
+        * 1 / ((diameter * density * heat_capacity) * (temp_h - temp_c))
         * time_increment
     )
 
     fixed_losses_absolute = (
-        0.25 * np.pi * diameter ** 2 * (temp_h + temp_c - 2 * temp_env) * time_increment
+        0.25 * u_value * np.pi * diameter ** 2 * (temp_h + temp_c - 2 * temp_env) * time_increment
     )
 
     fixed_losses_absolute *= 1e-6  # Wh to MWh
