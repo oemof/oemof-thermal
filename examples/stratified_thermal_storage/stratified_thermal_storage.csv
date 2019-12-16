@@ -1,6 +1,6 @@
 var_name,var_value,var_unit
-height,10,m
-diameter,4,m
+height,30,m
+diameter,10,m
 density,971.78,kg/m3
 heat_capacity,4180,J/(kg*K)
 temp_h,95,degC

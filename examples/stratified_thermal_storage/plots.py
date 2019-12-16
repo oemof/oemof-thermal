@@ -48,8 +48,8 @@ loss_rate, fixed_losses_relative, fixed_losses_absolute = calculate_losses(
     input_data['temp_env'],
 )
 
-maximum_heat_flow_charging = 2
-maximum_heat_flow_discharging = 2
+maximum_heat_flow_charging = 5
+maximum_heat_flow_discharging = 5
 
 
 def print_results():
@@ -74,7 +74,7 @@ def print_results():
     print(dash)
 
     for name, param in parameter.items():
-        print('{:>32s}{:>15.3f}'.format(name, param))
+        print('{:>32s}{:>15.9f}'.format(name, param))
 
     print(dash)
 
@@ -83,44 +83,52 @@ print_results()
 
 # Set up an energy system model
 solver = 'cbc'
-periods = 1000
+periods = 800
 datetimeindex = pd.date_range('1/1/2019', periods=periods, freq='H')
 
 energysystem = EnergySystem(timeindex=datetimeindex)
 
-bus_heat = Bus(label='bus_heat')
-
 storage_list = []
+
+bus_simple_thermal_storage = Bus(label='bus_simple_thermal_storage', balanced=False)
+
+energysystem.add(bus_simple_thermal_storage)
 
 storage_list.append(GenericStorage(
     label='simple_thermal_storage',
-    inputs={bus_heat: Flow(
+    inputs={bus_simple_thermal_storage: Flow(
         nominal_value=maximum_heat_flow_charging,
         variable_costs=0.0001)},
-    outputs={bus_heat: Flow(
-        nominal_value=maximum_heat_flow_discharging)},
+    outputs={bus_simple_thermal_storage: Flow(
+        nominal_value=maximum_heat_flow_discharging,
+        variable_costs=0.0001)},
     nominal_storage_capacity=nominal_storage_capacity,
     min_storage_level=min_storage_level,
     max_storage_level=max_storage_level,
-    initial_storage_level=3 / nominal_storage_capacity,
+    initial_storage_level=27 / nominal_storage_capacity,
     loss_rate=0.001,
     inflow_conversion_factor=1.,
     outflow_conversion_factor=1.,
     balanced=False
 ))
 
-for i, nominal_storage_capacity in enumerate([10, 15, 20]):
+for i, nominal_storage_capacity in enumerate([30, 65, 90]):
+    bus_i = Bus(label=f'bus_{i}', balanced=False)
+
+    energysystem.add(bus_i)
+
     storage_list.append(GenericStorage(
         label=f'stratified_thermal_storage_{nominal_storage_capacity}_MWh',
-        inputs={bus_heat: Flow(
+        inputs={bus_i: Flow(
             nominal_value=maximum_heat_flow_charging,
             variable_costs=0.0001)},
-        outputs={bus_heat: Flow(
-            nominal_value=maximum_heat_flow_discharging)},
+        outputs={bus_i: Flow(
+            nominal_value=maximum_heat_flow_discharging,
+            variable_costs=0.0001)},
         nominal_storage_capacity=nominal_storage_capacity,
         min_storage_level=min_storage_level,
         max_storage_level=max_storage_level,
-        initial_storage_level=3 / nominal_storage_capacity,
+        initial_storage_level=27 / nominal_storage_capacity,
         loss_rate=loss_rate,
         fixed_losses_relative=fixed_losses_relative,
         fixed_losses_absolute=fixed_losses_absolute,
@@ -129,7 +137,7 @@ for i, nominal_storage_capacity in enumerate([10, 15, 20]):
         balanced=False
     ))
 
-energysystem.add(bus_heat, *storage_list)
+energysystem.add(*storage_list)
 
 # create and solve the optimization model
 optimization_model = Model(energysystem)
@@ -172,8 +180,8 @@ for storage_label in (storage.label for storage in storage_list):
         label=storage_label,
         s=1
     )
-ax2.set_xlim(0, 3.2)
-ax2.set_ylim(0, 0.0035)
+ax2.set_xlim(0, 27.2)
+ax2.set_ylim(0, 0.035)
 ax2.set_title('Losses vs. storage content')
 ax2.set_xlabel('Storage content [MWh]')
 ax2.set_ylabel('Losses [MW]')
