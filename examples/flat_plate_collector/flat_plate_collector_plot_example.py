@@ -7,7 +7,9 @@ import matplotlib.pyplot as plt
 
 def plot_collector_heat(data_precalc, periods, eta_0):
     '''
-    Plot showing the difference between a constant efficiency and the efficiency depending on the ambient temperature for the same irradiance and hour of the day.
+    Plot showing the difference between a constant efficiency
+    and the efficiency depending on the ambient temperature for
+    the same irradiance and hour of the day.
     '''
 
     heat_calc = data_precalc['collectors_heat']
