@@ -78,7 +78,7 @@ def calculate_storage_dimensions(height, diameter):
 
 
 def calculate_capacities(volume, temp_h, temp_c, nonusable_storage_volume,
-                         heat_capacity=4180, density=971.78):
+                         heat_capacity=4196, density=971.6):
     r"""
     Calculates the nominal storage capacity, surface area, minimum
     and maximum storage level of a stratified thermal storage.
