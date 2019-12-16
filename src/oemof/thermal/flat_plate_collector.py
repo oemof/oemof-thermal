@@ -142,7 +142,8 @@ def calc_eta_c_flate_plate(eta_0, c_1, c_2, temp_collector_inlet,
 
     Returns
     -------
-    collectors efficiency: series of numeric
+    eta_c: series of numeric
+        collectors efficiency
 
     """
     delta_t = temp_collector_inlet + delta_temp_n - temp_amb
