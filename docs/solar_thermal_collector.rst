@@ -67,7 +67,7 @@ These arguments are used in the formulas of the function:
     :math:`E_{coll}`          :py:obj:`collector_irradiance`   Irradiance on collector after all
                                                                losses
 
-    :math:`\eta_C`            :py:obj:`eta_c`                  collectors efficiency
+    :math:`\eta_C`            :py:obj:`eta_c`                  Collectors efficiency
 
     :math:`c_1`               :py:obj:`c_1`                    Thermal loss parameter 1
 
