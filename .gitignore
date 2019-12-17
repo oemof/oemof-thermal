@@ -59,9 +59,6 @@ target/
 # IDE
 .idea
 
-# png
-*.png
-
 # data from Franzi
 CSP_data/
 CSP_results/
