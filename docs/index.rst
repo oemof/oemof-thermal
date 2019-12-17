@@ -11,14 +11,14 @@ Contents:
 .. toctree::
    :maxdepth: 1
 
-   overview
-   docu_template
+
+   getting_started
+   examples
    concentrating_solar_power
    heat_pump
    stratified_thermal_storage
    solar_thermal_collector
    compression_heat_pumps_and_chillers
-   examples
    api
 
 
