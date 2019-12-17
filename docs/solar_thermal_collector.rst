@@ -30,9 +30,9 @@ The precalculations for the solar thermal collector calculate the heat of the so
 collector based on global and diffuse horizontal irradiance and information about
 the collector and the location. The following scheme shows the calculation procedure.
 
-.. image:: _pics/scheme.png
+.. image:: _pics/solarcollector_scheme.png
     :width: 100 %
-    :alt: scheme.png
+    :alt: solarcollector_scheme.png
     :align: center
 
 The processing of the irradiance data is done by the pvlib, which calculates the total
@@ -115,8 +115,8 @@ of the dataframe.
 The following figure shows the heat provided by the collector calculated with this
 function in comparison to the heat calculated with a fix efficiency.
 
-.. image:: _pics/compare_precalculations.png
+.. image:: _pics/solarcollector_compare_precalculations.png
     :width: 100 %
-    :alt: scheme.png
+    :alt: solarcollector_compare_precalculations.png
     :align: center
 
