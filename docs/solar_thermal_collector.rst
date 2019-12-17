@@ -89,7 +89,7 @@ These arguments are used in the formulas of the function:
 
     ========================= ================================ ====================================
 
-Please see the API for all Parameters, which have to be provided. The needed dataframe
+Please see the API for all parameters, which have to be provided. The needed dataframe
 must hold columns for a date, the ambient temperature and the irradiance. Some of the
 parameters which have to be provided for the precalculation define the column names
 of the dataframe.
