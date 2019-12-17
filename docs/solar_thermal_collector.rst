@@ -51,7 +51,7 @@ to get the collectors heat.
      :start-after:  flat_plate_precalc_equation:
      :end-before: Parameters
 
-The three values :math:`Q_{coll}`, :math:`\eta_C` and :math:`E_{coll}` are returned.
+The three values :math:`Q_{coll}`, :math:`\eta_C` and :math:`E_{coll}` are returned in a dataframe.
 Losses, which occur after the heat absorption in the collector (e.g. losses in pipes)
 have to be taken into account in the component, which uses the precalculation
 (see the example).
@@ -122,4 +122,3 @@ function in comparison to the heat calculated with a fix efficiency.
     :width: 100 %
     :alt: solarcollector_compare_precalculations.png
     :align: center
-
