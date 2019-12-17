@@ -22,7 +22,7 @@ Install oemof-thermal from pypi:
 
 ::
 
-    pip install oemof-thermal
+    pip install oemof.thermal
 
 Installing the latest (dev) version
 -----------------------------------
