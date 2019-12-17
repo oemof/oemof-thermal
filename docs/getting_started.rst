@@ -4,72 +4,55 @@
 Getting started
 ~~~~~~~~~~~~~~~
 
-.. contents:: `Table of contents`
+oemof-thermal is a toolbox for calculation and development of thermal energy components for
+oemof.
+
+.. contents:: `Contents`
     :depth: 1
     :local:
     :backlinks: top
 
-Introduction
-============
+Using oemof-thermal
+===================
 
-**oemof-thermal** is a platform for calculation and development of thermal energy components for oemof  
+Installation
+------------
 
-
-Current Release
-===============
-
-Install oemof-thermal using pypi:
+Install oemof-thermal from pypi:
 
 ::
 
     pip install oemof-thermal
 
+Installing the latest (dev) version
+-----------------------------------
 
-Developing Version
-==================
-
-Documentation
-~~~~~~~~~~~~~
-
-Read the latest documentation at Readthedocs.org
-
-https://oemof-heat-components.readthedocs.io
-
-
-Installation
-~~~~~~~~~~~~
-
-Clone oemof-thermal from github.
+Clone oemof-thermal from github:
 
 ::
 
     git clone git@github.com:oemof/oemof-thermal.git
-    
 
-If the project is cloned you can install it using pip with the -e flag. 
+
+Now you can install it your local version of oemof-thermal using pip:
 
 ::
 
     pip install -e <path/to/oemof-thermal/root/dir>
 
+Examples
+--------
 
-Developing oemof-thermal
-~~~~~~~~~~~~~~~~~~~~~~~~~
+We provide examples described in the section :ref:`examples_label`.
 
-As the oemof-thermal is part of the oemof developer group we use the same developer rules:
 
-http://oemof.readthedocs.io/en/stable/developing_oemof.html
+Contributing to oemof.thermal
+=============================
 
-If you have push rights clone this repository to your local system.
+Contributions are welcome. You can write issues to announce bugs or errors or to propose
+enhancements. Or you can contribute a new approach that helps to model thermal energy
+systems. If you want to contribute, fork the project at github, develop your features on a new
+branch and finally open a pull request to merge your contribution to oemof-thermal.
 
-::
-
-    git clone git@github.com:oemof/oemof-thermal.git
-    
-If you want to contribute, fork the project at github, clone your personal fork to your system and send a pull request.
-    
-  
-Example
-=======
-
-We provide examples on how to use oemof-thermal. The examples are callable from anywhere in the command-line.
+As oemof-thermal is part of the oemof developer group we use the same developer rules, described
+`here <http://oemof.readthedocs.io/en/stable/developing_oemof.html>`_.
