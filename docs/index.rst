@@ -14,7 +14,8 @@ Contents:
    overview
    docu_template
    concentrating_solar_power
-   hot_water_storage
+   heat_pump
+   stratified_thermal_storage
    solar_thermal_collector
    compression_heat_pumps_and_chillers
    examples
