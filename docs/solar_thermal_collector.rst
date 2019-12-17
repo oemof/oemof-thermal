@@ -61,10 +61,11 @@ _________
 
 These arguments are used in the formulas of the function:
 
-    ========================= ================================ ===========
+    ========================= ================================ ====================================
     symbol                    argument                         explanation
-    ========================= ================================ ===========
-    :math:`E_{coll}`          :py:obj:`collector_irradiance`   Irradiance on collector after all losses
+    ========================= ================================ ====================================
+    :math:`E_{coll}`          :py:obj:`collector_irradiance`   Irradiance on collector after all
+                                                               losses
 
     :math:`\eta_C`            :py:obj:`eta_c`                  collectors efficiency
 
@@ -72,19 +73,21 @@ These arguments are used in the formulas of the function:
 
     :math:`c_2`               :py:obj:`c_2`                    Thermal loss parameter 2
 
-    :math:`\Delta T`          :py:obj:`delta_t`                Temperature difference (collector to ambience)
+    :math:`\Delta T`          :py:obj:`delta_t`                Temperature difference
+                                                               (collector to ambience)
 
-    :math:`\T_{collector in}` :py:obj:`temp_collector_inlet`   Collectors inlet temperature
+    :math:`T_{collector in}`  :py:obj:`temp_collector_inlet`   Collectors inlet temperature
 
-    :math:`\{\Delta T}_n`     :py:obj:`delta_temp_n`           Temperature difference between collector inlet and mean temperature.
+    :math:`\Delta T_n`        :py:obj:`delta_temp_n`           Temperature difference between
+                                                               collector inlet and mean temperature
 
-    :math:`\T_{amb}`          :py:obj:`temp_amb`               Ambient temperature
+    :math:`T_{amb}`           :py:obj:`temp_amb`               Ambient temperature
 
     :math:`\eta_0`            :py:obj:`eta_0`                  Optical efficiency of the collector
 
     :math:`Q_{coll}`          :py:obj:`collector_heat`         collectors heat
 
-    ========================= ================================ ===========
+    ========================= ================================ ====================================
 
 Please see the API for all Parameters, which have to be provided. The needed dataframe
 must hold columns for a date, the ambient temperature and the irradiance. Some of the
