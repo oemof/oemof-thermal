@@ -39,14 +39,6 @@ dataframe = pd.read_csv(
     sep=';',
 )
 
-# # Read demand time series from csv file
-# # --------------------------------------------------------------
-# demand_df = pd.read_csv(
-#     path + '/examples/flat_plate_collector/data/heat_demand.csv', sep=';'
-# )
-# demand = list(demand_df['heat_demand'].iloc[:periods])
-# # --------------------------------------------------------------
-
 # Use demandlib for creation of demand time series
 # --------------------------------------------------------------
 temperature = pd.read_csv(
