@@ -29,27 +29,27 @@ The three values :math:`Q_{coll}`, :math:`\eta_C` and :math:`E_{coll}` are retur
 The following table shows the variables used in the precalculation:
 
     ========================= =================================================== ===========
-        symbol                    argument                                            explanation
+    symbol                    argument                                            explanation
     ========================= =================================================== ===========
-        :math:`E_{coll}`          :py:obj:`collector_irradiance`                      Irradiance on collector after all losses
+    :math:`E_{coll}`          :py:obj:`collector_irradiance`                      Irradiance on collector after all losses
 
-        :math:`\eta_C`            :py:obj:`eta_c`                                     collectors efficiency
+    :math:`\eta_C`            :py:obj:`eta_c`                                     collectors efficiency
 
-        :math:`c_1`               :py:obj:`c_1`                                       Thermal loss parameter 1
+    :math:`c_1`               :py:obj:`c_1`                                       Thermal loss parameter 1
 
-        :math:`c_2`               :py:obj:`c_2`                                       Thermal loss parameter 2
+    :math:`c_2`               :py:obj:`c_2`                                       Thermal loss parameter 2
 
-        :math:`\Delta T`          :py:obj:`delta_t`                                   Temperature difference (collector to ambience)
+    :math:`\Delta T`          :py:obj:`delta_t`                                   Temperature difference (collector to ambience)
 
-        :math:`\T_{collector in}` :py:obj:`temp_collector_inlet`                      Collectors inlet temperature
+    :math:`\T_{collector in}` :py:obj:`temp_collector_inlet`                      Collectors inlet temperature
 
-        :math:`\{\Delta T}_n`     :py:obj:`delta_temp_n`                              Temperature difference between collector inlet and mean temperature.
+    :math:`\{\Delta T}_n`     :py:obj:`delta_temp_n`                              Temperature difference between collector inlet and mean temperature.
 
-        :math:`\T_{amb}`          :py:obj:`temp_amb`                                  Ambient temperature
+    :math:`\T_{amb}`          :py:obj:`temp_amb`                                  Ambient temperature
 
-        :math:`\eta_0`            :py:obj:`eta_0`                                     Optical efficiency of the collector
+    :math:`\eta_0`            :py:obj:`eta_0`                                     Optical efficiency of the collector
 
-        :math:`Q_{coll}`          :py:obj:`collector_heat`                            collectors heat
+    :math:`Q_{coll}`          :py:obj:`collector_heat`                            collectors heat
 
     ========================= =================================================== ===========
 
