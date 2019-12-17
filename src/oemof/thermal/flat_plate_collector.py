@@ -31,7 +31,7 @@ def flat_plate_precalc(
     irradiance_diffuse_col='dhi',
     temp_amb_col='temp_amb',
 ):
-    """
+    r"""
     Calculates collectors heat, efficiency and irradiance
     of a flat plate collector.
 
@@ -143,7 +143,7 @@ def calc_eta_c_flate_plate(
     temp_amb,
     collector_irradiance,
 ):
-    """
+    r"""
     Calculates collectors efficiency
 
     ..calc_eta_c_flate_plate_equation:
