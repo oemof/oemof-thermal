@@ -85,7 +85,7 @@ These arguments are used in the formulas of the function:
 
     :math:`\eta_0`            :py:obj:`eta_0`                  Optical efficiency of the collector
 
-    :math:`Q_{coll}`          :py:obj:`collector_heat`         collectors heat
+    :math:`Q_{coll}`          :py:obj:`collector_heat`         Collectors heat
 
     ========================= ================================ ====================================
 
