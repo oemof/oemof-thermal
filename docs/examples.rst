@@ -27,10 +27,15 @@ __________________________
 - csp collector heat output (plot)
 - concentrating solar power plant [1]_
 
+**Solar thermal collector**
+
+- flat_plate_collector_example [1]_
+- plots
+
 **Stratified thermal storage**
 
 - stratified thermal storage [1]_
 - stratified thermal storage (investment mode) [1]_
-- plots.py
+- plots
 
 .. [1] Example uses *oemof.solph*
