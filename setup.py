@@ -14,7 +14,7 @@ setup(name='oemof.thermal',
       author='oemof developer group',
       author_email='oemof@rl-institut.de',
       description=(
-          'Thermal energy components for'
+          'Thermal energy components for '
           'the open energy modelling framework.'
       ),
       url='https://github.com/oemof/oemof-thermal',
