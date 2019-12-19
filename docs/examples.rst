@@ -14,6 +14,11 @@ use the package and its calculations in any other context as well.
 List of Available Examples
 __________________________
 
+**Concentrating solar power (CSP)**
+
+- csp collector heat output (plot)
+- concentrating solar power plant [1]_
+
 **Compression heat pumps and chillers**
 
 - air source heat pump with constant maximum heat output [1]_
@@ -22,15 +27,15 @@ __________________________
 - COP dependence on temperature difference (plot)
 - ground source heat pump [1]_
 
-**Concentrating solar power (CSP)**
+**Solar thermal collector**
 
-- csp collector heat output (plot)
-- concentrating solar power plant [1]_
+- flat_plate_collector_example [1]_
+- plots
 
 **Stratified thermal storage**
 
 - stratified thermal storage [1]_
 - stratified thermal storage (investment mode) [1]_
-- plots.py
+- plots
 
 .. [1] Example uses *oemof.solph*

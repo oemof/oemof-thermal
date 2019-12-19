@@ -10,11 +10,11 @@ def read(fname):
 
 
 setup(name='oemof.thermal',
-      version='0.0.0',
+      version='0.0.1',
       author='oemof developer group',
       author_email='oemof@rl-institut.de',
       description=(
-          'Thermal energy components for'
+          'Thermal energy components for '
           'the open energy modelling framework.'
       ),
       url='https://github.com/oemof/oemof-thermal',
@@ -22,5 +22,7 @@ setup(name='oemof.thermal',
       packages=["oemof"] + ["oemof." + p for p in find_packages("src/oemof")],
       package_dir={"": "src"},
       install_requires=['oemof',
-                        'numpy >= 1.7.0, < 1.17',
-                        'pandas >= 0.18.0, < 0.25'])
+                        'matplotlib',
+                        'pvlib',
+                        'numpy >= 1.7.0',
+                        'pandas >= 0.18.0'])
