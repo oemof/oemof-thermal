@@ -33,7 +33,7 @@ delta_temp_n = 10
 # Read data for flat collector and heat demand
 path = os.path.dirname(os.path.abspath(os.path.join(__file__, '..', '..')))
 dataframe = pd.read_csv(
-    path + '/examples/flat_plate_collector/data/data_flat_collector.csv',
+    path + '/examples/solar_thermal_collector/data/data_flat_collector.csv',
     sep=';',
 )
 
@@ -78,7 +78,7 @@ precalc_data = flat_plate_precalc(
 )
 
 precalc_data.to_csv(
-    path + '/examples/flat_plate_collector/results/flate_plate_precalcs.csv',
+    path + '/examples/solar_thermal_collector/results/flate_plate_precalcs.csv',
     sep=';',
 )
 ######################################################################
@@ -182,7 +182,7 @@ df = pd.DataFrame()
 df = df.append(collector['sequences'])
 df = df.join(thermal_bus['sequences'], lsuffix='_1')
 df.to_csv(
-    path + '/examples/flat_plate_collector/results/thermal_bus_flat_plate.csv',
+    path + '/examples/solar_thermal_collector/results/thermal_bus_flat_plate.csv',
     sep=';',
 )
 
