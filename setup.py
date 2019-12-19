@@ -22,7 +22,7 @@ setup(name='oemof.thermal',
       packages=["oemof"] + ["oemof." + p for p in find_packages("src/oemof")],
       package_dir={"": "src"},
       install_requires=['oemof',
-                        'demandlib',
+                        'matplotlib',
                         'pvlib',
                         'numpy >= 1.7.0',
                         'pandas >= 0.18.0'])
