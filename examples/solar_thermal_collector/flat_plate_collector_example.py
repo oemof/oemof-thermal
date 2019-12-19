@@ -10,9 +10,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 from oemof import solph
 from oemof.thermal.flat_plate_collector import flat_plate_precalc
 from oemof.tools import economics
-from demandlib import bdew as bdew
-from workalendar.europe import Germany
-from flat_plate_collector_plot_example import plot_collector_heat
+from plots import plot_collector_heat
 import pandas as pd
 import os
 import oemof.outputlib as outputlib
@@ -35,62 +33,15 @@ delta_temp_n = 10
 # Read data for flat collector and heat demand
 path = os.path.dirname(os.path.abspath(os.path.join(__file__, '..', '..')))
 dataframe = pd.read_csv(
-    path + '/examples/flat_plate_collector/data/data_flat_collector.csv',
+    path + '/examples/solar_thermal_collector/data/data_flat_collector.csv',
     sep=';',
 )
 
-# Use demandlib for creation of demand time series
-# --------------------------------------------------------------
-temperature = pd.read_csv(
-    path + '/examples/flat_plate_collector/data/temperature_data.csv', sep=','
-)['temperature']
-
-cal = Germany()
-holidays = dict(cal.holidays(2018))
-
-# Create a DataFrame to hold the timeseries
-demand_df = pd.DataFrame(
-    index=pd.date_range(pd.datetime(2010, 1, 1, 0), periods=8760, freq='H')
+# Read demand time series from csv file
+demand_df = pd.read_csv(
+    path + '/examples/solar_thermal_collector/data/heat_demand.csv', sep=','
 )
-
-
-# Single family house (efh: Einfamilienhaus)
-demand_df['efh'] = bdew.HeatBuilding(
-    demand_df.index,
-    holidays=holidays,
-    temperature=temperature,
-    shlp_type='EFH',
-    building_class=1,
-    wind_class=1,
-    annual_heat_demand=25000,
-    name='EFH',
-).get_bdew_profile()
-
-# Multi family house (mfh: Mehrfamilienhaus)
-demand_df['mfh'] = bdew.HeatBuilding(
-    demand_df.index,
-    holidays=holidays,
-    temperature=temperature,
-    shlp_type='MFH',
-    building_class=2,
-    wind_class=0,
-    annual_heat_demand=80000,
-    name='MFH',
-).get_bdew_profile()
-
-# Industry, trade, service (ghd: Gewerbe, Handel, Dienstleistung)
-demand_df['ghd'] = bdew.HeatBuilding(
-    demand_df.index,
-    holidays=holidays,
-    temperature=temperature,
-    shlp_type='ghd',
-    wind_class=0,
-    annual_heat_demand=140000,
-    name='ghd',
-).get_bdew_profile()
-
-demand = demand_df.sum(axis=1)
-# --------------------------------------------------------------
+demand = list(demand_df['heat_demand'].iloc[:periods])
 
 # Define parameters for the energy system
 eta_losses = 0.05
@@ -127,7 +78,7 @@ precalc_data = flat_plate_precalc(
 )
 
 precalc_data.to_csv(
-    path + '/examples/flat_plate_collector/results/flate_plate_precalcs.csv',
+    path + '/examples/solar_thermal_collector/results/flate_plate_precalcs.csv',
     sep=';',
 )
 ######################################################################
@@ -231,7 +182,7 @@ df = pd.DataFrame()
 df = df.append(collector['sequences'])
 df = df.join(thermal_bus['sequences'], lsuffix='_1')
 df.to_csv(
-    path + '/examples/flat_plate_collector/results/thermal_bus_flat_plate.csv',
+    path + '/examples/solar_thermal_collector/results/thermal_bus_flat_plate.csv',
     sep=';',
 )
 

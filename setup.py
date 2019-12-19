@@ -14,7 +14,7 @@ setup(name='oemof.thermal',
       author='oemof developer group',
       author_email='oemof@rl-institut.de',
       description=(
-          'Thermal energy components for'
+          'Thermal energy components for '
           'the open energy modelling framework.'
       ),
       url='https://github.com/oemof/oemof-thermal',
@@ -22,7 +22,7 @@ setup(name='oemof.thermal',
       packages=["oemof"] + ["oemof." + p for p in find_packages("src/oemof")],
       package_dir={"": "src"},
       install_requires=['oemof',
-                        'demandlib',
+                        'matplotlib',
                         'pvlib',
                         'numpy >= 1.7.0',
                         'pandas >= 0.18.0'])
