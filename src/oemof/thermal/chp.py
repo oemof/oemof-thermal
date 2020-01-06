@@ -7,7 +7,7 @@ and power plants.
 This file is part of project oemof (github.com/oemof/oemof-thermal). It's copyrighted
 by the contributors recorded in the version control history of the file,
 available from its original location:
-oemof-thermal/src/oemof/thermal/stratified_thermal_storage.py
+oemof-thermal/src/oemof/thermal/chp.py
 """
 
 
@@ -15,6 +15,24 @@ def allocate_emissions(total_emissions, eta_el, eta_th, method, **kwargs):
     r"""
     Function to allocate emissions caused in cogeneration to the products electrical energy
     and heat according to specified method.
+
+    **IEA method**
+
+    :math:`EM_{el} = EM \cdot \frac{\eta_{el}}{\eta_{el} + \eta_{th}}`
+
+    :math:`EM_{th} = EM \cdot \frac{\eta_{th}}{\eta_{el} + \eta_{th}}`
+
+    **Efficiency method**
+
+    :math:`EM_{el} = EM \cdot \frac{\eta_{th}}{\eta_{el} + \eta_{th}}`
+
+    :math:`EM_{th} = EM \cdot \frac{\eta_{el}}{\eta_{el} + \eta_{th}}`
+
+    **Finish method**
+
+    :math:`EM_{el} = EM \cdot (1-PEE)\frac{\eta_{el}}{\eta_{el,REF}}`
+
+    :math:`EM_{th} = EM \cdot (1-PEE)\frac{\eta_{th}}{\eta_{th,REF}}`
 
     Reference:
     Mauch, W., Corradini, R., Wiesmeyer, K., Schwentzek, M. (2010).
