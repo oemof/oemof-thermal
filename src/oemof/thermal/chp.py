@@ -42,13 +42,13 @@ def allocate_emissions(total_emissions, eta_el, eta_th, method, **kwargs):
     Parameters
     ----------
     total_emissions : numeric
-        Total emissions to be allocated to electricity and heat.
+        Total absolute emissions to be allocated to electricity and heat [in CO2 equivalents].
 
     eta_el : numeric
-        Electrical efficiency of the cogeneration.
+        Electrical efficiency of the cogeneration [-].
 
     eta_th : numeric
-        Thermal efficiency of the cogeneration.
+        Thermal efficiency of the cogeneration [-].
 
     method : str
         Specification of method to use. Choose from ['iea', finnish', 'efficiency'].
@@ -59,10 +59,12 @@ def allocate_emissions(total_emissions, eta_el, eta_th, method, **kwargs):
     Returns
     -------
     allocated_emissions_electricity : numeric
-        total emissions allocated to electricity according to specified `method`.
+        total emissions allocated to electricity according to specified `method`
+        [in CO2 equivalents].
 
     allocated_emissions_heat : numeric
-            total emissions allocated to heat according to specified `method`.
+            total emissions allocated to heat according to specified `method`
+            [in CO2 equivalents].
 
     """
     if method == 'iea':
