@@ -8,7 +8,7 @@ compression\_heatpumps\_and\_chillers module
 
 csp module
 ==========================================================
-.. automodule:: oemof.thermal.csp
+.. automodule:: oemof.thermal.concentrating_solar_power
     :members:
     :undoc-members:
     :show-inheritance:
