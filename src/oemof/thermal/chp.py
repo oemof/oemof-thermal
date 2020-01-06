@@ -54,7 +54,7 @@ def allocate_emissions(total_emissions, eta_el, eta_th, method, **kwargs):
         Specification of method to use. Choose from ['iea', finnish', 'efficiency'].
 
     **kwargs
-        For the finish method, `eta_el_ref` and `eta_th_ref` have to be passed.
+        For the finnish method, `eta_el_ref` and `eta_th_ref` have to be passed.
 
     Returns
     -------
