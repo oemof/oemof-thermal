@@ -19,6 +19,7 @@ Contents:
    stratified_thermal_storage
    solar_thermal_collector
    compression_heat_pumps_and_chillers
+   whats_new
    api
 
 
