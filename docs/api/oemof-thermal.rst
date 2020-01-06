@@ -19,3 +19,10 @@ stratified_thermal_storage module
     :members:
     :undoc-members:
     :show-inheritance:
+
+chp module
+==========================================================
+.. automodule:: oemof.thermal.chp
+    :members:
+    :undoc-members:
+    :show-inheritance:
