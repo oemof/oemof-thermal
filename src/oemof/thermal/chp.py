@@ -28,7 +28,7 @@ def allocate_emissions(total_emissions, eta_el, eta_th, method, **kwargs):
 
     :math:`EM_{th} = EM \cdot \frac{\eta_{el}}{\eta_{el} + \eta_{th}}`
 
-    **Finish method**
+    **Finnish method**
 
     :math:`EM_{el} = EM \cdot (1-PEE)\frac{\eta_{el}}{\eta_{el,REF}}`
 
