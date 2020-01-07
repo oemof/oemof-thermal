@@ -24,7 +24,7 @@ A simplified 2-zone-model of a stratified thermal energy storage.
 * There is no distinction between outside temperature and ground temperature.
 * Material properties are constant.
 
-The equation describing the change of storage content is the following:
+The equation describing the storage content at timestep t is the following:
 
 .. math::
   Q_t = Q_{t-1} \Big(1- U \frac{4}{d\rho c}\Delta t\Big)
