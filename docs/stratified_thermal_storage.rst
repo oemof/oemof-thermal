@@ -48,10 +48,13 @@ with
   \delta &= U \frac{\pi d^2}{4}\Big(\Delta T_{H0} + \Delta T_{C0}\Big) \Delta t.
 
 
-The three terms represent constant heat losses through the top and bottom surfaces
-(:math:`\delta`), losses via the lateral surface (:math:`\gamma`) depending on the
-height of the storage and losses depending on the part of that surface belonging to the
-hot part of the water body that depend on the state of charge (:math:`\beta`).
+The three terms represent:
+* :math:`\delta`: constant heat losses through the top and bottom surfaces
+* :math:`\gamma \cdot Q_N`: losses via the lateral surface depending on the
+height of the storage
+* :math:`\beta \cdot Q_{t-1}`: losses depending on the part of that surface
+belonging to the hot part of the water body that depend on the state of charge
+
 
 In the case of investment, the diameter :math:`d` is given and the height can be
 adapted to adapt the nominal capacity of the storage. With this assumption,
