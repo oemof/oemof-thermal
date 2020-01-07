@@ -116,11 +116,11 @@ These parameters are part of the stratified thermal storage:
                                                                          storage content
                                                                          within one timestep [-]
 
-    :math:`\gamma`            :py:obj:`fixed_losses`                     Fixed losses as share
+    :math:`\gamma`            :py:obj:`fixed_losses_relative`            Fixed losses as share
                                                                          of nominal storage
                                                                          capacity [-]
 
-    :math:`\delta`            :py:obj:`fixed_absolute_losses`            Fixed absolute losses
+    :math:`\delta`            :py:obj:`fixed_losses_absolute`            Fixed absolute losses
                                                                          independent of storage
                                                                          content or nominal
                                                                          storage capacity [MWh]
