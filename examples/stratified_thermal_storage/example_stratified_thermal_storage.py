@@ -117,10 +117,11 @@ heat_demand = Sink(
 thermal_storage = GenericStorage(
     label='thermal_storage',
     inputs={bus_heat: Flow(
-        nominal_value=maximum_heat_flow_charging,
-        variable_costs=0.0001)},
+        nominal_value=maximum_heat_flow_charging)},
     outputs={bus_heat: Flow(
-        nominal_value=maximum_heat_flow_discharging)},
+        nominal_value=maximum_heat_flow_discharging,
+        variable_costs=0.0001
+    )},
     nominal_storage_capacity=nominal_storage_capacity,
     min_storage_level=min_storage_level,
     max_storage_level=max_storage_level,
