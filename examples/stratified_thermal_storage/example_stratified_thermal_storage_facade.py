@@ -117,14 +117,18 @@ thermal_storage = facades.StratifiedThermalStorage(
     label='thermal_storage',
     bus=bus_heat,
     carrier='water',
-    tech='reservoir',
-    storage_capacity=1000,
-    capacity=50,
-    profile=[1] * periods,
-    loss_rate=0.01,
-    initial_storage_level=0,
-    max_storage_level=0.9,
-    efficiency=0.93
+    tech='sensible_heat_storage',
+    diameter=input_data['diameter'],
+    height=input_data['height'],
+    temp_h=input_data['temp_h'],
+    temp_c=input_data['temp_c'],
+    temp_env=input_data['temp_env'],
+    u_value=u_value,
+    min_storage_level=min_storage_level,
+    max_storage_level=max_storage_level,
+    capacity=maximum_heat_flow_charging,
+    efficiency=1,
+    marginal_cost=0.0001
 )
 
 energysystem.add(bus_heat, heat_source, shortage, excess, heat_demand, thermal_storage)

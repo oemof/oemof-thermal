@@ -17,6 +17,8 @@ SPDX-License-Identifier:
 
 from collections import deque
 
+from oemof.thermal.stratified_thermal_storage import calculate_storage_dimensions,\
+    calculate_capacities, calculate_losses
 from oemof.energy_system import EnergySystem
 from oemof.network import Node
 from oemof.solph import Flow, Investment
@@ -34,7 +36,7 @@ class Facade(Node):
     ----------
     _facade_requires_ : list of str
         A list of required attributes. The constructor checks whether these are
-        present as keywort arguments or whether they are already present on
+        present as keyword arguments or whether they are already present on
         self (which means they have been set by constructors of subclasses) and
         raises an error if he doesn't find them.
     """
@@ -186,13 +188,40 @@ class StratifiedThermalStorage(GenericStorage, Facade):
             _facade_requires_=["bus", "carrier", "tech"], *args, **kwargs
         )
 
-        self.storage_capacity = kwargs.get("storage_capacity", 0)
+        self.height = kwargs.get("height", 0)
+
+        self.diameter = kwargs.get("diameter", 0)
+
+        self.temp_h = kwargs.get("temp_h")
+
+        self.temp_c = kwargs.get("temp_c")
+
+        self.temp_env = kwargs.get("temp_env")
+
+        self.u_value = kwargs.get("u_value")
+
+        self.volume = calculate_storage_dimensions(self.height, self.diameter)[0]
+
+        self.storage_capacity = calculate_capacities(self.volume, self.temp_h, self.temp_c, 0)[0]
+
+        losses = calculate_losses(
+            self.u_value,
+            self.diameter,
+            self.temp_h,
+            self.temp_c,
+            self.temp_env)
+
+        self.loss_rate = losses[0]
+
+        self.fixed_losses_relative = losses[1]
+
+        self.fixed_losses_absolute = losses[2]
 
         self.capacity = kwargs.get("capacity", 0)
 
-        self.capacity_cost = kwargs.get("capacity_cost")
-
         self.storage_capacity_cost = kwargs.get("storage_capacity_cost")
+
+        self.capacity_cost = kwargs.get("capacity_cost")
 
         self.storage_capacity_potential = kwargs.get(
             "storage_capacity_potential", float("+inf")
@@ -222,6 +251,12 @@ class StratifiedThermalStorage(GenericStorage, Facade):
         self.inflow_conversion_factor = sequence(self.efficiency)
 
         self.outflow_conversion_factor = sequence(self.efficiency)
+
+        self.loss_rate = sequence(self.loss_rate)
+
+        self.fixed_losses_relative = sequence(self.fixed_losses_relative)
+
+        self.fixed_losses_absolute = sequence(self.fixed_losses_absolute)
 
         # make it investment but don't set costs (set below for flow (power))
         self.investment = self._investment()
