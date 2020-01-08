@@ -9,3 +9,4 @@ Discover noteable new features and improvements in each release.
     :backlinks: top
 
 .. include::  whats_new/v0-0-1.rst
+.. include::  whats_new/v0-0-2.rst
