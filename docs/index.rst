@@ -14,12 +14,12 @@ Contents:
 
    getting_started
    examples
+   whats_new
    concentrating_solar_power
    heat_pump
    stratified_thermal_storage
    solar_thermal_collector
    compression_heat_pumps_and_chillers
-   whats_new
    api
 
 
