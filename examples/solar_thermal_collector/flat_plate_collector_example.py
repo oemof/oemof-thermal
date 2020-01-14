@@ -25,8 +25,8 @@ timezone = 'Europe/Berlin'
 collector_tilt = 10
 collector_azimuth = 20
 eta_0 = 0.73
-c_1 = 1.7
-c_2 = 0.016
+a_1 = 1.7
+a_2 = 0.016
 temp_collector_inlet = 20
 delta_temp_n = 10
 
@@ -67,8 +67,8 @@ precalc_data = flat_plate_precalc(
     collector_tilt,
     collector_azimuth,
     eta_0,
-    c_1,
-    c_2,
+    a_1,
+    a_2,
     temp_collector_inlet,
     delta_temp_n,
     date_col='hour',
