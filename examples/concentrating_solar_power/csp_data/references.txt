@@ -1,0 +1,4 @@
+data:
+weather: TMY
+cooling demand: synthetisch erzeugt. Bedarf ist exponentiell abhängig von der Außentemperatur. Die Parameter der Kunktion wurden durch Fitting der Omanzeitreihe erstellt.
+electricity demand: Ensoe-E time series for 2010 "ES_load_actual_entsoe_power_statistics". Unit is choosen to be kW.
