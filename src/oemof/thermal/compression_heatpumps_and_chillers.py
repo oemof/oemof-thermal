@@ -11,6 +11,7 @@ oemof-thermal/src/oemof/thermal/compression_heatpumps_and_chillers.py
 """
 import pandas as pd
 
+
 def calc_cops(temp_high, temp_low, quality_grade, temp_threshold_icing=2,
               consider_icing=False, factor_icing=None, mode=None):
     r"""
@@ -119,8 +120,7 @@ def calc_cops(temp_high, temp_low, quality_grade, temp_threshold_icing=2,
                 if t_l >= temp_threshold_icing + 273.15:
                     cops = cops + [quality_grade * t_h / (t_h - t_l)]
         elif mode == "chiller":
-            raise ValueError('Argument consider_icing must be set False for '
-                              'mode=chiller!')
+            raise ValueError('Argument consider_icing must be set False for mode=chiller!')
     return cops
 
 

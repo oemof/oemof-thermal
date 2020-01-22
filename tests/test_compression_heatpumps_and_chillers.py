@@ -30,15 +30,15 @@ def test_cop_calculation_hp_list_input_02():
 
 
 def test_cop_calculation_airsource_hp_with_icing_01():
-        cops_ASHP = cmpr_hp_chllr.calc_cops(
-            temp_high=[40],
-            temp_low=[1.3],
-            quality_grade=0.5,
-            mode='heat_pump',
-            consider_icing=True,
-            temp_threshold_icing=2,
-            factor_icing=0.8)
-        assert cops_ASHP == [3.236692506459949]
+    cops_ASHP = cmpr_hp_chllr.calc_cops(
+        temp_high=[40],
+        temp_low=[1.3],
+        quality_grade=0.5,
+        mode='heat_pump',
+        consider_icing=True,
+        temp_threshold_icing=2,
+        factor_icing=0.8)
+    assert cops_ASHP == [3.236692506459949]
 
 
 def test_cop_calculation_airsource_hp_with_icing_02():
@@ -51,6 +51,7 @@ def test_cop_calculation_airsource_hp_with_icing_02():
         temp_threshold_icing=2,
         factor_icing=0.8)
     assert cops_ASHP == [4.15318302387268]
+
 
 def test_cop_calculation_chiller():
     cops_chiller = cmpr_hp_chllr.calc_cops(
@@ -85,6 +86,7 @@ def test_raised_exception_02():
             consider_icing=True,
             temp_threshold_icing=2,
             factor_icing=0.8)
+
 
 def test_raised_exception_03():
     """Test if an exception is raised if temp_high and
@@ -152,6 +154,7 @@ def test_calc_max_Q_dot_heat():
     max_Q_hot = cmpr_hp_chllr.calc_max_Q_dot_heat(nominal_conditions=nom_cond,
                                                   cops=actual_cop)
     assert max_Q_hot == [1.125]
+
 
 def test_calc_chiller_quality_grade():
     nom_cond = {
