@@ -1,4 +1,3 @@
-import pytest
 import pandas as pd
 import oemof.thermal.concentrating_solar_power as csp
 
@@ -29,4 +28,3 @@ def test_calculation_iam_for_a_Series():
     res = csp.calc_iam(-0.00159, 0.0000977, s)
     result = pd.Series([1.00613, 0.99272, 0.95977], index=[1, 2, 3])
     assert res.eq(result).all() == True
-
