@@ -9,7 +9,7 @@ copyrighted by the contributors recorded in the version control history of the
 file, available from its original location:
 oemof-thermal/src/oemof/thermal/compression_heatpumps_and_chillers.py
 """
-
+import pandas as pd
 
 def calc_cops(temp_high, temp_low, quality_grade, temp_threshold_icing=2,
               consider_icing=False, factor_icing=None, mode=None):
@@ -66,7 +66,28 @@ def calc_cops(temp_high, temp_low, quality_grade, temp_threshold_icing=2,
 
 
     """
-    # Make both lists (temp_low and temp_high) have the same length and
+    # Check if input arguments have proper type and length
+    if type(temp_low) == pd.Series:
+        pass
+    elif not isinstance(temp_low, list):
+        raise TypeError('Argument temp_low is not of type list!')
+    if type(temp_high) == pd.Series:
+        pass
+    elif not isinstance(temp_high, list):
+        raise TypeError('Argument temp_high is not of type list!')
+    if len(temp_high) != len(temp_low):
+        if (len(temp_high) != 1) and ((len(temp_low) != 1)):
+            raise IndexError('Arguments temp_low and '
+                             'temp_high have to be of same '
+                             'length or one has to be of length 1 !')
+    if factor_icing is not None and consider_icing is False:
+        raise ValueError('Argument factor_icing can not be used without '
+                         'setting consider_icing=True!')
+    if factor_icing is None and consider_icing is True:
+        raise ValueError('Icing cannot be considered because argument '
+                         'factor_icing has value None!')
+
+    # Make temp_low and temp_high have the same length and
     # convert unit to Kelvin.
     length = max([len(temp_high), len(temp_low)])
     if len(temp_high) == 1:
@@ -98,9 +119,8 @@ def calc_cops(temp_high, temp_low, quality_grade, temp_threshold_icing=2,
                 if t_l >= temp_threshold_icing + 273.15:
                     cops = cops + [quality_grade * t_h / (t_h - t_l)]
         elif mode == "chiller":
-            # Combining 'consider_icing' and mode 'chiller' is not possible!
-            cops = None
-
+            raise ValueError('Argument consider_icing must be set False for '
+                              'mode=chiller!')
     return cops
 
 
@@ -139,6 +159,9 @@ def calc_max_Q_dot_chill(nominal_conditions, cops):
 
 
     """
+    if not isinstance(cops, list):
+        raise TypeError('Argument cops is not of type list!')
+
     nominal_cop = (nominal_conditions['nominal_Q_chill'] / nominal_conditions[
         'nominal_el_consumption'])
     max_Q_chill = [actual_cop / nominal_cop for actual_cop in cops]
