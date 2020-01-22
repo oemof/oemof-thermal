@@ -11,8 +11,8 @@ oemof-thermal/src/oemof/thermal/compression_heatpumps_and_chillers.py
 """
 
 
-def calc_cops(temp_high, temp_low, quality_grade, temp_threshold_icing=2,
-              consider_icing=False, factor_icing=None, mode=None):
+def calc_cops(temp_high, temp_low, quality_grade, mode, temp_threshold_icing=2,
+              consider_icing=False, factor_icing=None):
     r"""
     Calculates the Coefficient of Performance (COP) of heat pumps and chillers
     based on the Carnot efficiency (ideal process) and a scale-down factor.
