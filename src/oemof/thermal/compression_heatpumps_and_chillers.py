@@ -40,9 +40,9 @@ def calc_cops(temp_high, temp_low, quality_grade, temp_threshold_icing=2,
 
     Parameters
     ----------
-    temp_high : list of numerical values
+    temp_high : list or pandas.Series of numerical values
         Temperature of the high temperature reservoir in :math:`^\circ C`
-    temp_low : list of numerical values
+    temp_low : list or pandas.Series of numerical values
         Temperature of the low temperature reservoir in :math:`^\circ C`
     quality_grade : numerical value
         Factor that scales down the efficiency of the real heat pump
