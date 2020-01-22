@@ -66,6 +66,10 @@ def calc_cops(temp_high, temp_low, quality_grade, temp_threshold_icing=2,
 
 
     """
+
+    if mode is None:
+        raise AttributeError("Please specify mode. Must be 'chiller' or 'heat_pump'")
+
     # Make both lists (temp_low and temp_high) have the same length and
     # convert unit to Kelvin.
     length = max([len(temp_high), len(temp_low)])
