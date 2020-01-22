@@ -13,6 +13,13 @@ csp module
     :undoc-members:
     :show-inheritance:
 
+solar_thermal_collector module
+==========================================================
+.. automodule:: oemof.thermal.flat_plate_collector
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 stratified_thermal_storage module
 ==========================================================
 .. automodule:: oemof.thermal.stratified_thermal_storage
