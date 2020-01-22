@@ -83,7 +83,7 @@ def csp_precalc(df, periods,
         occur before the light hits the collectors surface.
 
 
-    **proposal of values**
+    **Proposal of values**
 
     If you have no idea, which values your collector have, here are values,
     which were measured in [1] for a collector:
