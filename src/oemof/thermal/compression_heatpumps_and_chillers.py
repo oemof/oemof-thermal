@@ -68,22 +68,22 @@ def calc_cops(temp_high, temp_low, quality_grade, temp_threshold_icing=2,
 
     """
     # Check if input arguments have proper type and length
-    if type(temp_low) == pd.Series:
-        pass
-    elif not isinstance(temp_low, list):
-        raise TypeError('Argument temp_low is not of type list!')
-    if type(temp_high) == pd.Series:
-        pass
-    elif not isinstance(temp_high, list):
-        raise TypeError('Argument temp_high is not of type list!')
+    if not isinstance(temp_low, (list, pd.Series)):
+        raise TypeError('Argument temp_low is not of type list or pd.Series!')
+
+    if not isinstance(temp_high, (list, pd.Series)):
+        raise TypeError('Argument temp_high is not of type list or pd.Series!')
+
     if len(temp_high) != len(temp_low):
         if (len(temp_high) != 1) and ((len(temp_low) != 1)):
             raise IndexError('Arguments temp_low and '
                              'temp_high have to be of same '
                              'length or one has to be of length 1 !')
+
     if factor_icing is not None and consider_icing is False:
         raise ValueError('Argument factor_icing can not be used without '
                          'setting consider_icing=True!')
+
     if factor_icing is None and consider_icing is True:
         raise ValueError('Icing cannot be considered because argument '
                          'factor_icing has value None!')
