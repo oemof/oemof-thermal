@@ -1,5 +1,6 @@
 import oemof.thermal.compression_heatpumps_and_chillers as cmpr_hp_chllr
 import pytest
+import pandas as pd
 
 
 def test_cop_calculation_hp():
@@ -10,6 +11,26 @@ def test_cop_calculation_hp():
         mode='heat_pump')
     assert cops_HP == [4.473571428571428]
 
+
+def test_calc_cops_with_Series_01():
+    ambient_temp_each_hour = {'01:00': 12, '02:00': 12, '03:00': 12}
+    temp_l_series = pd.Series(ambient_temp_each_hour)
+    cops_HP = cmpr_hp_chllr.calc_cops(
+        temp_high=[40],
+        temp_low=temp_l_series,
+        quality_grade=0.4,
+        mode='heat_pump')
+    assert cops_HP == [4.473571428571428, 4.473571428571428, 4.473571428571428]
+
+def test_calc_cops_with_Series_02():
+    set_temp_each_hour = {'01:00': 40, '02:00': 40, '03:00': 40}
+    temp_h_series = pd.Series(set_temp_each_hour)
+    cops_HP = cmpr_hp_chllr.calc_cops(
+        temp_high=temp_h_series,
+        temp_low=[12],
+        quality_grade=0.4,
+        mode='heat_pump')
+    assert cops_HP == [4.473571428571428, 4.473571428571428, 4.473571428571428]
 
 def test_cop_calculation_hp_list_input_01():
     cops_HP = cmpr_hp_chllr.calc_cops(
