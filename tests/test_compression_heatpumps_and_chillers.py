@@ -56,7 +56,6 @@ def test_cop_calculation_airsource_hp_with_icing_01():
         temp_low=[1.3],
         quality_grade=0.5,
         mode='heat_pump',
-        consider_icing=True,
         temp_threshold_icing=2,
         factor_icing=0.8)
     assert cops_ASHP == [3.236692506459949]
@@ -68,7 +67,6 @@ def test_cop_calculation_airsource_hp_with_icing_02():
         temp_low=[2.3],
         quality_grade=0.5,
         mode='heat_pump',
-        consider_icing=True,
         temp_threshold_icing=2,
         factor_icing=0.8)
     assert cops_ASHP == [4.15318302387268]
@@ -91,7 +89,6 @@ def test_raised_exception_01():
             temp_low=12,  # ERROR - temp_low has to be a list!
             quality_grade=0.4,
             mode='heat_pump',
-            consider_icing=True,
             temp_threshold_icing=2,
             factor_icing=0.8)
 
@@ -104,7 +101,6 @@ def test_raised_exception_02():
             temp_low=[12],
             quality_grade=0.4,
             mode='heat_pump',
-            consider_icing=True,
             temp_threshold_icing=2,
             factor_icing=0.8)
 
@@ -119,7 +115,6 @@ def test_raised_exception_03():
             # to be 1 or equal to len(temp_high)
             quality_grade=0.4,
             mode='heat_pump',
-            consider_icing=True,
             temp_threshold_icing=2,
             factor_icing=0.8)
 
@@ -132,7 +127,6 @@ def test_raised_exception_04():
             temp_low=[17],
             quality_grade=0.4,
             mode='chiller',
-            consider_icing=True,
             temp_threshold_icing=2,
             factor_icing=0.8)
 
