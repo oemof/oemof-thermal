@@ -22,6 +22,7 @@ def test_calc_cops_with_Series_01():
         mode='heat_pump')
     assert cops_HP == [4.473571428571428, 4.473571428571428, 4.473571428571428]
 
+
 def test_calc_cops_with_Series_02():
     set_temp_each_hour = {'01:00': 40, '02:00': 40, '03:00': 40}
     temp_h_series = pd.Series(set_temp_each_hour)
@@ -31,6 +32,7 @@ def test_calc_cops_with_Series_02():
         quality_grade=0.4,
         mode='heat_pump')
     assert cops_HP == [4.473571428571428, 4.473571428571428, 4.473571428571428]
+
 
 def test_cop_calculation_hp_list_input_01():
     cops_HP = cmpr_hp_chllr.calc_cops(
