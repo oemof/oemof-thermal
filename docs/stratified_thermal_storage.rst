@@ -7,6 +7,11 @@ Stratified thermal storage
 Scope
 _____
 
+This module was developed to implement a simplified model of a large-scale
+senible heat storage with ideal stratification for energy systems optimizations
+with oemof.solph.
+
+
 Concept
 _______
 
