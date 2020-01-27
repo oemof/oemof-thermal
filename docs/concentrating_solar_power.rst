@@ -58,7 +58,7 @@ with
 
 
 In the end, the irradiance on the collector is multiplied with the efficiency
-to get the collectors heat.
+to get the collector's heat.
 
 .. include:: ../src/oemof/thermal/concentrating_solar_power.py
   :start-after:  csp_precalc_equation:
