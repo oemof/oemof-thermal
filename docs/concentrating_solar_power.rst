@@ -65,7 +65,7 @@ to get the collector's heat.
   :end-before: functions used
 
 The three values :math:`Q_{coll}`, :math:`\eta_C` and :math:`E_{coll}` are
-returned. Losses, which occur after the heat absorption in the collector
+returned. Losses which occur after the heat absorption in the collector
 (e.g. losses in pipes) have to be taken into account in a later step
 (see the example).
 
