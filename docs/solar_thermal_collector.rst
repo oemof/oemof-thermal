@@ -6,8 +6,8 @@ Solar thermal collector
 
 Module to calculate the usable heat of a flat plate collector.
 
-Motivation and possible application
-___________________________________
+Scope
+_____
 
 This module was developed to provide the heat of a flat plate collector
 based on temperatures and collectors location, tilt and azimuth for energy
@@ -56,8 +56,8 @@ Losses, which occur after the heat absorption in the collector (e.g. losses in p
 have to be taken into account in the component, which uses the precalculation
 (see the example).
 
-Functions
-_________
+Usage
+_____
 
 These arguments are used in the formulas of the function:
 

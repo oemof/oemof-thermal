@@ -4,9 +4,11 @@
 Stratified thermal storage
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Scope
+_____
 
 Concept
--------
+_______
 
 A simplified 2-zone-model of a stratified thermal energy storage.
 
@@ -133,7 +135,7 @@ These parameters are part of the stratified thermal storage:
 
 
 Usage
------
+_____
 
 The thermal transmittance is precalculated using `calculate_u_value`.
 
