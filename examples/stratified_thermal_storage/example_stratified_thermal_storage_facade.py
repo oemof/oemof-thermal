@@ -1,9 +1,14 @@
 import os
+import sys
 import pandas as pd
 import numpy as np
 
 from oemof.thermal import facades
-from oemof.thermal.constraint_tests import compare_lp_files
+
+# import functions to compare lp-files of new example with old one.
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'tests')))
+from test_constraints import compare_lp_files
+
 from oemof.thermal.stratified_thermal_storage import (
     calculate_storage_u_value,
     calculate_storage_dimensions,
