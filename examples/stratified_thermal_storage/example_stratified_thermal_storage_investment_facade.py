@@ -4,10 +4,12 @@ import numpy as np
 
 from oemof.thermal.stratified_thermal_storage import (calculate_storage_u_value,
                                                       calculate_losses)
+from oemof.thermal import facades
+from oemof.thermal.constraint_tests import compare_lp_files
+
 from oemof.solph import (Source, Sink, Bus, Flow,
                          Investment, Model, EnergySystem)
 from oemof.solph.components import GenericStorage
-import oemof.outputlib as outputlib
 
 
 data_path = os.path.join(
@@ -96,41 +98,36 @@ heat_demand = Sink(
         fixed=True)})
 
 thermal_storage = GenericStorage(
+    investment=Investment(ep_costs=400, minimum=1)
+)
+
+thermal_storage = facades.StratifiedThermalStorage(
     label='thermal_storage',
-    inputs={bus_heat: Flow(
-        nominal_value=maximum_heat_flow_charging,
-        variable_costs=0.0001)},
-    outputs={bus_heat: Flow(
-        nominal_value=maximum_heat_flow_discharging)},
+    bus=bus_heat,
+    carrier='water',
+    tech='sensible_heat_storage',
+    diameter=input_data['diameter'],
+    temp_h=input_data['temp_h'],
+    temp_c=input_data['temp_c'],
+    temp_env=input_data['temp_env'],
+    u_value=u_value,
+    storage_capacity_cost=400,
+    capacity=maximum_heat_flow_charging,
     min_storage_level=min_storage_level,
     max_storage_level=max_storage_level,
-    loss_rate=loss_rate,
-    fixed_losses_relative=fixed_losses_relative,
-    fixed_losses_absolute=fixed_losses_absolute,
-    inflow_conversion_factor=1.,
-    outflow_conversion_factor=1.,
-    investment=Investment(ep_costs=400, minimum=1)
+    efficiency=1,
+    marginal_cost=0.0001
 )
 
 energysystem.add(bus_heat, heat_source, shortage, excess, heat_demand, thermal_storage)
 
 # create and solve the optimization model
 optimization_model = Model(energysystem)
-optimization_model.write('storage_model_invest.lp', io_options={'symbolic_solver_labels': True})
-optimization_model.solve(solver=solver,
-                         solve_kwargs={'tee': False, 'keepfiles': False})
-# get results
-results = outputlib.processing.results(optimization_model)
-string_results = outputlib.processing.convert_keys_to_strings(results)
-sequences = {k: v['sequences'] for k, v in string_results.items()}
-df = pd.concat(sequences, axis=1)
+optimization_model.write(
+    'storage_model_invest_facades.lp',
+    io_options={'symbolic_solver_labels': True}
+)
 
-# print storage sizing
-built_storage_capacity = results[thermal_storage, None]['scalars']['invest']
-initial_storage_capacity = results[thermal_storage, None]['scalars']['init_cap']
-maximum_heat_flow_charging = results[bus_heat, thermal_storage]['scalars']
-
-dash = '-' * 50
-print(dash)
-print('{:>32s}{:>15.3f}'.format('Built storage capacity [MWh]', built_storage_capacity))
-print(dash)
+with open('storage_model_invest_facades.lp') as generated_file:
+    with open('storage_model_invest.lp') as expected_file:
+        compare_lp_files(generated_file, expected_file)
