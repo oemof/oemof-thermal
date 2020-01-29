@@ -1,5 +1,16 @@
-"""Defines all functions, which are necessary for the CSP. The solph-component-
-facade will be in another file"""
+# -*- coding: utf-8
+
+"""
+This module is designed to hold functions which are necessary for the CSP.
+
+This file is part of project oemof (github.com/oemof/oemof-thermal). It's copyrighted
+by the contributors recorded in the version control history of the file,
+available from its original location:
+oemof-thermal/src/oemof/thermal/concentrating_solar_power.py
+
+SPDX-License-Identifier: MIT
+"""
+
 
 import pvlib
 import pandas as pd
@@ -83,7 +94,7 @@ def csp_precalc(df, periods,
         occur before the light hits the collectors surface.
 
 
-    **proposal of values**
+    **Proposal of values**
 
     If you have no idea, which values your collector have, here are values,
     which were measured in [1] for a collector:

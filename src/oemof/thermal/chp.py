@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -
+# -*- coding: utf-8
 
 """
 This module is designed to hold functions for pre- and postprocessing for combined heat
@@ -6,8 +6,9 @@ and power plants.
 
 This file is part of project oemof (github.com/oemof/oemof-thermal). It's copyrighted
 by the contributors recorded in the version control history of the file,
-available from its original location:
-oemof-thermal/src/oemof/thermal/chp.py
+available from its original location: oemof-thermal/src/oemof/thermal/chp.py
+
+SPDX-License-Identifier: MIT
 """
 
 
