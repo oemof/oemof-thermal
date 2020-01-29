@@ -13,6 +13,13 @@ concentrating_solar_power module
     :undoc-members:
     :show-inheritance:
 
+solar_thermal_collector module
+==========================================================
+.. automodule:: oemof.solar_thermal_collector
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 stratified_thermal_storage module
 ==========================================================
 .. automodule:: oemof.thermal.stratified_thermal_storage
