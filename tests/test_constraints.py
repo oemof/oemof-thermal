@@ -12,6 +12,7 @@ SPDX-License-Identifier: MIT
 
 import logging
 import os
+import pytest
 import re
 from difflib import unified_diff
 
@@ -120,6 +121,7 @@ class TestConstraints:
             with open(ref_filepath) as ref_file:
                 compare_lp_files(new_file, ref_file)
 
+    @pytest.mark.skip(reason="Relies on not yet released oemof v3.3")
     def test_stratified_thermal_storage_facade(self):
         """Constraint test of a StratifiedThermalStorage without investment.
         """
@@ -145,6 +147,7 @@ class TestConstraints:
 
         self.compare_to_reference_lp('stratified_thermal_storage.lp')
 
+    @pytest.mark.skip(reason="Relies on not yet released oemof v3.3")
     def test_stratified_thermal_storage_invest_facade(self):
         """Constraint test of a StratifiedThermalStorage with investment.
         """
