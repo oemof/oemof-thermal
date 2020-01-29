@@ -98,9 +98,9 @@ heat_demand = Sink(
 thermal_storage = GenericStorage(
     label='thermal_storage',
     inputs={bus_heat: Flow(
-        nominal_value=maximum_heat_flow_charging)},
+        investment=Investment())},
     outputs={bus_heat: Flow(
-        nominal_value=maximum_heat_flow_discharging,
+        investment=Investment(),
         variable_costs=0.0001)},
     min_storage_level=min_storage_level,
     max_storage_level=max_storage_level,
@@ -109,6 +109,8 @@ thermal_storage = GenericStorage(
     fixed_losses_absolute=fixed_losses_absolute,
     inflow_conversion_factor=1.,
     outflow_conversion_factor=1.,
+    invest_relation_input_output=1,
+    invest_relation_input_capacity=1 / 6,
     investment=Investment(ep_costs=400, minimum=1)
 )
 

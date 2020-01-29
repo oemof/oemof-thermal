@@ -231,6 +231,10 @@ class StratifiedThermalStorage(GenericStorage, Facade):
             "capacity_potential", float("+inf")
         )
 
+        self.minimum_storage_capacity = kwargs.get(
+            "minimum_storage_capacity", 0
+        )
+
         self.expandable = bool(kwargs.get("expandable", False))
 
         self.marginal_cost = kwargs.get("marginal_cost", 0)
