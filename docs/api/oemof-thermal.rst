@@ -15,7 +15,7 @@ csp module
 
 solar_thermal_collector module
 ==========================================================
-.. automodule:: oemof.thermal.flat_plate_collector
+.. automodule:: oemof.solar_thermal_collector
     :members:
     :undoc-members:
     :show-inheritance:
