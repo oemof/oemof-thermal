@@ -6,7 +6,7 @@ compression\_heatpumps\_and\_chillers module
     :undoc-members:
     :show-inheritance:
 
-csp module
+concentrating_solar_power module
 ==========================================================
 .. automodule:: oemof.thermal.concentrating_solar_power
     :members:
