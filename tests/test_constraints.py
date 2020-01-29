@@ -90,8 +90,8 @@ class TestConstraints:
 
         self.date_time_index = pd.date_range('1/1/2012', periods=3, freq='H')
 
-        self.tmppath = helpers.extend_basic_path('tmp')
-        logging.info(self.tmppath)
+        self.tmpdir = helpers.extend_basic_path('tmp')
+        logging.info(self.tmpdir)
 
     def setup(self):
         self.energysystem = solph.EnergySystem(groupings=solph.GROUPINGS,
@@ -101,6 +101,24 @@ class TestConstraints:
     def get_om(self):
         return solph.Model(self.energysystem,
                            timeindex=self.energysystem.timeindex)
+
+    def compare_to_reference_lp(self, ref_filename, my_om=None):
+        if my_om is None:
+            om = self.get_om()
+        else:
+            om = my_om
+
+        tmp_filename = ref_filename.replace('.lp', '') + '_tmp.lp'
+
+        new_filepath = os.path.join(self.tmpdir, tmp_filename)
+
+        om.write(new_filepath, io_options={'symbolic_solver_labels': True})
+
+        ref_filepath = os.path.join(os.path.dirname(__file__), 'lp_files', ref_filename)
+
+        with open(new_filepath) as new_file:
+            with open(ref_filepath) as ref_file:
+                compare_lp_files(new_file, ref_file)
 
     def test_stratified_thermal_storage_facade(self):
         """Constraint test of a StratifiedThermalStorage without investment.
@@ -125,7 +143,7 @@ class TestConstraints:
             marginal_cost=0.0001
         )
 
-        compare_lp_files('stratified_thermal_storage.lp')
+        self.compare_to_reference_lp('stratified_thermal_storage.lp')
 
     def test_stratified_thermal_storage_invest_facade(self):
         """Constraint test of a StratifiedThermalStorage with investment.
@@ -151,4 +169,4 @@ class TestConstraints:
             marginal_cost=0.0001
         )
 
-        compare_lp_files('stratified_thermal_storage_invest.lp')
+        self.compare_to_reference_lp('stratified_thermal_storage_invest.lp')
