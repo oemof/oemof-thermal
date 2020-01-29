@@ -15,7 +15,7 @@ concentrating_solar_power module
 
 solar_thermal_collector module
 ==========================================================
-.. automodule:: oemof.solar_thermal_collector
+.. automodule:: oemof.thermal.solar_thermal_collector
     :members:
     :undoc-members:
     :show-inheritance:
