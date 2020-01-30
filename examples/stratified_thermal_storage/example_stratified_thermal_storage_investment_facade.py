@@ -12,8 +12,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '.
 from test_constraints import compare_lp_files
 
 from oemof.solph import (Source, Sink, Bus, Flow,
-                         Investment, Model, EnergySystem)
-from oemof.solph.components import GenericStorage
+                         Model, EnergySystem)
 
 
 data_path = os.path.join(
