@@ -101,10 +101,6 @@ heat_demand = Sink(
         actual_value=demand_timeseries,
         fixed=True)})
 
-thermal_storage = GenericStorage(
-    investment=Investment(ep_costs=400, minimum=1)
-)
-
 thermal_storage = facades.StratifiedThermalStorage(
     label='thermal_storage',
     bus=bus_heat,
