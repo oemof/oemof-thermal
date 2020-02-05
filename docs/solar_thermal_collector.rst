@@ -76,7 +76,7 @@ These arguments are used in the formulas of the function:
     :math:`\Delta T`          :py:obj:`delta_t`                Temperature difference
                                                                (collector to ambience)
 
-    :math:`T_{Collector, in}`  :py:obj:`temp_collector_inlet`   Collectors inlet temperature
+    :math:`T_{Coll, in}`      :py:obj:`temp_collector_inlet`   Collectors inlet temperature
 
     :math:`\Delta T_n`        :py:obj:`delta_temp_n`           Temperature difference between
                                                                collector inlet and mean temperature
