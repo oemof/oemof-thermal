@@ -40,14 +40,14 @@ in-plane irradiance according to the azimuth and tilt angle of the collector.
 
 The efficiency of the collector is calculated with
 
-.. include:: ../src/oemof/thermal/flat_plate_collector.py
+.. include:: ../src/oemof/thermal/solar_thermal_collector.py
     :start-after:  calc_eta_c_flate_plate_equation:
     :end-before: Parameters
 
 In the end, the irradiance on the collector is multiplied with the efficiency
 to get the collectors heat.
 
-.. include:: ../src/oemof/thermal/flat_plate_collector.py
+.. include:: ../src/oemof/thermal/solar_thermal_collector.py
      :start-after:  flat_plate_precalc_equation:
      :end-before: Parameters
 
