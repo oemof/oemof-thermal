@@ -48,3 +48,6 @@ script:
 #  only:
 #  - branch_name1
 #  - branch_name2
+
+after_success:
+  - coveralls
