@@ -18,6 +18,7 @@ matrix:
 install:
   - pip install -r tests/test_requirements.txt
   - pip install -e .
+  - pip install coveralls
 
 # commands to run tests 
 script:
