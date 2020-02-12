@@ -33,7 +33,7 @@ def test_calculate_capacities():
     params = {
         'volume': 1000,  # m3
         'temp_h': 100,  # deg C
-        'temp_c': 50,
+        'temp_c': 50,  # deg C
         'nonusable_storage_volume': 0.1,
     }
 
@@ -46,10 +46,10 @@ def test_calculate_capacities():
 def test_calculate_losses():
     params = {
         'u_value': 1,
-        'diameter': 10,
-        'temp_h': 100,
-        'temp_c': 50,
-        'temp_env': 10,
+        'diameter': 10,  # m
+        'temp_h': 100,  # deg C
+        'temp_c': 50,  # deg C
+        'temp_env': 10,  # deg C
         'time_increment': 1
     }
 
