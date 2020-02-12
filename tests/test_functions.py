@@ -1,6 +1,7 @@
 import numpy as np
 from pytest import approx
 
+from oemof.thermal.chp import allocate_emissions
 from oemof.thermal.stratified_thermal_storage import (calculate_storage_u_value,
                                                       calculate_storage_dimensions,
                                                       calculate_capacities,
@@ -43,7 +44,7 @@ def test_calculate_capacities():
         and min_storage_level == 0.05
 
 
-def test_calculate_losses():
+def test_calculate_losses()        'time_increment': 1:
     params = {
         'u_value': 1,  # W/(m2*K)
         'diameter': 10,  # m
@@ -56,3 +57,23 @@ def test_calculate_losses():
     assert loss_rate == 0.00035450164405061065\
         and fixed_losses_relative == 0.00028360131524048847\
         and fixed_losses_absolute == 0.010210176124166827
+
+
+def test_allocate_emissions():
+    emissions_dict = {}
+    for method in ['iea', 'efficiency', 'finnish']:
+        emissions_dict[method] = allocate_emissions(
+            total_emissions=200,
+            eta_el=0.3,
+            eta_th=0.5,
+            method=method,
+            eta_el_ref=0.525,
+            eta_th_ref=0.82
+        )
+
+    result = {
+        'iea': (75.0, 125.0),
+        'efficiency': (125.0, 75.0),
+        'finnish': (96.7551622418879, 103.24483775811208)}
+
+    assert emissions_dict == result

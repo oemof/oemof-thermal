@@ -1,18 +1,22 @@
-# -*- coding: utf-8 -
+# -*- coding: utf-8
 
 """
 This module provides functions to calculate compression heat pumps and
 compression chillers.
 
-This file is part of project oemof (github.com/oemof/oemof-thermal). It's
-copyrighted by the contributors recorded in the version control history of the
-file, available from its original location:
+This file is part of project oemof (github.com/oemof/oemof-thermal). It's copyrighted
+by the contributors recorded in the version control history of the file,
+available from its original location:
 oemof-thermal/src/oemof/thermal/compression_heatpumps_and_chillers.py
+
+SPDX-License-Identifier: MIT
 """
+import pandas as pd
 
 
-def calc_cops(temp_high, temp_low, quality_grade, temp_threshold_icing=2,
-              consider_icing=False, factor_icing=None, mode=None):
+def calc_cops(mode, temp_high, temp_low, quality_grade, temp_threshold_icing=2,
+              factor_icing=None):
+
     r"""
     Calculates the Coefficient of Performance (COP) of heat pumps and chillers
     based on the Carnot efficiency (ideal process) and a scale-down factor.
@@ -40,16 +44,14 @@ def calc_cops(temp_high, temp_low, quality_grade, temp_threshold_icing=2,
 
     Parameters
     ----------
-    temp_high : list of numerical values
+    temp_high : list or pandas.Series of numerical values
         Temperature of the high temperature reservoir in :math:`^\circ C`
-    temp_low : list of numerical values
+    temp_low : list or pandas.Series of numerical values
         Temperature of the low temperature reservoir in :math:`^\circ C`
     quality_grade : numerical value
         Factor that scales down the efficiency of the real heat pump
         (or chiller) process from the ideal process (Carnot efficiency), where
          a factor of 1 means teh real process is equal to the ideal one.
-    consider_icing : boolean
-        Activates a threshold-temperature (default 'False')
     factor_icing: numerical value
         Sets the relative COP drop caused by icing, where 1 stands for no
         efficiency-drop.
@@ -66,7 +68,29 @@ def calc_cops(temp_high, temp_low, quality_grade, temp_threshold_icing=2,
 
 
     """
-    # Make both lists (temp_low and temp_high) have the same length and
+    # Check if input arguments have proper type and length
+    if not isinstance(temp_low, (list, pd.Series)):
+        raise TypeError("Argument 'temp_low' is not of type list or pd.Series!")
+
+    if not isinstance(temp_high, (list, pd.Series)):
+        raise TypeError("Argument 'temp_high' is not of "
+                        "type list or pd.Series!")
+
+    if len(temp_high) != len(temp_low):
+        if (len(temp_high) != 1) and ((len(temp_low) != 1)):
+            raise IndexError("Arguments 'temp_low' and 'temp_high' "
+                             "have to be of same length or one has "
+                             "to be of length 1 !")
+
+    # if factor_icing is not None and consider_icing is False:
+    #     raise ValueError('Argument factor_icing can not be used without '
+    #                      'setting consider_icing=True!')
+    #
+    # if factor_icing is None and consider_icing is True:
+    #     raise ValueError('Icing cannot be considered because argument '
+    #                      'factor_icing has value None!')
+
+    # Make temp_low and temp_high have the same length and
     # convert unit to Kelvin.
     length = max([len(temp_high), len(temp_low)])
     if len(temp_high) == 1:
@@ -78,8 +102,8 @@ def calc_cops(temp_high, temp_low, quality_grade, temp_threshold_icing=2,
     elif len(temp_low) == length:
         list_temp_low_K = [t + 273.15 for t in temp_low]
 
-    # Calculate COPs depending on selected mode (without considering icing).
-    if not consider_icing:
+    # Calculate COPs depending on selected mode (without icing).
+    if factor_icing is None:
         if mode == "heat_pump":
             cops = [quality_grade * t_h / (t_h - t_l) for
                     t_h, t_l in zip(list_temp_high_K, list_temp_low_K)]
@@ -88,7 +112,7 @@ def calc_cops(temp_high, temp_low, quality_grade, temp_threshold_icing=2,
                     t_h, t_l in zip(list_temp_high_K, list_temp_low_K)]
 
     # Calculate COPs of a heat pump and lower COP when icing occurs.
-    elif consider_icing:
+    elif factor_icing is not None:
         if mode == "heat_pump":
             cops = []
             for t_h, t_l in zip(list_temp_high_K, list_temp_low_K):
@@ -98,9 +122,8 @@ def calc_cops(temp_high, temp_low, quality_grade, temp_threshold_icing=2,
                 if t_l >= temp_threshold_icing + 273.15:
                     cops = cops + [quality_grade * t_h / (t_h - t_l)]
         elif mode == "chiller":
-            # Combining 'consider_icing' and mode 'chiller' is not possible!
-            cops = None
-
+            raise ValueError("Argument 'factor_icing' has "
+                             "to be None for mode='chiller'!")
     return cops
 
 
@@ -139,6 +162,9 @@ def calc_max_Q_dot_chill(nominal_conditions, cops):
 
 
     """
+    if not isinstance(cops, list):
+        raise TypeError("Argument 'cops' is not of type list!")
+
     nominal_cop = (nominal_conditions['nominal_Q_chill'] / nominal_conditions[
         'nominal_el_consumption'])
     max_Q_chill = [actual_cop / nominal_cop for actual_cop in cops]

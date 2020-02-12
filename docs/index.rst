@@ -14,6 +14,7 @@ Contents:
 
    getting_started
    examples
+   whats_new
    concentrating_solar_power
    heat_pump
    stratified_thermal_storage

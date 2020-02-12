@@ -6,9 +6,16 @@ compression\_heatpumps\_and\_chillers module
     :undoc-members:
     :show-inheritance:
 
-csp module
+concentrating_solar_power module
 ==========================================================
 .. automodule:: oemof.thermal.concentrating_solar_power
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+solar_thermal_collector module
+==========================================================
+.. automodule:: oemof.thermal.solar_thermal_collector
     :members:
     :undoc-members:
     :show-inheritance:
@@ -16,6 +23,13 @@ csp module
 stratified_thermal_storage module
 ==========================================================
 .. automodule:: oemof.thermal.stratified_thermal_storage
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+chp module
+==========================================================
+.. automodule:: oemof.thermal.chp
     :members:
     :undoc-members:
     :show-inheritance:

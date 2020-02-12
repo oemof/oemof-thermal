@@ -57,7 +57,6 @@ cops_ASHP = cmpr_hp_chiller.calc_cops(
     temp_low=data['ambient_temperature'],
     quality_grade=0.4,
     mode='heat_pump',
-    consider_icing=True,
     temp_threshold_icing=temp_threshold_icing,
     factor_icing=0.8)
 

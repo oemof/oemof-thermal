@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -
+# -*- coding: utf-8
 
 """
 This module is designed to hold functions for calculating stratified thermal storages.
@@ -7,7 +7,10 @@ This file is part of project oemof (github.com/oemof/oemof-thermal). It's copyri
 by the contributors recorded in the version control history of the file,
 available from its original location:
 oemof-thermal/src/oemof/thermal/stratified_thermal_storage.py
+
+SPDX-License-Identifier: MIT
 """
+
 
 import numpy as np
 

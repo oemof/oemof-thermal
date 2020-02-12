@@ -1,3 +1,5 @@
+|badge_pypi| |badge_travis| |badge_docs| |badge_coverage| |link-latest-doi|
+
 #############
 oemof.thermal
 #############
@@ -74,3 +76,24 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+
+.. |badge_pypi| image:: https://badge.fury.io/py/oemof.thermal.svg
+    :target: https://badge.fury.io/py/oemof.thermal
+    :alt: PyPI version
+
+.. |badge_docs| image:: https://readthedocs.org/projects/oemof-thermal/badge/?version=stable
+    :target: https://oemof-thermal.readthedocs.io/en/stable/
+    :alt: Documentation status
+
+.. |badge_coverage| image:: https://coveralls.io/repos/github/oemof/oemof-thermal/badge.svg?branch=dev&service=github
+    :target: https://coveralls.io/github/oemof/oemof-thermal?branch=dev
+    :alt: Test coverage
+
+.. |badge_travis| image:: https://travis-ci.org/oemof/oemof.svg?branch=dev
+    :target: https://travis-ci.org/oemof/oemof-thermal
+    :alt: Build status
+
+.. |link-latest-doi| image:: https://zenodo.org/badge/DOI/10.5281/zenodo.3606385.svg
+    :target: https://doi.org/10.5281/zenodo.3606385
+    :alt: Zenodo DOI
