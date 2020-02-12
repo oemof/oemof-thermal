@@ -1,19 +1,23 @@
-# -*- coding: utf-8 -
+# -*- coding: utf-8
 
 """
 This module provides functions to calculate compression heat pumps and
 compression chillers.
 
-This file is part of project oemof (github.com/oemof/oemof-thermal). It's
-copyrighted by the contributors recorded in the version control history of the
-file, available from its original location:
+This file is part of project oemof (github.com/oemof/oemof-thermal). It's copyrighted
+by the contributors recorded in the version control history of the file,
+available from its original location:
 oemof-thermal/src/oemof/thermal/compression_heatpumps_and_chillers.py
+
+SPDX-License-Identifier: MIT
 """
 import pandas as pd
 
 
+
 def calc_cops(mode, temp_high, temp_low, quality_grade, temp_threshold_icing=2,
               factor_icing=None):
+
     r"""
     Calculates the Coefficient of Performance (COP) of heat pumps and chillers
     based on the Carnot efficiency (ideal process) and a scale-down factor.

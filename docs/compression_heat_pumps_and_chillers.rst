@@ -69,7 +69,7 @@ is applied on the Carnot efficiency:
 with
 
 .. math::
-        0 \geq \eta \leq 1
+        0 \leq \eta \leq 1
 
 Typical values of quality grades are
 0.4 for air-source heat pumps,

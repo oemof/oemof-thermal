@@ -15,7 +15,7 @@ import oemof.outputlib as outputlib
 
 # precaluculation #
 
-dataframe = pd.read_csv('CSP_data/data_CSP.csv', sep=';')
+dataframe = pd.read_csv('csp_data/data_CSP.csv', sep=';')
 dataframe['Datum'] = pd.to_datetime(dataframe['Datum'])
 
 # parameters for the precalculation

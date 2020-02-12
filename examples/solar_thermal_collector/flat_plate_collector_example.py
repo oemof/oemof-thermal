@@ -8,7 +8,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 """
 
 from oemof import solph
-from oemof.thermal.flat_plate_collector import flat_plate_precalc
+from oemof.thermal.solar_thermal_collector import flat_plate_precalc
 from oemof.tools import economics
 from plots import plot_collector_heat
 import pandas as pd
@@ -25,8 +25,8 @@ timezone = 'Europe/Berlin'
 collector_tilt = 10
 collector_azimuth = 20
 eta_0 = 0.73
-c_1 = 1.7
-c_2 = 0.016
+a_1 = 1.7
+a_2 = 0.016
 temp_collector_inlet = 20
 delta_temp_n = 10
 
@@ -67,8 +67,8 @@ precalc_data = flat_plate_precalc(
     collector_tilt,
     collector_azimuth,
     eta_0,
-    c_1,
-    c_2,
+    a_1,
+    a_2,
     temp_collector_inlet,
     delta_temp_n,
     date_col='hour',

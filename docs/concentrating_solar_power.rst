@@ -58,14 +58,14 @@ with
 
 
 In the end, the irradiance on the collector is multiplied with the efficiency
-to get the collectors heat.
+to get the collector's heat.
 
 .. include:: ../src/oemof/thermal/concentrating_solar_power.py
   :start-after:  csp_precalc_equation:
   :end-before: functions used
 
 The three values :math:`Q_{coll}`, :math:`\eta_C` and :math:`E_{coll}` are
-returned. Losses, which occur after the heat absorption in the collector
+returned. Losses which occur after the heat absorption in the collector
 (e.g. losses in pipes) have to be taken into account in a later step
 (see the example).
 

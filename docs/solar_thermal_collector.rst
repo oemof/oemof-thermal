@@ -69,9 +69,9 @@ These arguments are used in the formulas of the function:
 
     :math:`\eta_C`            :py:obj:`eta_c`                  Collectors efficiency
 
-    :math:`c_1`               :py:obj:`c_1`                    Thermal loss parameter 1
+    :math:`a_1`               :py:obj:`a_1`                    Thermal loss parameter 1
 
-    :math:`c_2`               :py:obj:`c_2`                    Thermal loss parameter 2
+    :math:`a_2`               :py:obj:`a_2`                    Thermal loss parameter 2
 
     :math:`\Delta T`          :py:obj:`delta_t`                Temperature difference
                                                                (collector to ambience)
@@ -105,8 +105,8 @@ of the dataframe.
         collector_tilt,
         collector_azimuth,
         eta_0,
-        c_1,
-        c_2,
+        a_1,
+        a_2,
         temp_collector_inlet,
         delta_temp_n,
         date_col='hour',
