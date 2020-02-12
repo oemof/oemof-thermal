@@ -1,0 +1,6 @@
+name,id,chiller_type,nominal_cooling_capacity_kW,a,e,s_E,r_E,s_G,r_G,reference,manufacturer,detailed_description
+Rotartica,1,single-effect absorption chiller,4.5,2.704,1.883,0.196,2.476,0.232,4.271,,,
+Safarik,2,single-effect absorption chiller,15,2.138,2.252,0.452,-8.037,0.489,-4.913,,,
+Broad_01,3,single-effect absorption chiller,768,1.707,1.844,24.121,-553.194,24.121,-553.194,,,
+Broad_02,4,double-effect absorption chiller,1163,2.162,4.499,15.459,-911.572,10.807,-603.85,,,
+Kuehn,5,single-effect absorption chiller,10,2.5,1.8,0.42,0.9,0.51,2,,,
