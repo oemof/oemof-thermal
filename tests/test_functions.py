@@ -44,7 +44,7 @@ def test_calculate_capacities():
         and min_storage_level == 0.05
 
 
-def test_calculate_losses()        'time_increment': 1:
+def test_calculate_losses():
     params = {
         'u_value': 1,  # W/(m2*K)
         'diameter': 10,  # m
