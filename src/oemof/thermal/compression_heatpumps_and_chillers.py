@@ -14,7 +14,6 @@ SPDX-License-Identifier: MIT
 import pandas as pd
 
 
-
 def calc_cops(mode, temp_high, temp_low, quality_grade, temp_threshold_icing=2,
               factor_icing=None):
 
