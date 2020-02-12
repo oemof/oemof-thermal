@@ -18,9 +18,11 @@ import pandas as pd
 
 def csp_precalc(df, periods,
                 lat, long, tz,
-                collector_tilt, collector_azimuth, x, a_1, a_2,
+                collector_tilt, collector_azimuth, x,
                 eta_0, c_1, c_2,
                 temp_collector_inlet, temp_collector_outlet,
+                a_1, a_2, a_3=0, a_4=0, a_5=0, a_6=0,
+                loss_method='Janotte',
                 irradiance_method='horizontal',
                 date_col='date', irradiance_col='E_dir_hor',
                 temp_amb_col='t_amb'):
@@ -57,9 +59,7 @@ def csp_precalc(df, periods,
         degrees East of North
     x: numeric
         Cleanliness of the collector (between 0 and 1).
-    a_1: numeric
-        Parameter for the incident angle modifier.
-    a_2: numeric
+    a_1, a_2, a_3, a_4, a_5, a_6: numeric
         Parameter for the incident angle modifier.
     eta_0: numeric
         Optical efficiency of the collector.
@@ -71,6 +71,9 @@ def csp_precalc(df, periods,
         Collectors inlet temperature.
     temp_collector_outlet: numeric or series with length periods
         Collectors outlet temperature.
+    loss_method: string, default 'Janotte'
+        Valid values are: 'Janotte' or 'Andasol'. Describes, how the thermal
+        losses and the incidence angle modifier are calculated.
     irradiance_method: string, default 'horizontal'
         Valid values are: 'horizontal' or 'normal'. Describes, if the
         horizontal direct irradiance or the direct normal irradiance is
@@ -164,12 +167,13 @@ def csp_precalc(df, periods,
     data['collector_irradiance'] = collector_irradiance
 
     # Calculation of the incidence angle modifier
-    iam = calc_iam(a_1, a_2, tracking_data['aoi'])
+    iam = calc_iam(a_1, a_2, a_3, a_4, a_5, a_6, tracking_data['aoi'],
+                   loss_method)
 
     # Calculation of the collectors efficiency
     eta_c = calc_eta_c(eta_0, c_1, c_2, iam,
                        temp_collector_inlet, temp_collector_outlet,
-                       data['t_amb'], collector_irradiance)
+                       data['t_amb'], collector_irradiance, loss_method)
     data['eta_c'] = eta_c
 
     # Calculation of the collectors heat
@@ -203,7 +207,7 @@ def calc_collector_irradiance(irradiance_on_collector, x):
     return collector_irradiance
 
 
-def calc_iam(a_1, a_2, aoi):
+def calc_iam(a_1, a_2, a_3, a_4, a_5, a_6, aoi, loss_method):
     r"""
     Calculates the incidence angle modifier
 
@@ -214,10 +218,8 @@ def calc_iam(a_1, a_2, aoi):
 
     Parameters
     ----------
-    a_1: numeric
+    a_1, a_2, a_3, a_4, a_5, a_6: numeric
         Parameter 1 for the incident angle modifier.
-    a_2: numeric
-        Parameter 2 for the incident angle modifier.
     aoi: series of numeric
         Angle of incidence.
 
@@ -226,13 +228,18 @@ def calc_iam(a_1, a_2, aoi):
     Incidence angle modifier: series of numeric
 
     """
-    iam = 1 - a_1 * abs(aoi) - a_2 * aoi**2
+    if loss_method == 'Janotte':
+        iam = 1 - a_1 * abs(aoi) - a_2 * aoi**2
+
+    if loss_method == 'Andasol':
+        iam = (1 - a_1 * abs(aoi) - a_2 * aoi**2 - a_3 * aoi**3 - a_4 * aoi**4
+               - a_5 * aoi**5 - a_6 * aoi**6)
     return iam
 
 
 def calc_eta_c(eta_0, c_1, c_2, iam,
                temp_collector_inlet, temp_collector_outlet, temp_amb,
-               collector_irradiance):
+               collector_irradiance, loss_method):
     r"""
     Calculates collectors efficiency
 
@@ -265,16 +272,19 @@ def calc_eta_c(eta_0, c_1, c_2, iam,
     collectors efficiency: series of numeric
 
     """
-    delta_t = (temp_collector_inlet + temp_collector_outlet) / 2 - temp_amb
-    eta_c = pd.Series()
-    for index, value in collector_irradiance.items():
-        if value > 0:
-            eta = eta_0 * iam[index] - c_1 * delta_t[
-                index] / value - c_2 * delta_t[index] ** 2 / value
-            if eta > 0:
-                eta_c[index] = eta
+    if loss_method == 'Janotte':
+        delta_t = (temp_collector_inlet + temp_collector_outlet) / 2 - temp_amb
+        eta_c = pd.Series()
+        for index, value in collector_irradiance.items():
+            if value > 0:
+                eta = eta_0 * iam[index] - c_1 * delta_t[
+                    index] / value - c_2 * delta_t[index] ** 2 / value
+                if eta > 0:
+                    eta_c[index] = eta
+                else:
+                    eta_c[index] = 0
             else:
                 eta_c[index] = 0
-        else:
-            eta_c[index] = 0
+    if loss_method == 'Andasol':
+        eta_c = eta_0 * iam - c_1 / collector_irradiance
     return eta_c
