@@ -286,5 +286,14 @@ def calc_eta_c(eta_0, c_1, c_2, iam,
             else:
                 eta_c[index] = 0
     if loss_method == 'Andasol':
-        eta_c = eta_0 * iam - c_1 / collector_irradiance
+        eta_c = pd.Series()
+        for index, value in collector_irradiance.items():
+            if value > 0:
+                eta = eta_0 * iam[index] - c_1 / value
+                if eta > 0:
+                    eta_c[index] = eta
+                else:
+                    eta_c[index] = 0
+            else:
+                eta_c[index] = 0
     return eta_c
