@@ -1,8 +1,8 @@
 
 #  use environment 'env05'
 
-import absorption_heatpumps_and_chillers as abs_hp_chiller
-# import oemof.thermal.absorption_heatpumps_and_chillers as abs_hp_chiller
+# import absorption_heatpumps_and_chillers as abs_hp_chiller
+import oemof.thermal.absorption_heatpumps_and_chillers as abs_hp_chiller
 import oemof.solph as solph
 import oemof.outputlib as outputlib
 import pandas as pd
