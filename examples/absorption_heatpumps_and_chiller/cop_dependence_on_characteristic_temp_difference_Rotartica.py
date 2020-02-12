@@ -17,7 +17,7 @@ print(charpara[(charpara['name'] == chiller_name)]['a'].values[0])
 
 # Delta Delta t
 ddt = range(-5, 36, 1)
-print("Charateristic Temperatur Delta_Delta_t' =", ddt)
+print("Characteristic Temperature Delta_Delta_t' =", ddt)
 
 Q_dots_evap = abs_hp_chiller.calc_heat_flux(
     ddts=ddt,
