@@ -48,9 +48,9 @@ energysystem.add(solph.Source(
 #     inputs={b_th_medium: solph.Flow(variable_costs=0)}))
 energysystem.add(solph.Sink(
     label='cooling_demand',
-    inputs={b_th_low: solph.Flow(actual_value=data['demand_cooling'],
-                                  fixed=True,
-                                  nominal_value=27)}))
+    inputs={b_th_low: solph.Flow(actual_value=1,#actual_value=data['demand_cooling'],
+                                 fixed=True,
+                                 nominal_value=35)}))
 
 # Mean cooling water temperature in degC (dry cooling tower)
 temp_difference = 4
@@ -59,7 +59,7 @@ n = len(t_cooling)
 
 # Pre-Calculations
 ddt = abs_hp_chiller.calc_characteristic_temp(
-    t_hot=[75]*n,
+    t_hot=[85], # [75]*n,
     t_cool=t_cooling,
     t_chill=[15]*n,
     coef_a=charpara[(charpara['name'] == chiller_name)]['a'].values[0],
@@ -78,13 +78,14 @@ Q_dots_gen = abs_hp_chiller.calc_heat_flux(
 COPs = [Qevap/Qgen for Qgen, Qevap in zip(Q_dots_gen, Q_dots_evap)]
 nominal_value = 25
 actual_value = [Q_e/nominal_value for Q_e in Q_dots_evap]
+actual_value_df = pd.DataFrame(actual_value).clip(0)
 
 # Absorption Chiller
 energysystem.add(solph.Transformer(
     label="AC",
     inputs={b_th_high: solph.Flow()},
     outputs={b_th_low: solph.Flow(nominal_value=nominal_value,
-                                  actual_value=actual_value,
+                                  max=actual_value_df.values,
                                   variable_costs=5)},
     conversion_factors={b_th_low: COPs}))
 
@@ -121,8 +122,8 @@ ASHP_input = string_results[
 
 
 fig2, axs = plt.subplots(3, 1, figsize=(8, 5), sharex=True)
-axs[0].plot(AC_output, label='heat output')
-axs[0].plot(demand_cooling, linestyle='--', label='heat demand')
+axs[0].plot(AC_output, label='cooling output')
+axs[0].plot(demand_cooling, linestyle='--', label='cooling demand')
 axs[1].plot(COPs, linestyle='-.')
 axs[2].plot(data['air_temperature'])
 axs[0].set_title('Cooling capacity and demand')
