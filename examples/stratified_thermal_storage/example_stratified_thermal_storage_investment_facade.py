@@ -40,7 +40,7 @@ max_storage_level = 0.975
 min_storage_level = 0.025
 
 
-def print_results():
+def print_parameters():
     parameter = {
         'EQ-cost [Eur/]': 0,
         'U-value [W/(m2*K)]': u_value,
@@ -63,7 +63,7 @@ def print_results():
     print(dash)
 
 
-print_results()
+print_parameters()
 
 # Set up an energy system model
 solver = 'cbc'

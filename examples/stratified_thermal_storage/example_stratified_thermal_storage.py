@@ -50,7 +50,7 @@ maximum_heat_flow_charging = 2
 maximum_heat_flow_discharging = 2
 
 
-def print_results():
+def print_parameters():
     parameter = {
         'U-value [W/(m2*K)]': u_value,
         'Volume [m3]': volume,
@@ -77,7 +77,7 @@ def print_results():
     print(dash)
 
 
-print_results()
+print_parameters()
 
 # Set up an energy system model
 solver = 'cbc'
