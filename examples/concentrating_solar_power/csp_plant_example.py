@@ -36,9 +36,10 @@ temp_collector_outlet = 500
 
 data_precalc = csp_precalc(dataframe, periods,
                            latitude, longitude, timezone,
-                           collector_tilt, collector_azimuth, x, a_1, a_2,
+                           collector_tilt, collector_azimuth, x,
                            eta_0, c_1, c_2,
                            temp_collector_inlet, temp_collector_outlet,
+                           a_1, a_2,
                            date_col='Datum', temp_amb_col='t_amb')
 
 data_precalc['ES_load_actual_entsoe_power_statistics'] = list(

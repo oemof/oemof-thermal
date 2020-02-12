@@ -35,9 +35,10 @@ temp_collector_outlet = 500
 # cleaniness for the heat of the collector during a day
 data_precalc = csp_precalc(dataframe, periods,
                            latitude, longitude, timezone,
-                           collector_tilt, collector_azimuth, x, a_1, a_2,
+                           collector_tilt, collector_azimuth, x,
                            eta_0, c_1, c_2,
                            temp_collector_inlet, temp_collector_outlet,
+                           a_1, a_2,
                            date_col='Datum', temp_amb_col='t_amb')
 
 heat_calc = data_precalc['collector_heat']
@@ -64,9 +65,10 @@ for i in range(len(temp_amb_series)):
     data_precalc_temp_amb = csp_precalc(
         df_temp_amb_series, 1,
         latitude, longitude, timezone,
-        collector_tilt, collector_azimuth, x, a_1, a_2,
+        collector_tilt, collector_azimuth, x,
         eta_0, c_1, c_2,
         temp_collector_inlet, temp_collector_outlet,
+        a_1, a_2,
         date_col='Datum', temp_amb_col='t_amb')
 
     df_result = df_result.append(data_precalc_temp_amb, ignore_index=True)
