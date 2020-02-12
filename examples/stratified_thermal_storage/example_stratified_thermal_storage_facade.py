@@ -11,9 +11,6 @@ from test_constraints import compare_lp_files
 
 from oemof.thermal.stratified_thermal_storage import (
     calculate_storage_u_value,
-    calculate_storage_dimensions,
-    calculate_capacities,
-    calculate_losses,
 )
 
 from oemof.solph import Source, Sink, Bus, Flow, Model, EnergySystem
@@ -30,26 +27,8 @@ u_value = calculate_storage_u_value(
     input_data['alpha_inside'],
     input_data['alpha_outside'])
 
-volume, surface = calculate_storage_dimensions(
-    input_data['height'],
-    input_data['diameter']
-)
-
-nominal_storage_capacity, max_storage_level, min_storage_level = calculate_capacities(
-    volume,
-    input_data['temp_h'],
-    input_data['temp_c'],
-    input_data['nonusable_storage_volume'],
-    input_data['heat_capacity'],
-    input_data['density'])
-
-loss_rate, fixed_losses_relative, fixed_losses_absolute = calculate_losses(
-    u_value,
-    input_data['diameter'],
-    input_data['temp_h'],
-    input_data['temp_c'],
-    input_data['temp_env'])
-
+min_storage_level = 0.025
+max_storage_level = 0.975
 maximum_heat_flow_charging = 2
 maximum_heat_flow_discharging = 2
 
@@ -57,16 +36,10 @@ maximum_heat_flow_discharging = 2
 def print_results():
     parameter = {
         'U-value [W/(m2*K)]': u_value,
-        'Volume [m3]': volume,
-        'Surface [m2]': surface,
-        'Nominal storage capacity [MWh]': nominal_storage_capacity,
         'Max. heat flow charging [MW]': maximum_heat_flow_charging,
         'Max. heat flow discharging [MW]': maximum_heat_flow_discharging,
         'Max storage level [-]': max_storage_level,
         'Min storage_level [-]': min_storage_level,
-        'Loss rate [-]': loss_rate,
-        'Fixed relative losses [-]': fixed_losses_relative,
-        'Fixed absolute losses [MWh]': fixed_losses_absolute,
     }
 
     dash = '-' * 50
