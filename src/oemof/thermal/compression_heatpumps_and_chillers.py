@@ -67,16 +67,17 @@ def calc_cops(mode, temp_high, temp_low, quality_grade, temp_threshold_icing=2,
     """
     # Check if input arguments have proper type and length
     if not isinstance(temp_low, (list, pd.Series)):
-        raise TypeError('Argument temp_low is not of type list or pd.Series!')
+        raise TypeError("Argument 'temp_low' is not of type list or pd.Series!")
 
     if not isinstance(temp_high, (list, pd.Series)):
-        raise TypeError('Argument temp_high is not of type list or pd.Series!')
+        raise TypeError("Argument 'temp_high' is not of "
+                        "type list or pd.Series!")
 
     if len(temp_high) != len(temp_low):
         if (len(temp_high) != 1) and ((len(temp_low) != 1)):
-            raise IndexError('Arguments temp_low and '
-                             'temp_high have to be of same '
-                             'length or one has to be of length 1 !')
+            raise IndexError("Arguments 'temp_low' and 'temp_high' "
+                             "have to be of same length or one has "
+                             "to be of length 1 !")
 
     # if factor_icing is not None and consider_icing is False:
     #     raise ValueError('Argument factor_icing can not be used without '
@@ -118,8 +119,8 @@ def calc_cops(mode, temp_high, temp_low, quality_grade, temp_threshold_icing=2,
                 if t_l >= temp_threshold_icing + 273.15:
                     cops = cops + [quality_grade * t_h / (t_h - t_l)]
         elif mode == "chiller":
-            raise ValueError('Argument factor ising has '
-                             'to be None for mode=chiller!')
+            raise ValueError("Argument 'factor_icing' has "
+                             "to be None for mode='chiller'!")
     return cops
 
 
@@ -159,7 +160,7 @@ def calc_max_Q_dot_chill(nominal_conditions, cops):
 
     """
     if not isinstance(cops, list):
-        raise TypeError('Argument cops is not of type list!')
+        raise TypeError("Argument 'cops' is not of type list!")
 
     nominal_cop = (nominal_conditions['nominal_Q_chill'] / nominal_conditions[
         'nominal_el_consumption'])
