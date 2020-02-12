@@ -7,7 +7,7 @@ def calc_characteristic_temp(t_hot, t_cool, t_chill, coef_a, coef_e, method):
 
     # External mean temperature at generator (g)
     if len(t_hot) == 1:
-        list_t_g = t_hot[0]*length
+        list_t_g = t_hot*length  # t_hot[0]*length
     elif len(t_hot) == length:
         list_t_g = t_hot
     else:
