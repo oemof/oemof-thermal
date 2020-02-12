@@ -45,7 +45,7 @@ def test_calculate_capacities():
 
 def test_calculate_losses():
     params = {
-        'u_value': 1,
+        'u_value': 1,  # W/(m2*K)
         'diameter': 10,  # m
         'temp_h': 100,  # deg C
         'temp_c': 50,  # deg C
