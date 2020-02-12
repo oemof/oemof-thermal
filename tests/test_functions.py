@@ -31,7 +31,7 @@ def test_calculate_storage_dimensions():
 
 def test_calculate_capacities():
     params = {
-        'volume': 1000,
+        'volume': 1000,  # m3
         'temp_h': 100,
         'temp_c': 50,
         'nonusable_storage_volume': 0.1,
