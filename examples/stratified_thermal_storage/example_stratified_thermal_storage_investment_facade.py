@@ -3,8 +3,7 @@ import sys
 import pandas as pd
 import numpy as np
 
-from oemof.thermal.stratified_thermal_storage import (calculate_storage_u_value,
-                                                      calculate_losses)
+from oemof.thermal.stratified_thermal_storage import calculate_storage_u_value
 from oemof.thermal import facades
 
 # import functions to compare lp-files of new example with old one.
@@ -27,13 +26,6 @@ u_value = calculate_storage_u_value(
     input_data['alpha_inside'],
     input_data['alpha_outside'])
 
-loss_rate, fixed_losses_relative, fixed_losses_absolute = calculate_losses(
-    u_value,
-    input_data['diameter'],
-    input_data['temp_h'],
-    input_data['temp_c'],
-    input_data['temp_env'])
-
 maximum_heat_flow_charging = 0.9
 maximum_heat_flow_discharging = 0.9
 max_storage_level = 0.975
@@ -46,9 +38,6 @@ def print_parameters():
         'U-value [W/(m2*K)]': u_value,
         'Max. heat flow charging [MW]': maximum_heat_flow_charging,
         'Max. heat flow discharging [MW]': maximum_heat_flow_discharging,
-        'Loss rate [-]': loss_rate,
-        'Fixed relative losses [-]': fixed_losses_relative,
-        'Fixed absolute losses [MWh]': fixed_losses_absolute,
     }
 
     dash = '-' * 50
