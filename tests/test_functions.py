@@ -34,7 +34,7 @@ def test_calculate_capacities():
         'volume': 1000,  # m3
         'temp_h': 100,  # deg C
         'temp_c': 50,  # deg C
-        'nonusable_storage_volume': 0.1,
+        'nonusable_storage_volume': 0.1,  # dimensionless
     }
 
     nominal_storage_capacity, max_storage_level, min_storage_level = calculate_capacities(**params)
@@ -50,7 +50,6 @@ def test_calculate_losses():
         'temp_h': 100,  # deg C
         'temp_c': 50,  # deg C
         'temp_env': 10,  # deg C
-        'time_increment': 1
     }
 
     loss_rate, fixed_losses_relative, fixed_losses_absolute = calculate_losses(**params)
