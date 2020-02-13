@@ -81,7 +81,7 @@ def calculate_storage_dimensions(height, diameter):
 
 
 def calculate_capacities(
-    volume, temp_h, temp_c, nonusable_storage_volume, heat_capacity=4196, density=971.6
+    volume, temp_h, temp_c, nonusable_storage_volume, heat_capacity=4195.52, density=971.803
 ):
     r"""
     Calculates the nominal storage capacity, minimum
@@ -112,9 +112,11 @@ def calculate_capacities(
 
     heat_capacity: numeric
         Average specific heat capacity of storage medium [J/(kg*K)]
+        Calculated with CoolProp at a constant temperature of 80 °C as a simplification
 
     density : numeric
         Average density of storage medium [kg/m3]
+        Calculated with CoolProp at a constant temperature of 80 °C as a simplification
 
     Returns
     -------
@@ -144,8 +146,8 @@ def calculate_losses(
     temp_c,
     temp_env,
     time_increment=1,
-    heat_capacity=4180,
-    density=971.78,
+    heat_capacity=4195.52,
+    density=971.803,
 ):
     r"""
     Calculates loss rate and fixed losses for a stratified thermal storage.
@@ -180,9 +182,11 @@ def calculate_losses(
 
     heat_capacity: numeric
         Average specific heat capacity of storage medium [J/(kg*K)]
+        Calculated with CoolProp at a constant temperature of 80 °C as a simplification
 
     density : numeric
         Average density of storage medium [kg/m3]
+        Calculated with CoolProp at a constant temperature of 80 °C as a simplification
 
     Returns
     -------
