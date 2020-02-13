@@ -1,0 +1,15 @@
+var_name,var_value,var_unit
+height,30,m
+diameter,10,m
+density,971.78,kg/m3
+heat_capacity,4180,J/(kg*K)
+temp_h,95,degC
+temp_c,60,degC
+temp_env,10,degC
+inflow_conversion_factor,0.9,
+outflow_conversion_factor,0.9,
+nonusable_storage_volume,0.05,
+s_iso,0.05,m
+lamb_iso,0.03,W/(m*K)
+alpha_inside,1,W/(m2*K)
+alpha_outside,1,W/(m2*K)
