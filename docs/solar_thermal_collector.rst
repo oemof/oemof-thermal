@@ -40,14 +40,14 @@ in-plane irradiance according to the azimuth and tilt angle of the collector.
 
 The efficiency of the collector is calculated with
 
-.. include:: ../src/oemof/thermal/flat_plate_collector.py
+.. include:: ../src/oemof/thermal/solar_thermal_collector.py
     :start-after:  calc_eta_c_flate_plate_equation:
     :end-before: Parameters
 
 In the end, the irradiance on the collector is multiplied with the efficiency
 to get the collectors heat.
 
-.. include:: ../src/oemof/thermal/flat_plate_collector.py
+.. include:: ../src/oemof/thermal/solar_thermal_collector.py
      :start-after:  flat_plate_precalc_equation:
      :end-before: Parameters
 
@@ -76,7 +76,7 @@ These arguments are used in the formulas of the function:
     :math:`\Delta T`          :py:obj:`delta_t`                Temperature difference
                                                                (collector to ambience)
 
-    :math:`T_{Collector, in}`  :py:obj:`temp_collector_inlet`   Collectors inlet temperature
+    :math:`T_{coll, in}`      :py:obj:`temp_collector_inlet`   Collectors inlet temperature
 
     :math:`\Delta T_n`        :py:obj:`delta_temp_n`           Temperature difference between
                                                                collector inlet and mean temperature
