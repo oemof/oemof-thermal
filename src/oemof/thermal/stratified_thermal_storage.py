@@ -131,8 +131,8 @@ def calculate_capacities(
     nominal_storage_capacity = volume * heat_capacity * density * (temp_h - temp_c)
     nominal_storage_capacity *= 1 / 3600  # J to Wh
     nominal_storage_capacity *= 1e-6  # Wh to MWh
-    max_storage_level = 1 - 0.5 * nonusable_storage_volume
-    min_storage_level = 0.5 * nonusable_storage_volume
+    max_storage_level = nominal_storage_capacity * (1 - 0.5 * nonusable_storage_volume)
+    min_storage_level = nominal_storage_capacity * 0.5 * nonusable_storage_volume
 
     return nominal_storage_capacity, max_storage_level, min_storage_level
 
