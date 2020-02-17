@@ -1,4 +1,4 @@
-from oemof.thermal.chp import allocate_emissions
+from oemof.thermal.cogeneration import allocate_emissions
 
 
 def test_dummy():
