@@ -17,6 +17,8 @@ def allocate_emissions(total_emissions, eta_el, eta_th, method, **kwargs):
     Function to allocate emissions caused in cogeneration to the products electrical energy
     and heat according to specified method.
 
+    .. allocate_emissions-equations:
+
     **IEA method**
 
     :math:`EM_{el} = EM \cdot \frac{\eta_{el}}{\eta_{el} + \eta_{th}}`
