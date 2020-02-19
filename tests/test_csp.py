@@ -37,6 +37,36 @@ def test_calculation_iam_for_a_series():
     result = pd.Series([1.00613, 0.99272, 0.95977], index=[1, 2, 3])
     assert res.eq(result).all()
 
+
+with pytest.raises(ValueError):
+    df = pd.DataFrame(data={'date': [1, 2], 'E_dir_hor': [
+        30, 40], 't_amb': [30, 40]})
+    latitude = 23.614328
+    longitude = 58.545284
+    timezone = 'Asia/Muscat'
+    collector_tilt = 10
+    collector_azimuth = 180
+    x = 0.9
+    a_1 = -8.65e-4
+    a_2 = 8.87e-4
+    a_3 = -5.425e-5
+    a_4 = 1.665e-6
+    a_5 = -2.309e-8
+    a_6 = 1.197e-10
+    eta_0 = 0.78
+    c_1 = 0.816
+    c_2 = 0.0622
+    temp_collector_inlet = 235
+    temp_collector_outlet = 300
+    csp.csp_precalc(df, 2,
+                    latitude, longitude, timezone,
+                    collector_tilt, collector_azimuth, x,
+                    eta_0, c_1, c_2,
+                    temp_collector_inlet, temp_collector_outlet,
+                    a_1, a_2, a_3=0, a_4=0, a_5=0, a_6=0,
+                    loss_method='quatsch')
+
+
 def test_eta_janotte():
     s = pd.Series([50], index=[1])
     res = csp.calc_eta_c(0.816, 0.0622, 0.00023, 0.95, 235, 300, 30, s,
