@@ -9,11 +9,10 @@ import matplotlib.pyplot as plt
 
 # precaluculation #
 
-dataframe = pd.read_csv('csp_data/data_Muscat_22_8.csv', sep=';')
+dataframe = pd.read_csv('csp_data/data_Muscat_22_8.csv')
 dataframe['Datum'] = pd.to_datetime(dataframe['Datum'])
-df_temp_amb_series = pd.read_csv('csp_data/data_Muscat_22_8_midday.csv',
-                                 sep=';')
-temp_amb_series = pd.read_csv('csp_data/temp_ambience.csv', sep=';')['t_amb']
+df_temp_amb_series = pd.read_csv('csp_data/data_Muscat_22_8_midday.csv')
+temp_amb_series = pd.read_csv('csp_data/temp_ambience.csv')['t_amb']
 
 # parameters for the precalculation
 periods = 24
