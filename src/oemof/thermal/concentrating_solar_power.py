@@ -14,6 +14,7 @@ SPDX-License-Identifier: MIT
 
 import pvlib
 import pandas as pd
+import numpy as np
 
 
 def csp_precalc(df, periods,
@@ -128,6 +129,7 @@ def csp_precalc(df, periods,
         data = pd.DataFrame({'date': date_time_index,
                              'E_dir_hor': datainput[irradiance_col],
                              't_amb': datainput[temp_amb_col]})
+
     elif irradiance_method == 'normal':
         data = pd.DataFrame({'date': date_time_index,
                              'dni': datainput[irradiance_col],
@@ -153,6 +155,7 @@ def csp_precalc(df, periods,
         poa_horizontal_ratio = pvlib.irradiance.poa_horizontal_ratio(
             tracking_data['surface_tilt'], tracking_data['surface_azimuth'],
             solarposition['apparent_zenith'], solarposition['azimuth'])
+        poa_horizontal_ratio[poa_horizontal_ratio < 0] = 0
 
         irradiance_on_collector = data['E_dir_hor'] * poa_horizontal_ratio
 
@@ -290,5 +293,6 @@ def calc_eta_c(eta_0, c_1, c_2, iam,
         eta_c = eta_0 * iam - c_1 / collector_irradiance
 
     eta_c[eta_c < 0] = 0
+    eta_c[eta_c == np.inf] = 0
     eta_c = eta_c.fillna(0)
     return eta_c
