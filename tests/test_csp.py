@@ -1,4 +1,5 @@
 import pandas as pd
+import pytest
 import oemof.thermal.concentrating_solar_power as csp
 
 
@@ -36,11 +37,17 @@ def test_calculation_iam_for_a_series():
     result = pd.Series([1.00613, 0.99272, 0.95977], index=[1, 2, 3])
     assert res.eq(result).all()
 
-#
-# def test_eta():
-#     s = pd.Series([200], index=[0])
-#     iam = pd.Series([0.83525], index=[0])
-#     ambient = pd.Series([20], index=[0])
-#     res = csp.calc_eta_c(0.816, 0.0622, 0.00023, iam, 235, 300, ambient, s,
-#                          'Janotte')
-#     assert res == pd.Series([0.5341468125], index=[0])
+def test_eta_janotte():
+    s = pd.Series([50], index=[1])
+    res = csp.calc_eta_c(0.816, 0.0622, 0.00023, 0.95, 235, 300, 30, s,
+                         'Janotte')
+    result = pd.Series([0.22028124999999987], index=[1])
+    assert res.eq(result).all()
+
+
+def test_eta_andasol():
+    s = pd.Series([100], index=[1])
+    res = csp.calc_eta_c(0.816, 64, 0.00023, 0.95, 235, 300, 30, s,
+                         'Andasol')
+    result = pd.Series([0.13519999999999988], index=[1])
+    assert res.eq(result).all()
