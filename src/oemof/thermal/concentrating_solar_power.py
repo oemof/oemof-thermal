@@ -116,7 +116,7 @@ def csp_precalc(df, periods,
     https://doi.org/10.21105/joss.00884
     """
 
-    if loss_method != ("Janotte" or "Andasol"):
+    if loss_method != "Janotte" and loss_method != "Andasol":
         raise ValueError('loss_method should be "Janotte" or "Andasol"')
 
     date_time_index = pd.date_range(df.loc[0, date_col], periods=periods,
