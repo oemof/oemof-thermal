@@ -116,6 +116,7 @@ def csp_precalc(df, periods,
     https://doi.org/10.21105/joss.00884
     """
 
+
     date_time_index = pd.date_range(df.loc[0, date_col], periods=periods,
                                     freq='H', tz=tz)
     # Creation of input-DF with 3 columns, depending on irradiance_method
@@ -222,6 +223,9 @@ def calc_iam(a_1, a_2, a_3, a_4, a_5, a_6, aoi, loss_method):
         Parameter 1 for the incident angle modifier.
     aoi: series of numeric
         Angle of incidence.
+    loss_method: string, default 'Janotte'
+        Valid values are: 'Janotte' or 'Andasol'. Describes, how the thermal
+        losses and the incidence angle modifier are calculated.
 
     Returns
     -------
@@ -266,6 +270,9 @@ def calc_eta_c(eta_0, c_1, c_2, iam,
         Ambient temperature.
     collector_irradiance: series of numeric
         Irradiance on collector after all losses.
+    loss_method: string, default 'Janotte'
+        Valid values are: 'Janotte' or 'Andasol'. Describes, how the thermal
+        losses and the incidence angle modifier are calculated.
 
     Returns
     -------
@@ -274,26 +281,12 @@ def calc_eta_c(eta_0, c_1, c_2, iam,
     """
     if loss_method == 'Janotte':
         delta_t = (temp_collector_inlet + temp_collector_outlet) / 2 - temp_amb
-        eta_c = pd.Series()
-        for index, value in collector_irradiance.items():
-            if value > 0:
-                eta = eta_0 * iam[index] - c_1 * delta_t[
-                    index] / value - c_2 * delta_t[index] ** 2 / value
-                if eta > 0:
-                    eta_c[index] = eta
-                else:
-                    eta_c[index] = 0
-            else:
-                eta_c[index] = 0
+        eta_c = eta_0 * iam - c_1 * delta_t / collector_irradiance - c_2\
+            * delta_t ** 2 / collector_irradiance
+
     if loss_method == 'Andasol':
-        eta_c = pd.Series()
-        for index, value in collector_irradiance.items():
-            if value > 0:
-                eta = eta_0 * iam[index] - c_1 / value
-                if eta > 0:
-                    eta_c[index] = eta
-                else:
-                    eta_c[index] = 0
-            else:
-                eta_c[index] = 0
+        eta_c = eta_0 * iam - c_1 / collector_irradiance
+
+    eta_c[eta_c < 0] = 0
+    eta_c = eta_c.fillna(0)
     return eta_c
