@@ -282,9 +282,9 @@ def calc_eta_c(eta_0, c_1, c_2, iam,
 
     """
     if loss_method == 'Janotte':
-        delta_t = (temp_collector_inlet + temp_collector_outlet) / 2 - temp_amb
-        eta_c = eta_0 * iam - c_1 * delta_t / collector_irradiance - c_2\
-            * delta_t ** 2 / collector_irradiance
+        delta_temp = (temp_collector_inlet + temp_collector_outlet) / 2 - temp_amb
+        eta_c = eta_0 * iam - c_1 * delta_temp / collector_irradiance - c_2\
+            * delta_temp ** 2 / collector_irradiance
 
     if loss_method == 'Andasol':
         eta_c = eta_0 * iam - c_1 / collector_irradiance
