@@ -50,7 +50,7 @@ def calc_heat_flux(ddts, coef_s, coef_r, method):
     if method == 'kuehn_and_ziegler':
         Q_dots = [coef_s * ddt + coef_r for ddt in ddts]
     else:
-        Q_dot_evap = None
+        Q_dots = None
         print("ERROR - unknown argument 'method'. "
               "Heat flux Q_dot was not calculated!")
     return Q_dots
