@@ -1,5 +1,4 @@
 
-#  use environment 'env05'
 
 def calc_characteristic_temp(t_hot, t_cool, t_chill, coef_a, coef_e, method):
     lengths = [len(t_hot), len(t_cool), len(t_chill)]
@@ -7,7 +6,7 @@ def calc_characteristic_temp(t_hot, t_cool, t_chill, coef_a, coef_e, method):
 
     # External mean temperature at generator (g)
     if len(t_hot) == 1:
-        list_t_g = t_hot*length  # t_hot[0]*length
+        list_t_g = t_hot*length
     elif len(t_hot) == length:
         list_t_g = t_hot
     else:

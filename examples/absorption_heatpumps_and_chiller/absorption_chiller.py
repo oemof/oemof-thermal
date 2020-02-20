@@ -57,7 +57,7 @@ n = len(t_cooling)
 
 # Pre-Calculations
 ddt = abs_hp_chiller.calc_characteristic_temp(
-    t_hot=[85], # [75]*n,
+    t_hot=[85],
     t_cool=t_cooling,
     t_chill=[15]*n,
     coef_a=charpara[(charpara['name'] == chiller_name)]['a'].values[0],
