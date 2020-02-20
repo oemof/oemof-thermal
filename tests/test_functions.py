@@ -1,26 +1,39 @@
-from oemof.thermal.chp import allocate_emissions
+import pandas as pd
+
+from oemof.thermal.solar_thermal_collector import (flat_plate_precalc,
+                                                   calc_eta_c_flate_plate)
 
 
-def test_dummy():
-    a = 2 * 0.5
-    assert a == 1
+def test_flat_plate_precalc():
+    params = {
+        'periods': 1,
+        'latitude': 52.2443,
+        'longitude': 10.5594,
+        'timezone': 'Europe/Berlin',
+        'collector_tilt': 10,
+        'collector_azimuth': 20,
+        'eta_0': 0.5,
+        'a_1': 1,
+        'a_2': 0.5,
+        'temp_collector_inlet': 20,
+        'delta_temp_n': 10
+    }
+
+    # results need to be adjusted
+    results = pd.DataFrame({'eta_c': 0.322531, 'collectors_heat': 35.733698})
+    data = flat_plate_precalc(params)
+    assert data == results
 
 
-def test_allocate_emissions():
-    emissions_dict = {}
-    for method in ['iea', 'efficiency', 'finnish']:
-        emissions_dict[method] = allocate_emissions(
-            total_emissions=200,
-            eta_el=0.3,
-            eta_th=0.5,
-            method=method,
-            eta_el_ref=0.525,
-            eta_th_ref=0.82
-        )
+def test_calc_eta_c_flate_plate():
+    params = {
+        'eta_0': 0.5,
+        'a_1': 1,
+        'a_2': 0.5,
+        'temp_collector_inlet': 20,
+        'delta_temp_n': 10,
+        'temp_amb': 10,
+        'collector_irradiance': 1000,
+    }
 
-    result = {
-        'iea': (75.0, 125.0),
-        'efficiency': (125.0, 75.0),
-        'finnish': (96.7551622418879, 103.24483775811208)}
-
-    assert emissions_dict == result
+    assert calc_eta_c_flate_plate(params) == 0.3    # Adjust this value
