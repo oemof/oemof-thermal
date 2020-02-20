@@ -18,8 +18,7 @@ date_time_index = pd.date_range('1/1/2012', periods=number_of_time_steps,
 energysystem = solph.EnergySystem(timeindex=date_time_index)
 
 # Read data file
-filename_data = os.path.join(os.path.dirname(__file__),
-                                 'data/AC_example.csv')
+filename_data = os.path.join(os.path.dirname(__file__), 'data/AC_example.csv')
 data = pd.read_csv(filename_data)
 
 filename_charpara = os.path.join(os.path.dirname(__file__),
@@ -31,9 +30,7 @@ chiller_name = 'Kuehn'
 b_th_high = solph.Bus(label="hot")
 # b_th_medium = solph.Bus(label="cool")
 b_th_low = solph.Bus(label="chilled")
-energysystem.add(b_th_high,
-                # b_th_medium,
-                 b_th_low)
+energysystem.add(b_th_high, b_th_low)
 
 energysystem.add(solph.Source(
     label='driving_heat',
@@ -46,7 +43,7 @@ energysystem.add(solph.Source(
 #     inputs={b_th_medium: solph.Flow(variable_costs=0)}))
 energysystem.add(solph.Sink(
     label='cooling_demand',
-    inputs={b_th_low: solph.Flow(actual_value=1,#actual_value=data['demand_cooling'],
+    inputs={b_th_low: solph.Flow(actual_value=1,
                                  fixed=True,
                                  nominal_value=35)}))
 
@@ -59,7 +56,7 @@ n = len(t_cooling)
 ddt = abs_hp_chiller.calc_characteristic_temp(
     t_hot=[85],
     t_cool=t_cooling,
-    t_chill=[15]*n,
+    t_chill=[15] * n,
     coef_a=charpara[(charpara['name'] == chiller_name)]['a'].values[0],
     coef_e=charpara[(charpara['name'] == chiller_name)]['e'].values[0],
     method='kuehn_and_ziegler')
@@ -73,9 +70,9 @@ Q_dots_gen = abs_hp_chiller.calc_heat_flux(
     coef_s=charpara[(charpara['name'] == chiller_name)]['s_G'].values[0],
     coef_r=charpara[(charpara['name'] == chiller_name)]['r_G'].values[0],
     method='kuehn_and_ziegler')
-COPs = [Qevap/Qgen for Qgen, Qevap in zip(Q_dots_gen, Q_dots_evap)]
+COPs = [Qevap / Qgen for Qgen, Qevap in zip(Q_dots_gen, Q_dots_evap)]
 nominal_value = 25
-actual_value = [Q_e/nominal_value for Q_e in Q_dots_evap]
+actual_value = [Q_e / nominal_value for Q_e in Q_dots_evap]
 actual_value_df = pd.DataFrame(actual_value).clip(0)
 
 # Absorption Chiller
@@ -142,8 +139,3 @@ plt.show()
 print('********* Main results *********')
 print(high_temp_bus['sequences'].sum(axis=0))
 print(low_temp_bus['sequences'].sum(axis=0))
-
-## Display calculated COPs
-# print("")
-# print("Coefficients of Performance (COP): ", *cops_ASHP, sep='\n')
-# print("")

@@ -35,7 +35,7 @@ def test_calc_characteristic_temp_Braod_01():
     chiller_name = 'Broad_01'
     n = 2
     ddt = ac.calc_characteristic_temp(
-        t_hot=[85]*n,
+        t_hot=[85] * n,
         t_cool=[30],
         t_chill=[15],
         coef_a=charpara[(charpara['name'] == chiller_name)]['a'].values[0],
@@ -76,10 +76,11 @@ def test_calc_heat_flux_generator():
         method='kuehn_and_ziegler')
     assert Q_dots_gen == [584.92]
 
+
 def test_raised_exception_argument_type():
     """Test if an exception is raised if input argument is not a list."""
     with pytest.raises(TypeError):
-        ddt = ac.calc_characteristic_temp(
+        ac.calc_characteristic_temp(
             t_hot=[85],
             t_cool=[30],
             t_chill=[15],
