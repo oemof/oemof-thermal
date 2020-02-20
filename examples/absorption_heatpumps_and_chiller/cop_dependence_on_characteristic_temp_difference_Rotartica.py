@@ -59,7 +59,7 @@ line3 = ax2.plot(ddt,
 ax2.yaxis.tick_right()
 ax2.yaxis.set_label_position('right')
 plt.ylabel('COP')
-plt.xlabel('$\Delta\Delta t$ in K')
+plt.xlabel(r'$\Delta\Delta t$ in K')
 ax2.legend(loc='upper center')
 ax1.legend(loc='upper left')
 
