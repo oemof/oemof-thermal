@@ -31,7 +31,7 @@ solar collector based on the direct horizontal irradiance (DHI) or the direct
 normal irradiance (DNI) and information about the collector and the location.
 The following scheme shows the calculation procedure.
 
-.. 	image:: _pics/scheme.png
+.. 	image:: _pics/csp_scheme.png
    :width: 100 %
    :alt: scheme.png
    :align: center
