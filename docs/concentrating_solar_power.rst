@@ -29,7 +29,19 @@ _________
 The precalculations for the concentrating solar power calculate the heat of the
 solar collector based on the direct horizontal irradiance (DHI) or the direct
 normal irradiance (DNI) and information about the collector and the location.
-The following scheme shows the calculation procedure.
+
+.. 	image:: _pics/concentrating_solar_power.svg
+   :width: 100 %
+   :alt: scheme.png
+   :align: center
+
+The geometrical losses, the optical losses at the collector, and the thermal
+losses in the collector are taking into account to calculate the heat, which
+the collector can provide.
+
+The following scheme shows the calculation procedure in the module to realize
+the collectors behavier in the left part. The right part shows a scheme of a
+part of an oemof network and how this module is connected to the network.
 
 .. 	image:: _pics/csp_scheme.png
    :width: 100 %
