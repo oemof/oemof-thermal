@@ -156,7 +156,7 @@ def calc_eta_c_flate_plate(
 
     with
 
-    :math:`\Delta T = T_{collector in} + {\Delta T}_n - T_{amb}`
+    :math:`\Delta T = T_{coll,in} + {\Delta T}_n - T_{amb}`
 
     Parameters
     ----------
