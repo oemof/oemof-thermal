@@ -112,11 +112,13 @@ def calculate_capacities(
 
     heat_capacity: numeric
         Average specific heat capacity of storage medium [J/(kg*K)]
-        Default values calculated with CoolProp for a temperature of 80 °C as a simplifying assumption
+        Default values calculated with CoolProp for a temperature of 80 °C
+        as a simplifying assumption
 
     density : numeric
         Average density of storage medium [kg/m3]
-        Default values calculated with CoolProp for a temperature of 80 °C as a simplifying assumption
+        Default values calculated with CoolProp for a temperature of 80 °C
+        as a simplifying assumption
 
     Returns
     -------
@@ -182,11 +184,13 @@ def calculate_losses(
 
     heat_capacity: numeric
         Average specific heat capacity of storage medium [J/(kg*K)]
-        Default values calculated with CoolProp for a temperature of 80 °C as a simplifying assumption
+        Default values calculated with CoolProp for a temperature of 80 °C
+        as a simplifying assumption
 
     density : numeric
         Average density of storage medium [kg/m3]
-        Default values calculated with CoolProp for a temperature of 80 °C as a simplifying assumption
+        Default values calculated with CoolProp for a temperature of 80 °C
+        as a simplifying assumption
 
     Returns
     -------
