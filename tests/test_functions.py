@@ -40,7 +40,8 @@ def test_calc_eta_c_flate_plate():
                              'temp_amb': [9]})
     temp_amb.set_index('date', inplace=True)
 
-    collector_irradiance = pd.DataFrame({'date': ['1970-01-01 00:00:00.000000001+01:00'], 'poa_global': 99.84226497618872})
+    collector_irradiance = pd.DataFrame({'date': ['1970-01-01 00:00:00.000000001+01:00'],
+                                         'poa_global': 99.84226497618872})
     collector_irradiance.set_index('date', inplace=True)
 
     params = {
@@ -53,5 +54,4 @@ def test_calc_eta_c_flate_plate():
         'collector_irradiance': collector_irradiance['poa_global']
     }
     data = calc_eta_c_flate_plate(**params)
-    print(data)
-    assert 1 == 1   # data == approx(0.30176452266786186)    # Adjust this value
+    assert data.values == approx(0.30176452266786186)    # Adjust this value
