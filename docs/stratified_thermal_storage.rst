@@ -10,10 +10,16 @@ Concept
 
 A simplified 2-zone-model of a stratified thermal energy storage.
 
-.. 	image:: _pics/stratified_thermal_storage.svg
+.. 	figure:: _pics/stratified_thermal_storage.svg
    :width: 70 %
    :alt: stratified_thermal_storage.svg
-   :align: center
+   :align: left
+
+   Fig. 1: Schematic of the simplified model of a stratified thermal storage with two
+   perfectly separated bodies of water with temperatures :math:`T_H` and
+   :math:`T_C`. When charging/discharging the storage, the thermocline moves
+   down or up, respectively. Losses to the environment through the surface of the
+   storage depend on the size of the hot and cold zone.
 
 * We assume a cylindrical storage with of diameter d and height h,
   with two temperature regions that are perfectly separated.
