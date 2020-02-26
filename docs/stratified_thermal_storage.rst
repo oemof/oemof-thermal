@@ -50,10 +50,9 @@ with
 
 The three terms represent:
 * :math:`\delta`: constant heat losses through the top and bottom surfaces
-* :math:`\gamma \cdot Q_N`: losses via the lateral surface depending on the
-height of the storage
-* :math:`\beta \cdot Q_{t-1}`: losses depending on the part of that surface
-belonging to the hot part of the water body that depend on the state of charge
+* :math:`\gamma \cdot Q_N`: losses through the total lateral surface assuming the storage to be empty (storage is at :math:`T_{C}` and :math:`\Delta T_{C0}` is the driving temperature difference), depending on the height of the storage
+* :math:`\beta \cdot Q_{t-1}`: addional losses through lateral surface that
+belong to the hot part of the water body, depending on the state of charge
 
 
 In the case of investment, the diameter :math:`d` is given and the height can be
