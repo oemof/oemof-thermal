@@ -23,11 +23,16 @@ timezone = 'Asia/Muscat'
 collector_tilt = 10
 collector_azimuth = 180
 cleanliness = 0.9
-a_1 = -0.00159
-a_2 = 0.0000977
-eta_0 = 0.816
-c_1 = 0.0622
-c_2 = 0.00023
+a_1 = -8.65e-4
+a_2 = 8.87e-4
+a_3 = -5.425e-5
+a_4 = 1.665e-6
+a_5 = -2.309e-8
+a_6 = 1.197e-10
+
+eta_0 = 0.78
+c_1 = 64
+c_2 = 0
 temp_collector_inlet = 435
 temp_collector_outlet = 500
 
@@ -38,7 +43,8 @@ data_precalc = csp_precalc(dataframe, periods,
                            collector_tilt, collector_azimuth, cleanliness,
                            eta_0, c_1, c_2,
                            temp_collector_inlet, temp_collector_outlet,
-                           a_1, a_2,
+                           a_1, a_2, a_3, a_4, a_5, a_6,
+                           loss_method='Andasol',
                            date_col='Datum', temp_amb_col='t_amb')
 
 heat_calc = data_precalc['collector_heat']
@@ -69,7 +75,8 @@ for i in range(len(temp_amb_series)):
         collector_tilt, collector_azimuth, cleanliness,
         eta_0, c_1, c_2,
         temp_collector_inlet, temp_collector_outlet,
-        a_1, a_2,
+        a_1, a_2, a_3, a_4, a_5, a_6,
+        loss_method='Andasol',
         date_col='Datum', temp_amb_col='t_amb')
 
     df_result = df_result.append(data_precalc_temp_amb, ignore_index=True)
