@@ -48,8 +48,8 @@ data_precalc = csp_precalc(dataframe, periods,
                            date_col='Datum', temp_amb_col='t_amb')
 
 heat_calc = data_precalc['collector_heat']
-irradiance_on_collector = (data_precalc['collector_irradiance'] /
-                           (cleanliness**1.5))
+irradiance_on_collector = (data_precalc['collector_irradiance']
+                           / (cleanliness**1.5))
 heat_compare = irradiance_on_collector * eta_0
 t = list(range(1, 25))
 
