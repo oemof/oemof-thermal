@@ -35,16 +35,23 @@ def test_flat_plate_precalc():
            data['collectors_heat'].values == approx(results['collectors_heat'].values)
 
 
+def test_calc_eta_c_flate_plate():
+    temp_amb = pd.DataFrame({'date': ['1970-01-01 00:00:00.000000001+01:00'],
+                             'temp_amb': [9]})
+    temp_amb.set_index('date', inplace=True)
 
-#def test_calc_eta_c_flate_plate():
-#    params = {
-#        'eta_0': 0.5,
-#        'a_1': 1,
-#        'a_2': 0.5,
-#        'temp_collector_inlet': 20,
-#        'delta_temp_n': 10,
-#        'temp_amb': 10,
-#        'collector_irradiance': 1000,
-#    }
+    collector_irradiance = pd.DataFrame({'date': ['1970-01-01 00:00:00.000000001+01:00'], 'poa_global': 99.84226497618872})
+    collector_irradiance.set_index('date', inplace=True)
 
-#    assert calc_eta_c_flate_plate(params) == 0.3    # Adjust this value
+    params = {
+        'eta_0': 0.73,
+        'a_1': 1.7,
+        'a_2': 0.016,
+        'temp_collector_inlet': 20,
+        'delta_temp_n': 10,
+        'temp_amb': temp_amb['temp_amb'],
+        'collector_irradiance': collector_irradiance['poa_global']
+    }
+    data = calc_eta_c_flate_plate(**params)
+    print(data)
+    assert 1 == 1   # data == approx(0.30176452266786186)    # Adjust this value
