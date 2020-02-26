@@ -93,11 +93,8 @@ These parameters are part of the stratified thermal storage:
     :math:`T_0`               :py:obj:`temp_env`                         Environment temperature
                                                                          timeseries [deg C]
 
-    :math:`Q_t`                                                          Stored thermal energy
-                                                                         [MWh] at timestep t
-
-    :math:`Q_{t-1}`                                                      Stored thermal energy
-                                                                         [MWh] at timestep before t
+    :math:`Q`                                                            Stored thermal energy
+                                                                         [MWh]
 
     :math:`Q_N`               :py:obj:`nominal_storage_capacity`         Maximum amount of
                                                                          stored thermal energy
