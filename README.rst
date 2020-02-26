@@ -86,7 +86,7 @@ SOFTWARE.
     :target: https://oemof-thermal.readthedocs.io/en/stable/
     :alt: Documentation status
 
-.. |badge_coverage| image:: https://coveralls.io/repos/github/oemof/oemof-thermal/badge.svg?branch=dev
+.. |badge_coverage| image:: https://coveralls.io/repos/github/oemof/oemof-thermal/badge.svg?branch=dev&service=github
     :target: https://coveralls.io/github/oemof/oemof-thermal?branch=dev
     :alt: Test coverage
 
