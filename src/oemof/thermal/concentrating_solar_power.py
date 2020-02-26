@@ -61,13 +61,14 @@ def csp_precalc(df, periods,
     cleanliness: numeric
         Cleanliness of the collector (between 0 and 1).
     a_1, a_2, a_3, a_4, a_5, a_6: numeric
-        Parameter for the incident angle modifier.
+        Parameters for the incident angle modifier. For loss method 'Janotte'
+        a_1 and a_2 are required, for 'Andasol' a_1 to a_6 are required.
     eta_0: numeric
         Optical efficiency of the collector.
     c_1: numeric
-        Thermal loss parameter 1.
+        Thermal loss parameter 1. Required for both loss methods.
     c_2: numeric
-        Thermal loss parameter 2.
+        Thermal loss parameter 2. Required for loss method 'Janotte'.
     temp_collector_inlet: numeric or series with length periods
         Collectors inlet temperature.
     temp_collector_outlet: numeric or series with length periods
@@ -234,7 +235,8 @@ def calc_iam(a_1, a_2, a_3, a_4, a_5, a_6, aoi, loss_method):
     Parameters
     ----------
     a_1, a_2, a_3, a_4, a_5, a_6: numeric
-        Parameter 1 for the incident angle modifier.
+        Parameters for the incident angle modifier. For loss method 'Janotte'
+        a_1 and a_2 are required, for 'Andasol' a_1 to a_6 are required.
     aoi: series of numeric
         Angle of incidence.
     loss_method: string, default 'Janotte'
@@ -277,9 +279,9 @@ def calc_eta_c(eta_0, c_1, c_2, iam,
     eta_0: numeric
         Optical efficiency of the collector.
     c_1: numeric
-        Thermal loss parameter 1.
+        Thermal loss parameter 1. Required for both loss methods.
     c_2: numeric
-        Thermal loss parameter 2.
+        Thermal loss parameter 2. Required for loss method 'Janotte'.
     iam: series of numeric
         Incidence angle modifier.
     temp_collector_inlet: numeric, in °C
