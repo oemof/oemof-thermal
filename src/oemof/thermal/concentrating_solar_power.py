@@ -19,7 +19,7 @@ import numpy as np
 
 def csp_precalc(df, periods,
                 lat, long, timezone,
-                collector_tilt, collector_azimuth, x,
+                collector_tilt, collector_azimuth, cleanliness,
                 eta_0, c_1, c_2,
                 temp_collector_inlet, temp_collector_outlet,
                 a_1, a_2, a_3=0, a_4=0, a_5=0, a_6=0,
@@ -58,7 +58,7 @@ def csp_precalc(df, periods,
     collector_azimuth: numeric
         The azimuth of the collector. Azimuth according to pvlib in decimal
         degrees East of North
-    x: numeric
+    cleanliness: numeric
         Cleanliness of the collector (between 0 and 1).
     a_1, a_2, a_3, a_4, a_5, a_6: numeric
         Parameter for the incident angle modifier.
@@ -168,7 +168,7 @@ def csp_precalc(df, periods,
     # Calculation of the irradiance which reaches the collector after all
     # losses (cleanliness)
     collector_irradiance = calc_collector_irradiance(
-        irradiance_on_collector, x)
+        irradiance_on_collector, cleanliness)
     collector_irradiance = collector_irradiance.fillna(0)
     data['collector_irradiance'] = collector_irradiance
 
@@ -189,7 +189,7 @@ def csp_precalc(df, periods,
     return data
 
 
-def calc_collector_irradiance(irradiance_on_collector, x):
+def calc_collector_irradiance(irradiance_on_collector, cleanliness):
     r"""
     Subtracts the losses of dirtiness from the irradiance on the collector
 
@@ -209,7 +209,7 @@ def calc_collector_irradiance(irradiance_on_collector, x):
     collector_irradiance: series of numeric
         Irradiance on collector after all losses.
     """
-    collector_irradiance = irradiance_on_collector * x**1.5
+    collector_irradiance = irradiance_on_collector * cleanliness**1.5
     return collector_irradiance
 
 
