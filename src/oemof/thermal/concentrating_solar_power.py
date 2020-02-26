@@ -160,7 +160,7 @@ def csp_precalc(df, periods,
         irradiance_on_collector = data['E_dir_hor'] * poa_horizontal_ratio
 
     elif irradiance_method == 'normal':
-        irradiance_on_collector = pvlib.irradiance.beam_coponent(
+        irradiance_on_collector = pvlib.irradiance.beam_component(
             tracking_data['surface_tilt'], tracking_data['surface_azimuth'],
             solarposition['apparent_zenith'], solarposition['azimuth'],
             data['dni'])
