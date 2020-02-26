@@ -215,12 +215,21 @@ def calc_collector_irradiance(irradiance_on_collector, cleanliness):
 
 def calc_iam(a_1, a_2, a_3, a_4, a_5, a_6, aoi, loss_method):
     r"""
-    Calculates the incidence angle modifier
+    Calculates the incidence angle modifier depending on the loss method
 
     .. calc_iam_equation:
 
+    method 'Janotte':
+
     :math:`\kappa(\varTheta) = 1 - a_1 \cdot \vert\varTheta\vert- a_2
-    * \vert\varTheta\vert^2`
+    \cdot \vert\varTheta\vert^2`
+
+    method 'Andasol':
+
+    :math:`\kappa(\varTheta) = 1 - a_1 \cdot \vert\varTheta\vert - a_2
+    \cdot \vert\varTheta\vert^2- a_3 \cdot \vert\varTheta\vert^3
+    - a_4 \cdot \vert\varTheta\vert^4 - a_5 \cdot \vert\varTheta\vert^5
+    - a_6 \cdot \vert\varTheta\vert^6`
 
     Parameters
     ----------
@@ -250,12 +259,18 @@ def calc_eta_c(eta_0, c_1, c_2, iam,
                temp_collector_inlet, temp_collector_outlet, temp_amb,
                collector_irradiance, loss_method):
     r"""
-    Calculates collectors efficiency
+    Calculates collectors efficiency depending on the loss method
 
     .. calc_eta_c_equation:
 
+    method 'Janotte':
+
     :math:`\eta_C = \eta_0 \cdot \kappa(\varTheta) - c_1 \cdot
     \frac{\Delta T}{E_{coll}} - c_2 \cdot \frac{{\Delta T}^2}{E_{coll}}`
+
+    method 'Andasol':
+
+    :math:`\eta_C = \eta_0 \cdot \kappa(\varTheta) - \frac{c_1}{E_{coll}}`
 
     Parameters
     ----------
