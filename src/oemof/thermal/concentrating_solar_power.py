@@ -18,7 +18,7 @@ import numpy as np
 
 
 def csp_precalc(df, periods,
-                lat, long, tz,
+                lat, long, timezone,
                 collector_tilt, collector_azimuth, x,
                 eta_0, c_1, c_2,
                 temp_collector_inlet, temp_collector_outlet,
@@ -51,7 +51,7 @@ def csp_precalc(df, periods,
         Latitude of the location.
     long: numeric
         Longitude of the location.
-    tz: string
+    timezone: string
         pytz timezone of the location.
     collector_tilt: numeric
         The tilt of the collector.
@@ -121,7 +121,7 @@ def csp_precalc(df, periods,
         raise ValueError('loss_method should be "Janotte" or "Andasol"')
 
     date_time_index = pd.date_range(df.loc[0, date_col], periods=periods,
-                                    freq='H', tz=tz)
+                                    freq='H', tz=timezone)
     # Creation of input-DF with 3 columns, depending on irradiance_method
     datainput = df.iloc[:periods]
 
