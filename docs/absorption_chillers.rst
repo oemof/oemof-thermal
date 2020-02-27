@@ -32,7 +32,7 @@ temperature difference (:math:`\Delta\Delta T`) that combines the external
 mean temperatures of the heat exchangers.
 
 Various approaches of the characteristic equation method exists.
-Here we use the approach described by Kühn and Ziegler.
+Here we use the approach described by Kühn and Ziegler [1]:
 
 .. math::
   \Delta\Delta T = t_{G} - a \cdot t_{AC} + e \cdot t_{E}
@@ -58,7 +58,13 @@ The COP is then calculated from :math:`\dot{Q}_{E}` and :math:`\dot{Q}_{G}`:
 .. math::
   COP = \frac{\dot{Q}_{E}}{\dot{Q}_{G}}
 
+References
+__________
 
+
+.. include:: ../src/oemof/thermal/absorption_heatpumps_and_chillers.py
+  :start-after: Reference**
+  :end-before: """
 
 
 

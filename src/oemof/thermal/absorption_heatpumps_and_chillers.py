@@ -1,6 +1,24 @@
 
 
 def calc_characteristic_temp(t_hot, t_cool, t_chill, coef_a, coef_e, method):
+
+    r"""
+    Calculates absorption chillers.
+
+    **Reference**
+
+    [1] Annett Kühn , Felix Ziegler. Operational results of a 10 kW \
+    absorption chiller and adaption of the characteristic equation. \
+    Technische Universität Berlin.
+
+    [2] Maria Puig-Arnavat, Jesús López-Villada, \
+    Joan Carles Bruno, Alberto Coronas.
+    Analysis and parameter identification for characteristic equations \
+    of single- and double-effect absorption chillers by means of \
+    multivariable regression.
+    In: International Journal of Refrigeration, 33 (2010) 70-78.
+    """
+
     lengths = [len(t_hot), len(t_cool), len(t_chill)]
     length = max(lengths)
 
