@@ -21,25 +21,25 @@ def allocate_emissions(total_emissions, eta_el, eta_th, method, **kwargs):
 
     **IEA method**
 
-    :math:`EM_{el} = EM \cdot \frac{\eta_{el}}{\eta_{el} + \eta_{th}}`
+    :math:`EM_{el} = EM \cdot \frac{\eta_{el}}{\eta_{el} + \eta_{th}}`,
 
-    :math:`EM_{th} = EM \cdot \frac{\eta_{th}}{\eta_{el} + \eta_{th}}`
+    :math:`EM_{th} = EM \cdot \frac{\eta_{th}}{\eta_{el} + \eta_{th}}`.
 
     **Efficiency method**
 
-    :math:`EM_{el} = EM \cdot \frac{\eta_{th}}{\eta_{el} + \eta_{th}}`
+    :math:`EM_{el} = EM \cdot \frac{\eta_{th}}{\eta_{el} + \eta_{th}}`,
 
-    :math:`EM_{th} = EM \cdot \frac{\eta_{el}}{\eta_{el} + \eta_{th}}`
+    :math:`EM_{th} = EM \cdot \frac{\eta_{el}}{\eta_{el} + \eta_{th}}`.
 
     **Finnish method**
 
-    :math:`EM_{el} = EM \cdot (1-PEE)\frac{\eta_{el}}{\eta_{el,REF}}`
+    :math:`EM_{el} = EM \cdot (1-PEE)\frac{\eta_{el}}{\eta_{el,REF}}`,
 
-    :math:`EM_{th} = EM \cdot (1-PEE)\frac{\eta_{th}}{\eta_{th,REF}}`
+    :math:`EM_{th} = EM \cdot (1-PEE)\frac{\eta_{th}}{\eta_{th,REF}}`,
 
-    where
+    with
 
-    :math:`PEE = 1 - \frac{1}{\frac{\eta_{th}}{\eta_{th,ref}}+\frac{\eta_{el}}{\eta_{el,ref}}}`
+    :math:`PEE = 1 - \frac{1}{\frac{\eta_{th}}{\eta_{th,ref}}+\frac{\eta_{el}}{\eta_{el,ref}}}`.
 
     Reference:
     Mauch, W., Corradini, R., Wiesmeyer, K., Schwentzek, M. (2010).
