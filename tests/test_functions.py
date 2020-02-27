@@ -109,7 +109,7 @@ def test_flat_plate_precalc():
                             'collectors_heat': [30.128853432617774, 27.848310784333435]})
 
     assert data['eta_c'].values == approx(results['eta_c'].values) and \
-           data['collectors_heat'].values == approx(results['collectors_heat'].values)
+        data['collectors_heat'].values == approx(results['collectors_heat'].values)
 
 
 def test_calc_eta_c_flate_plate():
