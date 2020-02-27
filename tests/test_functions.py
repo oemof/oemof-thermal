@@ -84,10 +84,10 @@ def test_allocate_emissions():
 
 def test_flat_plate_precalc():
     params = {
-       'df': pd.DataFrame(data={'hour': [1, 2],
-                                'ghi': [112, 129],
-                                'dhi': [100.3921648, 93.95959036],
-                                'temp_amb': [9, 10]}),
+        'df': pd.DataFrame(data={'hour': [1, 2],
+                                 'ghi': [112, 129],
+                                 'dhi': [100.3921648, 93.95959036],
+                                 'temp_amb': [9, 10]}),
         'periods': 2,
         'lat': 52.2443,
         'long': 10.5594,
