@@ -37,6 +37,10 @@ def allocate_emissions(total_emissions, eta_el, eta_th, method, **kwargs):
 
     :math:`EM_{th} = EM \cdot (1-PEE)\frac{\eta_{th}}{\eta_{th,REF}}`
 
+    where
+
+    :math:`PEE = 1 - \frac{1}{\frac{\eta_{th}}{\eta_{th,ref}}+\frac{\eta_{el}}{\eta_{el,ref}}}`
+
     Reference:
     Mauch, W., Corradini, R., Wiesmeyer, K., Schwentzek, M. (2010).
     Allokationsmethoden für spezifische CO2-Emissionen von Strom und Waerme aus KWK-Anlagen.
