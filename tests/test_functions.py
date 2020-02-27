@@ -106,7 +106,7 @@ def test_allocate_emission_series():
             pd.Series([103.24483775811208, 103.24483775811208])
         )}
 
-    for key in default.keys():
+    for key in default:
         for em_result, em_default in zip(emissions_dict[key], default[key]):
             assert em_result.equals(em_default),\
                 f"Result \n{em_result} does not match default \n{em_default}"
