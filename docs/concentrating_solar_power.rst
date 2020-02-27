@@ -92,11 +92,13 @@ These arguments are used in the formulas of the function:
     ========================= =================================================== ===========
     symbol                    argument                                            explanation
     ========================= =================================================== ===========
-    :math:`E_{coll}`          :py:obj:`collector_irradiance`                      Irradiance on collector after all losses
+    :math:`E_{coll}`          :py:obj:`collector_irradiance`                      Irradiance on collector considering all losses
+                                                                                  including losses because of dirtiness
 
     :math:`E^*_{coll}`        :py:obj:`irradiance_on_collector`                   Irradiance which hits collectors surface
+                                                                                  before losses because of dirtiness are considered
 
-    :math:`X`                 :py:obj:`x`                                         Cleanliness of the collector (between 0 and 1)
+    :math:`X`                 :py:obj:`cleanliness`                                Cleanliness of the collector (between 0 and 1)
 
     :math:`\kappa`            :py:obj:`iam`                                       Incidence angle modifier
 
