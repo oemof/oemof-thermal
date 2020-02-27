@@ -8,14 +8,17 @@ Scope
 _____
 
 The module is designed to hold functions that are helpful when modeling components that generate
-more then one type of output.
+more than one type of output.
 
 Concept
 _______
 
+Currently there are three different methods that can be used to allocate the emissions to the two
+outputs of a unit that produces electricity and heat.
+
 .. include:: ../src/oemof/thermal/cogeneration.py
   :start-after:  allocate_emissions-equations:
-  :end-before: Reference
+  :end-before: Parameters
 
 Usage
 _____
@@ -24,7 +27,7 @@ _____
 .. code-block:: python
 
     em_el, em_heat = allocate_emissions(
-            total_emissions=200,
+            total_emissions=200,  # in CO2 equivalents
             eta_el=0.3,
             eta_th=0.5,
             method=method,
@@ -32,7 +35,10 @@ _____
             eta_th_ref=0.82
     )
 
-.. 	image:: _pics/emission_allocation_methods.svg
+.. 	figure:: _pics/emission_allocation_methods.svg
    :width: 70 %
    :alt: emission_allocation_methods.svg
-   :align: center
+   :align: left
+
+   Fig. 1: The above figure illustrates the allocation of emissions using the different allocation
+   methods.
