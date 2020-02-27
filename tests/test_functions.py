@@ -1,7 +1,8 @@
 import numpy as np
+import pandas as pd
 from pytest import approx
 
-from oemof.thermal.chp import allocate_emissions
+from oemof.thermal.cogeneration import allocate_emissions
 from oemof.thermal.stratified_thermal_storage import (calculate_storage_u_value,
                                                       calculate_storage_dimensions,
                                                       calculate_capacities,
@@ -77,3 +78,35 @@ def test_allocate_emissions():
         'finnish': (96.7551622418879, 103.24483775811208)}
 
     assert emissions_dict == result
+
+
+def test_allocate_emission_series():
+    emissions_dict = {}
+    for method in ['iea', 'efficiency', 'finnish']:
+        emissions_dict[method] = allocate_emissions(
+            total_emissions=pd.Series([200, 200]),
+            eta_el=pd.Series([0.3, 0.3]),
+            eta_th=pd.Series([0.5, 0.5]),
+            method=method,
+            eta_el_ref=pd.Series([0.525, 0.525]),
+            eta_th_ref=pd.Series([0.82, 0.82])
+        )
+
+    default = {
+        'iea': (
+            pd.Series([75.0, 75.0]),
+            pd.Series([125.0, 125.0])
+        ),
+        'efficiency': (
+            pd.Series([125.0, 125.0]),
+            pd.Series([75.0, 75.0])
+        ),
+        'finnish': (
+            pd.Series([96.7551622418879, 96.7551622418879]),
+            pd.Series([103.24483775811208, 103.24483775811208])
+        )}
+
+    for key in default:
+        for em_result, em_default in zip(emissions_dict[key], default[key]):
+            assert em_result.equals(em_default),\
+                f"Result \n{em_result} does not match default \n{em_default}"
