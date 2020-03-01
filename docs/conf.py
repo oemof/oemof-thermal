@@ -224,7 +224,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    ('index', 'oemof_heat.tex', u'oemof heat documentation',
+    ('index', 'oemof_thermal.tex', u'oemof.thermal documentation',
      u'oemof developer group', 'manual'),
 ]
 
@@ -254,7 +254,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'oemof', u'oemof heat documentation',
+    ('index', 'oemof', u'oemof.thermal documentation',
      [u'oemof developer group'], 1)
 ]
 
@@ -268,7 +268,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    ('index', 'oemof heat', u'oemof heat documentation',
+    ('index', 'oemof.thermal', u'oemof.thermal documentation',
      u'Author', 'oemof developer group', 'One line description of project.',
      'Miscellaneous'),
 ]
@@ -289,7 +289,7 @@ texinfo_documents = [
 # -- Options for Epub output ----------------------------------------------
 
 # Bibliographic Dublin Core info.
-epub_title = u'oemof heat'
+epub_title = u'oemof.thermal'
 epub_author = u'oemof developer group'
 epub_publisher = u'oemof developer group'
 epub_copyright = u'2019, oemof developer group'
