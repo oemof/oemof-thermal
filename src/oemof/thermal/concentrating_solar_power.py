@@ -184,7 +184,7 @@ def csp_precalc(df, periods,
     data['eta_c'] = eta_c
 
     # Calculation of the collectors heat
-    collector_heat = collector_irradiance * eta_c
+    collector_heat = calc_heat_coll(eta_c, collector_irradiance)
     data['collector_heat'] = collector_heat
 
     return data
@@ -313,3 +313,22 @@ def calc_eta_c(eta_0, c_1, c_2, iam,
     eta_c[eta_c == np.inf] = 0
     eta_c = eta_c.fillna(0)
     return eta_c
+
+
+def calc_heat_coll(eta_c, collector_irradiance):
+    r"""
+
+    Parameters
+    ----------
+    eta_c: series of numeric
+        collectors efficiency
+    collector_irradiance: series of numeric
+        Irradiance on collector after all losses.
+
+    Returns
+    -------
+    collectors heat: series of numeric
+
+    """
+    collector_heat = collector_irradiance * eta_c
+    return collector_heat
