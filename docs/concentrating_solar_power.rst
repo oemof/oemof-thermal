@@ -6,8 +6,8 @@ Concentrating solar power
 
 Module to calculate the usable heat of a parabolic trough collector
 
-Motivation and possible application
-___________________________________
+Scope
+_____
 
 This module was developed to provide the heat of a parabolic trough collector
 based on temperatures and collectors location, tilt and azimuth for energy
@@ -24,7 +24,7 @@ In addition, you will find an example, which compares this precalculation with
 a calculation with a constant efficiency.
 
 Concept
-_________
+_______
 
 The precalculations for the concentrating solar power calculate the heat of the
 solar collector based on the direct horizontal irradiance (DHI) or the direct
@@ -69,8 +69,8 @@ returned. Losses which occur after the heat absorption in the collector
 (e.g. losses in pipes) have to be taken into account in a later step
 (see the example).
 
-Functions
-_________
+Usage
+_____
 
 These arguments are used in the formulas of the function:
 
