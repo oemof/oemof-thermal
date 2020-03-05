@@ -19,7 +19,7 @@ dataframe = pd.read_csv('csp_data/data_csp_plant.csv')
 dataframe['Datum'] = pd.to_datetime(dataframe['Datum'])
 
 # parameters for the precalculation
-periods = 8760
+periods = 10
 latitude = 23.614328
 longitude = 58.545284
 timezone = 'Asia/Muscat'
@@ -34,16 +34,20 @@ c_2 = 0.00023
 temp_collector_inlet = 435
 temp_collector_outlet = 500
 
-data_precalc = csp_precalc(dataframe, periods,
+data_precalc = csp_precalc('1/1/2003', periods, 'H',
                            latitude, longitude, timezone,
                            collector_tilt, collector_azimuth, cleanliness,
                            eta_0, c_1, c_2,
                            temp_collector_inlet, temp_collector_outlet,
                            a_1, a_2,
-                           date_col='Datum', temp_amb_col='t_amb')
+                           date_col='Datum',
+                           E_dir_hor=dataframe['E_dir_hor'],
+                           temp_amb_input=dataframe['t_amb'])
 
 data_precalc['ES_load_actual_entsoe_power_statistics'] = list(
     dataframe['ES_load_actual_entsoe_power_statistics'].iloc[:periods])
+
+data_precalc.to_csv('results_precalc.csv')
 
 # regular oemof_system #
 
