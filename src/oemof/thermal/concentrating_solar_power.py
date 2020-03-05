@@ -25,7 +25,6 @@ def csp_precalc(date, periods, freq,
                 a_1, a_2, a_3=0, a_4=0, a_5=0, a_6=0,
                 loss_method='Janotte',
                 irradiance_method='horizontal',
-                date_col='date',
                 **kwargs):
     r"""
     Calculates collectors efficiency and irradiance according to [1] and the
@@ -80,12 +79,6 @@ def csp_precalc(date, periods, freq,
         Valid values are: 'horizontal' or 'normal'. Describes, if the
         horizontal direct irradiance or the direct normal irradiance is
         given and used for calculation.
-    date_col: string, default: 'date'
-        Describes the name of the column in the dataframe df.
-    irradiance_col: string, default: 'E_dir_hor'
-        Describes the name of the column in the dataframe df.
-    temp_amb_col: string, default: 'temp_amb'
-        Describes the name of the column in the dataframe df.
 
     Returns
     -------
@@ -119,12 +112,14 @@ def csp_precalc(date, periods, freq,
     """
 
     if loss_method not in ['Janotte', 'Andasol']:
-        raise ValueError("loss_method should be 'Janotte' or 'Andasol'")
+        raise ValueError(
+            "loss_method should be 'Janotte' or 'Andasol'")
 
     if irradiance_method not in ['normal', 'horizontal']:
-        raise ValueError("irradiance_method should be 'normal' or 'horizontal'")
+        raise ValueError(
+            "irradiance_method should be 'normal' or 'horizontal'")
 
-    required_dict = {'horizontal': 'E_dir_hor', 'other': 'dni'}
+    required_dict = {'horizontal': 'E_dir_hor', 'normal': 'dni'}
 
     irradiance_required = required_dict[irradiance_method]
 
@@ -136,16 +131,16 @@ def csp_precalc(date, periods, freq,
         raise AttributeError(
             "temp_amb_input is not provided")
 
-    irradiance = (kwargs.get(irradiance_required)).iloc[:periods] #
-    temp_amb = (kwargs.get('temp_amb_input')).iloc[:periods]      # hier fehlt der Index. Muss drangefügt werden. Morgen nachgucken
     date_time_index = pd.date_range(date, periods=periods,
                                     freq=freq, tz=timezone)
 
-    # Creation of input-DF with 3 columns, depending on irradiance_method
-    data = pd.DataFrame({'date': date_time_index,
-                         'E_dir_hor': irradiance,
-                         't_amb': temp_amb})
+    irradiance = (kwargs.get(irradiance_required)).iloc[:periods]
+    temp_amb = (kwargs.get('temp_amb_input')).iloc[:periods]
 
+    # Creation of a df with 3 columns
+    data = pd.DataFrame({'date': date_time_index,
+                         'irradiance': irradiance,
+                         't_amb': temp_amb})
     data.set_index('date', inplace=True)
 
     # Calculation of geometrical position of collector with the pvlib
@@ -154,44 +149,43 @@ def csp_precalc(date, periods, freq,
         latitude=lat,
         longitude=long)
 
-    print('here solarposition')
+    # Calculation of the tracking data with the pvlib
     tracking_data = pvlib.tracking.singleaxis(
         solarposition['apparent_zenith'], solarposition['azimuth'],
         axis_tilt=collector_tilt, axis_azimuth=collector_azimuth)
 
-    print('here trackingdata')
     # Calculation of the irradiance which hits the collectors surface
     irradiance_on_collector = calc_irradiance(
         tracking_data['surface_tilt'], tracking_data['surface_azimuth'],
         solarposition['apparent_zenith'], solarposition['azimuth'],
-        irradiance, irradiance_method)
+        data['irradiance'], irradiance_method)
 
-    print('here irradianceoncolector')
     # Calculation of the irradiance which reaches the collector after all
     # losses (cleanliness)
     collector_irradiance = calc_collector_irradiance(
         irradiance_on_collector, cleanliness)
-    data['collector_irradiance'] = collector_irradiance
 
-    print('here collectorirradiance')
     # Calculation of the incidence angle modifier
-    iam = calc_iam(a_1, a_2, a_3, a_4, a_5, a_6, tracking_data['aoi'],
-                   loss_method)
-    data['iam'] = iam
+    iam = calc_iam(
+        a_1, a_2, a_3, a_4, a_5, a_6, tracking_data['aoi'], loss_method)
 
-    print('here iam')
     # Calculation of the collectors efficiency
-    eta_c = calc_eta_c(eta_0, c_1, c_2, iam,
-                       temp_collector_inlet, temp_collector_outlet,
-                       temp_amb, collector_irradiance, loss_method)
-    data['eta_c'] = eta_c
+    eta_c = calc_eta_c(
+        eta_0, c_1, c_2, iam, temp_collector_inlet, temp_collector_outlet,
+        data['t_amb'], collector_irradiance, loss_method)
 
-    print('here eta_c')
     # Calculation of the collectors heat
-    collector_heat = calc_heat_coll(eta_c, collector_irradiance)
+    collector_heat = calc_heat_coll(
+        eta_c, collector_irradiance)
+
+    # Writing the results in the output df
+    data['collector_irradiance'] = collector_irradiance
+    data['iam'] = iam
+    data['eta_c'] = eta_c
     data['collector_heat'] = collector_heat
-    print('here collectorheat')
+
     return data
+
 
 def calc_irradiance(surface_tilt, surface_azimuth, apparent_zenith, azimuth,
                     irradiance, irradiance_method):
@@ -207,6 +201,7 @@ def calc_irradiance(surface_tilt, surface_azimuth, apparent_zenith, azimuth,
             irradiance)
 
     return irradiance_on_collector
+
 
 def calc_collector_irradiance(irradiance_on_collector, cleanliness):
     r"""
@@ -322,9 +317,7 @@ def calc_eta_c(eta_0, c_1, c_2, iam,
     collectors efficiency: series of numeric
 
     """
-    print(iam)
-    print(temp_amb)
-    print(collector_irradiance)
+
     if loss_method == 'Janotte':
         delta_temp = (temp_collector_inlet + temp_collector_outlet) / 2 - temp_amb
         eta_c = eta_0 * iam - c_1 * delta_temp / collector_irradiance - c_2\
@@ -333,7 +326,6 @@ def calc_eta_c(eta_0, c_1, c_2, iam,
     if loss_method == 'Andasol':
         eta_c = eta_0 * iam - c_1 / collector_irradiance
 
-    print(type(eta_c))
     eta_c[eta_c < 0] = 0
     eta_c[eta_c == np.inf] = 0
     eta_c = eta_c.fillna(0)
