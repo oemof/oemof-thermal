@@ -65,3 +65,4 @@ CSP_results/
 
 # results
 examples/flat_plate_collector/results/
+examples/absorption_heatpumps_and_chiller/*.png
