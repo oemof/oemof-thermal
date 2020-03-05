@@ -3,6 +3,7 @@ from pytest import approx
 import pytest
 import oemof.thermal.concentrating_solar_power as csp
 
+
 def test_calculation_of_collector_irradiance():
     s = pd.Series([10, 20, 30], index=[1, 2, 3])
     res = csp.calc_collector_irradiance(s, 0.9)
