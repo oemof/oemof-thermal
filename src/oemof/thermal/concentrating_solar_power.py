@@ -46,10 +46,12 @@ def csp_precalc(date, periods, freq,
 
     Parameters
     ----------
-    df: dataframe
-        Holds values for time, the irradiance and the ambient temperature.
+    date: str
+        Start date of the calculation.
     periods: numeric
         Defines the number of timesteps.
+    freq: str
+        Frequence of the timesteps.
     lat: numeric
         Latitude of the location.
     long: numeric
@@ -83,6 +85,8 @@ def csp_precalc(date, periods, freq,
         Valid values are: 'horizontal' or 'normal'. Describes, if the
         horizontal direct irradiance or the direct normal irradiance is
         given and used for calculation.
+    temp_amb_input: series of numeric
+        Ambient temperature time series
 
     Returns
     -------
