@@ -36,9 +36,13 @@ def csp_precalc(date, periods, freq,
     :math:`Q_{coll} = E_{coll} \cdot \eta_C`
 
     functions used
+     * pvlib.solarposition.get_solarposition
+     * pvlib.tracking.singleaxis
+     * calc_irradiance
      * calc_collector_irradiance
      * calc_iam
      * calc_eta_c
+     * calc_heat_coll
 
     Parameters
     ----------
@@ -88,8 +92,8 @@ def csp_precalc(date, periods, freq,
         * collector_heat
 
     collector_irradiance:
-        The irradiance on collector after all losses which \
-        occur before the light hits the collectors surface.
+        Calculation of the irradiance which reaches the collector after all
+        losses (incl. cleanliness).
 
 
     **Proposal of values**
@@ -180,7 +184,6 @@ def csp_precalc(date, periods, freq,
 
     # Writing the results in the output df
     data['collector_irradiance'] = collector_irradiance
-    data['iam'] = iam
     data['eta_c'] = eta_c
     data['collector_heat'] = collector_heat
 
@@ -189,6 +192,30 @@ def csp_precalc(date, periods, freq,
 
 def calc_irradiance(surface_tilt, surface_azimuth, apparent_zenith, azimuth,
                     irradiance, irradiance_method):
+    r"""
+
+    Parameters
+    ----------
+    surface_tilt: series of numeric
+        Panel tilt from horizontal.
+    surface_azimuth: series of numeric
+        Panel azimuth from north.
+    apparent_zenith: series of numeric
+        Solar zenith angle.
+    azimuth: series of numeric
+        Solar azimuth angle.
+    irradiance: series of numeric
+        Solar irraciance (dni or E_direct_horizontal).
+    irradiance_method: str
+        Describes, if the horizontal direct irradiance or the direct normal
+        irradiance is given and used for calculation.
+
+    Returns
+    -------
+    irradiance_on_collector: series of numeric
+        Irradiance which hits collectors surface.
+
+    """
     if irradiance_method == 'horizontal':
         poa_horizontal_ratio = pvlib.irradiance.poa_horizontal_ratio(
             surface_tilt, surface_azimuth, apparent_zenith, azimuth)
