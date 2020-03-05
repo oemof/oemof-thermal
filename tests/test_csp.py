@@ -1,21 +1,15 @@
 import pandas as pd
+from pytest import approx
 import pytest
 import oemof.thermal.concentrating_solar_power as csp
 
-
-def test_calculation_of_collector_irradiance_for_single_value():
-    res = csp.calc_collector_irradiance(10, 0.9)
-
-    assert res == 8.5381496824546241963970125
-
-
-def test_calculation_of_collector_irradiance_for_a_series():
+def test_calculation_of_collector_irradiance():
     s = pd.Series([10, 20, 30], index=[1, 2, 3])
     res = csp.calc_collector_irradiance(s, 0.9)
     result = pd.Series(
         [8.5381496824546242, 17.0762993649092484, 25.614449047363873],
         index=[1, 2, 3])
-    assert res.eq(result).all()
+    assert res.values == approx(result.values)
 
 
 def test_calculation_iam_for_single_value():
@@ -35,18 +29,18 @@ def test_calculation_iam_for_a_series():
     s = pd.Series([10, 20, 30], index=[1, 2, 3])
     res = csp.calc_iam(-0.00159, 0.0000977, 0, 0, 0, 0, s, 'Janotte')
     result = pd.Series([1.00613, 0.99272, 0.95977], index=[1, 2, 3])
-    assert res.eq(result).all()
+    assert res.values == approx(result.values)
 
 
 with pytest.raises(ValueError):
-    df = pd.DataFrame(data={'date': [1, 2], 'E_dir_hor': [
+    df = pd.DataFrame(data={'date': ['1/1/2001', '1/2/2001'], 'E_dir_hor': [
         30, 40], 't_amb': [30, 40]})
     latitude = 23.614328
     longitude = 58.545284
     timezone = 'Asia/Muscat'
     collector_tilt = 10
     collector_azimuth = 180
-    x = 0.9
+    cleanliness = 0.9
     a_1 = -8.65e-4
     a_2 = 8.87e-4
     a_3 = -5.425e-5
@@ -58,13 +52,14 @@ with pytest.raises(ValueError):
     c_2 = 0.0622
     temp_collector_inlet = 235
     temp_collector_outlet = 300
-    csp.csp_precalc(df, 2,
+    csp.csp_precalc('1/1/2001', 2, 'D',
                     latitude, longitude, timezone,
-                    collector_tilt, collector_azimuth, x,
+                    collector_tilt, collector_azimuth, cleanliness,
                     eta_0, c_1, c_2,
                     temp_collector_inlet, temp_collector_outlet,
                     a_1, a_2, a_3=0, a_4=0, a_5=0, a_6=0,
-                    loss_method='quatsch')
+                    loss_method='quatsch',
+                    temp_amb_input=df['t_amb'])
 
 
 def test_eta_janotte():
@@ -72,7 +67,7 @@ def test_eta_janotte():
     res = csp.calc_eta_c(0.816, 0.0622, 0.00023, 0.95, 235, 300, 30, s,
                          'Janotte')
     result = pd.Series([0.22028124999999987], index=[1])
-    assert res.eq(result).all()
+    assert res.values == approx(result.values)
 
 
 def test_eta_andasol():
@@ -80,4 +75,4 @@ def test_eta_andasol():
     res = csp.calc_eta_c(0.816, 64, 0.00023, 0.95, 235, 300, 30, s,
                          'Andasol')
     result = pd.Series([0.13519999999999988], index=[1])
-    assert res.eq(result).all()
+    assert res.values == approx(result.values)
