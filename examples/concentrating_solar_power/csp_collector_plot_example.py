@@ -32,13 +32,14 @@ temp_collector_outlet = 500
 
 # plot showing the difference between a constant efficiency without considering
 # cleaniness for the heat of the collector during a day
-data_precalc = csp_precalc(dataframe, periods,
+data_precalc = csp_precalc('1/1/2003', periods, 'H',
                            latitude, longitude, timezone,
                            collector_tilt, collector_azimuth, cleanliness,
                            eta_0, c_1, c_2,
                            temp_collector_inlet, temp_collector_outlet,
                            a_1, a_2,
-                           date_col='Datum', temp_amb_col='t_amb')
+                           E_dir_hor=dataframe['E_dir_hor'],
+                           temp_amb_input=dataframe['t_amb'])
 
 heat_calc = data_precalc['collector_heat']
 irradiance_on_collector = (data_precalc['collector_irradiance']
