@@ -16,10 +16,9 @@ import oemof.outputlib as outputlib
 # precaluculation #
 
 dataframe = pd.read_csv('csp_data/data_csp_plant.csv')
-dataframe['Datum'] = pd.to_datetime(dataframe['Datum'])
 
 # parameters for the precalculation
-periods = 10
+periods = 8760
 latitude = 23.614328
 longitude = 58.545284
 timezone = 'Asia/Muscat'
@@ -40,7 +39,6 @@ data_precalc = csp_precalc('1/1/2003', periods, 'H',
                            eta_0, c_1, c_2,
                            temp_collector_inlet, temp_collector_outlet,
                            a_1, a_2,
-                           date_col='Datum',
                            E_dir_hor=dataframe['E_dir_hor'],
                            temp_amb_input=dataframe['t_amb'])
 
