@@ -123,11 +123,11 @@ def csp_precalc(date, periods, freq,
 
     irradiance_required = required_dict[irradiance_method]
 
-    if not irradiance_required in kwargs:
+    if irradiance_required not in kwargs:
         raise AttributeError(
             f"'{irradiance_required}' necessary for {irradiance_method} is not provided")
 
-    if not 'temp_amb_input' in kwargs:
+    if 'temp_amb_input' not in kwargs:
         raise AttributeError(
             "temp_amb_input is not provided")
 
