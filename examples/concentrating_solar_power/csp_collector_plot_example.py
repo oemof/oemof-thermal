@@ -32,7 +32,7 @@ temp_collector_outlet = 500
 
 # plot showing the difference between a constant efficiency without considering
 # cleaniness for the heat of the collector during a day
-data_precalc = csp_precalc('1/1/2003', periods, 'H',
+data_precalc = csp_precalc('22/08/2003', periods, 'H',
                            latitude, longitude, timezone,
                            collector_tilt, collector_azimuth, cleanliness,
                            eta_0, c_1, c_2,
@@ -51,7 +51,7 @@ t = list(range(1, 25))
 fig, ax = plt.subplots()
 ax.plot(t, heat_calc, label='CSP precalculation')
 ax.plot(t, heat_compare, label='constant efficiency')
-ax.set(xlabel='time (h)', ylabel='Q_coll',
+ax.set(xlabel='time [h]', ylabel='Q_coll [W/m2]',
        title='Heat of the collector')
 ax.grid()
 ax.legend()
@@ -64,13 +64,14 @@ df_result = pd.DataFrame()
 for i in range(len(temp_amb_series)):
     df_temp_amb_series['t_amb'] = temp_amb_series[i]
     data_precalc_temp_amb = csp_precalc(
-        df_temp_amb_series, 1,
+        '2003-01-01 12:00:00', 1, 'H',
         latitude, longitude, timezone,
         collector_tilt, collector_azimuth, cleanliness,
         eta_0, c_1, c_2,
         temp_collector_inlet, temp_collector_outlet,
         a_1, a_2,
-        date_col='Datum', temp_amb_col='t_amb')
+        E_dir_hor=df_temp_amb_series['E_dir_hor'],
+        temp_amb_input=df_temp_amb_series['t_amb'])
 
     df_result = df_result.append(data_precalc_temp_amb, ignore_index=True)
 
