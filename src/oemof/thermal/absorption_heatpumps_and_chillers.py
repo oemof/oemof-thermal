@@ -110,6 +110,33 @@ def calc_characteristic_temp(t_hot, t_cool, t_chill, coef_a, coef_e, method):
 
 
 def calc_heat_flux(ddts, coef_s, coef_r, method):
+    r"""
+        Calculates the heat flux at external heat exchanger.
+
+        .. calc_heat_flux-equations:
+
+        :math:`\dot{Q} = s \cdot \Delta\Delta T + r`
+
+        Parameters
+        ----------
+        ddt : numeric
+            Characteristic temperature difference [K]
+
+        coeff_s : numeric
+            Characteristic parameter [-]
+
+        coeff_r : numeric
+            Characteristic parameter [-]
+
+        method : string
+            Method to calculate characteristic temperature difference
+
+        Returns
+        -------
+        Q_dots : numeric
+            Heat flux [W]
+
+        """
     if method == 'kuehn_and_ziegler':
         Q_dots = [coef_s * ddt + coef_r for ddt in ddts]
     else:
@@ -120,10 +147,43 @@ def calc_heat_flux(ddts, coef_s, coef_r, method):
 
 
 def define_AC_specs(Q_dots_evap, Q_dots_gen):
-    # Define Absorption Chiller specifications
+    r"""
+    Calculates the coefficients of performance ('COPs'),
+    the maximum chiller capacity as normed value ('Q_chill_max'),
+    and the maximum chiller capacity as
+    absolute value ('Q_chill_nominal').
+
+    .. COP-equations:
+
+    :math:`COP= \frac{\dot{Q}_{evap}}{\dot{Q}_{gen}}`
+
+    .. Q_chill_max-equations:
+
+    :math:`\dot{Q}_{chill, max} = \frac{\dot{Q}_{evap}}{max(\dot{Q}_{evap})}`
+
+    .. Q_chill_max-equations:
+
+    :math:`\dot{Q}_{chill, nominal} = max(\dot{Q}_{evap})`
+
+
+    Parameters
+    ----------
+    Q_dots_evap : numeric
+        Heat flux at Evaporator
+
+    Q_dots_gen : numeric
+        Heat flux at Generator
+
+    Returns
+    -------
+    AC_specs : dict
+        Absorption chiller specifications
+        ('COPs', 'Q_chill_max', 'Q_chill_nominal')
+
+    """
     AC_specs = {
         'COPs': [Q_e / Q_g for Q_e, Q_g in zip(Q_dots_evap, Q_dots_gen)],
-        'Q_chill_max': [Q_e / max(Q_dots_evap) for Q_e in Q_dots_evap],  # In %
-        'Q_chill_nominal': max(Q_dots_evap)  # Absolute value of max heat flux
+        'Q_chill_max': [Q_e / max(Q_dots_evap) for Q_e in Q_dots_evap],
+        'Q_chill_nominal': max(Q_dots_evap)
     }
     return AC_specs
