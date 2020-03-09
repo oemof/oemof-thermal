@@ -1,3 +1,11 @@
+absorption_heatpumps_and_chillers module
+==========================================================
+
+.. automodule:: oemof.thermal.absorption_heatpumps_and_chillers
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 compression\_heatpumps\_and\_chillers module
 ==========================================================
 
