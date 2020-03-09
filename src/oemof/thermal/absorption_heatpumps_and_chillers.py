@@ -1,9 +1,50 @@
+# -*- coding: utf-8
 
+"""
+This module is designed to hold functions for calculating absorption chillers.
+
+This file is part of project oemof (github.com/oemof/oemof-thermal). It's copyrighted
+by the contributors recorded in the version control history of the file,
+available from its original location:
+oemof-thermal/src/oemof/thermal/stratified_thermal_storage.py
+
+SPDX-License-Identifier: MIT
+"""
 
 def calc_characteristic_temp(t_hot, t_cool, t_chill, coef_a, coef_e, method):
 
     r"""
-    Calculates absorption chillers.
+    Calculates the characteristic temperature difference.
+
+    .. calc_characteristic_temp-equations:
+
+    :math:`\Delta\Delta T = t_{G} - a \cdot t_{AC} + e \cdot t_{E}`
+
+    Parameters
+    ----------
+    t_hot : numeric
+        External arithmetic mean fluid temperature of hot water at heat exchanger (generator) [K]
+
+    t_cool : numeric
+        External arithmetic mean fluid temperature of cooling water at heat exchanger (absorber and condenser) [K]
+
+    t_chill : numeric
+        External arithmetic mean fluid temperature of chilled water at heat exchanger (evaporater) [K]
+
+    coeff_a : numeric
+        Characteristic parameter [-]
+
+    coeff_e : numeric
+        Characteristic parameter [-]
+
+    method : string
+        Method to calculate characteristic temperature difference
+
+    Returns
+    -------
+    ddts : numeric
+        Characteristic temperature difference [K]
+
 
     **Reference**
 
