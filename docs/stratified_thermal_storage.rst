@@ -234,7 +234,7 @@ only a loss rate vs. the stratified thermal storage implementation
 (`source code
 <https://github.com/oemof/oemof-thermal/tree/dev/examples/stratified_thermal_storage>`_).
 
-.. 	image:: _pics/compare_storage_models.pdf
+.. 	image:: _pics/cop_dependence_on_temp_difference.png
    :width: 100 %
-   :alt: compare_storage_models.pdf
+   :alt: cop_dependence_on_temp_difference.png
    :align: center
