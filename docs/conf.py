@@ -43,7 +43,8 @@ extensions = [
     'sphinx.ext.viewcode',
     'sphinx.ext.imgmath',
     'sphinx.ext.napoleon',
-    'sphinxcontrib.inkscapeconverter'
+    'sphinxcontrib.inkscapeconverter',
+    'sphinx.ext.imgconverter'
 ]
 
 numpydoc_show_class_members = False
