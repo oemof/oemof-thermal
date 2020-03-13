@@ -10,9 +10,9 @@ Concept
 
 A simplified 2-zone-model of a stratified thermal energy storage.
 
-.. 	figure:: _pics/stratified_thermal_storage.pdf
+.. 	figure:: _pics/stratified_thermal_storage.png
    :width: 70 %
-   :alt: stratified_thermal_storage.pdf
+   :alt: stratified_thermal_storage.png
    :align: left
 
    Fig. 1: Schematic of the simplified model of a stratified thermal storage with two
@@ -233,7 +233,7 @@ only a loss rate vs. the stratified thermal storage implementation
 (`source code
 <https://github.com/oemof/oemof-thermal/tree/dev/examples/stratified_thermal_storage>`_).
 
-.. 	image:: _pics/compare_storage_models.pdf
+.. 	image:: _pics/compare_storage_models.png
    :width: 100 %
-   :alt: compare_storage_models.pdf
+   :alt: compare_storage_models.png
    :align: center
