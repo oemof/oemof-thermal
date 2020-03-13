@@ -10,10 +10,10 @@ Concept
 
 A simplified 2-zone-model of a stratified thermal energy storage.
 
-.. figure:: _pics/stratified_thermal_storage.pdf
-    :width: 70 %
-    :alt: stratified_thermal_storage.pdf
-    :align: left
+.. 	figure:: _pics/stratified_thermal_storage.pdf
+   :width: 70 %
+   :alt: stratified_thermal_storage.pdf
+   :align: left
 
    Fig. 1: Schematic of the simplified model of a stratified thermal storage with two
    perfectly separated bodies of water with temperatures :math:`T_H` and
