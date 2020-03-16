@@ -1,52 +1,51 @@
 v0.0.2 (2020)
 =============
 
-
 API changes
-###########
+-----------
 
 * The components xy has a new API (Facade)...
 
-
-
 New features
-############
+------------
 
+* 
 
 New components
-##############
+--------------
 
+* 
 
 Documentation
-#############
-* The documentation xy was improved...
-* ....
+-------------
 
+* 
 
 Known issues
-############
+------------
 
+* 
 
 Bug fixes
-#########
+---------
+
 * Bug fix 1
 * Bug fix 2
 
+Tests
+-----
 
-Testing
-#######
 * The repository now has function tests, see oemof-thermal/tests/test_functions.py
 
-
 Other changes
-#############
+-------------
 
+* 
 
 Contributors
-############
+------------
 
 * Caroline Möller
 * Franziska Pleißner
 * Jakob Wolf
 * Jann Launer
-
