@@ -188,9 +188,9 @@ class StratifiedThermalStorage(GenericStorage, Facade):
             _facade_requires_=["bus", "carrier", "tech"], *args, **kwargs
         )
 
-        self.height = kwargs.get("height", 0)
+        self.height = kwargs.get("height")
 
-        self.diameter = kwargs.get("diameter", 0)
+        self.diameter = kwargs.get("diameter")
 
         self.temp_h = kwargs.get("temp_h")
 
@@ -217,7 +217,7 @@ class StratifiedThermalStorage(GenericStorage, Facade):
 
         self.fixed_losses_absolute = losses[2]
 
-        self.capacity = kwargs.get("capacity", 0)
+        self.capacity = kwargs.get("capacity")
 
         self.storage_capacity_cost = kwargs.get("storage_capacity_cost")
 
