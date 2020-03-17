@@ -189,7 +189,10 @@ class StratifiedThermalStorage(GenericStorage, Facade):
     def __init__(self, *args, **kwargs):
 
         super().__init__(
-            _facade_requires_=["bus", "carrier", "tech"], *args, **kwargs
+            _facade_requires_=[
+                "bus", "carrier", "tech",
+                "temp_h", "temp_c", "temp_env",
+                "u_value"], *args, **kwargs
         )
 
         self.height = kwargs.get("height")
