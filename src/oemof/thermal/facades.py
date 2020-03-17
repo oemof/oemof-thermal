@@ -190,7 +190,7 @@ class StratifiedThermalStorage(GenericStorage, Facade):
 
         super().__init__(
             _facade_requires_=[
-                "bus", "carrier", "tech",
+                "bus", "carrier", "tech", "diameter",
                 "temp_h", "temp_c", "temp_env",
                 "u_value"], *args, **kwargs
         )
