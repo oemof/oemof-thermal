@@ -17,7 +17,7 @@ Welcome oemof-thermal's documentation!
 
 .. toctree::
    :maxdepth: 1
-   :caption: Usage
+   :caption: User's guide
 
    cogeneration
    compression_heat_pumps_and_chillers
