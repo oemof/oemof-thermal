@@ -181,6 +181,7 @@ class StratifiedThermalStorage(GenericStorage, Facade):
     ...     temp_h=95,
     ...     temp_c=60,
     ...     temp_env=10,
+    ...     u_value=0.3,
     ...     initial_storage_level=0.5,
     ...     min_storage_level=0.05,
     ...     max_storage_level=0.95)
@@ -195,9 +196,9 @@ class StratifiedThermalStorage(GenericStorage, Facade):
                 "u_value"], *args, **kwargs
         )
 
-        self.height = kwargs.get("height")
-
         self.diameter = kwargs.get("diameter")
+
+        self.height = kwargs.get("height")
 
         self.temp_h = kwargs.get("temp_h")
 
@@ -206,19 +207,6 @@ class StratifiedThermalStorage(GenericStorage, Facade):
         self.temp_env = kwargs.get("temp_env")
 
         self.u_value = kwargs.get("u_value")
-
-        losses = calculate_losses(
-            self.u_value,
-            self.diameter,
-            self.temp_h,
-            self.temp_c,
-            self.temp_env)
-
-        self.loss_rate = losses[0]
-
-        self.fixed_losses_relative = losses[1]
-
-        self.fixed_losses_absolute = losses[2]
 
         self.capacity = kwargs.get("capacity", 0)
 
@@ -240,13 +228,26 @@ class StratifiedThermalStorage(GenericStorage, Facade):
 
         self.expandable = bool(kwargs.get("expandable", False))
 
-        self.marginal_cost = kwargs.get("marginal_cost", 0)
-
         self.efficiency = kwargs.get("efficiency", 1)
+
+        self.marginal_cost = kwargs.get("marginal_cost", 0)
 
         self.input_parameters = kwargs.get("input_parameters", {})
 
         self.output_parameters = kwargs.get("output_parameters", {})
+
+        losses = calculate_losses(
+            self.u_value,
+            self.diameter,
+            self.temp_h,
+            self.temp_c,
+            self.temp_env)
+
+        self.loss_rate = losses[0]
+
+        self.fixed_losses_relative = losses[1]
+
+        self.fixed_losses_absolute = losses[2]
 
         self.build_solph_components()
 
