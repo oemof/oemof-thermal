@@ -184,7 +184,8 @@ class StratifiedThermalStorage(GenericStorage, Facade):
     ...     u_value=0.3,
     ...     initial_storage_level=0.5,
     ...     min_storage_level=0.05,
-    ...     max_storage_level=0.95)
+    ...     max_storage_level=0.95
+    ...     capacity=1)
     """
 
     def __init__(self, *args, **kwargs):
