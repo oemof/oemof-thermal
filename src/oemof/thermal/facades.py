@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 
-""" Facade's are classes providing a simplified view on more complex classes.
+"""
+Adapted from `oemof.tabular's facades
+<https://github.com/oemof/oemof-tabular/blob/master/src/oemof/tabular/facades.py>`_
+
+Facade's are classes providing a simplified view on more complex classes.
 More specifically, the `Facade`s in this module act as simplified, energy
 specific  wrappers around `oemof`'s and `oemof.solph`'s more abstract and
 complex classes. The idea is to be able to instantiate a `Facade` using keyword
