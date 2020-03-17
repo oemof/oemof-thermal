@@ -174,8 +174,6 @@ class StratifiedThermalStorage(GenericStorage, Facade):
     >>> thermal_storage = StratifiedThermalStorage(
     ...     label='thermal_storage',
     ...     bus=heat_bus,
-    ...     carrier='water',
-    ...     tech='sensible_heat_storage',
     ...     diameter=10,
     ...     height=10,
     ...     temp_h=95,
@@ -192,7 +190,7 @@ class StratifiedThermalStorage(GenericStorage, Facade):
 
         super().__init__(
             _facade_requires_=[
-                "bus", "carrier", "tech", "diameter",
+                "bus", "diameter",
                 "temp_h", "temp_c", "temp_env",
                 "u_value"], *args, **kwargs
         )

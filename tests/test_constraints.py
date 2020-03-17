@@ -130,8 +130,6 @@ class TestConstraints:
         facades.StratifiedThermalStorage(
             label='thermal_storage',
             bus=bus_heat,
-            carrier='water',
-            tech='sensible_heat_storage',
             diameter=10,
             height=30,
             temp_h=95,
@@ -156,8 +154,6 @@ class TestConstraints:
         facades.StratifiedThermalStorage(
             label='thermal_storage',
             bus=bus_heat,
-            carrier='water',
-            tech='sensible_heat_storage',
             diameter=10,
             temp_h=95,
             temp_c=60,
