@@ -45,9 +45,7 @@ nominal_storage_capacity, max_storage_level, min_storage_level = calculate_capac
     volume,
     input_data['temp_h'],
     input_data['temp_c'],
-    input_data['nonusable_storage_volume'],
-    input_data['heat_capacity'],
-    input_data['density'])
+    input_data['nonusable_storage_volume'])
 
 loss_rate, fixed_losses_relative, fixed_losses_absolute = calculate_losses(
     u_value,
