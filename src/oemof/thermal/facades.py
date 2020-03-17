@@ -208,7 +208,7 @@ class StratifiedThermalStorage(GenericStorage, Facade):
 
         self.u_value = kwargs.get("u_value")
 
-        self.capacity = kwargs.get("capacity", 0)
+        self.capacity = kwargs.get("capacity")
 
         self.storage_capacity_cost = kwargs.get("storage_capacity_cost")
 
@@ -227,6 +227,9 @@ class StratifiedThermalStorage(GenericStorage, Facade):
         )
 
         self.expandable = bool(kwargs.get("expandable", False))
+
+        if self.expandable and self.capacity is None:
+            self.capacity = 0
 
         self.efficiency = kwargs.get("efficiency", 1)
 
