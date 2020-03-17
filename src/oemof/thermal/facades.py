@@ -169,8 +169,8 @@ class StratifiedThermalStorage(GenericStorage, Facade):
     Examples
     ---------
     >>> from oemof import solph
-    >>> from oemof.tabular import facades
-    >>> my_bus = solph.Bus('my_bus')
+    >>> from oemof.thermal.facades import StratifiedThermalStorage
+    >>> heat_bus = solph.Bus(label='heat_bus')
     >>> thermal_storage = StratifiedThermalStorage(
     ...     label='thermal_storage',
     ...     bus=heat_bus,
@@ -206,6 +206,10 @@ class StratifiedThermalStorage(GenericStorage, Facade):
         self.temp_env = kwargs.get("temp_env")
 
         self.u_value = kwargs.get("u_value")
+
+        self.water_properties = {
+            'heat_capacity': kwargs.get("heat_capacity"), 'density': kwargs.get("density")
+        }
 
         self.capacity = kwargs.get("capacity")
 
@@ -243,7 +247,9 @@ class StratifiedThermalStorage(GenericStorage, Facade):
             self.diameter,
             self.temp_h,
             self.temp_c,
-            self.temp_env)
+            self.temp_env,
+            **{key: value for key, value in self.water_properties.items() if value is not None}
+        )
 
         self.loss_rate = losses[0]
 
@@ -301,7 +307,12 @@ class StratifiedThermalStorage(GenericStorage, Facade):
             self.volume = calculate_storage_dimensions(self.height, self.diameter)[0]
 
             self.nominal_storage_capacity = calculate_capacities(
-                self.volume, self.temp_h, self.temp_c, 0)[0]
+                self.volume,
+                self.temp_h,
+                self.temp_c,
+                0,
+                **{key: value for key, value in self.water_properties.items() if value is not None}
+            )[0]
 
             fi = Flow(
                 nominal_value=self._nominal_value(), **self.input_parameters
