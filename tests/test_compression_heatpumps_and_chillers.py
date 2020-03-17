@@ -1,6 +1,7 @@
-import oemof.thermal.compression_heatpumps_and_chillers as cmpr_hp_chllr
-import pytest
 import pandas as pd
+import pytest
+
+import oemof.thermal.compression_heatpumps_and_chillers as cmpr_hp_chllr
 
 
 def test_cop_calculation_hp():

@@ -12,10 +12,10 @@ SPDX-License-Identifier: MIT
 
 import logging
 import os
-import pytest
 import re
 from difflib import unified_diff
 
+import pytest
 import pandas as pd
 
 from oemof.thermal import facades
@@ -85,19 +85,20 @@ def compare_lp_files(lp_file_1, lp_file_2, ignored=None):
 class TestConstraints:
 
     @classmethod
-    def setup_class(self):
-        self.objective_pattern = re.compile(r'^objective.*(?=s\.t\.)',
-                                            re.DOTALL | re.MULTILINE)
+    def setup_class(cls):
+        cls.objective_pattern = re.compile(r'^objective.*(?=s\.t\.)',
+                                           re.DOTALL | re.MULTILINE)
 
-        self.date_time_index = pd.date_range('1/1/2012', periods=3, freq='H')
+        cls.date_time_index = pd.date_range('1/1/2012', periods=3, freq='H')
 
-        self.tmpdir = helpers.extend_basic_path('tmp')
-        logging.info(self.tmpdir)
+        cls.tmpdir = helpers.extend_basic_path('tmp')
+        logging.info(cls.tmpdir)
 
-    def setup(self):
-        self.energysystem = solph.EnergySystem(groupings=solph.GROUPINGS,
-                                               timeindex=self.date_time_index)
-        Node.registry = self.energysystem
+    @classmethod
+    def setup(cls):
+        cls.energysystem = solph.EnergySystem(groupings=solph.GROUPINGS,
+                                              timeindex=cls.date_time_index)
+        Node.registry = cls.energysystem
 
     def get_om(self):
         return solph.Model(self.energysystem,
