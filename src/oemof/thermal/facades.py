@@ -207,10 +207,6 @@ class StratifiedThermalStorage(GenericStorage, Facade):
 
         self.u_value = kwargs.get("u_value")
 
-        self.volume = calculate_storage_dimensions(self.height, self.diameter)[0]
-
-        self.storage_capacity = calculate_capacities(self.volume, self.temp_h, self.temp_c, 0)[0]
-
         losses = calculate_losses(
             self.u_value,
             self.diameter,
@@ -224,7 +220,7 @@ class StratifiedThermalStorage(GenericStorage, Facade):
 
         self.fixed_losses_absolute = losses[2]
 
-        self.capacity = kwargs.get("capacity")
+        self.capacity = kwargs.get("capacity", 0)
 
         self.storage_capacity_cost = kwargs.get("storage_capacity_cost")
 
@@ -257,8 +253,6 @@ class StratifiedThermalStorage(GenericStorage, Facade):
     def build_solph_components(self):
         """
         """
-        self.nominal_storage_capacity = self.storage_capacity
-
         self.inflow_conversion_factor = sequence(self.efficiency)
 
         self.outflow_conversion_factor = sequence(self.efficiency)
@@ -301,6 +295,11 @@ class StratifiedThermalStorage(GenericStorage, Facade):
             # required for correct grouping in oemof.solph.components
             self._invest_group = True
         else:
+            self.volume = calculate_storage_dimensions(self.height, self.diameter)[0]
+
+            self.nominal_storage_capacity = calculate_capacities(
+                self.volume, self.temp_h, self.temp_c, 0)[0]
+
             fi = Flow(
                 nominal_value=self._nominal_value(), **self.input_parameters
             )
