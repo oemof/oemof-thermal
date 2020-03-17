@@ -1,6 +1,6 @@
 \* Source Pyomo model name=Model *\
 
-min
+min 
 objective:
 +400 GenericInvestmentStorageBlock_invest(thermal_storage)
 +0.0001 flow(thermal_storage_bus_heat_0)
@@ -61,27 +61,27 @@ c_u_GenericInvestmentStorageBlock_init_cap_limit(thermal_storage)_:
 
 c_e_GenericInvestmentStorageBlock_balance_first(thermal_storage)_:
 +1 GenericInvestmentStorageBlock_capacity(thermal_storage_0)
--0.99982274917797465 GenericInvestmentStorageBlock_init_cap(thermal_storage)
-+4.490354157974401e-05 GenericInvestmentStorageBlock_invest(thermal_storage)
+-0.99982340904089895 GenericInvestmentStorageBlock_init_cap(thermal_storage)
++0.00025227279871584872 GenericInvestmentStorageBlock_invest(thermal_storage)
 -1 flow(bus_heat_thermal_storage_0)
 +1 flow(thermal_storage_bus_heat_0)
-= -0.0044374996231955829
+= -0.0053014376029327757
 
 c_e_GenericInvestmentStorageBlock_balance(thermal_storage_1)_:
--0.99982274917797465 GenericInvestmentStorageBlock_capacity(thermal_storage_0)
+-0.99982340904089895 GenericInvestmentStorageBlock_capacity(thermal_storage_0)
 +1 GenericInvestmentStorageBlock_capacity(thermal_storage_1)
-+4.490354157974401e-05 GenericInvestmentStorageBlock_invest(thermal_storage)
++0.00025227279871584872 GenericInvestmentStorageBlock_invest(thermal_storage)
 -1 flow(bus_heat_thermal_storage_1)
 +1 flow(thermal_storage_bus_heat_1)
-= -0.0044374996231955829
+= -0.0053014376029327757
 
 c_e_GenericInvestmentStorageBlock_balance(thermal_storage_2)_:
--0.99982274917797465 GenericInvestmentStorageBlock_capacity(thermal_storage_1)
+-0.99982340904089895 GenericInvestmentStorageBlock_capacity(thermal_storage_1)
 +1 GenericInvestmentStorageBlock_capacity(thermal_storage_2)
-+4.490354157974401e-05 GenericInvestmentStorageBlock_invest(thermal_storage)
++0.00025227279871584872 GenericInvestmentStorageBlock_invest(thermal_storage)
 -1 flow(bus_heat_thermal_storage_2)
 +1 flow(thermal_storage_bus_heat_2)
-= -0.0044374996231955829
+= -0.0053014376029327757
 
 c_e_GenericInvestmentStorageBlock_balanced_cstr(thermal_storage)_:
 +1 GenericInvestmentStorageBlock_capacity(thermal_storage_2)
@@ -128,7 +128,7 @@ c_u_GenericInvestmentStorageBlock_min_capacity(thermal_storage_2)_:
 +0.97499999999999998 GenericInvestmentStorageBlock_invest(thermal_storage)
 <= 0
 
-c_e_ONE_VAR_CONSTANT:
+c_e_ONE_VAR_CONSTANT: 
 ONE_VAR_CONSTANT = 1.0
 
 bounds
@@ -143,6 +143,6 @@ bounds
    0 <= GenericInvestmentStorageBlock_capacity(thermal_storage_0) <= +inf
    0 <= GenericInvestmentStorageBlock_capacity(thermal_storage_1) <= +inf
    0 <= GenericInvestmentStorageBlock_capacity(thermal_storage_2) <= +inf
-   10 <= GenericInvestmentStorageBlock_invest(thermal_storage) <= +inf
+   1 <= GenericInvestmentStorageBlock_invest(thermal_storage) <= +inf
    0 <= GenericInvestmentStorageBlock_init_cap(thermal_storage) <= +inf
 end
