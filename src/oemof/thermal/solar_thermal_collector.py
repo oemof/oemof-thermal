@@ -1,13 +1,16 @@
-# -*- coding: utf-8 -
+# -*- coding: utf-8
 
 """
 This module is designed to hold functions for calculating a solar thermal collector.
 
 This file is part of project oemof (github.com/oemof/oemof-thermal). It's copyrighted
-by the contributors recorded in the version control history of the file, available
-from its original location:
-oemof-thermal/src/oemof/thermal/flat_plate_collector.py
+by the contributors recorded in the version control history of the file,
+available from its original location:
+oemof-thermal/src/oemof/thermal/solar_thermal_collector.py
+
+SPDX-License-Identifier: MIT
 """
+
 
 import pvlib
 import pandas as pd
@@ -22,8 +25,8 @@ def flat_plate_precalc(
     collector_tilt,
     collector_azimuth,
     eta_0,
-    c_1,
-    c_2,
+    a_1,
+    a_2,
     temp_collector_inlet,
     delta_temp_n,
     date_col='date',
@@ -55,7 +58,7 @@ def flat_plate_precalc(
         in decimal degrees East of North.
     eta_0: numeric
         Optical efficiency of the collector.
-    c_1, c_2: numeric
+    a_1, a_2: numeric
         Thermal loss parameters.
     temp_collector_inlet: numeric or series with length of periods
         Collectors inlet temperature.
@@ -120,8 +123,8 @@ def flat_plate_precalc(
 
     eta_c = calc_eta_c_flate_plate(
         eta_0,
-        c_1,
-        c_2,
+        a_1,
+        a_2,
         temp_collector_inlet,
         delta_temp_n,
         data['temp_amb'],
@@ -136,8 +139,8 @@ def flat_plate_precalc(
 
 def calc_eta_c_flate_plate(
     eta_0,
-    c_1,
-    c_2,
+    a_1,
+    a_2,
     temp_collector_inlet,
     delta_temp_n,
     temp_amb,
@@ -148,20 +151,20 @@ def calc_eta_c_flate_plate(
 
     ..calc_eta_c_flate_plate_equation:
 
-    :math:`\eta_C = \eta_0 - c_1 \cdot \frac{\Delta T}{E_{coll}}
-    - c_2 \cdot \frac{{\Delta T}^2}{E_{coll}}`
+    :math:`\eta_C = \eta_0 - a_1 \cdot \frac{\Delta T}{E_{coll}}
+    - a_2 \cdot \frac{{\Delta T}^2}{E_{coll}}`
 
     with
 
-    :math:`\Delta T = T_{collector in} + {\Delta T}_n - T_{amb}`
+    :math:`\Delta T = T_{coll,in} + {\Delta T}_n - T_{amb}`
 
     Parameters
     ----------
     eta_0: numeric
          Optical efficiency of the collector.
-    c_1: numeric
+    a_1: numeric
         Thermal loss parameter 1.
-    c_2: numeric
+    a_2: numeric
         Thermal loss parameter 2.
     temp_collector_inlet: numeric, in °C
         Collectors inlet temperature.
@@ -184,8 +187,8 @@ def calc_eta_c_flate_plate(
         if value > 0:
             eta = (
                 eta_0
-                - c_1 * delta_t[index] / value
-                - c_2 * delta_t[index] ** 2 / value
+                - a_1 * delta_t[index] / value
+                - a_2 * delta_t[index] ** 2 / value
             )
             if eta > 0:
                 eta_c[index] = eta

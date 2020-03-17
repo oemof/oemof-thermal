@@ -6,8 +6,8 @@ Solar thermal collector
 
 Module to calculate the usable heat of a flat plate collector.
 
-Motivation and possible application
-___________________________________
+Scope
+_____
 
 This module was developed to provide the heat of a flat plate collector
 based on temperatures and collectors location, tilt and azimuth for energy
@@ -40,14 +40,14 @@ in-plane irradiance according to the azimuth and tilt angle of the collector.
 
 The efficiency of the collector is calculated with
 
-.. include:: ../src/oemof/thermal/flat_plate_collector.py
+.. include:: ../src/oemof/thermal/solar_thermal_collector.py
     :start-after:  calc_eta_c_flate_plate_equation:
     :end-before: Parameters
 
 In the end, the irradiance on the collector is multiplied with the efficiency
 to get the collectors heat.
 
-.. include:: ../src/oemof/thermal/flat_plate_collector.py
+.. include:: ../src/oemof/thermal/solar_thermal_collector.py
      :start-after:  flat_plate_precalc_equation:
      :end-before: Parameters
 
@@ -56,8 +56,8 @@ Losses, which occur after the heat absorption in the collector (e.g. losses in p
 have to be taken into account in the component, which uses the precalculation
 (see the example).
 
-Functions
-_________
+Usage
+_____
 
 These arguments are used in the formulas of the function:
 
@@ -69,14 +69,14 @@ These arguments are used in the formulas of the function:
 
     :math:`\eta_C`            :py:obj:`eta_c`                  Collectors efficiency
 
-    :math:`c_1`               :py:obj:`c_1`                    Thermal loss parameter 1
+    :math:`a_1`               :py:obj:`a_1`                    Thermal loss parameter 1
 
-    :math:`c_2`               :py:obj:`c_2`                    Thermal loss parameter 2
+    :math:`a_2`               :py:obj:`a_2`                    Thermal loss parameter 2
 
     :math:`\Delta T`          :py:obj:`delta_t`                Temperature difference
                                                                (collector to ambience)
 
-    :math:`T_{Collector, in}`  :py:obj:`temp_collector_inlet`   Collectors inlet temperature
+    :math:`T_{coll, in}`      :py:obj:`temp_collector_inlet`   Collectors inlet temperature
 
     :math:`\Delta T_n`        :py:obj:`delta_temp_n`           Temperature difference between
                                                                collector inlet and mean temperature
@@ -105,8 +105,8 @@ of the dataframe.
         collector_tilt,
         collector_azimuth,
         eta_0,
-        c_1,
-        c_2,
+        a_1,
+        a_2,
         temp_collector_inlet,
         delta_temp_n,
         date_col='hour',

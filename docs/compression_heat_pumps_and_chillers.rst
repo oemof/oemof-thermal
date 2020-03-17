@@ -6,8 +6,8 @@ Compression Heat Pumps and Chillers
 Simple calculations for compression heat pumps and chillers.
 
 
-Motivation and possible application
-___________________________________
+Scope
+_____
 
 This module was developed to provide COP calculations
 based on temperatures for energy system optimizations with oemof.solph.
@@ -17,8 +17,8 @@ A time series of pre-calculated COPs can be used as input for a transformer
 Discover more possibilities to use this module with our examples:
 https://github.com/oemof/oemof-thermal/tree/dev/examples
 
-The Heat Pump Cycle
-___________________
+Concept
+_______
 
 Compression heat pumps and chillers increase the temperature of a flow using
 a compressor that consumes electric power.
@@ -69,7 +69,7 @@ is applied on the Carnot efficiency:
 with
 
 .. math::
-        0 \geq \eta \leq 1
+        0 \leq \eta \leq 1
 
 Typical values of quality grades are
 0.4 for air-source heat pumps,
@@ -92,8 +92,8 @@ model different types of heat pumps.
     Fig.2: COP dependence on temperature difference
     (Output of example `cop_dependence_on_temperature_difference.py`).
 
-Functions
-_________
+Usage
+_____
 
 These arguments are input to the functions:
 

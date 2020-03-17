@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -
+# -*- coding: utf-8
 
 """
 This module is designed to hold functions for pre- and postprocessing for combined heat
@@ -6,8 +6,9 @@ and power plants.
 
 This file is part of project oemof (github.com/oemof/oemof-thermal). It's copyrighted
 by the contributors recorded in the version control history of the file,
-available from its original location:
-oemof-thermal/src/oemof/thermal/chp.py
+available from its original location: oemof-thermal/src/oemof/thermal/chp.py
+
+SPDX-License-Identifier: MIT
 """
 
 
@@ -16,23 +17,29 @@ def allocate_emissions(total_emissions, eta_el, eta_th, method, **kwargs):
     Function to allocate emissions caused in cogeneration to the products electrical energy
     and heat according to specified method.
 
+    .. allocate_emissions-equations:
+
     **IEA method**
 
-    :math:`EM_{el} = EM \cdot \frac{\eta_{el}}{\eta_{el} + \eta_{th}}`
+    :math:`EM_{el} = EM \cdot \frac{\eta_{el}}{\eta_{el} + \eta_{th}}`,
 
-    :math:`EM_{th} = EM \cdot \frac{\eta_{th}}{\eta_{el} + \eta_{th}}`
+    :math:`EM_{th} = EM \cdot \frac{\eta_{th}}{\eta_{el} + \eta_{th}}`.
 
     **Efficiency method**
 
-    :math:`EM_{el} = EM \cdot \frac{\eta_{th}}{\eta_{el} + \eta_{th}}`
+    :math:`EM_{el} = EM \cdot \frac{\eta_{th}}{\eta_{el} + \eta_{th}}`,
 
-    :math:`EM_{th} = EM \cdot \frac{\eta_{el}}{\eta_{el} + \eta_{th}}`
+    :math:`EM_{th} = EM \cdot \frac{\eta_{el}}{\eta_{el} + \eta_{th}}`.
 
     **Finnish method**
 
-    :math:`EM_{el} = EM \cdot (1-PEE)\frac{\eta_{el}}{\eta_{el,REF}}`
+    :math:`EM_{el} = EM \cdot (1-PEE)\frac{\eta_{el}}{\eta_{el,REF}}`,
 
-    :math:`EM_{th} = EM \cdot (1-PEE)\frac{\eta_{th}}{\eta_{th,REF}}`
+    :math:`EM_{th} = EM \cdot (1-PEE)\frac{\eta_{th}}{\eta_{th,REF}}`,
+
+    with
+
+    :math:`PEE = 1 - \frac{1}{\frac{\eta_{th}}{\eta_{th,ref}}+\frac{\eta_{el}}{\eta_{el,ref}}}`.
 
     Reference:
     Mauch, W., Corradini, R., Wiesmeyer, K., Schwentzek, M. (2010).

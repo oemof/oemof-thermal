@@ -4,16 +4,29 @@
 Stratified thermal storage
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Scope
+_____
+
+This module was developed to implement a simplified model of a large-scale
+sensible heat storage with ideal stratification for energy system optimization
+with oemof.solph.
+
 
 Concept
--------
+_______
 
 A simplified 2-zone-model of a stratified thermal energy storage.
 
-.. 	image:: _pics/stratified_thermal_storage.svg
+.. 	figure:: _pics/stratified_thermal_storage.svg
    :width: 70 %
    :alt: stratified_thermal_storage.svg
-   :align: center
+   :align: left
+
+   Fig. 1: Schematic of the simplified model of a stratified thermal storage with two
+   perfectly separated bodies of water with temperatures :math:`T_H` and
+   :math:`T_C`. When charging/discharging the storage, the thermocline moves
+   down or up, respectively. Losses to the environment through the surface of the
+   storage depend on the size of the hot and cold zone.
 
 * We assume a cylindrical storage with of diameter d and height h,
   with two temperature regions that are perfectly separated.
@@ -24,7 +37,7 @@ A simplified 2-zone-model of a stratified thermal energy storage.
 * There is no distinction between outside temperature and ground temperature.
 * Material properties are constant.
 
-The equation describing the change of storage content is the following:
+The equation describing the storage content at timestep t is the following:
 
 .. math::
   Q_t = Q_{t-1} \Big(1- U \frac{4}{d\rho c}\Delta t\Big)
@@ -48,10 +61,15 @@ with
   \delta &= U \frac{\pi d^2}{4}\Big(\Delta T_{H0} + \Delta T_{C0}\Big) \Delta t.
 
 
-The three terms represent constant heat losses through the top and bottom surfaces
-(:math:`\delta`), losses via the lateral surface (:math:`\gamma`) depending on the
-height of the storage and losses depending on the part of that surface belonging to the
-hot part of the water body that depend on the state of charge (:math:`\beta`).
+The three terms represent:
+
+* :math:`\delta`, constant heat losses through the top and bottom surfaces ,
+* :math:`\gamma \cdot Q_N`, losses through the total lateral surface assuming the storage
+  to be empty (storage is at :math:`T_{C}` and :math:`\Delta T_{C0}` is the driving
+  temperature difference), depending on the height of the storage,
+* :math:`\beta \cdot Q_{t-1}`, additonal losses through lateral surface that
+  belong to the hot part of the water body, depending on the state of charge.
+
 
 In the case of investment, the diameter :math:`d` is given and the height can be
 adapted to adapt the nominal capacity of the storage. With this assumption,
@@ -91,6 +109,9 @@ These parameters are part of the stratified thermal storage:
     :math:`T_0`               :py:obj:`temp_env`                         Environment temperature
                                                                          timeseries [deg C]
 
+    :math:`Q`                 attribute of oemof-solph component         Stored thermal energy
+                                                                         [MWh]
+
     :math:`Q_N`               :py:obj:`nominal_storage_capacity`         Maximum amount of
                                                                          stored thermal energy
                                                                          [MWh]
@@ -116,11 +137,11 @@ These parameters are part of the stratified thermal storage:
                                                                          storage content
                                                                          within one timestep [-]
 
-    :math:`\gamma`            :py:obj:`fixed_losses`                     Fixed losses as share
+    :math:`\gamma`            :py:obj:`fixed_losses_relative`            Fixed losses as share
                                                                          of nominal storage
                                                                          capacity [-]
 
-    :math:`\delta`            :py:obj:`fixed_absolute_losses`            Fixed absolute losses
+    :math:`\delta`            :py:obj:`fixed_losses_absolute`            Fixed absolute losses
                                                                          independent of storage
                                                                          content or nominal
                                                                          storage capacity [MWh]
@@ -133,7 +154,7 @@ These parameters are part of the stratified thermal storage:
 
 
 Usage
------
+_____
 
 The thermal transmittance is precalculated using `calculate_u_value`.
 
@@ -202,6 +223,17 @@ Finally, the parameters can be used to define a storage component.
         inflow_conversion_factor=1.,
         outflow_conversion_factor=1.
     )
+
+
+.. warning::
+
+   For this example to work as intended, please use the not yet released oemof branch
+
+   https://github.com/oemof/oemof/tree/v0.3
+
+   which contains the new attributes for GenericStorage, `fixed_losses_absolute` and
+   `fixed_losses_relative`. As soon as the feature in oemof is released, no extra steps
+   will be necessary to use them and this warning will be removed.
 
 The following figure shows a comparison of results of a common storage implementation using
 only a loss rate vs. the stratified thermal storage implementation

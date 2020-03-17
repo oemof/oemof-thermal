@@ -9,11 +9,10 @@ import matplotlib.pyplot as plt
 
 # precaluculation #
 
-dataframe = pd.read_csv('CSP_data/data_Muscat_22_8.csv', sep=';')
+dataframe = pd.read_csv('csp_data/data_Muscat_22_8.csv')
 dataframe['Datum'] = pd.to_datetime(dataframe['Datum'])
-df_temp_amb_series = pd.read_csv('CSP_data/data_Muscat_22_8_midday.csv',
-                                 sep=';')
-temp_amb_series = pd.read_csv('CSP_data/temp_ambience.csv', sep=';')['t_amb']
+df_temp_amb_series = pd.read_csv('csp_data/data_Muscat_22_8_midday.csv')
+temp_amb_series = pd.read_csv('csp_data/temp_ambience.csv')['t_amb']
 
 # parameters for the precalculation
 periods = 24
@@ -22,7 +21,7 @@ longitude = 58.545284
 timezone = 'Asia/Muscat'
 collector_tilt = 10
 collector_azimuth = 180
-x = 0.9
+cleanliness = 0.9
 a_1 = -0.00159
 a_2 = 0.0000977
 eta_0 = 0.816
@@ -35,13 +34,15 @@ temp_collector_outlet = 500
 # cleaniness for the heat of the collector during a day
 data_precalc = csp_precalc(dataframe, periods,
                            latitude, longitude, timezone,
-                           collector_tilt, collector_azimuth, x, a_1, a_2,
+                           collector_tilt, collector_azimuth, cleanliness,
                            eta_0, c_1, c_2,
                            temp_collector_inlet, temp_collector_outlet,
+                           a_1, a_2,
                            date_col='Datum', temp_amb_col='t_amb')
 
 heat_calc = data_precalc['collector_heat']
-irradiance_on_collector = data_precalc['collector_irradiance'] / (x**1.5)
+irradiance_on_collector = (data_precalc['collector_irradiance']
+                           / (cleanliness**1.5))
 heat_compare = irradiance_on_collector * eta_0
 t = list(range(1, 25))
 
@@ -64,9 +65,10 @@ for i in range(len(temp_amb_series)):
     data_precalc_temp_amb = csp_precalc(
         df_temp_amb_series, 1,
         latitude, longitude, timezone,
-        collector_tilt, collector_azimuth, x, a_1, a_2,
+        collector_tilt, collector_azimuth, cleanliness,
         eta_0, c_1, c_2,
         temp_collector_inlet, temp_collector_outlet,
+        a_1, a_2,
         date_col='Datum', temp_amb_col='t_amb')
 
     df_result = df_result.append(data_precalc_temp_amb, ignore_index=True)

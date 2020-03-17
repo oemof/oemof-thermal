@@ -6,8 +6,8 @@ Concentrating solar power
 
 Module to calculate the usable heat of a parabolic trough collector
 
-Motivation and possible application
-___________________________________
+Scope
+_____
 
 This module was developed to provide the heat of a parabolic trough collector
 based on temperatures and collectors location, tilt and azimuth for energy
@@ -24,7 +24,7 @@ In addition, you will find an example, which compares this precalculation with
 a calculation with a constant efficiency.
 
 Concept
-_________
+_______
 
 The precalculations for the concentrating solar power calculate the heat of the
 solar collector based on the direct horizontal irradiance (DHI) or the direct
@@ -58,30 +58,32 @@ with
 
 
 In the end, the irradiance on the collector is multiplied with the efficiency
-to get the collectors heat.
+to get the collector's heat.
 
 .. include:: ../src/oemof/thermal/concentrating_solar_power.py
   :start-after:  csp_precalc_equation:
   :end-before: functions used
 
 The three values :math:`Q_{coll}`, :math:`\eta_C` and :math:`E_{coll}` are
-returned. Losses, which occur after the heat absorption in the collector
+returned. Losses which occur after the heat absorption in the collector
 (e.g. losses in pipes) have to be taken into account in a later step
 (see the example).
 
-Functions
-_________
+Usage
+_____
 
 These arguments are used in the formulas of the function:
 
     ========================= =================================================== ===========
     symbol                    argument                                            explanation
     ========================= =================================================== ===========
-    :math:`E_{coll}`          :py:obj:`collector_irradiance`                      Irradiance on collector after all losses
+    :math:`E_{coll}`          :py:obj:`collector_irradiance`                      Irradiance on collector considering all losses
+                                                                                  including losses because of dirtiness
 
     :math:`E^*_{coll}`        :py:obj:`irradiance_on_collector`                   Irradiance which hits collectors surface
+                                                                                  before losses because of dirtiness are considered
 
-    :math:`X`                 :py:obj:`x`                                         Cleanliness of the collector (between 0 and 1)
+    :math:`X`                 :py:obj:`cleanliness`                                Cleanliness of the collector (between 0 and 1)
 
     :math:`\kappa`            :py:obj:`iam`                                       Incidence angle modifier
 
