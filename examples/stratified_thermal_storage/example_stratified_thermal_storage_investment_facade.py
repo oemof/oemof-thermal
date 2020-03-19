@@ -8,9 +8,9 @@ from oemof.thermal import facades
 
 # import functions to compare lp-files of new example with old one.
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'tests')))
-from test_constraints import compare_lp_files
+from test_constraints import compare_lp_files  # noqa
 
-from oemof.solph import (Source, Sink, Bus, Flow,
+from oemof.solph import (Source, Sink, Bus, Flow,  # noqa: E402
                          Model, EnergySystem)
 
 
@@ -25,34 +25,6 @@ u_value = calculate_storage_u_value(
     input_data['lamb_iso'],
     input_data['alpha_inside'],
     input_data['alpha_outside'])
-
-maximum_heat_flow_charging = 0.9
-maximum_heat_flow_discharging = 0.9
-max_storage_level = 0.975
-min_storage_level = 0.025
-
-
-def print_parameters():
-    parameter = {
-        'EQ-cost [Eur/]': 0,
-        'U-value [W/(m2*K)]': u_value,
-        'Max. heat flow charging [MW]': maximum_heat_flow_charging,
-        'Max. heat flow discharging [MW]': maximum_heat_flow_discharging,
-    }
-
-    dash = '-' * 50
-
-    print(dash)
-    print('{:>32s}{:>15s}'.format('Parameter name', 'Value'))
-    print(dash)
-
-    for name, param in parameter.items():
-        print('{:>32s}{:>15.5f}'.format(name, param))
-
-    print(dash)
-
-
-print_parameters()
 
 # Set up an energy system model
 solver = 'cbc'
@@ -92,7 +64,7 @@ heat_demand = Sink(
 thermal_storage = facades.StratifiedThermalStorage(
     label='thermal_storage',
     bus=bus_heat,
-    diameter=input_data['diameter'],
+    diameter=input_data['diameter'],  # TODO: setting to zero should give an error
     temp_h=input_data['temp_h'],
     temp_c=input_data['temp_c'],
     temp_env=input_data['temp_env'],
@@ -100,10 +72,10 @@ thermal_storage = facades.StratifiedThermalStorage(
     expandable=True,
     capacity_cost=0,
     storage_capacity_cost=400,
-    minimum_storage_capacity=1,
+    minimum_storage_capacity=1,  # TODO: setting to zero should give an error!
     invest_relation_input_capacity=1 / 6,
-    min_storage_level=min_storage_level,
-    max_storage_level=max_storage_level,
+    min_storage_level=0.025,
+    max_storage_level=0.975,
     efficiency=1,
     marginal_cost=0.0001
 )
@@ -120,3 +92,5 @@ optimization_model.write(
 with open('storage_model_invest_facades.lp') as generated_file:
     with open('storage_model_invest.lp') as expected_file:
         compare_lp_files(generated_file, expected_file)
+
+print('lp-files are equal.')
