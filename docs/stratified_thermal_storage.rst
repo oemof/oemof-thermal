@@ -17,9 +17,9 @@ _______
 
 A simplified 2-zone-model of a stratified thermal energy storage.
 
-.. 	figure:: _pics/stratified_thermal_storage.svg
+.. 	figure:: _pics/stratified_thermal_storage.png
    :width: 70 %
-   :alt: stratified_thermal_storage.svg
+   :alt: stratified_thermal_storage.png
    :align: left
 
    Fig. 1: Schematic of the simplified model of a stratified thermal storage with two
