@@ -7,13 +7,13 @@ from oemof.thermal import facades
 
 # import functions to compare lp-files of new example with old one.
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'tests')))
-from test_constraints import compare_lp_files
+from test_constraints import compare_lp_files  # noqa
 
-from oemof.thermal.stratified_thermal_storage import (
+from oemof.thermal.stratified_thermal_storage import (  # noqa
     calculate_storage_u_value,
 )
 
-from oemof.solph import Source, Sink, Bus, Flow, Model, EnergySystem
+from oemof.solph import Source, Sink, Bus, Flow, Model, EnergySystem  # noqa
 
 data_path = os.path.join(
     os.path.dirname(os.path.abspath(__file__)),
