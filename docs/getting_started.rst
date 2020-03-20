@@ -4,7 +4,7 @@
 Getting started
 ~~~~~~~~~~~~~~~
 
-oemof.thermal is an oemof library with a focus on thermal energy technologies (heat/cool).
+oemof.thermal is an oemof library with a focus on thermal energy technologies (heating/cooling).
 In its original intention it is an extension to the components of the optimization framework
 oemof.solph. However, some of its functions may be useful for their own.
 
