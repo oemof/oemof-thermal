@@ -29,8 +29,8 @@ Known issues
 Bug fixes
 ---------
 
-* Bug fix 1
-* Bug fix 2
+* Figures and images of svg format did not render in pdfLaTeX (`Issue #46 <https://github.com/oemof/oemof-thermal/issues/46>`_). As a solution to the problem png files have been added and included in the docs.
+* The title of the documentation was 'oemof heat documentation' and not 'oemof.thermal documentation'. Target name and title of documents, that are output within conf.py, have been changed for LaTeX, manual page, Texinfo and Epub.
 
 Tests
 -----
@@ -49,3 +49,4 @@ Contributors
 * Franziska Pleißner
 * Jakob Wolf
 * Jann Launer
+* Marie-Claire Gering
