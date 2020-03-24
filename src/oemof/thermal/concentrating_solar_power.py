@@ -17,11 +17,9 @@ import pandas as pd
 import numpy as np
 
 
-def csp_precalc(date, periods, freq,
-                lat, long, timezone,
-                collector_tilt, collector_azimuth, cleanliness,
+def csp_precalc(lat, long, collector_tilt, collector_azimuth, cleanliness,
                 eta_0, c_1, c_2,
-                temp_collector_inlet, temp_collector_outlet,
+                temp_collector_inlet, temp_collector_outlet, temp_amb,
                 a_1, a_2, a_3=0, a_4=0, a_5=0, a_6=0,
                 loss_method='Janotte',
                 irradiance_method='horizontal',
@@ -46,23 +44,11 @@ def csp_precalc(date, periods, freq,
 
     Parameters
     ----------
-    date: str
-        Start date of the calculation.
-
-    periods: numeric
-        Defines the number of timesteps.
-
-    freq: str
-        Frequence of the timesteps.
-
     lat: numeric
         Latitude of the location.
 
     long: numeric
         Longitude of the location.
-
-    timezone: string
-        pytz timezone of the location.
 
     collector_tilt: numeric
         The tilt of the collector.
@@ -89,8 +75,12 @@ def csp_precalc(date, periods, freq,
 
     temp_collector_inlet: numeric or series with length periods
         Collectors inlet temperature.
+
     temp_collector_outlet: numeric or series with length periods
         Collectors outlet temperature.
+
+    temp_amb: time indexed series
+        Ambient temperature time series
 
     loss_method: string, default 'Janotte'
         Valid values are: 'Janotte' or 'Andasol'. Describes, how the thermal
@@ -101,8 +91,8 @@ def csp_precalc(date, periods, freq,
         horizontal direct irradiance or the direct normal irradiance is
         given and used for calculation.
 
-    temp_amb_input: series of numeric
-        Ambient temperature time series
+    irradiance: time indexed series
+        Irradiance for calculation. E_dir_hor or dni must be given.
 
     Returns
     -------
@@ -115,6 +105,9 @@ def csp_precalc(date, periods, freq,
         Calculation of the irradiance which reaches the collector after all
         losses (incl. cleanliness).
 
+    **comment**
+    Series for ambient temperature and irradiance must have the same length
+    and the same time index. Be aware of the time one.
 
     **Proposal of values**
 
@@ -151,25 +144,15 @@ def csp_precalc(date, periods, freq,
         raise AttributeError(
             f"'{irradiance_required}' necessary for {irradiance_method} is not provided")
 
-    if 'temp_amb_input' not in kwargs:
-        raise AttributeError(
-            "temp_amb_input is not provided")
+    irradiance = (kwargs.get(irradiance_required))
 
-    date_time_index = pd.date_range(date, periods=periods,
-                                    freq=freq, tz=timezone)
-
-    irradiance = (kwargs.get(irradiance_required)).iloc[:periods]
-    temp_amb = (kwargs.get('temp_amb_input')).iloc[:periods]
-
-    # Creation of a df with 3 columns
-    data = pd.DataFrame({'date': date_time_index,
-                         'irradiance': irradiance,
+    # Creation of a df with 2 columns
+    data = pd.DataFrame({'irradiance': irradiance,
                          't_amb': temp_amb})
-    data.set_index('date', inplace=True)
 
     # Calculation of geometrical position of collector with the pvlib
     solarposition = pvlib.solarposition.get_solarposition(
-        time=date_time_index,
+        time=data.index,
         latitude=lat,
         longitude=long)
 
