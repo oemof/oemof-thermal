@@ -53,14 +53,12 @@ with pytest.raises(ValueError):
     c_2 = 0.0622
     temp_collector_inlet = 235
     temp_collector_outlet = 300
-    csp.csp_precalc('1/1/2001', 2, 'D',
-                    latitude, longitude, timezone,
+    csp.csp_precalc(latitude, longitude,
                     collector_tilt, collector_azimuth, cleanliness,
                     eta_0, c_1, c_2,
-                    temp_collector_inlet, temp_collector_outlet,
+                    temp_collector_inlet, temp_collector_outlet, df['t_amb'],
                     a_1, a_2, a_3=0, a_4=0, a_5=0, a_6=0,
-                    loss_method='quatsch',
-                    temp_amb_input=df['t_amb'])
+                    loss_method='quatsch')
 
 
 def test_eta_janotte():
