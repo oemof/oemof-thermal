@@ -11,7 +11,14 @@ import matplotlib.pyplot as plt
 
 dataframe = pd.read_csv('csp_data/data_Muscat_22_8.csv')
 dataframe['Datum'] = pd.to_datetime(dataframe['Datum'])
+dataframe.set_index('Datum', inplace=True)
+dataframe.index = dataframe.index.tz_localize(tz='Asia/Muscat')
+
 df_temp_amb_series = pd.read_csv('csp_data/data_Muscat_22_8_midday.csv')
+df_temp_amb_series['Datum'] = pd.to_datetime(df_temp_amb_series['Datum'])
+df_temp_amb_series.set_index('Datum', inplace=True)
+df_temp_amb_series.index = df_temp_amb_series.index.tz_localize(tz='Asia/Muscat')
+
 temp_amb_series = pd.read_csv('csp_data/temp_ambience.csv')['t_amb']
 
 # parameters for the precalculation
@@ -32,14 +39,13 @@ temp_collector_outlet = 500
 
 # plot showing the difference between a constant efficiency without considering
 # cleaniness for the heat of the collector during a day
-data_precalc = csp_precalc('22/08/2003', periods, 'H',
-                           latitude, longitude, timezone,
+data_precalc = csp_precalc(latitude, longitude,
                            collector_tilt, collector_azimuth, cleanliness,
                            eta_0, c_1, c_2,
                            temp_collector_inlet, temp_collector_outlet,
+                           dataframe['t_amb'],
                            a_1, a_2,
-                           E_dir_hor=dataframe['E_dir_hor'],
-                           temp_amb_input=dataframe['t_amb'])
+                           E_dir_hor=dataframe['E_dir_hor'])
 
 heat_calc = data_precalc['collector_heat']
 irradiance_on_collector = (data_precalc['collector_irradiance']
@@ -64,14 +70,13 @@ df_result = pd.DataFrame()
 for i in range(len(temp_amb_series)):
     df_temp_amb_series['t_amb'] = temp_amb_series[i]
     data_precalc_temp_amb = csp_precalc(
-        '2003-01-01 12:00:00', 1, 'H',
-        latitude, longitude, timezone,
+        latitude, longitude,
         collector_tilt, collector_azimuth, cleanliness,
         eta_0, c_1, c_2,
         temp_collector_inlet, temp_collector_outlet,
+        df_temp_amb_series['t_amb'],
         a_1, a_2,
-        E_dir_hor=df_temp_amb_series['E_dir_hor'],
-        temp_amb_input=df_temp_amb_series['t_amb'])
+        E_dir_hor=df_temp_amb_series['E_dir_hor'])
 
     df_result = df_result.append(data_precalc_temp_amb, ignore_index=True)
 
