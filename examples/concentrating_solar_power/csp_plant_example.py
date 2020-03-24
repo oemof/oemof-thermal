@@ -12,6 +12,7 @@ from oemof.tools import economics
 from oemof.thermal.concentrating_solar_power import csp_precalc
 import pandas as pd
 import oemof.outputlib as outputlib
+import matplotlib.pyplot as plt
 
 # precaluculation #
 
@@ -145,3 +146,11 @@ df = pd.DataFrame()
 df = df.append(collector['sequences'])
 df = df.join(thermal_bus['sequences'], lsuffix='_1')
 df.to_csv('CSP_results.csv')
+
+fig, ax = plt.subplots()
+ax.plot(list(range(8760)), thermal_bus['sequences'][(('collector', 'thermal'), 'flow')], label='test')
+ax.set(xlabel='time [h]', ylabel='Q_coll [W/m2]',
+       title='Heat of the collector')
+ax.grid()
+ax.legend()
+plt.show()
