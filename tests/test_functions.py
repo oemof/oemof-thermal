@@ -297,19 +297,14 @@ def test_allocate_emission_series():
                 f"Result \n{em_result} does not match default \n{em_default}"
 
 
-def test_calculation_of_collector_irradiance_for_single_value():
-    res = csp.calc_collector_irradiance(10, 0.9)
 
-    assert res == 8.5381496824546241963970125
-
-
-def test_calculation_of_collector_irradiance_for_a_series():
+def test_calculation_of_collector_irradiance():
     s = pd.Series([10, 20, 30], index=[1, 2, 3])
     res = csp.calc_collector_irradiance(s, 0.9)
     result = pd.Series(
         [8.5381496824546242, 17.0762993649092484, 25.614449047363873],
         index=[1, 2, 3])
-    assert res.eq(result).all()
+    assert res.values == approx(result.values)
 
 
 def test_calculation_iam_for_single_value():
@@ -340,7 +335,7 @@ with pytest.raises(ValueError):
     timezone = 'Asia/Muscat'
     collector_tilt = 10
     collector_azimuth = 180
-    x = 0.9
+    cleanliness = 0.9
     a_1 = -8.65e-4
     a_2 = 8.87e-4
     a_3 = -5.425e-5
@@ -352,11 +347,10 @@ with pytest.raises(ValueError):
     c_2 = 0.0622
     temp_collector_inlet = 235
     temp_collector_outlet = 300
-    csp.csp_precalc(df, 2,
-                    latitude, longitude, timezone,
-                    collector_tilt, collector_azimuth, x,
+    csp.csp_precalc(latitude, longitude,
+                    collector_tilt, collector_azimuth, cleanliness,
                     eta_0, c_1, c_2,
-                    temp_collector_inlet, temp_collector_outlet,
+                    temp_collector_inlet, temp_collector_outlet, df['t_amb'],
                     a_1, a_2, a_3=0, a_4=0, a_5=0, a_6=0,
                     loss_method='quatsch')
 
