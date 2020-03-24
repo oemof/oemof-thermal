@@ -1,11 +1,197 @@
 import numpy as np
+import pandas as pd
+import pytest
 from pytest import approx
 
-from oemof.thermal.chp import allocate_emissions
+import oemof.thermal.compression_heatpumps_and_chillers as cmpr_hp_chllr
+import oemof.thermal.concentrating_solar_power as csp
+from oemof.thermal.cogeneration import allocate_emissions
 from oemof.thermal.stratified_thermal_storage import (calculate_storage_u_value,
                                                       calculate_storage_dimensions,
                                                       calculate_capacities,
                                                       calculate_losses)
+from oemof.thermal.solar_thermal_collector import (flat_plate_precalc,
+                                                   calc_eta_c_flate_plate)
+
+
+def test_cop_calculation_hp():
+    cops_HP = cmpr_hp_chllr.calc_cops(
+        temp_high=[40],
+        temp_low=[12],
+        quality_grade=0.4,
+        mode='heat_pump')
+    assert cops_HP == [4.473571428571428]
+
+
+def test_calc_cops_with_Series_01():
+    ambient_temp_each_hour = {'01:00': 12, '02:00': 12, '03:00': 12}
+    temp_l_series = pd.Series(ambient_temp_each_hour)
+    cops_HP = cmpr_hp_chllr.calc_cops(
+        temp_high=[40],
+        temp_low=temp_l_series,
+        quality_grade=0.4,
+        mode='heat_pump')
+    assert cops_HP == [4.473571428571428, 4.473571428571428, 4.473571428571428]
+
+
+def test_calc_cops_with_Series_02():
+    set_temp_each_hour = {'01:00': 40, '02:00': 40, '03:00': 40}
+    temp_h_series = pd.Series(set_temp_each_hour)
+    cops_HP = cmpr_hp_chllr.calc_cops(
+        temp_high=temp_h_series,
+        temp_low=[12],
+        quality_grade=0.4,
+        mode='heat_pump')
+    assert cops_HP == [4.473571428571428, 4.473571428571428, 4.473571428571428]
+
+
+def test_cop_calculation_hp_list_input_01():
+    cops_HP = cmpr_hp_chllr.calc_cops(
+        temp_high=[40, 40],
+        temp_low=[12],
+        quality_grade=0.4,
+        mode='heat_pump')
+    assert cops_HP == [4.473571428571428, 4.473571428571428]
+
+
+def test_cop_calculation_hp_list_input_02():
+    cops_HP = cmpr_hp_chllr.calc_cops(
+        temp_high=[40],
+        temp_low=[12, 12],
+        quality_grade=0.4,
+        mode='heat_pump')
+    assert cops_HP == [4.473571428571428, 4.473571428571428]
+
+
+def test_cop_calculation_airsource_hp_with_icing_01():
+    cops_ASHP = cmpr_hp_chllr.calc_cops(
+        temp_high=[40],
+        temp_low=[1.3],
+        quality_grade=0.5,
+        mode='heat_pump',
+        temp_threshold_icing=2,
+        factor_icing=0.8)
+    assert cops_ASHP == [3.236692506459949]
+
+
+def test_cop_calculation_airsource_hp_with_icing_02():
+    cops_ASHP = cmpr_hp_chllr.calc_cops(
+        temp_high=[40],
+        temp_low=[2.3],
+        quality_grade=0.5,
+        mode='heat_pump',
+        temp_threshold_icing=2,
+        factor_icing=0.8)
+    assert cops_ASHP == [4.15318302387268]
+
+
+def test_cop_calculation_chiller():
+    cops_chiller = cmpr_hp_chllr.calc_cops(
+        temp_high=[35],
+        temp_low=[17],
+        quality_grade=0.45,
+        mode='chiller')
+    assert cops_chiller == [7.25375]
+
+
+def test_raised_exception_01():
+    """Test if an exception is raised if temp_low is not a list."""
+    with pytest.raises(TypeError):
+        cmpr_hp_chllr.calc_cops(
+            temp_high=[40],
+            temp_low=12,  # ERROR - temp_low has to be a list!
+            quality_grade=0.4,
+            mode='heat_pump',
+            temp_threshold_icing=2,
+            factor_icing=0.8)
+
+
+def test_raised_exception_02():
+    """Test if an exception is raised if temp_high is not a list."""
+    with pytest.raises(TypeError):
+        cmpr_hp_chllr.calc_cops(
+            temp_high=40,  # ERROR - temp_high has to be a list!
+            temp_low=[12],
+            quality_grade=0.4,
+            mode='heat_pump',
+            temp_threshold_icing=2,
+            factor_icing=0.8)
+
+
+def test_raised_exception_03():
+    """Test if an exception is raised if temp_high and
+    temp_low have different length AND none of them is of length 1."""
+    with pytest.raises(IndexError):
+        cmpr_hp_chllr.calc_cops(
+            temp_high=[40, 39, 39],
+            temp_low=[12, 10],  # ERROR - len(temp_low) has
+            # to be 1 or equal to len(temp_high)
+            quality_grade=0.4,
+            mode='heat_pump',
+            temp_threshold_icing=2,
+            factor_icing=0.8)
+
+
+def test_raised_exception_04():
+    """Test if an exception is raised if ... """
+    with pytest.raises(ValueError):
+        cmpr_hp_chllr.calc_cops(
+            temp_high=[39],
+            temp_low=[17],
+            quality_grade=0.4,
+            mode='chiller',
+            temp_threshold_icing=2,
+            factor_icing=0.8)
+
+
+def test_raised_exception_05():
+    """Test if an exception is raised if ... """
+    with pytest.raises(ValueError):
+        cmpr_hp_chllr.calc_cops(
+            temp_high=[39],
+            temp_low=[17],
+            quality_grade=0.4,
+            mode='chiller',
+            temp_threshold_icing=2,
+            factor_icing=0.8)
+
+
+def test_calc_max_Q_dot_chill():
+    nominal_conditions = {
+        'nominal_Q_chill': 20,
+        'nominal_el_consumption': 5}
+    actual_cop = [4.5]
+    max_Q_chill = cmpr_hp_chllr.calc_max_Q_dot_chill(nominal_conditions,
+                                                     cops=actual_cop)
+    assert max_Q_chill == [1.125]
+
+
+def test_raised_exceptions_05():
+    with pytest.raises(TypeError):
+        actual_cop = 4.5  # ERROR - has to be of type list!
+        nom_cond = {'nominal_Q_chill': 20, 'nominal_el_consumption': 5}
+        cmpr_hp_chllr.calc_max_Q_dot_chill(nominal_conditions=nom_cond,
+                                           cops=actual_cop)
+
+
+def test_calc_max_Q_dot_heat():
+    nom_cond = {
+        'nominal_Q_hot': 20,
+        'nominal_el_consumption': 5}
+    actual_cop = [4.5]
+    max_Q_hot = cmpr_hp_chllr.calc_max_Q_dot_heat(nominal_conditions=nom_cond,
+                                                  cops=actual_cop)
+    assert max_Q_hot == [1.125]
+
+
+def test_calc_chiller_quality_grade():
+    nom_cond = {
+        'nominal_Q_chill': 20,
+        'nominal_el_consumption': 5,
+        't_high_nominal': 35,
+        't_low_nominal': 7}
+    q_grade = cmpr_hp_chllr.calc_chiller_quality_grade(nominal_conditions=nom_cond)
+    assert q_grade == 0.39978582902016785
 
 
 def test_calculate_storage_u_value():
@@ -77,3 +263,160 @@ def test_allocate_emissions():
         'finnish': (96.7551622418879, 103.24483775811208)}
 
     assert emissions_dict == result
+
+
+def test_allocate_emission_series():
+    emissions_dict = {}
+    for method in ['iea', 'efficiency', 'finnish']:
+        emissions_dict[method] = allocate_emissions(
+            total_emissions=pd.Series([200, 200]),
+            eta_el=pd.Series([0.3, 0.3]),
+            eta_th=pd.Series([0.5, 0.5]),
+            method=method,
+            eta_el_ref=pd.Series([0.525, 0.525]),
+            eta_th_ref=pd.Series([0.82, 0.82])
+        )
+
+    default = {
+        'iea': (
+            pd.Series([75.0, 75.0]),
+            pd.Series([125.0, 125.0])
+        ),
+        'efficiency': (
+            pd.Series([125.0, 125.0]),
+            pd.Series([75.0, 75.0])
+        ),
+        'finnish': (
+            pd.Series([96.7551622418879, 96.7551622418879]),
+            pd.Series([103.24483775811208, 103.24483775811208])
+        )}
+
+    for key in default:
+        for em_result, em_default in zip(emissions_dict[key], default[key]):
+            assert em_result.equals(em_default),\
+                f"Result \n{em_result} does not match default \n{em_default}"
+
+
+def test_calculation_of_collector_irradiance():
+    s = pd.Series([10, 20, 30], index=[1, 2, 3])
+    res = csp.calc_collector_irradiance(s, 0.9)
+    result = pd.Series(
+        [8.5381496824546242, 17.0762993649092484, 25.614449047363873],
+        index=[1, 2, 3])
+    assert res.values == approx(result.values)
+
+
+def test_calculation_iam_for_single_value():
+    res = csp.calc_iam(-0.00159, 0.0000977, 0, 0, 0, 0, 50, 'Janotte')
+
+    assert res == 0.8352499999999999
+
+
+def test_calculation_iam_andasol():
+    res = csp.calc_iam(-8.65e-4, 8.87e-4, -5.425e-5, 1.665e-6, -2.309e-8,
+                       1.197e-10, 50, 'Andasol')
+
+    assert res == 0.5460625000000001
+
+
+def test_calculation_iam_for_a_series():
+    s = pd.Series([10, 20, 30], index=[1, 2, 3])
+    res = csp.calc_iam(-0.00159, 0.0000977, 0, 0, 0, 0, s, 'Janotte')
+    result = pd.Series([1.00613, 0.99272, 0.95977], index=[1, 2, 3])
+    assert res.eq(result).all()
+
+
+with pytest.raises(ValueError):
+    df = pd.DataFrame(data={'date': [1, 2], 'E_dir_hor': [
+        30, 40], 't_amb': [30, 40]})
+    latitude = 23.614328
+    longitude = 58.545284
+    timezone = 'Asia/Muscat'
+    collector_tilt = 10
+    collector_azimuth = 180
+    cleanliness = 0.9
+    a_1 = -8.65e-4
+    a_2 = 8.87e-4
+    a_3 = -5.425e-5
+    a_4 = 1.665e-6
+    a_5 = -2.309e-8
+    a_6 = 1.197e-10
+    eta_0 = 0.78
+    c_1 = 0.816
+    c_2 = 0.0622
+    temp_collector_inlet = 235
+    temp_collector_outlet = 300
+    csp.csp_precalc(latitude, longitude,
+                    collector_tilt, collector_azimuth, cleanliness,
+                    eta_0, c_1, c_2,
+                    temp_collector_inlet, temp_collector_outlet, df['t_amb'],
+                    a_1, a_2, a_3=0, a_4=0, a_5=0, a_6=0,
+                    loss_method='quatsch')
+
+
+def test_eta_janotte():
+    s = pd.Series([50], index=[1])
+    res = csp.calc_eta_c(0.816, 0.0622, 0.00023, 0.95, 235, 300, 30, s,
+                         'Janotte')
+    result = pd.Series([0.22028124999999987], index=[1])
+    assert res.eq(result).all()
+
+
+def test_eta_andasol():
+    s = pd.Series([100], index=[1])
+    res = csp.calc_eta_c(0.816, 64, 0.00023, 0.95, 235, 300, 30, s,
+                         'Andasol')
+    result = pd.Series([0.13519999999999988], index=[1])
+    assert res.eq(result).all()
+
+
+def test_flat_plate_precalc():
+    params = {
+        'df': pd.DataFrame(data={'hour': [1, 2],
+                                 'ghi': [112, 129],
+                                 'dhi': [100.3921648, 93.95959036],
+                                 'temp_amb': [9, 10]}),
+        'periods': 2,
+        'lat': 52.2443,
+        'long': 10.5594,
+        'tz': 'Europe/Berlin',
+        'collector_tilt': 10,
+        'collector_azimuth': 20,
+        'eta_0': 0.73,
+        'a_1': 1.7,
+        'a_2': 0.016,
+        'temp_collector_inlet': 20,
+        'delta_temp_n': 10,
+        'date_col': 'hour'
+    }
+    # Save return value from flat_plate_precalc(...) as data
+    data = flat_plate_precalc(**params)
+
+    # Data frame containing separately calculated results
+    results = pd.DataFrame({'eta_c': [0.30176452266786186, 0.29787208853863734],
+                            'collectors_heat': [30.128853432617774, 27.848310784333435]})
+
+    assert data['eta_c'].values == approx(results['eta_c'].values) and \
+        data['collectors_heat'].values == approx(results['collectors_heat'].values)
+
+
+def test_calc_eta_c_flate_plate():
+    temp_amb = pd.DataFrame({'date': ['1970-01-01 00:00:00.000000001+01:00'],
+                             'temp_amb': [9]})
+    temp_amb.set_index('date', inplace=True)
+
+    collector_irradiance = pd.DataFrame({'date': ['1970-01-01 00:00:00.000000001+01:00'],
+                                         'poa_global': 99.84226497618872})
+    collector_irradiance.set_index('date', inplace=True)
+
+    params = {
+        'eta_0': 0.73,
+        'a_1': 1.7,
+        'a_2': 0.016,
+        'temp_collector_inlet': 20,
+        'delta_temp_n': 10,
+        'temp_amb': temp_amb['temp_amb'],
+        'collector_irradiance': collector_irradiance['poa_global']
+    }
+    data = calc_eta_c_flate_plate(**params)
+    assert data.values == approx(0.30176452266786186)    # Adjust this value

@@ -1,2 +1,47 @@
 v0.0.2 (2020)
 =============
+
+API changes
+-----------
+
+* 
+
+New features
+------------
+
+* 
+
+New components
+--------------
+
+* 
+
+Documentation
+-------------
+
+* 
+
+Known issues
+------------
+
+* 
+
+Bug fixes
+---------
+
+* 
+
+Tests
+-----
+
+* 
+
+Other changes
+-------------
+
+* 
+
+Contributors
+------------
+
+* 
