@@ -17,6 +17,9 @@ import matplotlib.pyplot as plt
 # precaluculation #
 
 dataframe = pd.read_csv('csp_data/data_csp_plant.csv')
+dataframe['Datum'] = pd.to_datetime(dataframe['Datum'])
+dataframe.set_index('Datum', inplace=True)
+dataframe.index = dataframe.index.tz_localize(tz='Asia/Muscat')
 
 # parameters for the precalculation
 periods = 8760
@@ -34,14 +37,13 @@ c_2 = 0.00023
 temp_collector_inlet = 435
 temp_collector_outlet = 500
 
-data_precalc = csp_precalc('1/1/2003', periods, 'H',
-                           latitude, longitude, timezone,
+data_precalc = csp_precalc(latitude, longitude,
                            collector_tilt, collector_azimuth, cleanliness,
                            eta_0, c_1, c_2,
                            temp_collector_inlet, temp_collector_outlet,
+                           dataframe['t_amb'],
                            a_1, a_2,
-                           E_dir_hor=dataframe['E_dir_hor'],
-                           temp_amb_input=dataframe['t_amb'])
+                           E_dir_hor=dataframe['E_dir_hor'])
 
 data_precalc['ES_load_actual_entsoe_power_statistics'] = list(
     dataframe['ES_load_actual_entsoe_power_statistics'].iloc[:periods])
@@ -148,7 +150,7 @@ df = df.join(thermal_bus['sequences'], lsuffix='_1')
 df.to_csv('CSP_results.csv')
 
 fig, ax = plt.subplots()
-ax.plot(list(range(8760)), thermal_bus['sequences'][(('collector', 'thermal'), 'flow')], label='test')
+ax.plot(list(range(8760)), thermal_bus['sequences'][(('collector', 'thermal'), 'flow')])
 ax.set(xlabel='time [h]', ylabel='Q_coll [W/m2]',
        title='Heat of the collector')
 ax.grid()
