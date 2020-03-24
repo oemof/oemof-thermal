@@ -48,43 +48,59 @@ def csp_precalc(date, periods, freq,
     ----------
     date: str
         Start date of the calculation.
+
     periods: numeric
         Defines the number of timesteps.
+
     freq: str
         Frequence of the timesteps.
+
     lat: numeric
         Latitude of the location.
+
     long: numeric
         Longitude of the location.
+
     timezone: string
         pytz timezone of the location.
+
     collector_tilt: numeric
         The tilt of the collector.
+
     collector_azimuth: numeric
         The azimuth of the collector. Azimuth according to pvlib in decimal
-        degrees East of North
+        degrees East of North.
+
     cleanliness: numeric
         Cleanliness of the collector (between 0 and 1).
+
     a_1, a_2, a_3, a_4, a_5, a_6: numeric
         Parameters for the incident angle modifier. For loss method 'Janotte'
         a_1 and a_2 are required, for 'Andasol' a_1 to a_6 are required.
+
     eta_0: numeric
         Optical efficiency of the collector.
+
     c_1: numeric
         Thermal loss parameter 1. Required for both loss methods.
+
     c_2: numeric
         Thermal loss parameter 2. Required for loss method 'Janotte'.
+
     temp_collector_inlet: numeric or series with length periods
         Collectors inlet temperature.
     temp_collector_outlet: numeric or series with length periods
         Collectors outlet temperature.
+
     loss_method: string, default 'Janotte'
         Valid values are: 'Janotte' or 'Andasol'. Describes, how the thermal
         losses and the incidence angle modifier are calculated.
+
     irradiance_method: string, default 'horizontal'
         Valid values are: 'horizontal' or 'normal'. Describes, if the
         horizontal direct irradiance or the direct normal irradiance is
         given and used for calculation.
+
     temp_amb_input: series of numeric
         Ambient temperature time series
 
@@ -202,14 +218,19 @@ def calc_irradiance(surface_tilt, surface_azimuth, apparent_zenith, azimuth,
     ----------
     surface_tilt: series of numeric
         Panel tilt from horizontal.
+
     surface_azimuth: series of numeric
         Panel azimuth from north.
+
     apparent_zenith: series of numeric
         Solar zenith angle.
+
     azimuth: series of numeric
         Solar azimuth angle.
+
     irradiance: series of numeric
         Solar irraciance (dni or E_direct_horizontal).
+
     irradiance_method: str
         Describes, if the horizontal direct irradiance or the direct normal
         irradiance is given and used for calculation.
@@ -246,6 +267,7 @@ def calc_collector_irradiance(irradiance_on_collector, cleanliness):
     ----------
     irradiance_on_collector: series of numeric
         Irradiance which hits collectors surface.
+
     x: numeric
         Cleanliness of the collector (between 0 and 1).
 
@@ -284,8 +306,10 @@ def calc_iam(a_1, a_2, a_3, a_4, a_5, a_6, aoi, loss_method):
     a_1, a_2, a_3, a_4, a_5, a_6: numeric
         Parameters for the incident angle modifier. For loss method 'Janotte'
         a_1 and a_2 are required, for 'Andasol' a_1 to a_6 are required.
+
     aoi: series of numeric
         Angle of incidence.
+
     loss_method: string, default 'Janotte'
         Valid values are: 'Janotte' or 'Andasol'. Describes, how the thermal
         losses and the incidence angle modifier are calculated.
@@ -325,20 +349,28 @@ def calc_eta_c(eta_0, c_1, c_2, iam,
     ----------
     eta_0: numeric
         Optical efficiency of the collector.
+
     c_1: numeric
         Thermal loss parameter 1. Required for both loss methods.
+
     c_2: numeric
         Thermal loss parameter 2. Required for loss method 'Janotte'.
+
     iam: series of numeric
         Incidence angle modifier.
+
     temp_collector_inlet: numeric, in °C
         Collectors inlet temperature.
+
     temp_collector_outlet: numeric, in °C
         Collectors outlet temperature.
+
     temp_amb: series of numeric, in °C
         Ambient temperature.
+
     collector_irradiance: series of numeric
         Irradiance on collector after all losses.
+
     loss_method: string, default 'Janotte'
         Valid values are: 'Janotte' or 'Andasol'. Describes, how the thermal
         losses and the incidence angle modifier are calculated.
@@ -369,7 +401,8 @@ def calc_heat_coll(eta_c, collector_irradiance):
     Parameters
     ----------
     eta_c: series of numeric
-        collectors efficiency
+        collectors efficiency.
+
     collector_irradiance: series of numeric
         Irradiance on collector after all losses.
 
