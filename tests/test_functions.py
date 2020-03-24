@@ -297,7 +297,6 @@ def test_allocate_emission_series():
                 f"Result \n{em_result} does not match default \n{em_default}"
 
 
-
 def test_calculation_of_collector_irradiance():
     s = pd.Series([10, 20, 30], index=[1, 2, 3])
     res = csp.calc_collector_irradiance(s, 0.9)
