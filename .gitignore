@@ -59,9 +59,6 @@ target/
 # IDE
 .idea
 
-# data from Franzi
-CSP_data/
-CSP_results/
-
 # results
 examples/flat_plate_collector/results/
+examples/concentrating_solar_power/csp_results

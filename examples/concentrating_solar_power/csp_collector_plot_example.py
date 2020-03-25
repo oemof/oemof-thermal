@@ -54,7 +54,7 @@ ax.set(xlabel='time (h)', ylabel='Q_coll',
        title='Heat of the collector')
 ax.grid()
 ax.legend()
-plt.savefig('compare_precalculations.png')
+plt.savefig('csp_results/compare_collector_heat_method1.png')
 
 # plot showing the difference between a constant efficiency and the efficiency
 # depending on the ambient temperature for the same irradiance and hour of the
@@ -83,4 +83,4 @@ ax.set(xlabel='ambient temperature', ylabel='eta_collector',
 ax.grid()
 ax.legend()
 plt.show()
-plt.savefig('compare_temp_dependency.png')
+plt.savefig('csp_results/compare_temp_dependency_method1.png')
