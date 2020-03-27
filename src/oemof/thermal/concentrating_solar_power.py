@@ -29,10 +29,6 @@ def csp_precalc(lat, long, collector_tilt, collector_azimuth, cleanliness,
     heat of the thermal collector. For the calculation of irradiance pvlib [2]
     is used.
 
-    .. csp_precalc_equation:
-
-    :math:`Q_{coll} = E_{coll} \cdot \eta_C`
-
     functions used
      * pvlib.solarposition.get_solarposition
      * pvlib.tracking.singleaxis
@@ -380,6 +376,10 @@ def calc_eta_c(eta_0, c_1, c_2, iam,
 
 def calc_heat_coll(eta_c, collector_irradiance):
     r"""
+
+    .. csp_heat_equation:
+
+    :math:`Q_{coll} = E_{coll} \cdot \eta_C`
 
     Parameters
     ----------

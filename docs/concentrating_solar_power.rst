@@ -29,6 +29,7 @@ _______
 The pre-calculations for the concentrating solar power calculate the heat of the
 solar collector based on the direct horizontal irradiance (DHI) or the direct
 normal irradiance (DNI) and information about the collector and its location.
+The losses can be calculated in 2 different ways.
 
 .. figure:: _pics/concentrating_solar_power.svg
     :width: 60 %
@@ -55,25 +56,25 @@ dirt on the collector with:
   :start-after:  calc_collector_irradiance_equation:
   :end-before: Parameters
 
-The efficiency of the collector is calculated with
+The efficiency of the collector is calculated depending on the loss method with
 
 .. include:: ../src/oemof/thermal/concentrating_solar_power.py
   :start-after:  calc_eta_c_equation:
   :end-before: Parameters
 
-with
+with the incident angle modifier, which is calculated depending on the loss
+method:
 
 .. include:: ../src/oemof/thermal/concentrating_solar_power.py
   :start-after:  calc_iam_equation:
   :end-before: Parameters
 
-
 In the end, the irradiance on the collector is multiplied with the efficiency
 to get the collector's heat.
 
 .. include:: ../src/oemof/thermal/concentrating_solar_power.py
-  :start-after:  csp_precalc_equation:
-  :end-before: functions used
+  :start-after:  csp_heat_equation:
+  :end-before: Parameters
 
 The three values :math:`Q_{coll}`, :math:`\eta_C` and :math:`E_{coll}` are
 returned. Losses which occur after the heat absorption in the collector
@@ -120,24 +121,24 @@ These arguments are used in the formulas of the function:
 
 Please see the API for all parameters which have to be provided, also the ones
 which are not part of the described formulas.
-The needed dataframe must hold columns for a date, the ambient temperature and
-the irradiance. Depending on the method, this must be the horizontal direct
-irradiance or the direct normal irradiance. There are parameters to define,
-which are the column names.
+The data for ambient temperature and irradiance must have the same time index.
+Depending on the method, the irradiance must be the horizontal direct
+irradiance or the direct normal irradiance.
 
 .. code-block:: python
 
     data_precalc = csp_precalc(
-        dataframe, periods,
-        latitude, longitude, timezone,
-        collector_tilt, collector_azimuth, x, a_1, a_2,
+        latitude, longitude,
+        collector_tilt, collector_azimuth, cleanliness,
         eta_0, c_1, c_2,
-        temp_collector_inlet, temp_collector_outlet,
-        date_col='Datum'
+        temp_collector_inlet, temp_collector_outlet, dataframe['t_amb'],
+        a_1, a_2,
+        E_dir_hor=dataframe['E_dir_hor']
         )
 
 The following figure shows the heat provided by the collector calculated with
-this function in comparison to the heat calculated with a fix efficiency.
+this functions amd the loss method "Janotte" in comparison to the heat
+calculated with a fix efficiency.
 
 .. 	image:: _pics/compare_precalculations.png
    :width: 100 %
