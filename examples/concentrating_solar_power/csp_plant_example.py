@@ -132,7 +132,7 @@ energysystem.add(bth, bcol, bel, col_heat, el_grid, backup, consumer,
                  ambience_sol, collector, turbine, storage)
 
 model = solph.Model(energysystem)
-
+model.write('csp_model.lp', io_options={'symbolic_solver_labels': True})
 model.solve(solver='cbc', solve_kwargs={'tee': True})
 
 # filename = (path + '/lp_files/'
