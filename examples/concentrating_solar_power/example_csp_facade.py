@@ -16,7 +16,7 @@ data_path = os.path.join(
     'CSP_data/data_CSP.csv')
 
 # Set up an energy system model
-periods = 10
+periods = 100
 latitude = 23.614328
 longitude = 58.545284
 collector_tilt = 10
@@ -41,7 +41,7 @@ date_time_index = input_data.index
 # regular oemof_system #
 
 # parameters for energy system
-eta_losses = 0.05
+eta_losses = 0.2
 elec_consumption = 0.05
 backup_costs = 1000
 cap_loss = 0.02
