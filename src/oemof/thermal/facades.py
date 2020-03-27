@@ -446,8 +446,6 @@ class Collector(Transformer, Facade):
             }
         )
 
-        self.outflow_conversion_factor = sequence(self.efficiency)
-
         if self.expandable:
             raise NotImplementedError(
                 "Investment for reservoir class is not implemented."
