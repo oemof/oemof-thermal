@@ -32,15 +32,20 @@ normal irradiance (DNI) and information about the collector and its location.
 
 .. figure:: _pics/concentrating_solar_power.svg
     :width: 60 %
-    :alt: concentrating_solar_power.svg
+    :alt: concentrating_solar_power.png
     :align: center
     :figclass: align-center
 
-    Fig.1: The energy flows at the collector.
+    Fig.1: The energy flows and losses at a parabolic trough collector.
 
-The geometrical losses, the optical losses at the collector and the thermal
-losses in the collector are taken into account to calculate the heat which
-the collector can provide.
+The direct normal radiation (E_dir) is reduced by geometrical losses
+(Q_loss,geom) so that only the collector radiation (E_coll*) hits the collector.
+Before the thermal power is absorbed by the absorber tube, also optical losses
+(Q_loss,opt), which can be reflection losses at the mirror, transmission losses
+at the cladding tube and absorption losses at the absorber tube, occur. The
+absorber finally loses a part of the absorbed heat output through thermal
+losses (Q_loss,therm).
+
 
 The processing of the irradiance data is done by the pvlib, which calculates
 the direct irradiance on the collector. This irradiance is reduced by dust and
