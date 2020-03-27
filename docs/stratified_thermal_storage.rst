@@ -4,9 +4,16 @@
 Stratified thermal storage
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Scope
+_____
+
+This module was developed to implement a simplified model of a large-scale
+sensible heat storage with ideal stratification for energy system optimization
+with oemof.solph.
+
 
 Concept
--------
+_______
 
 A simplified 2-zone-model of a stratified thermal energy storage.
 
@@ -147,7 +154,7 @@ These parameters are part of the stratified thermal storage:
 
 
 Usage
------
+_____
 
 The thermal transmittance is precalculated using `calculate_u_value`.
 
