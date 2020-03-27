@@ -344,7 +344,7 @@ class Collector(Transformer, Facade):
     ...     electrical_bus=bel,
     ...     electrical_consumption=0.05,
     ...     peripheral_losses=0.05,
-    ...     size=1000,
+    ...     aperture_area=1000,
     ...     loss_method='Janotte',
     ...     irradiance_method='horizontal',
     ...     latitude=23.614328,
@@ -389,7 +389,7 @@ class Collector(Transformer, Facade):
 
         self.peripheral_losses = kwargs.get("peripheral_losses")
 
-        self.size = kwargs.get("size")
+        self.aperture_area = kwargs.get("aperture_area")
 
         self.lat = kwargs.get("lat")
 
@@ -454,7 +454,7 @@ class Collector(Transformer, Facade):
         inflow = Source(
             label=self.label + "-inflow",
             outputs={
-                self: Flow(nominal_value=self.size,
+                self: Flow(nominal_value=self.aperture_area,
                            max=self.collectors_heat,
                            fixed=True)
             },
