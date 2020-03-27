@@ -63,10 +63,9 @@ collector = facades.Collector(
     irradiance_method='horizontal',
     latitude=23.614328,
     longitude=58.545284,
-    timezone='Asia/Muscat',
     collector_tilt=10,
     collector_azimuth=180,
-    x=0.9,
+    cleanliness=0.9,
     a_1=-0.00159,
     a_2=0.0000977,
     eta_0=0.816,
@@ -74,9 +73,9 @@ collector = facades.Collector(
     c_2=0.00023,
     temp_collector_inlet=435,
     temp_collector_outlet=500,
-    irradiance=input_data['E_dir_hor'],
     temp_amb=input_data['t_amb'],
-)
+    irradiance=input_data['E_dir_hor']
+    )
 
 el_grid = solph.Source(
     label='grid',
