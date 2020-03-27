@@ -42,15 +42,6 @@ The geometrical losses, the optical losses at the collector and the thermal
 losses in the collector are taken into account to calculate the heat which
 the collector can provide.
 
-The following scheme shows the calculation procedure in the module to realize
-the collectors behavior in the left part. The right part shows a scheme of a
-part of an oemof network and how this module is connected to the network.
-
-.. 	image:: _pics/csp_scheme.png
-   :width: 100 %
-   :alt: scheme.png
-   :align: center
-
 The processing of the irradiance data is done by the pvlib, which calculates
 the direct irradiance on the collector. This irradiance is reduced by dust and
 dirt on the collector with:
