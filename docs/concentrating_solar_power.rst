@@ -15,26 +15,37 @@ system optimizations with oemof.solph.
 
 In
 https://github.com/oemof/oemof-thermal/tree/dev/examples
-you can find an example, how to use the modul to calculate a CSP power plant.
-A time series of pre-calculated heat can be used as input for a source
+you can find an example on how to use the modul to calculate a CSP power plant.
+A time series of pre-calculated heat flows can be used as input for a source
 (an oemof.solph component), and a transformer (an oemof.solph component) can be
 used to hold electrical power consumption and further thermal losses of the
 collector in an energy system optimization.
-In addition, you will find an example, which compares this precalculation with
-a calculation with a constant efficiency.
+In addition, you will find an example which compares this precalculation with
+a calculation using a constant efficiency.
 
 Concept
 _______
 
-The precalculations for the concentrating solar power calculate the heat of the
+The pre-calculations for the concentrating solar power calculate the heat of the
 solar collector based on the direct horizontal irradiance (DHI) or the direct
-normal irradiance (DNI) and information about the collector and the location.
-The following scheme shows the calculation procedure.
+normal irradiance (DNI) and information about the collector and its location.
 
-.. 	image:: _pics/scheme.png
-   :width: 100 %
-   :alt: scheme.png
-   :align: center
+.. figure:: _pics/concentrating_solar_power.svg
+    :width: 60 %
+    :alt: concentrating_solar_power.png
+    :align: center
+    :figclass: align-center
+
+    Fig.1: The energy flows and losses at a parabolic trough collector.
+
+The direct normal radiation (E_dir) is reduced by geometrical losses
+(Q_loss,geom) so that only the collector radiation (E_coll*) hits the collector.
+Before the thermal power is absorbed by the absorber tube, also optical losses
+(Q_loss,opt), which can be reflection losses at the mirror, transmission losses
+at the cladding tube and absorption losses at the absorber tube, occur. The
+absorber finally loses a part of the absorbed heat output through thermal
+losses (Q_loss,therm).
+
 
 The processing of the irradiance data is done by the pvlib, which calculates
 the direct irradiance on the collector. This irradiance is reduced by dust and
@@ -83,7 +94,7 @@ These arguments are used in the formulas of the function:
     :math:`E^*_{coll}`        :py:obj:`irradiance_on_collector`                   Irradiance which hits collectors surface
                                                                                   before losses because of dirtiness are considered
 
-    :math:`X`                 :py:obj:`cleanliness`                                Cleanliness of the collector (between 0 and 1)
+    :math:`X`                 :py:obj:`cleanliness`                               Cleanliness of the collector (between 0 and 1)
 
     :math:`\kappa`            :py:obj:`iam`                                       Incidence angle modifier
 
@@ -93,7 +104,7 @@ These arguments are used in the formulas of the function:
 
     :math:`\varTheta`         :py:obj:`aoi`                                       Angle of incidence
 
-    :math:`\eta_C`            :py:obj:`eta_c`                                     collectors efficiency
+    :math:`\eta_C`            :py:obj:`eta_c`                                     Collector efficiency
 
     :math:`c_1`               :py:obj:`c_1`                                       Thermal loss parameter 1
 
@@ -103,11 +114,11 @@ These arguments are used in the formulas of the function:
 
     :math:`\eta_0`            :py:obj:`eta_0`                                     Optical efficiency of the collector
 
-    :math:`Q_{coll}`          :py:obj:`collector_heat`                            collectors heat
+    :math:`Q_{coll}`          :py:obj:`collector_heat`                            Collector's heat
 
     ========================= =================================================== ===========
 
-Please see the API for all Parameters, which have to be provided, also the ones
+Please see the API for all parameters which have to be provided, also the ones
 which are not part of the described formulas.
 The needed dataframe must hold columns for a date, the ambient temperature and
 the irradiance. Depending on the method, this must be the horizontal direct
