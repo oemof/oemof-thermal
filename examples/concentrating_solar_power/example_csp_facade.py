@@ -4,26 +4,24 @@ import pandas as pd
 import numpy as np
 
 from oemof.thermal import facades
-from oemof.thermal.concentrating_solar_power import csp_precalc
 from oemof import solph
 from oemof.tools import economics
+
+# import functions to compare lp-files of new example with old one.
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'tests')))
+from test_constraints import compare_lp_files  # noqa
 
 data_path = os.path.join(
     os.path.dirname(os.path.abspath(__file__)),
     'CSP_data/data_CSP.csv')
 
-input_data = pd.read_csv('CSP_data/data_CSP.csv', sep=';')
-input_data['Datum'] = pd.to_datetime(input_data['Datum'])
-
 # Set up an energy system model
-
-periods = 100
+periods = 10
 latitude = 23.614328
 longitude = 58.545284
-timezone = 'Asia/Muscat'
 collector_tilt = 10
 collector_azimuth = 180
-x = 0.9
+cleanliness = 0.9
 a_1 = -0.00159
 a_2 = 0.0000977
 eta_0 = 0.816
@@ -31,13 +29,19 @@ c_1 = 0.0622
 c_2 = 0.00023
 temp_collector_inlet = 435
 temp_collector_outlet = 500
-date_time_index = pd.date_range('1/1/2003', periods=periods,
-                                freq='H', tz=timezone)
+
+input_data = pd.read_csv('csp_data/data_csp_plant.csv').head(periods)
+input_data['Datum'] = pd.to_datetime(input_data['Datum'])
+input_data.set_index('Datum', inplace=True)
+input_data.index = input_data.index.tz_localize(tz='Asia/Muscat')
+
+date_time_index = input_data.index
+
 
 # regular oemof_system #
 
 # parameters for energy system
-eta_losses = 0.8
+eta_losses = 0.05
 elec_consumption = 0.05
 backup_costs = 1000
 cap_loss = 0.02
@@ -54,25 +58,25 @@ bel = solph.Bus(label='electricity')
 #sources and sinks
 collector = facades.Collector(
     label='solar_collector',
-    output=bth,
-    electrical_input=bel,
+    output_bus=bth,
+    electrical_bus=bel,
     electrical_consumption=elec_consumption,
     peripheral_losses=eta_losses,
     size=size_collector,
     loss_method='Janotte',
     irradiance_method='horizontal',
-    latitude=23.614328,
-    longitude=58.545284,
-    collector_tilt=10,
-    collector_azimuth=180,
-    cleanliness=0.9,
-    a_1=-0.00159,
-    a_2=0.0000977,
-    eta_0=0.816,
-    c_1=0.0622,
-    c_2=0.00023,
-    temp_collector_inlet=435,
-    temp_collector_outlet=500,
+    latitude=latitude,
+    longitude=longitude,
+    collector_tilt=collector_tilt,
+    collector_azimuth=collector_azimuth,
+    cleanliness=cleanliness,
+    a_1=a_1,
+    a_2=a_2,
+    eta_0=eta_0,
+    c_1=c_1,
+    c_2=c_2,
+    temp_collector_inlet=temp_collector_inlet,
+    temp_collector_outlet=temp_collector_outlet,
     temp_amb=input_data['t_amb'],
     irradiance=input_data['E_dir_hor']
     )
@@ -121,4 +125,8 @@ energysystem.add(bth, bel, el_grid, backup, excess, consumer, storage, turbine,
 # create and solve the optimization model
 model = solph.Model(energysystem)
 model.solve(solver='cbc', solve_kwargs={'tee': True})
-model.write('storage_model_facades.lp', io_options={'symbolic_solver_labels': True})
+model.write('csp_model_facades.lp', io_options={'symbolic_solver_labels': True})
+
+with open('csp_model_facades.lp') as generated_file:
+    with open('csp_model.lp') as expected_file:
+        compare_lp_files(generated_file, expected_file)
