@@ -6,14 +6,16 @@ authors:
 
 SPDX-License-Identifier: GPL-3.0-or-later
 """
+import os
+
+import pandas as pd
 
 from oemof import solph
-from oemof.thermal.solar_thermal_collector import flat_plate_precalc
 from oemof.tools import economics
-from plots import plot_collector_heat
-import pandas as pd
-import os
 import oemof.outputlib as outputlib
+from oemof.thermal.solar_thermal_collector import flat_plate_precalc
+from plots import plot_collector_heat
+
 
 # DATA AND PARAMETERS
 ######################################################################
@@ -30,16 +32,24 @@ a_2 = 0.016
 temp_collector_inlet = 20
 delta_temp_n = 10
 
+# Set results path
+base_path = os.path.dirname(os.path.abspath(os.path.join(__file__)))
+
+results_path = os.path.join(base_path, 'results')
+
+if not os.path.exists(results_path):
+    os.mkdir(results_path)
+
 # Read data for flat collector and heat demand
-path = os.path.dirname(os.path.abspath(os.path.join(__file__, '..', '..')))
 dataframe = pd.read_csv(
-    path + '/examples/solar_thermal_collector/data/data_flat_collector.csv',
+    os.path.join(base_path, 'data', 'data_flat_collector.csv'),
     sep=';',
 )
 
 # Read demand time series from csv file
 demand_df = pd.read_csv(
-    path + '/examples/solar_thermal_collector/data/heat_demand.csv', sep=','
+    os.path.join(base_path, 'data', 'heat_demand.csv')
+    ,sep=','
 )
 demand = list(demand_df['heat_demand'].iloc[:periods])
 
@@ -78,8 +88,8 @@ precalc_data = flat_plate_precalc(
 )
 
 precalc_data.to_csv(
-    path + '/examples/solar_thermal_collector/results/flate_plate_precalcs.csv',
-    sep=';',
+    os.path.join(results_path, 'flate_plate_precalcs.csv'),
+    sep=';'
 )
 ######################################################################
 
@@ -182,7 +192,7 @@ df = pd.DataFrame()
 df = df.append(collector['sequences'])
 df = df.join(thermal_bus['sequences'], lsuffix='_1')
 df.to_csv(
-    path + '/examples/solar_thermal_collector/results/thermal_bus_flat_plate.csv',
+    os.path.join(results_path, 'thermal_bus_flat_plate.csv'),
     sep=';',
 )
 
