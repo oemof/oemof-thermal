@@ -1,8 +1,6 @@
 var_name,var_value,var_unit
 height,30,m
 diameter,10,m
-density,971.6,kg/m3
-heat_capacity,4196,J/(kg*K)
 temp_h,95,degC
 temp_c,60,degC
 temp_env,10,degC
