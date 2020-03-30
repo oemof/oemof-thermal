@@ -4,7 +4,7 @@
    contain the root `toctree` directive.
    
 Welcome to oemof.thermal's documentation!
-======================================
+=========================================
 
 
 
@@ -40,4 +40,3 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-

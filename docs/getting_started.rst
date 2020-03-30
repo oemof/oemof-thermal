@@ -4,8 +4,25 @@
 Getting started
 ~~~~~~~~~~~~~~~
 
-oemof.thermal is a toolbox for calculation and development of thermal energy components for
-oemof.
+oemof.thermal is an oemof library with a focus on thermal energy technologies (heating/cooling).
+In its original intention it is an extension to the components of the optimization framework
+oemof.solph. However, some of its functions may be useful for their own.
+
+oemof.thermal is organized like this:
+
+For each technology that is covered, there is a module which holds a collection of useful functions.
+These functions can be applied to perform pre-calculations of an optimization model or postprocess
+optimization results. Besides, they may equally well be used stand-alone (totally independent from
+optimization).
+
+For each module, there is a page that explains the scope of the module and its underlying concept.
+Mathematical symbols for commonly used variables and their names in the code are presented in
+overview tables. The usage of the functions and some sample results are given. Lastly, notable
+references to the literature are listed that the reader can refer to if she wants to get more
+information on the background.
+
+Finally, there are a couple of examples that can give an idea of how the functionality of
+oemof.thermal can be utilized.
 
 .. contents:: `Contents`
     :depth: 1
