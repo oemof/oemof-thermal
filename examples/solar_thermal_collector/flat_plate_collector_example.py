@@ -48,8 +48,8 @@ dataframe = pd.read_csv(
 
 # Read demand time series from csv file
 demand_df = pd.read_csv(
-    os.path.join(base_path, 'data', 'heat_demand.csv')
-    ,sep=','
+    os.path.join(base_path, 'data', 'heat_demand.csv'),
+    sep=','
 )
 demand = list(demand_df['heat_demand'].iloc[:periods])
 
