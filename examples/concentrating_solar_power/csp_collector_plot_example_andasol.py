@@ -2,12 +2,22 @@
 example, which shows the difference between the new approach and a fix
 efficiency
 """
+import os
+
+import matplotlib.pyplot as plt
+import pandas as pd
 
 from oemof.thermal.concentrating_solar_power import csp_precalc
-import pandas as pd
-import matplotlib.pyplot as plt
 
-# precaluculation #
+# set results path
+base_path = os.path.dirname(os.path.abspath(os.path.join(__file__)))
+
+results_path = os.path.join(base_path, 'results')
+
+if not os.path.exists(results_path):
+    os.mkdir(results_path)
+
+# precalculation #
 
 dataframe = pd.read_csv('csp_data/data_Muscat_22_8.csv')
 dataframe['Datum'] = pd.to_datetime(dataframe['Datum'])
