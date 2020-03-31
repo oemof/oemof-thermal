@@ -5,11 +5,15 @@ API changes
 -----------
 
 * The components xy has a new API (Facade)...
+* The arguments of ``compression_heatpumps_and_chillers.calc_cops()`` changed.
+  ``consider_icing`` was removed. To consider icing in the calculation
+  ``factor_icing`` (default value: ``None``) has to be set not None.
 
 New features
 ------------
 
-* 
+* The function ``compression_heatpumps_and_chillers.calc_cops()`` raises
+  Errors in case of wrong argument type or size.
 
 New components
 --------------
