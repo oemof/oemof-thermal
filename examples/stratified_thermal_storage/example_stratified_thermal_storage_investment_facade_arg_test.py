@@ -80,7 +80,6 @@ thermal_storage = facades.StratifiedThermalStorage(
     # Arguments that do not play a role in comparison of lp files
     temp_env=1000,
     nonusable_storage_volume=1000,  # Argument not integrated in facades.py but in stratified_thermal_storage.csv
-    inflow_conversion_factor=1000,  # Argument not used in facades.py
     # Arguments that do not have default values set yet
     capacity_potential=float("+inf"),
     storage_capacity_potential=float("+inf"),
