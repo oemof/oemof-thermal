@@ -6,12 +6,23 @@ authors: Franziska Pleissner
 
 SPDX-License-Identifier: GPL-3.0-or-later
 """
+import os
+
+import pandas as pd
 
 from oemof import solph
 from oemof.tools import economics
 from oemof.thermal.concentrating_solar_power import csp_precalc
-import pandas as pd
 import oemof.outputlib as outputlib
+
+
+# set results path
+base_path = os.path.dirname(os.path.abspath(os.path.join(__file__)))
+
+results_path = os.path.join(base_path, 'results')
+
+if not os.path.exists(results_path):
+    os.mkdir(results_path)
 
 # precaluculation #
 
@@ -142,4 +153,4 @@ thermal_bus = outputlib.views.node(energysystem.results['main'], 'thermal')
 df = pd.DataFrame()
 df = df.append(collector['sequences'])
 df = df.join(thermal_bus['sequences'], lsuffix='_1')
-df.to_csv('CSP_results.csv')
+df.to_csv('results/csp_plant_results.csv')
