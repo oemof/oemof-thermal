@@ -63,7 +63,7 @@ t = list(range(1, 25))
 fig, ax = plt.subplots()
 ax.plot(t, heat_calc, label='CSP precalculation')
 ax.plot(t, heat_compare, label='constant efficiency')
-ax.set(xlabel='time (h)', ylabel='Q_coll',
+ax.set(xlabel='time (h)', ylabel='Q_coll [W/m2]',
        title='Heat of the collector')
 ax.grid()
 ax.legend()
@@ -92,7 +92,7 @@ ax.plot(temp_amb_series, df_result['eta_c'],
         label='efficiency depending on ambient temperature')
 ax.plot(temp_amb_series, [eta_0] * 24, label='constant efficiency')
 ax.set_ylim(0, 1)
-ax.set(xlabel='ambient temperature', ylabel='eta_collector',
+ax.set(xlabel='ambient temperature [°C]', ylabel='eta_collector',
        title='collectors efficiency')
 ax.grid()
 ax.legend()
