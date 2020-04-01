@@ -298,9 +298,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4"
-     inkscape:cx="173.5124"
-     inkscape:cy="134.18413"
+     inkscape:zoom="1.979899"
+     inkscape:cx="190.33264"
+     inkscape:cy="158.06374"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -607,5 +607,17 @@
          x="64.020233"
          y="101.07912"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444447px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#575757;fill-opacity:1;stroke-width:0.26458332">opt</tspan></text>
+    <circle
+       style="opacity:0.98999999;fill:#575757;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.69619805;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:0.99406529"
+       id="path976"
+       cx="60.789909"
+       cy="85.14859"
+       r="0.65456814" />
+    <circle
+       style="opacity:0.98999999;fill:#575757;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.89428264;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:0.99406529"
+       id="path978"
+       cx="143.40771"
+       cy="106.53224"
+       r="0.65456814" />
   </g>
 </svg>
