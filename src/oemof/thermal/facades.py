@@ -421,8 +421,6 @@ class Collector(Transformer, Facade):
 
         self.expandable = bool(kwargs.get("expandable", False))
 
-        print(self.longitude)
-
         heat = csp_precalc(
             self.latitude, self.longitude, self.collector_tilt, self.collector_azimuth,
             self.cleanliness, self.eta_0, self.c_1, self.c_2,
