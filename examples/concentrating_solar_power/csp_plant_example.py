@@ -147,7 +147,7 @@ thermal_bus = outputlib.views.node(energysystem.results['main'], 'thermal')
 df = pd.DataFrame()
 df = df.append(collector['sequences'])
 df = df.join(thermal_bus['sequences'], lsuffix='_1')
-df.to_csv('CSP_results.csv')
+df.to_csv('results/csp_plant_results.csv')
 
 fig, ax = plt.subplots()
 ax.plot(list(range(8760)), thermal_bus['sequences'][(('collector', 'thermal'), 'flow')])
