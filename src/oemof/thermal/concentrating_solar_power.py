@@ -379,7 +379,7 @@ def calc_heat_coll(eta_c, collector_irradiance):
 
     .. csp_heat_equation:
 
-    :math:`Q_{coll} = E_{coll} \cdot \eta_C`
+    :math:`\dot Q_{coll} = E_{coll} \cdot \eta_C`
 
     Parameters
     ----------

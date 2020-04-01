@@ -39,13 +39,14 @@ The losses can be calculated in 2 different ways.
 
     Fig.1: The energy flows and losses at a parabolic trough collector.
 
-The direct normal radiation (E_dir) is reduced by geometrical losses
-(Q_loss,geom) so that only the collector radiation (E_coll*) hits the collector.
-Before the thermal power is absorbed by the absorber tube, also optical losses
-(Q_loss,opt), which can be reflection losses at the mirror, transmission losses
-at the cladding tube and absorption losses at the absorber tube, occur. The
-absorber finally loses a part of the absorbed heat output through thermal
-losses (Q_loss,therm).
+The direct normal radiation (:math:`E_{dir}`) is reduced by geometrical losses
+(:math:`\dot Q_{loss,geom}`) so that only the collector radiation
+(:math:`E_{coll}^*`) hits the collector. Before the thermal power is absorbed by
+the absorber tube, also optical losses (:math:`\dot Q_{loss,opt}`), which can
+be reflection losses at the mirror, transmission losses at the cladding tube
+and absorption losses at the absorber tube, occur. The absorber finally loses a
+part of the absorbed heat output through thermal losses
+(:math:`\dot Q_{loss,therm}`).
 
 
 The processing of the irradiance data is done by the pvlib, which calculates
@@ -76,7 +77,7 @@ to get the collector's heat.
   :start-after:  csp_heat_equation:
   :end-before: Parameters
 
-The three values :math:`Q_{coll}`, :math:`\eta_C` and :math:`E_{coll}` are
+The three values :math:`\dot Q_{coll}`, :math:`\eta_C` and :math:`E_{coll}` are
 returned. Losses which occur after the heat absorption in the collector
 (e.g. losses in pipes) have to be taken into account in a later step
 (see the example).
@@ -115,7 +116,7 @@ These arguments are used in the formulas of the function:
 
     :math:`\eta_0`            :py:obj:`eta_0`                                     Optical efficiency of the collector
 
-    :math:`Q_{coll}`          :py:obj:`collector_heat`                            Collector's heat
+    :math:`\dot Q_{coll}`     :py:obj:`collector_heat`                            Collector's heat
 
     ========================= =================================================== ===========
 
@@ -140,9 +141,9 @@ The following figure shows the heat provided by the collector calculated with
 this functions and the loss method "Janotte" in comparison to the heat
 calculated with a fix efficiency.
 
-.. 	image:: _pics/compare_precalculations.png
+.. 	image:: _pics/compare_collector_heat_method1.png
    :width: 100 %
-   :alt: compare_precalculations.png
+   :alt: compare_collector_heat_method1.png
    :align: center
 
 References
