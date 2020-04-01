@@ -25,7 +25,7 @@ def csp_precalc(lat, long, collector_tilt, collector_azimuth, cleanliness,
                 irradiance_method='horizontal',
                 **kwargs):
     r"""
-    Calculates collectors efficiency and irradiance according to [1] and the
+    Calculates collector efficiency and irradiance according to [1] and the
     heat of the thermal collector. For the calculation of irradiance pvlib [2]
     is used.
 
