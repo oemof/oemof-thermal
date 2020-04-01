@@ -369,11 +369,6 @@ class Collector(Transformer, Facade):
         kwargs.update(
             {
                 "_facade_requires_": [
-                    "bus",
-                    "carrier",
-                    "tech",
-                    "profile",
-                    "efficiency",
                 ]
             }
         )
@@ -406,6 +401,10 @@ class Collector(Transformer, Facade):
         self.c_1 = kwargs.get("c_1")
 
         self.c_2 = kwargs.get("c_2")
+
+        self.a_1 = kwargs.get("a_1")
+
+        self.a_2 = kwargs.get("a_2")
 
         self.temp_collector_inlet = kwargs.get("temp_collector_inlet")
 
