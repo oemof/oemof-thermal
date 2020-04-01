@@ -369,6 +369,7 @@ class Collector(Transformer, Facade):
         kwargs.update(
             {
                 "_facade_requires_": [
+                    "longitude"
                 ]
             }
         )
@@ -386,9 +387,9 @@ class Collector(Transformer, Facade):
 
         self.aperture_area = kwargs.get("aperture_area")
 
-        self.lat = kwargs.get("lat")
+        self.latitude = kwargs.get("latitude")
 
-        self.long = kwargs.get("long")
+        self.longitude = kwargs.get("longitude")
 
         self.collector_tilt = kwargs.get("collector_tilt")
 
@@ -420,8 +421,10 @@ class Collector(Transformer, Facade):
 
         self.expandable = bool(kwargs.get("expandable", False))
 
+        print(self.longitude)
+
         heat = csp_precalc(
-            self.lat, self.long, self.collector_tilt, self.collector_azimuth,
+            self.latitude, self.longitude, self.collector_tilt, self.collector_azimuth,
             self.cleanliness, self.eta_0, self.c_1, self.c_2,
             self.temp_collector_inlet, self.temp_collector_outlet,
             self.temp_amb,
