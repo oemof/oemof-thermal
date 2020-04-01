@@ -59,7 +59,7 @@ data_precalc = csp_precalc(latitude, longitude,
 data_precalc['ES_load_actual_entsoe_power_statistics'] = list(
     dataframe['ES_load_actual_entsoe_power_statistics'].iloc[:periods])
 
-data_precalc.to_csv('results_precalc.csv')
+data_precalc.to_csv('results/results_csp_plant_precalc.csv')
 
 # regular oemof_system #
 
