@@ -76,7 +76,7 @@ def csp_precalc(lat, long, collector_tilt, collector_azimuth, cleanliness,
         Collectors outlet temperature.
 
     temp_amb: time indexed series
-        Ambient temperature time series
+        Ambient temperature time series.
 
     loss_method: string, default 'Janotte'
         Valid values are: 'Janotte' or 'Andasol'. Describes, how the thermal
@@ -384,7 +384,7 @@ def calc_heat_coll(eta_c, collector_irradiance):
     Parameters
     ----------
     eta_c: series of numeric
-        collectors efficiency.
+        Collector efficiency.
 
     collector_irradiance: series of numeric
         Irradiance on collector after all losses.

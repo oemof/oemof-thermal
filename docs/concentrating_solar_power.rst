@@ -137,7 +137,7 @@ irradiance or the direct normal irradiance.
         )
 
 The following figure shows the heat provided by the collector calculated with
-this functions amd the loss method "Janotte" in comparison to the heat
+this functions and the loss method "Janotte" in comparison to the heat
 calculated with a fix efficiency.
 
 .. 	image:: _pics/compare_precalculations.png

@@ -4,8 +4,8 @@ v0.0.2 (2020)
 API changes
 -----------
 
-* concentrating solar power: The input for irradiance must be a time indexed
-series now, instead of a series and separate information about the date
+* concentrating solar power: The input for irradiance is now a time indexed
+series instead of a series and separate information about the date
 
 
 New features
