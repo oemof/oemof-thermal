@@ -80,8 +80,7 @@ collector = facades.Collector(
     temp_collector_inlet=temp_collector_inlet,
     temp_collector_outlet=temp_collector_outlet,
     temp_amb=input_data['t_amb'],
-    irradiance=input_data['E_dir_hor']
-    )
+    irradiance=input_data['E_dir_hor'])
 
 el_grid = solph.Source(
     label='grid',

@@ -456,8 +456,8 @@ class Collector(Transformer, Facade):
 
         self.conversion_factors.update(
             {
-                self.electrical_bus: sequence(self.electrical_consumption *
-                                              (1 - self.additional_losses)),
+                self.electrical_bus: sequence(self.electrical_consumption
+                                              * (1 - self.additional_losses)),
                 self.output_bus: sequence(1 - self.additional_losses),
                 inflow: sequence(1)
             }

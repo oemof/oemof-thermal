@@ -104,8 +104,8 @@ collector = solph.Transformer(
     outputs={bth: solph.Flow()},
     conversion_factors={
         bcol: 1,
-        bel: elec_consumption*(1-additional_losses),
-        bth: 1-additional_losses})
+        bel: elec_consumption * (1 - additional_losses),
+        bth: 1 - additional_losses})
 
 turbine = solph.Transformer(
     label='turbine',
@@ -142,7 +142,9 @@ results = outputlib.processing.results(model)
 electricity_bus = outputlib.views.node(results, 'electricity')['sequences']
 thermal_bus = outputlib.views.node(results, 'thermal')['sequences']
 solar_bus = outputlib.views.node(results, 'solar')['sequences']
-df = pd.merge(pd.merge(electricity_bus, thermal_bus, left_index=True, right_index=True), solar_bus, left_index=True, right_index=True)
+df = pd.merge(
+    pd.merge(electricity_bus, thermal_bus, left_index=True, right_index=True),
+    solar_bus, left_index=True, right_index=True)
 df.to_csv('results/csp_plant_results.csv')
 
 fig, ax = plt.subplots()
