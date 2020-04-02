@@ -123,7 +123,7 @@ class Facade(Node):
         self.build_solph_components()
 
 
-class Collector(Transformer, Facade):
+class Collector(Transformer, Facade):       # todo: Solve naming conflict (cf. csp)
     r""" Solar thermal collector unit
     Examples:
     ----------
