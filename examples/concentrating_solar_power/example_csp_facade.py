@@ -1,7 +1,9 @@
 import os
 import sys
 import pandas as pd
-import numpy as np
+import oemof.outputlib as outputlib
+import matplotlib.pyplot as plt
+
 
 from oemof.thermal import facades
 from oemof import solph
@@ -16,7 +18,7 @@ data_path = os.path.join(
     'CSP_data/data_CSP.csv')
 
 # Set up an energy system model
-periods = 100
+periods = 50
 latitude = 23.614328
 longitude = 58.545284
 collector_tilt = 10
@@ -41,7 +43,7 @@ date_time_index = input_data.index
 # regular oemof_system #
 
 # parameters for energy system
-eta_losses = 0.2
+additional_losses = 0.2
 elec_consumption = 0.05
 backup_costs = 1000
 cap_loss = 0.02
@@ -61,7 +63,7 @@ collector = facades.Collector(
     output_bus=bth,
     electrical_bus=bel,
     electrical_consumption=elec_consumption,
-    peripheral_losses=eta_losses,
+    additional_losses=additional_losses,
     aperture_area=size_collector,
     loss_method='Janotte',
     irradiance_method='horizontal',
@@ -127,6 +129,28 @@ model = solph.Model(energysystem)
 model.solve(solver='cbc', solve_kwargs={'tee': True})
 model.write('csp_model_facades.lp', io_options={'symbolic_solver_labels': True})
 
-with open('csp_model_facades.lp') as generated_file:
-    with open('csp_model.lp') as expected_file:
-        compare_lp_files(generated_file, expected_file)
+
+energysystem.results['main'] = outputlib.processing.results(model)
+energysystem.results['meta'] = outputlib.processing.meta_results(model)
+
+collector = outputlib.views.node(energysystem.results['main'], 'solar_collector')
+thermal_bus = outputlib.views.node(energysystem.results['main'], 'thermal')
+electricity_bus = outputlib.views.node(energysystem.results['main'], 'electricity')
+df = pd.DataFrame()
+df = df.append(collector['sequences'])
+df = df.join(thermal_bus['sequences'], lsuffix='_1')
+df = df.join(electricity_bus['sequences'], lsuffix='_1')
+df.to_csv('results/facade_results.csv')
+
+fig, ax = plt.subplots()
+ax.plot(list(range(periods)), thermal_bus['sequences'][(('solar_collector', 'thermal'), 'flow')])
+ax.set(xlabel='time [h]', ylabel='Q_coll [W/m2]',
+       title='Heat of the collector')
+ax.grid()
+ax.legend()
+plt.show()
+
+#
+# with open('csp_model_facades.lp') as generated_file:
+#     with open('csp_model.lp') as expected_file:
+#         compare_lp_files(generated_file, expected_file)
