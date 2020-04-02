@@ -25,8 +25,8 @@ from oemof.thermal.stratified_thermal_storage import calculate_storage_dimension
     calculate_capacities, calculate_losses
 from oemof.thermal.concentrating_solar_power import csp_precalc
 from oemof.energy_system import EnergySystem
-from oemof.network import Node, Transformer, Source
-from oemof.solph import Flow, Investment
+from oemof.network import Node
+from oemof.solph import Flow, Investment, Transformer, Source
 from oemof.solph.components import GenericStorage
 from oemof.solph.plumbing import sequence
 
@@ -343,7 +343,7 @@ class Collector(Transformer, Facade):
     ...     output_bus=bth,
     ...     electrical_bus=bel,
     ...     electrical_consumption=0.05,
-    ...     peripheral_losses=0.05,
+    ...     additional_losses=0.2,
     ...     aperture_area=1000,
     ...     loss_method='Janotte',
     ...     irradiance_method='horizontal',
@@ -383,7 +383,7 @@ class Collector(Transformer, Facade):
 
         self.electrical_consumption = kwargs.get("electrical_consumption")
 
-        self.peripheral_losses = kwargs.get("peripheral_losses")
+        self.additional_losses = kwargs.get("additional_losses")
 
         self.aperture_area = kwargs.get("aperture_area")
 
@@ -439,11 +439,6 @@ class Collector(Transformer, Facade):
     def build_solph_components(self):
         """
         """
-        self.conversion_factors=\
-            {
-                self.electrical_bus: sequence(self.electrical_consumption),
-                self.output_bus: sequence(1-self.peripheral_losses),
-            }
 
         if self.expandable:
             raise NotImplementedError(
@@ -459,17 +454,22 @@ class Collector(Transformer, Facade):
             },
         )
 
-        self.inputs.update(
+        self.conversion_factors.update(
             {
-                self.electrical_bus: Flow(
-                )
+                self.electrical_bus: sequence(self.electrical_consumption *
+                                              (1 - self.additional_losses)),
+                self.output_bus: sequence(1 - self.additional_losses),
+                inflow: sequence(1)
             }
         )
+
+        print(self.conversion_factors)
+
+        self.inputs.update(
+            {self.electrical_bus: Flow()}
+        )
         self.outputs.update(
-            {
-                self.output_bus: Flow(
-                )
-            }
+            {self.output_bus: Flow()}
         )
 
         self.subnodes = (inflow,)
