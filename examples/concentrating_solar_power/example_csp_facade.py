@@ -148,9 +148,3 @@ ax.set(xlabel='time [h]', ylabel='Q_coll [W/m2]',
 ax.grid()
 ax.legend()
 plt.show()
-
-#
-# with open('csp_model_facades.lp') as generated_file:
-#     with open('csp_model.lp') as expected_file:
-#         compare_lp_files(generated_file, expected_file)
-
