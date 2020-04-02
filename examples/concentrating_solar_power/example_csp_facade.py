@@ -60,7 +60,7 @@ bel = solph.Bus(label='electricity')
 #sources and sinks
 collector = facades.Collector(
     label='solar_collector',
-    output_bus=bth,
+    heat_bus=bth,
     electrical_bus=bel,
     electrical_consumption=elec_consumption,
     additional_losses=additional_losses,

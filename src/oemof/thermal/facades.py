@@ -340,7 +340,7 @@ class Collector(Transformer, Facade):
     >>> bel = solph.Bus(label='electrical_bus')
     >>> collector = Collector(
     ...     label='solar_collector',
-    ...     output_bus=bth,
+    ...     heat_bus=bth,
     ...     electrical_bus=bel,
     ...     electrical_consumption=0.05,
     ...     additional_losses=0.2,
@@ -377,7 +377,7 @@ class Collector(Transformer, Facade):
 
         self.label = kwargs.get("label")
 
-        self.output_bus = kwargs.get("output_bus")
+        self.heat_bus = kwargs.get("heat_bus")
 
         self.electrical_bus = kwargs.get("electrical_bus")
 
@@ -458,7 +458,7 @@ class Collector(Transformer, Facade):
             {
                 self.electrical_bus: sequence(self.electrical_consumption
                                               * (1 - self.additional_losses)),
-                self.output_bus: sequence(1 - self.additional_losses),
+                self.heat_bus: sequence(1 - self.additional_losses),
                 inflow: sequence(1)
             }
         )
@@ -469,7 +469,7 @@ class Collector(Transformer, Facade):
             {self.electrical_bus: Flow()}
         )
         self.outputs.update(
-            {self.output_bus: Flow()}
+            {self.heat_bus: Flow()}
         )
 
         self.subnodes = (inflow,)
