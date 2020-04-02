@@ -137,18 +137,16 @@ model.solve(solver='cbc', solve_kwargs={'tee': True})
 #             + 'CSP_Test.lp')
 # model.write(filename, io_options={'symbolic_solver_labels': True})
 
-energysystem.results['main'] = outputlib.processing.results(model)
-energysystem.results['meta'] = outputlib.processing.meta_results(model)
+results = outputlib.processing.results(model)
 
-collector = outputlib.views.node(energysystem.results['main'], 'collector')
-thermal_bus = outputlib.views.node(energysystem.results['main'], 'thermal')
-df = pd.DataFrame()
-df = df.append(collector['sequences'])
-df = df.join(thermal_bus['sequences'], lsuffix='_1')
+electricity_bus = outputlib.views.node(results, 'electricity')['sequences']
+thermal_bus = outputlib.views.node(results, 'thermal')['sequences']
+solar_bus = outputlib.views.node(results, 'solar')['sequences']
+df = pd.merge(pd.merge(electricity_bus, thermal_bus, left_index=True, right_index=True), solar_bus, left_index=True, right_index=True)
 df.to_csv('results/csp_plant_results.csv')
 
 fig, ax = plt.subplots()
-ax.plot(list(range(periods)), thermal_bus['sequences'][(('collector', 'thermal'), 'flow')])
+ax.plot(list(range(periods)), thermal_bus[(('collector', 'thermal'), 'flow')])
 ax.set(xlabel='time [h]', ylabel='Q_coll [W/m2]',
        title='Heat of the collector')
 ax.grid()

@@ -130,20 +130,19 @@ model.solve(solver='cbc', solve_kwargs={'tee': True})
 model.write('csp_model_facades.lp', io_options={'symbolic_solver_labels': True})
 
 
-energysystem.results['main'] = outputlib.processing.results(model)
-energysystem.results['meta'] = outputlib.processing.meta_results(model)
+results = outputlib.processing.results(model)
 
-collector = outputlib.views.node(energysystem.results['main'], 'solar_collector')
-thermal_bus = outputlib.views.node(energysystem.results['main'], 'thermal')
-electricity_bus = outputlib.views.node(energysystem.results['main'], 'electricity')
+collector = outputlib.views.node(results, 'solar_collector-inflow')['sequences']
+thermal_bus = outputlib.views.node(results, 'thermal')['sequences']
+electricity_bus = outputlib.views.node(results, 'electricity')['sequences']
 df = pd.DataFrame()
-df = df.append(collector['sequences'])
-df = df.join(thermal_bus['sequences'], lsuffix='_1')
-df = df.join(electricity_bus['sequences'], lsuffix='_1')
+df = df.append(collector)
+df = df.join(thermal_bus, lsuffix='_1')
+df = df.join(electricity_bus, lsuffix='_1')
 df.to_csv('results/facade_results.csv')
 
 fig, ax = plt.subplots()
-ax.plot(list(range(periods)), thermal_bus['sequences'][(('solar_collector', 'thermal'), 'flow')])
+ax.plot(list(range(periods)), thermal_bus[(('solar_collector', 'thermal'), 'flow')])
 ax.set(xlabel='time [h]', ylabel='Q_coll [W/m2]',
        title='Heat of the collector')
 ax.grid()
@@ -154,3 +153,4 @@ plt.show()
 # with open('csp_model_facades.lp') as generated_file:
 #     with open('csp_model.lp') as expected_file:
 #         compare_lp_files(generated_file, expected_file)
+
