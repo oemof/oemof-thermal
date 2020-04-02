@@ -29,13 +29,13 @@ oemof.thermal can be utilized.
     :local:
     :backlinks: top
 
-Using oemof-thermal
+Using oemof.thermal
 ===================
 
 Installation
 ------------
 
-Install oemof-thermal from pypi:
+Install oemof.thermal from pypi:
 
 ::
 
@@ -44,14 +44,14 @@ Install oemof-thermal from pypi:
 Installing the latest (dev) version
 -----------------------------------
 
-Clone oemof-thermal from github:
+Clone oemof.thermal from github:
 
 ::
 
     git clone git@github.com:oemof/oemof-thermal.git
 
 
-Now you can install it your local version of oemof-thermal using pip:
+Now you can install your local version of oemof.thermal using pip:
 
 ::
 
@@ -69,7 +69,7 @@ Contributing to oemof.thermal
 Contributions are welcome. You can write issues to announce bugs or errors or to propose
 enhancements. Or you can contribute a new approach that helps to model thermal energy
 systems. If you want to contribute, fork the project at github, develop your features on a new
-branch and finally open a pull request to merge your contribution to oemof-thermal.
+branch and finally open a pull request to merge your contribution to oemof.thermal.
 
-As oemof-thermal is part of the oemof developer group we use the same developer rules, described
+As oemof.thermal is part of the oemof developer group we use the same developer rules, described
 `here <http://oemof.readthedocs.io/en/stable/developing_oemof.html>`_.

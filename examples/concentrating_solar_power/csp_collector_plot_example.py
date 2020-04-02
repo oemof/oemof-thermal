@@ -2,12 +2,23 @@
 example, which shows the difference between the new approach and a fix
 efficiency
 """
+import os
+
+import matplotlib.pyplot as plt
+import pandas as pd
 
 from oemof.thermal.concentrating_solar_power import csp_precalc
-import pandas as pd
-import matplotlib.pyplot as plt
 
-# precaluculation #
+
+# Set results path
+base_path = os.path.dirname(os.path.abspath(os.path.join(__file__)))
+
+results_path = os.path.join(base_path, 'results')
+
+if not os.path.exists(results_path):
+    os.mkdir(results_path)
+
+# precalculation #
 
 dataframe = pd.read_csv('csp_data/data_Muscat_22_8.csv')
 dataframe['Datum'] = pd.to_datetime(dataframe['Datum'])
@@ -61,7 +72,7 @@ ax.set(xlabel='time [h]', ylabel='Q_coll [W/m2]',
        title='Heat of the collector')
 ax.grid()
 ax.legend()
-plt.savefig('compare_precalculations.png')
+plt.savefig('results/compare_collector_heat_method1.png')
 
 # plot showing the difference between a constant efficiency and the efficiency
 # depending on the ambient temperature for the same irradiance and hour of the
@@ -90,4 +101,4 @@ ax.set(xlabel='ambient temperature', ylabel='eta_collector',
 ax.grid()
 ax.legend()
 plt.show()
-plt.savefig('compare_temp_dependency.png')
+plt.savefig('results/compare_temp_dependency_method1.png')

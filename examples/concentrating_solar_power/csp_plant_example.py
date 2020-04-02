@@ -6,14 +6,29 @@ authors: Franziska Pleissner
 
 SPDX-License-Identifier: GPL-3.0-or-later
 """
+import os
+
+import pandas as pd
 
 from oemof import solph
 from oemof.tools import economics
 from oemof.thermal.concentrating_solar_power import csp_precalc
-import pandas as pd
 import oemof.outputlib as outputlib
 import matplotlib.pyplot as plt
 
+
+# set results path
+base_path = os.path.dirname(os.path.abspath(os.path.join(__file__)))
+
+results_path = os.path.join(base_path, 'results')
+
+if not os.path.exists(results_path):
+    os.mkdir(results_path)
+
+# precaluculation #
+
+dataframe = pd.read_csv('csp_data/data_csp_plant.csv')
+dataframe['Datum'] = pd.to_datetime(dataframe['Datum'])
 
 # parameters for the precalculation
 periods = 50
@@ -137,20 +152,14 @@ model.solve(solver='cbc', solve_kwargs={'tee': True})
 #             + 'CSP_Test.lp')
 # model.write(filename, io_options={'symbolic_solver_labels': True})
 
-results = outputlib.processing.results(model)
+==== BASE ====
+energysystem.results['main'] = outputlib.processing.results(model)
+energysystem.results['meta'] = outputlib.processing.meta_results(model)
 
-electricity_bus = outputlib.views.node(results, 'electricity')['sequences']
-thermal_bus = outputlib.views.node(results, 'thermal')['sequences']
-solar_bus = outputlib.views.node(results, 'solar')['sequences']
-df = pd.merge(
-    pd.merge(electricity_bus, thermal_bus, left_index=True, right_index=True),
-    solar_bus, left_index=True, right_index=True)
-df.to_csv('results/csp_plant_results.csv')
-
-fig, ax = plt.subplots()
-ax.plot(list(range(periods)), thermal_bus[(('collector', 'thermal'), 'flow')])
-ax.set(xlabel='time [h]', ylabel='Q_coll [W/m2]',
-       title='Heat of the collector')
-ax.grid()
-ax.legend()
-plt.show()
+collector = outputlib.views.node(energysystem.results['main'], 'electricity')
+thermal_bus = outputlib.views.node(energysystem.results['main'], 'thermal')
+df = pd.DataFrame()
+df = df.append(collector['sequences'])
+df = df.join(thermal_bus['sequences'], lsuffix='_1')
+df.to_csv('CSP_results.csv')
+==== BASE ====
