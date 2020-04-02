@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 
 
 # parameters for the precalculation
-periods = 100
+periods = 50
 latitude = 23.614328
 longitude = 58.545284
 collector_tilt = 10
@@ -53,7 +53,7 @@ data_precalc.to_csv('results/results_precalc_csp_plant.csv')
 # regular oemof_system #
 
 # parameters for energy system
-eta_losses = 0.8
+additional_losses = 0.2
 elec_consumption = 0.05
 backup_costs = 1000
 cap_loss = 0.02
@@ -103,9 +103,9 @@ collector = solph.Transformer(
         bel: solph.Flow()},
     outputs={bth: solph.Flow()},
     conversion_factors={
-        bcol: 1 - elec_consumption,
-        bel: elec_consumption,
-        bth: eta_losses})
+        bcol: 1,
+        bel: elec_consumption*(1-additional_losses),
+        bth: 1-additional_losses})
 
 turbine = solph.Transformer(
     label='turbine',
@@ -140,7 +140,7 @@ model.solve(solver='cbc', solve_kwargs={'tee': True})
 energysystem.results['main'] = outputlib.processing.results(model)
 energysystem.results['meta'] = outputlib.processing.meta_results(model)
 
-collector = outputlib.views.node(energysystem.results['main'], 'electricity')
+collector = outputlib.views.node(energysystem.results['main'], 'collector')
 thermal_bus = outputlib.views.node(energysystem.results['main'], 'thermal')
 df = pd.DataFrame()
 df = df.append(collector['sequences'])
