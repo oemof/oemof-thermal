@@ -439,12 +439,11 @@ class Collector(Transformer, Facade):
     def build_solph_components(self):
         """
         """
-        self.conversion_factors.update(
+        self.conversion_factors=\
             {
                 self.electrical_bus: sequence(self.electrical_consumption),
                 self.output_bus: sequence(1-self.peripheral_losses),
             }
-        )
 
         if self.expandable:
             raise NotImplementedError(
@@ -455,7 +454,7 @@ class Collector(Transformer, Facade):
             label=self.label + "-inflow",
             outputs={
                 self: Flow(nominal_value=self.aperture_area,
-                           max=self.collectors_heat,
+                           actual_value=self.collectors_heat,
                            fixed=True)
             },
         )
@@ -463,14 +462,12 @@ class Collector(Transformer, Facade):
         self.inputs.update(
             {
                 self.electrical_bus: Flow(
-                    **self.input_parameters
                 )
             }
         )
         self.outputs.update(
             {
                 self.output_bus: Flow(
-                    nominal_value=self.capacity, **self.output_parameters
                 )
             }
         )
