@@ -179,6 +179,8 @@ model = solph.Model(energysystem)
 
 model.solve(solver='cbc', solve_kwargs={'tee': True})
 
+model.write('solar_thermal_collector_model.lp', io_options={'symbolic_solver_labels': True})
+
 # filename = (path + '/lp_files/'
 #             + 'CSP_Test.lp')
 # model.write(filename, io_options={'symbolic_solver_labels': True})
