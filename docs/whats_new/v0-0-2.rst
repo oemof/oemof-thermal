@@ -19,7 +19,7 @@ New components
 Documentation
 -------------
 
-* 
+* Improve the schematic pictures of the components
 
 Known issues
 ------------
