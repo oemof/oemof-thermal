@@ -403,9 +403,7 @@ class Collector(Transformer, Facade):
 
         self.c_2 = kwargs.get("c_2")
 
-        self.a_1 = kwargs.get("a_1")
-
-        self.a_2 = kwargs.get("a_2")
+        self.aas = kwargs.get("aas", {})
 
         self.temp_collector_inlet = kwargs.get("temp_collector_inlet")
 
@@ -423,22 +421,24 @@ class Collector(Transformer, Facade):
 
         if self.irradiance_method == "horizontal":
             heat = csp_precalc(
-                self.latitude, self.longitude, self.collector_tilt, self.collector_azimuth,
-                self.cleanliness, self.eta_0, self.c_1, self.c_2,
+                self.latitude, self.longitude,
+                self.collector_tilt, self.collector_azimuth, self.cleanliness,
+                self.eta_0, self.c_1, self.c_2,
                 self.temp_collector_inlet, self.temp_collector_outlet,
                 self.temp_amb,
-                self.a_1, self.a_2,
+                **self.aas,
                 loss_method=self.loss_method,
                 irradiance_method=self.irradiance_method,
                 E_dir_hor=self.irradiance
             )
         if self.irradiance_method == "normal":
             heat = csp_precalc(
-                self.latitude, self.longitude, self.collector_tilt, self.collector_azimuth,
-                self.cleanliness, self.eta_0, self.c_1, self.c_2,
+                self.latitude, self.longitude,
+                self.collector_tilt, self.collector_azimuth, self.cleanliness,
+                self.eta_0, self.c_1, self.c_2,
                 self.temp_collector_inlet, self.temp_collector_outlet,
                 self.temp_amb,
-                self.a_1, self.a_2,
+                **self.aas,
                 loss_method=self.loss_method,
                 irradiance_method=self.irradiance_method,
                 dni=self.irradiance
