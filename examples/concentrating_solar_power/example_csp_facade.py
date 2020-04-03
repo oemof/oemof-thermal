@@ -1,5 +1,4 @@
 import os
-import sys
 import pandas as pd
 import oemof.outputlib as outputlib
 import matplotlib.pyplot as plt
@@ -9,13 +8,18 @@ from oemof.thermal import facades
 from oemof import solph
 from oemof.tools import economics
 
-# import functions to compare lp-files of new example with old one.
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'tests')))
-from test_constraints import compare_lp_files  # noqa
 
-data_path = os.path.join(
-    os.path.dirname(os.path.abspath(__file__)),
-    'CSP_data/data_CSP.csv')
+# set paths
+base_path = os.path.dirname(os.path.abspath(os.path.join(__file__)))
+
+results_path = os.path.join(base_path, 'results/')
+lp_path = os.path.join(base_path, 'lp_files/')
+data_path = os.path.join(base_path, 'csp_data/')
+
+if not os.path.exists(results_path):
+    os.mkdir(results_path)
+
+
 
 # Set up an energy system model
 periods = 50
@@ -32,7 +36,7 @@ c_2 = 0.00023
 temp_collector_inlet = 435
 temp_collector_outlet = 500
 
-input_data = pd.read_csv('csp_data/data_csp_plant.csv').head(periods)
+input_data = pd.read_csv(data_path + 'data_csp_plant.csv').head(periods)
 input_data['Datum'] = pd.to_datetime(input_data['Datum'])
 input_data.set_index('Datum', inplace=True)
 input_data.index = input_data.index.tz_localize(tz='Asia/Muscat')
@@ -127,19 +131,24 @@ energysystem.add(bth, bel, el_grid, backup, excess, consumer, storage, turbine,
 # create and solve the optimization model
 model = solph.Model(energysystem)
 model.solve(solver='cbc', solve_kwargs={'tee': True})
-model.write('csp_model_facades.lp', io_options={'symbolic_solver_labels': True})
+
+# if not os.path.exists(lp_path):
+#         os.mkdir(lp_path)
+# model.write(lp_path + 'csp_model_facades.lp',
+#             io_options={'symbolic_solver_labels': True})
 
 
 results = outputlib.processing.results(model)
 
-collector = outputlib.views.node(results, 'solar_collector-inflow')['sequences']
+collector_inflow = outputlib.views.node(
+    results, 'solar_collector-inflow')['sequences']
 thermal_bus = outputlib.views.node(results, 'thermal')['sequences']
 electricity_bus = outputlib.views.node(results, 'electricity')['sequences']
 df = pd.DataFrame()
-df = df.append(collector)
+df = df.append(collector_inflow)
 df = df.join(thermal_bus, lsuffix='_1')
 df = df.join(electricity_bus, lsuffix='_1')
-df.to_csv('results/facade_results.csv')
+df.to_csv(results_path + 'facade_results.csv')
 
 fig, ax = plt.subplots()
 ax.plot(list(range(periods)), thermal_bus[(('solar_collector', 'thermal'), 'flow')])

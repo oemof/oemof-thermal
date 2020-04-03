@@ -20,8 +20,9 @@ import matplotlib.pyplot as plt
 # set results path
 base_path = os.path.dirname(os.path.abspath(os.path.join(__file__)))
 
-results_path = os.path.join(base_path, 'results')
-lp_path = os.path.join(base_path, 'lp_files')
+results_path = os.path.join(base_path, 'results/')
+lp_path = os.path.join(base_path, 'lp_files/')
+data_path = os.path.join(base_path, 'csp_data/')
 
 if not os.path.exists(results_path):
     os.mkdir(results_path)
@@ -42,7 +43,7 @@ temp_collector_inlet = 435
 temp_collector_outlet = 500
 
 # input data
-dataframe = pd.read_csv('csp_data/data_csp_plant.csv').head(periods)
+dataframe = pd.read_csv(data_path + 'data_csp_plant.csv').head(periods)
 dataframe['Datum'] = pd.to_datetime(dataframe['Datum'])
 dataframe.set_index('Datum', inplace=True)
 dataframe.index = dataframe.index.tz_localize(tz='Asia/Muscat')
@@ -141,13 +142,12 @@ energysystem.add(bth, bcol, bel, col_heat, el_grid, backup, consumer,
                  ambience_sol, collector, turbine, storage)
 
 model = solph.Model(energysystem)
+model.solve(solver='cbc', solve_kwargs={'tee': True})
 
 # if not os.path.exists(lp_path):
 #         os.mkdir(lp_path)
-# model.write((lp_path + '/csp_model.lp'),
+# model.write((lp_path + 'csp_model.lp'),
 #             io_options={'symbolic_solver_labels': True})
-
-model.solve(solver='cbc', solve_kwargs={'tee': True})
 
 results = outputlib.processing.results(model)
 
@@ -157,7 +157,7 @@ solar_bus = outputlib.views.node(results, 'solar')['sequences']
 df = pd.merge(
     pd.merge(electricity_bus, thermal_bus, left_index=True, right_index=True),
     solar_bus, left_index=True, right_index=True)
-df.to_csv('results/csp_plant_results.csv')
+df.to_csv(results_path + 'csp_plant_results.csv')
 
 fig, ax = plt.subplots()
 ax.plot(list(range(periods)), thermal_bus[(('collector', 'thermal'), 'flow')])
