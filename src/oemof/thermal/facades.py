@@ -421,16 +421,28 @@ class Collector(Transformer, Facade):
 
         self.expandable = bool(kwargs.get("expandable", False))
 
-        heat = csp_precalc(
-            self.latitude, self.longitude, self.collector_tilt, self.collector_azimuth,
-            self.cleanliness, self.eta_0, self.c_1, self.c_2,
-            self.temp_collector_inlet, self.temp_collector_outlet,
-            self.temp_amb,
-            self.a_1, self.a_2,
-            loss_method=self.loss_method,
-            irradiance_method=self.irradiance_method,
-            E_dir_hor=self.irradiance       # just for one irradiance_method
-        )
+        if self.irradiance_method == "horizontal":
+            heat = csp_precalc(
+                self.latitude, self.longitude, self.collector_tilt, self.collector_azimuth,
+                self.cleanliness, self.eta_0, self.c_1, self.c_2,
+                self.temp_collector_inlet, self.temp_collector_outlet,
+                self.temp_amb,
+                self.a_1, self.a_2,
+                loss_method=self.loss_method,
+                irradiance_method=self.irradiance_method,
+                E_dir_hor=self.irradiance
+            )
+        if self.irradiance_method == "normal":
+            heat = csp_precalc(
+                self.latitude, self.longitude, self.collector_tilt, self.collector_azimuth,
+                self.cleanliness, self.eta_0, self.c_1, self.c_2,
+                self.temp_collector_inlet, self.temp_collector_outlet,
+                self.temp_amb,
+                self.a_1, self.a_2,
+                loss_method=self.loss_method,
+                irradiance_method=self.irradiance_method,
+                dni=self.irradiance
+            )
 
         self.collectors_heat = heat['collector_heat']
 
