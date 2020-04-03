@@ -4,12 +4,14 @@ v0.0.2 (2020)
 API changes
 -----------
 
-* 
+* concentrating solar power: The input for irradiance is now a time indexed
+series instead of a series and separate information about the date
+
 
 New features
 ------------
 
-* 
+* concentrating solar power: losses can be calculated with two methods.
 
 New components
 --------------
@@ -44,4 +46,4 @@ Other changes
 Contributors
 ------------
 
-* 
+* FranziPl

@@ -297,19 +297,13 @@ def test_allocate_emission_series():
                 f"Result \n{em_result} does not match default \n{em_default}"
 
 
-def test_calculation_of_collector_irradiance_for_single_value():
-    res = csp.calc_collector_irradiance(10, 0.9)
-
-    assert res == 8.5381496824546241963970125
-
-
-def test_calculation_of_collector_irradiance_for_a_series():
+def test_calculation_of_collector_irradiance():
     s = pd.Series([10, 20, 30], index=[1, 2, 3])
     res = csp.calc_collector_irradiance(s, 0.9)
     result = pd.Series(
         [8.5381496824546242, 17.0762993649092484, 25.614449047363873],
         index=[1, 2, 3])
-    assert res.eq(result).all()
+    assert res.values == approx(result.values)
 
 
 def test_calculation_iam_for_single_value():
@@ -332,33 +326,44 @@ def test_calculation_iam_for_a_series():
     assert res.eq(result).all()
 
 
-with pytest.raises(ValueError):
-    df = pd.DataFrame(data={'date': [1, 2], 'E_dir_hor': [
-        30, 40], 't_amb': [30, 40]})
-    latitude = 23.614328
-    longitude = 58.545284
-    timezone = 'Asia/Muscat'
-    collector_tilt = 10
-    collector_azimuth = 180
-    x = 0.9
-    a_1 = -8.65e-4
-    a_2 = 8.87e-4
-    a_3 = -5.425e-5
-    a_4 = 1.665e-6
-    a_5 = -2.309e-8
-    a_6 = 1.197e-10
-    eta_0 = 0.78
-    c_1 = 0.816
-    c_2 = 0.0622
-    temp_collector_inlet = 235
-    temp_collector_outlet = 300
-    csp.csp_precalc(df, 2,
-                    latitude, longitude, timezone,
-                    collector_tilt, collector_azimuth, x,
-                    eta_0, c_1, c_2,
-                    temp_collector_inlet, temp_collector_outlet,
-                    a_1, a_2, a_3=0, a_4=0, a_5=0, a_6=0,
-                    loss_method='quatsch')
+def test_csp_different_timeindex():
+    r"""
+    Test if differing time index raises error.
+    """
+    E_dir_hor = pd.Series([30, 40], index=[1, 2])
+    t_amb = pd.Series([30, 40], index=[2, 3])
+    with pytest.raises(IndexError):
+        csp.csp_precalc(20, 60,
+                        10, 180, 0.9,
+                        0.78, 0.816, 0.0622,
+                        235, 300, t_amb,
+                        -8.65e-4, 8.87e-4,
+                        loss_method='Janotte',
+                        E_dir_hor=E_dir_hor)
+
+
+def test_csp_wrong_loss_method():
+    with pytest.raises(ValueError):
+        df = pd.DataFrame(data={'date': [1, 2], 'E_dir_hor': [
+            30, 40], 't_amb': [30, 40]})
+        latitude = 23.614328
+        longitude = 58.545284
+        collector_tilt = 10
+        collector_azimuth = 180
+        cleanliness = 0.9
+        a_1 = -8.65e-4
+        a_2 = 8.87e-4
+        eta_0 = 0.78
+        c_1 = 0.816
+        c_2 = 0.0622
+        temp_collector_inlet = 235
+        temp_collector_outlet = 300
+        csp.csp_precalc(latitude, longitude,
+                        collector_tilt, collector_azimuth, cleanliness,
+                        eta_0, c_1, c_2,
+                        temp_collector_inlet, temp_collector_outlet, df['t_amb'],
+                        a_1, a_2, a_3=0, a_4=0, a_5=0, a_6=0,
+                        loss_method='quatsch')
 
 
 def test_eta_janotte():

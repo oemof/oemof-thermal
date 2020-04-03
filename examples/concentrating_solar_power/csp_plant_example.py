@@ -14,6 +14,7 @@ from oemof import solph
 from oemof.tools import economics
 from oemof.thermal.concentrating_solar_power import csp_precalc
 import oemof.outputlib as outputlib
+import matplotlib.pyplot as plt
 
 
 # set results path
@@ -28,6 +29,8 @@ if not os.path.exists(results_path):
 
 dataframe = pd.read_csv('csp_data/data_csp_plant.csv')
 dataframe['Datum'] = pd.to_datetime(dataframe['Datum'])
+dataframe.set_index('Datum', inplace=True)
+dataframe.index = dataframe.index.tz_localize(tz='Asia/Muscat')
 
 # parameters for the precalculation
 periods = 8760
@@ -45,16 +48,18 @@ c_2 = 0.00023
 temp_collector_inlet = 435
 temp_collector_outlet = 500
 
-data_precalc = csp_precalc(dataframe, periods,
-                           latitude, longitude, timezone,
+data_precalc = csp_precalc(latitude, longitude,
                            collector_tilt, collector_azimuth, cleanliness,
                            eta_0, c_1, c_2,
                            temp_collector_inlet, temp_collector_outlet,
+                           dataframe['t_amb'],
                            a_1, a_2,
-                           date_col='Datum', temp_amb_col='t_amb')
+                           E_dir_hor=dataframe['E_dir_hor'])
 
 data_precalc['ES_load_actual_entsoe_power_statistics'] = list(
     dataframe['ES_load_actual_entsoe_power_statistics'].iloc[:periods])
+
+data_precalc.to_csv('results/results_csp_plant_precalc.csv')
 
 # regular oemof_system #
 
@@ -154,3 +159,11 @@ df = pd.DataFrame()
 df = df.append(collector['sequences'])
 df = df.join(thermal_bus['sequences'], lsuffix='_1')
 df.to_csv('results/csp_plant_results.csv')
+
+fig, ax = plt.subplots()
+ax.plot(list(range(8760)), thermal_bus['sequences'][(('collector', 'thermal'), 'flow')])
+ax.set(xlabel='time [h]', ylabel='Q_coll [W/m2]',
+       title='Heat of the collector')
+ax.grid()
+ax.legend()
+plt.show()
