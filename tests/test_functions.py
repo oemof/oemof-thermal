@@ -326,6 +326,22 @@ def test_calculation_iam_for_a_series():
     assert res.eq(result).all()
 
 
+def test_csp_different_timeindex():
+    r"""
+    Test if differing time index raises error.
+    """
+    E_dir_hor = pd.Series([30, 40], index=[1, 2])
+    t_amb = pd.Series([30, 40], index=[2, 3])
+    with pytest.raises(IndexError):
+        csp.csp_precalc(20, 60,
+                        10, 180, 0.9,
+                        0.78, 0.816, 0.0622,
+                        235, 300, t_amb,
+                        -8.65e-4, 8.87e-4,
+                        loss_method='Janotte',
+                        E_dir_hor=E_dir_hor)
+
+
 def test_csp_wrong_loss_method():
     with pytest.raises(ValueError):
         df = pd.DataFrame(data={'date': [1, 2], 'E_dir_hor': [

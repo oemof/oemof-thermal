@@ -142,6 +142,9 @@ def csp_precalc(lat, long, collector_tilt, collector_azimuth, cleanliness,
 
     irradiance = (kwargs.get(irradiance_required))
 
+    if not temp_amb.index.equals(irradiance.index):
+        raise IndexError(f"Index of temp_amb and {irradiance_required} have to be the same.")
+
     # Creation of a df with 2 columns
     data = pd.DataFrame({'irradiance': irradiance,
                          't_amb': temp_amb})
