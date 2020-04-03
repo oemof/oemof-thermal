@@ -20,7 +20,6 @@ if not os.path.exists(results_path):
     os.mkdir(results_path)
 
 
-
 # Set up an energy system model
 periods = 50
 latitude = 23.614328
