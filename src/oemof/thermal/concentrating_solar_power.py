@@ -87,8 +87,8 @@ def csp_precalc(lat, long, collector_tilt, collector_azimuth, cleanliness,
         horizontal direct irradiance or the direct normal irradiance is
         given and used for calculation.
 
-    irradiance: time indexed series
-        Irradiance for calculation. E_dir_hor or dni must be given.
+    E_dir_hor/dni (depending on irradiance_method): time indexed series
+        Irradiance for calculation.
 
     Returns
     -------
@@ -140,7 +140,7 @@ def csp_precalc(lat, long, collector_tilt, collector_azimuth, cleanliness,
         raise AttributeError(
             f"'{irradiance_required}' necessary for {irradiance_method} is not provided")
 
-    irradiance = (kwargs.get(irradiance_required))
+    irradiance = kwargs.get(irradiance_required)
 
     if not temp_amb.index.equals(irradiance.index):
         raise IndexError(f"Index of temp_amb and {irradiance_required} have to be the same.")
