@@ -475,8 +475,6 @@ class Collector(Transformer, Facade):
             }
         )
 
-        print(self.conversion_factors)
-
         self.inputs.update(
             {self.electrical_bus: Flow()}
         )
