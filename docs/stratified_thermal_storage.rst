@@ -227,9 +227,9 @@ Finally, the parameters can be used to define a storage component.
 
 .. warning::
 
-   For this example to work as intended, please use the not yet released oemof branch
+   For this example to work as intended, please use the not yet released oemof-solph branch
 
-   https://github.com/oemof/oemof/tree/v0.3
+   https://github.com/oemof/oemof-solph/tree/dev
 
    which contains the new attributes for GenericStorage, `fixed_losses_absolute` and
    `fixed_losses_relative`. As soon as the feature in oemof is released, no extra steps
