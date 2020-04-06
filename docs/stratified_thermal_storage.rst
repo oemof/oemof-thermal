@@ -156,15 +156,103 @@ These parameters are part of the stratified thermal storage:
 Usage
 _____
 
-The thermal transmittance is precalculated using `calculate_u_value`.
+
+StratifiedThermalStorage facade
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Using the StratifiedThermalStorage facade, you can instantiate a storage like this:
+
 
 .. code-block:: python
 
-    u_value = calculate_storage_u_value(s_iso, lamb_iso, alpha_inside, alpha_outside)
+  from oemof.solph import Bus
+  from oemof.thermal.facades import StratifiedThermalStorage
 
-.. include:: ../src/oemof/thermal/stratified_thermal_storage.py
-  :start-after:  calculate_storage_u_value-equations:
-  :end-before: Parameters
+  bus_heat = Bus('heat')
+
+  thermal_storage = StratifiedThermalStorage(
+      label='thermal_storage',
+      bus=bus_heat,
+      diameter=2,
+      height=5,
+      temp_h=95,
+      temp_c=60,
+      temp_env=10,
+      u_value=u_value,
+      min_storage_level=0.05,
+      max_storage_level=0.95,
+      capacity=1,
+      efficiency=0.9,
+      marginal_cost=0.0001
+  )
+
+
+Storage investment is possible as well. There are two options:
+
+
+1. Invest into :py:obj:`nominal_storage_capacity` and :py:obj:`capacity`
+   (charging/discharging power) with a fixed ratio.
+2. Invest into :py:obj:`nominal_storage_capacity` and :py:obj:`capacity` independently with no
+   fixed ratio.
+
+In many practical cases, thermal storages are dimensioned using a rule of thumb: The storage should
+be able to provide its peak thermal power for 6-7 hours. To apply this in a model, use option 1.
+If you do not want to use a rule of thumb and rather let the model decide, go with option 2.
+
+.. code-block:: python
+
+  thermal_storage = StratifiedThermalStorage(
+      label='thermal_storage',
+      bus=bus_heat,
+      diameter=2,
+      height=5,
+      temp_h=95,
+      temp_c=60,
+      temp_env=10,
+      u_value=u_value,
+      expandable=True,
+      capacity_cost=0,
+      storage_capacity_cost=400,
+      minimum_storage_capacity=1,
+      invest_relation_input_capacity=1 / 6,
+      min_storage_level=0.05,
+      max_storage_level=0.95,
+      efficiency=0.9,
+      marginal_cost=0.0001
+  )
+
+
+A 3rd option, investing into nominal_storage_capacity but leaving charging/discharging power fixed,
+can not be modelled at the moment.
+
+.. warning::
+
+   For this example to work as intended, please use the not yet released oemof-solph branch
+
+   https://github.com/oemof/oemof-solph/tree/dev
+
+   which contains the new attributes for GenericStorage, `fixed_losses_absolute` and
+   `fixed_losses_relative`. As soon as the feature in oemof is released, no extra steps
+   will be necessary to use them and this warning will be removed.
+
+The following figure shows a comparison of results of a common storage implementation using
+only a loss rate vs. the stratified thermal storage implementation
+(`source code
+<https://github.com/oemof/oemof-thermal/tree/dev/examples/stratified_thermal_storage>`_).
+
+.. 	figure:: _pics/compare_storage_models.png
+   :width: 100 %
+   :alt: compare_storage_models.png
+   :align: center
+
+   Fig. 2: TODO: Add caption here.
+
+Implicit calculations
+^^^^^^^^^^^^^^^^^^^^^
+
+In the background, the StratifiedThermalStorage class uses the following functions.
+
+The thermal transmittance is pre-calculated using `calculate_u_value`.
 
 The dimensions of the storage are calculated with `calculate_storage_dimensions`
 
@@ -206,43 +294,15 @@ Loss terms are precalculated by the following function.
   :start-after:  calculate_losses-equations:
   :end-before: Parameters
 
-Finally, the parameters can be used to define a storage component.
+To calculate the thermal transmittance of the storage hull from material properties, you can use
+the following function.
 
 .. code-block:: python
 
-    thermal_storage = oemof.solph.GenericStorage(
-        label='thermal_storage',
-        inputs={bus_heat: Flow()},
-        outputs={bus_heat: Flow()},
-        nominal_storage_capacity=nominal_storage_capacity,
-        min_storage_level=min_storage_level,
-        max_storage_level=max_storage_level,
-        loss_rate=loss_rate,
-        fixed_losses_relative=fixed_losses_relative,
-        fixed_losses_absolute=fixed_losses_absolute,
-        inflow_conversion_factor=1.,
-        outflow_conversion_factor=1.
-    )
+    u_value = calculate_storage_u_value(s_iso, lamb_iso, alpha_inside, alpha_outside)
+
+.. include:: ../src/oemof/thermal/stratified_thermal_storage.py
+  :start-after:  calculate_storage_u_value-equations:
+  :end-before: Parameters
 
 
-.. warning::
-
-   For this example to work as intended, please use the not yet released oemof-solph branch
-
-   https://github.com/oemof/oemof-solph/tree/dev
-
-   which contains the new attributes for GenericStorage, `fixed_losses_absolute` and
-   `fixed_losses_relative`. As soon as the feature in oemof is released, no extra steps
-   will be necessary to use them and this warning will be removed.
-
-The following figure shows a comparison of results of a common storage implementation using
-only a loss rate vs. the stratified thermal storage implementation
-(`source code
-<https://github.com/oemof/oemof-thermal/tree/dev/examples/stratified_thermal_storage>`_).
-
-.. 	figure:: _pics/compare_storage_models.png
-   :width: 100 %
-   :alt: compare_storage_models.png
-   :align: center
-
-   Fig. 2: TODO: Add caption here.
