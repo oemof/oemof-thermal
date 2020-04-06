@@ -170,13 +170,13 @@ The dimensions of the storage are calculated with `calculate_storage_dimensions`
 
 .. code-block:: python
 
-  calculate_storage_dimensions(height, diameter)
+  volume, surface = calculate_storage_dimensions(height, diameter)
 
 .. include:: ../src/oemof/thermal/stratified_thermal_storage.py
   :start-after:  calculate_storage_dimensions-equations:
   :end-before: Parameters
 
-The nominal storage capacity, minimum and maximum storage level are precalculated upon initialization
+The nominal storage capacity, minimum and maximum storage level are pre-calculated upon initialization
 using `calculate_capacities`.
 
 .. code-block:: python
