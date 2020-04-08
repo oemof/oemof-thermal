@@ -75,9 +75,8 @@ collector = facades.Collector(
     collector_tilt=collector_tilt,
     collector_azimuth=collector_azimuth,
     cleanliness=cleanliness,
-    aas={
-        'a_1': a_1,
-        'a_2': a_2},
+    a_1=a_1,
+    a_2=a_2,
     eta_0=eta_0,
     c_1=c_1,
     c_2=c_2,

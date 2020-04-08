@@ -403,7 +403,17 @@ class Collector(Transformer, Facade):
 
         self.c_2 = kwargs.get("c_2")
 
-        self.aas = kwargs.get("aas", {})
+        self.a_1 = kwargs.get("a_1")
+
+        self.a_2 = kwargs.get("a_2")
+
+        self.a_3 = kwargs.get("a_3", 0)
+
+        self.a_4 = kwargs.get("a_4", 0)
+
+        self.a_5 = kwargs.get("a_5", 0)
+
+        self.a_6 = kwargs.get("a_6", 0)
 
         self.temp_collector_inlet = kwargs.get("temp_collector_inlet")
 
@@ -426,7 +436,7 @@ class Collector(Transformer, Facade):
                 self.eta_0, self.c_1, self.c_2,
                 self.temp_collector_inlet, self.temp_collector_outlet,
                 self.temp_amb,
-                **self.aas,
+                self.a_1, self.a_2, self.a_3, self.a_4, self.a_5, self.a_6,
                 loss_method=self.loss_method,
                 irradiance_method=self.irradiance_method,
                 E_dir_hor=self.irradiance
@@ -438,7 +448,7 @@ class Collector(Transformer, Facade):
                 self.eta_0, self.c_1, self.c_2,
                 self.temp_collector_inlet, self.temp_collector_outlet,
                 self.temp_amb,
-                **self.aas,
+                self.a_1, self.a_2, self.a_3, self.a_4, self.a_5, self.a_6,
                 loss_method=self.loss_method,
                 irradiance_method=self.irradiance_method,
                 dni=self.irradiance
