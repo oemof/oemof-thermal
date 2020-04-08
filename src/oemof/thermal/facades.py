@@ -198,17 +198,7 @@ class StratifiedThermalStorage(GenericStorage, Facade):
                 "u_value"], *args, **kwargs
         )
 
-        self.diameter = kwargs.get("diameter")
-
         self.height = kwargs.get("height")
-
-        self.temp_h = kwargs.get("temp_h")
-
-        self.temp_c = kwargs.get("temp_c")
-
-        self.temp_env = kwargs.get("temp_env")
-
-        self.u_value = kwargs.get("u_value")
 
         self.water_properties = {
             'heat_capacity': kwargs.get("heat_capacity"), 'density': kwargs.get("density")
