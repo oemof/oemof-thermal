@@ -224,8 +224,11 @@ If you do not want to use a rule of thumb and rather let the model decide, go wi
   )
 
 
-A 3rd option, investing into nominal_storage_capacity but leaving charging/discharging power fixed,
-can not be modelled at the moment.
+A 3rd and 4th option, investing into :py:attr:`nominal_storage_capacity` but leaving
+:py:attr:`capacity` fixed or vice versa, can not be modelled with this facade (at the moment).
+It seems to be a case that is not as relevant for thermal storages as the others. If you want to
+model it, you can do so by performing the necessary pre-calculations and using oemof.solph's
+:py:obj:`GenericStorage` directly.
 
 .. warning::
 
