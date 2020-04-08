@@ -251,8 +251,7 @@ class SolarThermalCollector(Transformer, Facade):       # todo: Solve naming con
         inflow = Source(    # todo: Adjust !
             label=self.label + "-inflow",
             outputs={
-                self: Flow(nominal_value=self.aperture_area,
-                           actual_value=self.collectors_heat,
+                self: Flow(                         actual_value=self.collectors_heat,
                            fixed=True)
             },
         )
