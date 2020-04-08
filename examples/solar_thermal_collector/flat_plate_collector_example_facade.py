@@ -105,24 +105,12 @@ consumer = solph.Sink(
 )
 
 # Create sink for collector excess heat.
-collector_excess_heat = solph.Sink(     # todo: Adjust
-    label='collector_excess_heat', inputs={bcol: solph.Flow()}
-)
-
-# Create collector transformer.
-collector = solph.Transformer(     # todo: Adjust
-    label='collector',
-    inputs={bcol: solph.Flow(), bel: solph.Flow()},
-    outputs={bth: solph.Flow()},
-    conversion_factors={
-        bcol: 1 - elec_consumption,
-        bel: elec_consumption,
-        bth: 1 - eta_losses,
-    },
+collector_excess_heat = solph.Sink(
+    label='collector_excess_heat', inputs={bth: solph.Flow()}
 )
 
 # Create heat storage.
-storage = solph.components.GenericStorage(     # todo: Adjust
+storage = solph.components.GenericStorage(
     label='storage',
     inputs={bth: solph.Flow()},
     outputs={bth: solph.Flow()},
