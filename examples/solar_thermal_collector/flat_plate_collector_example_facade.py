@@ -146,34 +146,20 @@ storage = solph.components.GenericStorage(     # todo: Adjust
     investment=solph.Investment(ep_costs=costs_storage),
 )
 
-date_time_index = pd.date_range(
-    '1/1/2003', periods=periods, freq='H', tz='Asia/Muscat'     # todo: Check why tz not 'Europe/Berlin'
-)
-
 energysystem = solph.EnergySystem(timeindex=date_time_index)
 
 energysystem.add(
     bth,
     bel,
+    collector,
     el_grid,
     backup,
-    collector_excess_heat,
     consumer,
+    collector_excess_heat,
     storage,
-    collector,
-    collector
 )
 
 model = solph.Model(energysystem)
 
 model.solve(solver='cbc', solve_kwargs={'tee': True})
 
-# filename = (path + '/lp_files/'
-#             + 'CSP_Test.lp')
-# model.write(filename, io_options={'symbolic_solver_labels': True})
-
-model.write('solar_thermal_collector_model_facades.lp', io_options={'symbolic_solver_labels': True})
-
-with open('solar_thermal_collector_model_facades.lp') as generated_file:
-    with open('solar_thermal_collector_model.lp') as expected_file:
-        compare_lp_files(generated_file, expected_file)
