@@ -11,12 +11,15 @@ complex classes. The idea is to be able to instantiate a `Facade` using keyword
 arguments, whose value are derived from simple, tabular data sources. Under the
 hood the `Facade` then uses these arguments to construct an `oemof` or
 `oemof.solph` component and sets it up to be easily used in an `EnergySystem`.
+
 **Note** The mathematical notation is as follows:
+
 * Optimization variables (endogenous) are denoted by :math:`x`
 * Optimization parameters (exogenous) are denoted by :math:`c`
 * The set of timesteps :math:`T` describes all timesteps of the optimization
   problem
-SPDX-License-Identifier:
+
+SPDX-License-Identifier: MIT
 """
 
 from collections import deque
