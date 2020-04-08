@@ -31,7 +31,7 @@ A simplified 2-zone-model of a stratified thermal energy storage.
 * We assume a cylindrical storage with of diameter d and height h,
   with two temperature regions that are perfectly separated.
 * The temperatures are assumed to be constant and correspond to
-  the feedin/return temperature of the heating system.
+  the feed-in/return temperature of the heating system.
 * Heat conductivity of the storage has to be passed as well as a timeseries
   for outside temperatures for the calculation of heat losses.
 * There is no distinction between outside temperature and ground temperature.
@@ -67,7 +67,7 @@ The three terms represent:
 * :math:`\gamma \cdot Q_N`, losses through the total lateral surface assuming the storage
   to be empty (storage is at :math:`T_{C}` and :math:`\Delta T_{C0}` is the driving
   temperature difference), depending on the height of the storage,
-* :math:`\beta \cdot Q_{t-1}`, additonal losses through lateral surface that
+* :math:`\beta \cdot Q_{t-1}`, additional losses through lateral surface that
   belong to the hot part of the water body, depending on the state of charge.
 
 
