@@ -187,13 +187,16 @@ Using the StratifiedThermalStorage facade, you can instantiate a storage like th
   )
 
 
-Storage investment is possible as well. There are two options:
+Storage investment is possible as well. To do so, you still need to provide :py:attr:`diameter`, but
+leave :py:attr:`height` and :py:attr:`capacity` open and set :py:attr:`expandable=True`.
 
+There are two options to choose from:
 
-1. Invest into :py:obj:`nominal_storage_capacity` and :py:obj:`capacity`
-   (charging/discharging power) with a fixed ratio.
-2. Invest into :py:obj:`nominal_storage_capacity` and :py:obj:`capacity` independently with no
-   fixed ratio.
+1. Invest into :py:attr:`nominal_storage_capacity` and :py:attr:`capacity`
+   (charging/discharging power) with a fixed ratio. Pass :py:attr:`invest_relation_input_capacity`
+   and either :py:attr:`storage_capacity_cost` or :py:attr:`capacity_cost`
+2. Invest into :py:attr:`nominal_storage_capacity` and :py:attr:`capacity` independently with no
+   fixed ratio. Pass :py:attr:`storage_capacity_cost` and :py:attr:`capacity_cost`
 
 In many practical cases, thermal storages are dimensioned using a rule of thumb: The storage should
 be able to provide its peak thermal power for 6-7 hours. To apply this in a model, use option 1.
@@ -205,7 +208,6 @@ If you do not want to use a rule of thumb and rather let the model decide, go wi
       label='thermal_storage',
       bus=bus_heat,
       diameter=2,
-      height=5,
       temp_h=95,
       temp_c=60,
       temp_env=10,
@@ -250,7 +252,8 @@ only a loss rate vs. the stratified thermal storage implementation
 Implicit calculations
 ^^^^^^^^^^^^^^^^^^^^^
 
-In the background, the StratifiedThermalStorage class uses the following functions.
+In the background, the StratifiedThermalStorage class uses the following functions. They can be used
+independent of the facade class as well.
 
 The thermal transmittance is pre-calculated using `calculate_u_value`.
 
