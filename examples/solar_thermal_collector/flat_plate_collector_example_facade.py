@@ -7,11 +7,7 @@ authors:
 SPDX-License-Identifier: GPL-3.0-or-later
 """
 import os
-import sys
 import pandas as pd
-
-from oemof import solph
-from oemof.tools import economics
 import oemof.outputlib as outputlib
 
 from oemof.thermal import facades
