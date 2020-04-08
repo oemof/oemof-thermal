@@ -10,7 +10,7 @@ min_storage_level,0.025,
 max_storage_level,0.975,
 maximum_heat_flow_charging,2,MW
 maximum_heat_flow_discharging,2,MW
-s_iso,0.05,m
+s_iso,50,mm
 lamb_iso,0.03,W/(m*K)
 alpha_inside,1,W/(m2*K)
 alpha_outside,1,W/(m2*K)
