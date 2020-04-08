@@ -60,7 +60,7 @@ data_precalc = csp_precalc(latitude, longitude,
 data_precalc['ES_load_actual_entsoe_power_statistics'] = list(
     dataframe['ES_load_actual_entsoe_power_statistics'].iloc[:periods])
 
-data_precalc.to_csv('results/results_precalc_csp_plant.csv')
+data_precalc.to_csv('results/results_csp_plant_precalc.csv')
 
 # regular oemof_system #
 
@@ -158,6 +158,7 @@ df = pd.merge(
     pd.merge(electricity_bus, thermal_bus, left_index=True, right_index=True),
     solar_bus, left_index=True, right_index=True)
 df.to_csv(results_path + 'csp_plant_results.csv')
+
 
 fig, ax = plt.subplots()
 ax.plot(list(range(periods)), thermal_bus[(('collector', 'thermal'), 'flow')])

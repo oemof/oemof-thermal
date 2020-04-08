@@ -80,7 +80,7 @@ def csp_precalc(lat, long, collector_tilt, collector_azimuth, cleanliness,
         Collectors outlet temperature.
 
     temp_amb: time indexed series
-        Ambient temperature time series
+        Ambient temperature time series.
 
     loss_method: string, default 'Janotte'
         Valid values are: 'Janotte' or 'Andasol'. Describes, how the thermal
@@ -91,8 +91,8 @@ def csp_precalc(lat, long, collector_tilt, collector_azimuth, cleanliness,
         horizontal direct irradiance or the direct normal irradiance is
         given and used for calculation.
 
-    irradiance: time indexed series
-        Irradiance for calculation. E_dir_hor or dni must be given.
+    E_dir_hor/dni (depending on irradiance_method): time indexed series
+        Irradiance for calculation.
 
     Returns
     -------
@@ -144,7 +144,10 @@ def csp_precalc(lat, long, collector_tilt, collector_azimuth, cleanliness,
         raise AttributeError(
             f"'{irradiance_required}' necessary for {irradiance_method} is not provided")
 
-    irradiance = (kwargs.get(irradiance_required))
+    irradiance = kwargs.get(irradiance_required)
+
+    if not temp_amb.index.equals(irradiance.index):
+        raise IndexError(f"Index of temp_amb and {irradiance_required} have to be the same.")
 
     # Creation of a df with 2 columns
     data = pd.DataFrame({'irradiance': irradiance,
@@ -380,6 +383,9 @@ def calc_eta_c(eta_0, c_1, c_2, iam,
 
 def calc_heat_coll(eta_c, collector_irradiance):
     r"""
+    .. csp_heat_equation:
+
+    :math:`\dot Q_{coll} = E_{coll} \cdot \eta_C`
 
     Parameters
     ----------

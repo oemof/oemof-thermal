@@ -17,10 +17,10 @@ _______
 
 A simplified 2-zone-model of a stratified thermal energy storage.
 
-.. 	figure:: _pics/stratified_thermal_storage.svg
+.. 	figure:: _pics/stratified_thermal_storage.png
    :width: 70 %
-   :alt: stratified_thermal_storage.svg
-   :align: left
+   :alt: stratified_thermal_storage.png
+   :align: center
 
    Fig. 1: Schematic of the simplified model of a stratified thermal storage with two
    perfectly separated bodies of water with temperatures :math:`T_H` and
@@ -240,7 +240,7 @@ only a loss rate vs. the stratified thermal storage implementation
 (`source code
 <https://github.com/oemof/oemof-thermal/tree/dev/examples/stratified_thermal_storage>`_).
 
-.. 	image:: _pics/compare_storage_models.svg
+.. 	image:: _pics/compare_storage_models.png
    :width: 100 %
-   :alt: compare_storage_models.svg
+   :alt: compare_storage_models.png
    :align: center

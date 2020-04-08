@@ -35,9 +35,9 @@ _____
             eta_th_ref=0.82
     )
 
-.. 	figure:: _pics/emission_allocation_methods.svg
+.. 	figure:: _pics/emission_allocation_methods.png
    :width: 70 %
-   :alt: emission_allocation_methods.svg
+   :alt: emission_allocation_methods.png
    :align: left
 
    Fig. 1: The above figure illustrates the allocation of emissions using the different allocation
