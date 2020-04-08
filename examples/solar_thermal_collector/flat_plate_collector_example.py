@@ -43,7 +43,7 @@ a_2 = 0.016
 temp_collector_inlet = 20
 delta_temp_n = 10
 
-input_data = pd.read_csv(data_path + 'data_flat_collector_2.csv').head(periods)
+input_data = pd.read_csv(data_path + 'data_flat_collector.csv').head(periods)
 print(input_data)
 input_data['hour'] = pd.to_datetime(input_data['hour'])
 input_data.set_index('hour', inplace=True)
