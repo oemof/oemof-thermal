@@ -332,7 +332,25 @@ class StratifiedThermalStorage(GenericStorage, Facade):
 
 
 class Collector(Transformer, Facade):
-    r""" Change the docstring
+    r""" Parabolic trough collector unit
+
+    Parameters
+    ----------
+    heat_bus: oemof.solph.Bus
+        An oemof bus instance in which absorbs the collectors heat.
+    electrical_bus: oemof.solph.Bus
+        An oemof bus instance which provides electrical energy to the collector.
+    electrical_consumption: numeric
+        Specifies how much electrical energy is used per provided thermal energy.
+    additional_losses: numeric
+        Specifies how much thermal energy is lost in peripheral parts like
+        pipes and pumps.
+    aperture_area: numeric
+        Specify the ares or size of the collector.
+
+    See the API of csp_precalc in oemof.thermal.concentrating_solar_power for
+    the other parameters.
+
     example:
     >>> from oemof import solph
     >>> from oemof.thermal.facades import Collector
