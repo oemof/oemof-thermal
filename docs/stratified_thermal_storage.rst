@@ -250,7 +250,9 @@ only a loss rate vs. the stratified thermal storage implementation
    :alt: compare_storage_models.png
    :align: center
 
-   Fig. 2: TODO: Add caption here.
+   Fig. 2: Example plot showing the difference between :py:obj:`StratifiedThermalStorages`
+   of different storage capacities and a simpler model with a single loss rate. The left panel
+   shows the loss of thermal energy over time. The right panel shows losses vs storage content.
 
 Implicit calculations
 ^^^^^^^^^^^^^^^^^^^^^
