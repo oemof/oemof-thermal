@@ -186,6 +186,8 @@ Using the StratifiedThermalStorage facade, you can instantiate a storage like th
       marginal_cost=0.0001
   )
 
+To learn about all parameters that can be passed to the facades, have a look at the
+:ref:`api reference for the facade module <api_label>`.
 
 Storage investment is possible as well. To do so, you still need to provide :py:attr:`diameter`, but
 leave :py:attr:`height` and :py:attr:`capacity` open and set :py:attr:`expandable=True`.
