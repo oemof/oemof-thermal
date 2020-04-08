@@ -74,11 +74,8 @@ conversion_storage = 0.98
 # Calculate global irradiance on the collector area
 # and collector efficiency depending on the temperature difference
 precalc_data = flat_plate_precalc(
-    dataframe,
-    periods,
     latitude,
     longitude,
-    timezone,
     collector_tilt,
     collector_azimuth,
     eta_0,
@@ -86,10 +83,9 @@ precalc_data = flat_plate_precalc(
     a_2,
     temp_collector_inlet,
     delta_temp_n,
-    date_col='hour',
-    irradiance_global_col='global_horizontal_W_m2',
-    irradiance_diffuse_col='diffuse_horizontal_W_m2',
-    temp_amb_col='temp_amb',
+    irradiance_global=input_data['global_horizontal_W_m2'],
+    irradiance_diffuse=input_data['diffuse_horizontal_W_m2'],
+    temp_amb=input_data['temp_amb'],
 )
 
 precalc_data.to_csv(

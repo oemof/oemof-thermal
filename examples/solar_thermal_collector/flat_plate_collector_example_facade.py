@@ -26,18 +26,15 @@ if not os.path.exists(results_path):
         os.mkdir(results_path)
 
 
-# DATA AND PARAMETERS
-######################################################################
-# Define parameters for the precalculation
+# Set up an energy system model
 periods = 48
 latitude = 52.2443
 longitude = 10.5594
-timezone = 'Europe/Berlin'
 collector_tilt = 10
 collector_azimuth = 20
-eta_0 = 0.73
 a_1 = 1.7
 a_2 = 0.016
+eta_0 = 0.73
 temp_collector_inlet = 20
 delta_temp_n = 10
 
@@ -65,42 +62,31 @@ costs_storage = economics.annuity(20, 20, 0.06)
 costs_electricity = 1000
 storage_loss_rate = 0.001
 conversion_storage = 0.98
-######################################################################
 
-
-######################################################################
-
-# COMPONENT
-######################################################################
 # busses
 bth = solph.Bus(label='thermal')
 bel = solph.Bus(label='electricity')
 
-collector = facades.Collector(
+collector = facades.SolarThermalCollector(
     label='solar_collector',
     output_bus=bth,
     electrical_bus=bel,
-    dataframe=dataframe,
     periods=periods,
     electrical_consumption=elec_consumption,
     peripheral_losses=eta_losses,
-    irradiance_method='horizontal',
     latitude=latitude,
     longitude=longitude,
     collector_tilt=collector_tilt,
     collector_azimuth=collector_azimuth,
+    eta_0=eta_0,
     a_1=a_1,
     a_2=a_2,
-    eta_0=eta_0,
     temp_collector_inlet=temp_collector_inlet,
     delta_temp_n=delta_temp_n,
-    temp_amb=dataframe['temp_amb'],
-    date_col='hour',
-    irradiance_global_col='global_horizontal_W_m2',
-    irradiance_diffuse_col='diffuse_horizontal_W_m2',
-    temp_amb_col='temp_amb',
+    irradiance_global=input_data['global_horizontal_W_m2'],
+    irradiance_diffuse=input_data['diffuse_horizontal_W_m2'],
+    temp_amb=input_data['temp_amb'],
     )
-
 
 # Create source for electricity grid.
 el_grid = solph.Source(

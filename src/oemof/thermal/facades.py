@@ -181,64 +181,41 @@ class Collector(Transformer, Facade):       # todo: Solve naming conflict (cf. c
 
         self.electrical_bus = kwargs.get("electrical_bus")
 
-        self.dataframe = kwargs.get("dataframe")
-
         self.periods = kwargs.get("periods")
 
         self.electrical_consumption = kwargs.get("electrical_consumption")
 
-        self.peripheral_losses = kwargs.get("peripheral_losses")
-
-        #self.aperture_area = kwargs.get("aperture_area") # todo: Check if can be deleted
+        self.peripheral_losses = kwargs.get("peripheral_losses") # todo: Check if can be deleted
 
         self.latitude = kwargs.get("latitude")
 
         self.longitude = kwargs.get("longitude")
 
-        self.timezone = kwargs.get('timezone')
-
         self.collector_tilt = kwargs.get("collector_tilt")
 
         self.collector_azimuth = kwargs.get("collector_azimuth")
-
-        self.eta_0 = kwargs.get("eta_0")
 
         self.a_1 = kwargs.get("a_1")
 
         self.a_2 = kwargs.get("a_2")
 
-        self.delta_temp_n = kwargs.get("delta_temp_n")
-
-        self.date_col = kwargs.get("date_col")
-
-        self.irradiance_global_col = kwargs.get("irradiance_global_col")
-
-        self.irradiance_diffuse_col = kwargs.get("irradiance_diffuse_col")
-
-        self.temp_amb_col = kwargs.get("temp_amb_col")
-
-        #self.c_1 = kwargs.get("c_1") # todo: Check if can be deleted
-
-        #self.c_2 = kwargs.get("c_2") # todo: Check if can be deleted
+        self.eta_0 = kwargs.get("eta_0")
 
         self.temp_collector_inlet = kwargs.get("temp_collector_inlet")
 
-        #self.temp_collector_outlet = kwargs.get("temp_collector_outlet") # todo: Check if can be deleted
+        self.delta_temp_n = kwargs.get("delta_temp_n")
 
-        self.temp_amb = kwargs.get("temp_amb")     # todo: Check if argument is needed
+        self.irradiance_global = kwargs.get("irradiance_global")
 
-        #self.loss_method = kwargs.get("loss_method") # todo: Check if can be deleted
+        self.irradiance_diffuse = kwargs.get("irradiance_diffuse")
 
-        #self.irradiance_method = kwargs.get("irradiance_method") # todo: Check if can be deleted
+        self.temp_amb = kwargs.get("temp_amb")
 
         self.expandable = bool(kwargs.get("expandable", False))
 
-        eta_c = flat_plate_precalc(
-            self.dataframe,
-            self.periods,
+        data = flat_plate_precalc(
             self.latitude,
             self.longitude,
-            self.timezone,
             self.collector_tilt,
             self.collector_azimuth,
             self.eta_0,
@@ -246,13 +223,14 @@ class Collector(Transformer, Facade):       # todo: Solve naming conflict (cf. c
             self.a_2,
             self.temp_collector_inlet,
             self.delta_temp_n,
-            self.date_col,
-            self.irradiance_global_col,
-            self.irradiance_diffuse_col,
-            self.temp_amb_col,
+            self.irradiance_global,
+            self.irradiance_diffuse,
+            self.temp_amb,
         )
 
-        self.collectors_eta_c = eta_c
+        self.collectors_eta_c = data['eta_c']
+
+        self.collectors_heat = data['collectors_heat']
 
         self.build_solph_components()
 

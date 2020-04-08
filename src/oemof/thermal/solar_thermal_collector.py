@@ -17,11 +17,8 @@ import pandas as pd
 
 
 def flat_plate_precalc(
-    df,
-    periods,
     lat,
     long,
-    tz,
     collector_tilt,
     collector_azimuth,
     eta_0,
@@ -29,10 +26,9 @@ def flat_plate_precalc(
     a_2,
     temp_collector_inlet,
     delta_temp_n,
-    date_col='date',
-    irradiance_global_col='ghi',
-    irradiance_diffuse_col='dhi',
-    temp_amb_col='temp_amb',
+    irradiance_global,
+    irradiance_diffuse,
+    temp_amb
 ):
     r"""
     Calculates collectors heat, efficiency and irradiance
@@ -85,24 +81,25 @@ def flat_plate_precalc(
 
     """
 
-    date_time_index = pd.date_range(
-        df.loc[0, date_col], periods=periods, freq='H', tz=tz
-    )
-    datainput = df.iloc[:periods]
-
+    # Creation of a df with 3 columns
     data = pd.DataFrame(
         {
-            'date': date_time_index,
-            'ghi': datainput[irradiance_global_col],
-            'dhi': datainput[irradiance_diffuse_col],
-            'temp_amb': datainput[temp_amb_col],
+            'ghi': irradiance_global,
+            'dhi': irradiance_diffuse,
+            'temp_amb': temp_amb
         }
     )
 
-    data.set_index('date', inplace=True)
+    # date_time_index = pd.date_range(
+    #     df.loc[0, date_col], periods=periods, freq='H', tz=tz
+    # )
+    # datainput = df.iloc[:periods]
 
+    # data.set_index('date', inplace=True)
+
+    # Calculation of geometrical position of collector with the pvlib
     solposition = pvlib.solarposition.get_solarposition(
-        time=date_time_index, latitude=lat, longitude=long
+        time=data.index, latitude=lat, longitude=long
     )
 
     dni = pvlib.irradiance.dni(
