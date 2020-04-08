@@ -27,19 +27,10 @@ u_value = calculate_storage_u_value(
     input_data['alpha_inside'],
     input_data['alpha_outside'])
 
-min_storage_level = 0.025
-max_storage_level = 0.975
-maximum_heat_flow_charging = 2
-maximum_heat_flow_discharging = 2
-
 
 def print_parameters():
     parameter = {
         'U-value [W/(m2*K)]': u_value,
-        'Max. heat flow charging [MW]': maximum_heat_flow_charging,
-        'Max. heat flow discharging [MW]': maximum_heat_flow_discharging,
-        'Max storage level [-]': max_storage_level,
-        'Min storage_level [-]': min_storage_level,
     }
 
     dash = '-' * 50
@@ -100,9 +91,9 @@ thermal_storage = facades.StratifiedThermalStorage(
     temp_c=input_data['temp_c'],
     temp_env=input_data['temp_env'],
     u_value=u_value,
-    min_storage_level=min_storage_level,
-    max_storage_level=max_storage_level,
-    capacity=maximum_heat_flow_charging,
+    min_storage_level=input_data['min_storage_level'],
+    max_storage_level=input_data['max_storage_level'],
+    capacity=input_data['maximum_heat_flow_charging'],
     efficiency=1,
     marginal_cost=0.0001
 )

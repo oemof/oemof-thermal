@@ -41,11 +41,10 @@ volume, surface = calculate_storage_dimensions(
     input_data['diameter']
 )
 
-nominal_storage_capacity, max_storage_level, min_storage_level = calculate_capacities(
+nominal_storage_capacity = calculate_capacities(
     volume,
     input_data['temp_h'],
-    input_data['temp_c'],
-    input_data['nonusable_storage_volume'])
+    input_data['temp_c'])
 
 loss_rate, fixed_losses_relative, fixed_losses_absolute = calculate_losses(
     u_value,
@@ -66,8 +65,6 @@ def print_parameters():
         'Nominal storage capacity [MWh]': nominal_storage_capacity,
         'Max. heat flow charging [MW]': maximum_heat_flow_charging,
         'Max. heat flow discharging [MW]': maximum_heat_flow_discharging,
-        'Max storage level [-]': max_storage_level,
-        'Min storage_level [-]': min_storage_level,
         'Loss rate [-]': loss_rate,
         'Fixed relative losses [-]': fixed_losses_relative,
         'Fixed absolute losses [MWh]': fixed_losses_absolute,
@@ -131,8 +128,8 @@ thermal_storage = GenericStorage(
         variable_costs=0.0001
     )},
     nominal_storage_capacity=nominal_storage_capacity,
-    min_storage_level=min_storage_level,
-    max_storage_level=max_storage_level,
+    min_storage_level=input_data['min_storage_level'],
+    max_storage_level=input_data['max_storage_level'],
     loss_rate=loss_rate,
     fixed_losses_relative=fixed_losses_relative,
     fixed_losses_absolute=fixed_losses_absolute,

@@ -39,18 +39,11 @@ loss_rate, fixed_losses_relative, fixed_losses_absolute = calculate_losses(
     input_data['temp_c'],
     input_data['temp_env'])
 
-maximum_heat_flow_charging = 0.9
-maximum_heat_flow_discharging = 0.9
-max_storage_level = 0.975
-min_storage_level = 0.025
-
 
 def print_parameters():
     parameter = {
         'EQ-cost [Eur/]': 0,
         'U-value [W/(m2*K)]': u_value,
-        'Max. heat flow charging [MW]': maximum_heat_flow_charging,
-        'Max. heat flow discharging [MW]': maximum_heat_flow_discharging,
         'Loss rate [-]': loss_rate,
         'Fixed relative losses [-]': fixed_losses_relative,
         'Fixed absolute losses [MWh]': fixed_losses_absolute,
@@ -112,8 +105,8 @@ thermal_storage = GenericStorage(
     outputs={bus_heat: Flow(
         investment=Investment(),
         variable_costs=0.0001)},
-    min_storage_level=min_storage_level,
-    max_storage_level=max_storage_level,
+    min_storage_level=input_data['min_storage_level'],
+    max_storage_level=input_data['max_storage_level'],
     loss_rate=loss_rate,
     fixed_losses_relative=fixed_losses_relative,
     fixed_losses_absolute=fixed_losses_absolute,

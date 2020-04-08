@@ -6,7 +6,10 @@ temp_c,60,degC
 temp_env,10,degC
 inflow_conversion_factor,0.9,
 outflow_conversion_factor,0.9,
-nonusable_storage_volume,0.05,
+min_storage_level,0.025,
+max_storage_level,0.975,
+maximum_heat_flow_charging,2,MW
+maximum_heat_flow_discharging,2,MW
 s_iso,0.05,m
 lamb_iso,0.03,W/(m*K)
 alpha_inside,1,W/(m2*K)

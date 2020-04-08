@@ -303,9 +303,8 @@ class StratifiedThermalStorage(GenericStorage, Facade):
                 self.volume,
                 self.temp_h,
                 self.temp_c,
-                0,
                 **{key: value for key, value in self.water_properties.items() if value is not None}
-            )[0]
+            )
 
             fi = Flow(
                 nominal_value=self._nominal_value(), **self.input_parameters

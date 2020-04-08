@@ -221,13 +221,10 @@ def test_calculate_capacities():
         'volume': 1000,  # m3
         'temp_h': 100,  # deg C
         'temp_c': 50,  # deg C
-        'nonusable_storage_volume': 0.1,  # dimensionless
     }
 
-    nominal_storage_capacity, max_storage_level, min_storage_level = calculate_capacities(**params)
-    assert nominal_storage_capacity == 56.62804059111111\
-        and max_storage_level == 0.95\
-        and min_storage_level == 0.05
+    nominal_storage_capacity = calculate_capacities(**params)
+    assert nominal_storage_capacity == 56.62804059111111
 
 
 def test_calculate_losses():
