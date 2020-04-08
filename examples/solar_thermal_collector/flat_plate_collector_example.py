@@ -158,7 +158,7 @@ storage = solph.components.GenericStorage(
 )
 
 date_time_index = pd.date_range(
-    '1/1/2003', periods=periods, freq='H', tz='Asia/Muscat'
+    '1/1/2003', periods=periods, freq='H', tz='Europe/Berlin'
 )
 
 energysystem = solph.EnergySystem(timeindex=date_time_index)
