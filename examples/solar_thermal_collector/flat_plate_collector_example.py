@@ -17,6 +17,17 @@ from oemof.thermal.solar_thermal_collector import flat_plate_precalc
 from plots import plot_collector_heat
 
 
+# set paths
+base_path = os.path.dirname(os.path.abspath(os.path.join(__file__)))
+
+results_path = os.path.join(base_path, 'results/')
+lp_path = os.path.join(base_path, 'lp_files/')
+data_path = os.path.join(base_path, 'data/')
+
+if not os.path.exists(results_path):
+        os.mkdir(results_path)
+
+
 # DATA AND PARAMETERS
 ######################################################################
 # Define parameters for the precalculation
@@ -32,19 +43,13 @@ a_2 = 0.016
 temp_collector_inlet = 20
 delta_temp_n = 10
 
-# Set results path
-base_path = os.path.dirname(os.path.abspath(os.path.join(__file__)))
+input_data = pd.read_csv(data_path + 'data_flat_collector_2.csv').head(periods)
+print(input_data)
+input_data['hour'] = pd.to_datetime(input_data['hour'])
+input_data.set_index('hour', inplace=True)
+input_data.index = input_data.index.tz_localize(tz='Europe/Berlin')
 
-results_path = os.path.join(base_path, 'results')
-
-if not os.path.exists(results_path):
-    os.mkdir(results_path)
-
-# Read data for flat collector and heat demand
-dataframe = pd.read_csv(
-    os.path.join(base_path, 'data', 'data_flat_collector.csv'),
-    sep=';',
-)
+date_time_index = input_data.index
 
 # Read demand time series from csv file
 demand_df = pd.read_csv(
@@ -180,10 +185,6 @@ model = solph.Model(energysystem)
 model.solve(solver='cbc', solve_kwargs={'tee': True})
 
 model.write('solar_thermal_collector_model.lp', io_options={'symbolic_solver_labels': True})
-
-# filename = (path + '/lp_files/'
-#             + 'CSP_Test.lp')
-# model.write(filename, io_options={'symbolic_solver_labels': True})
 
 energysystem.results['main'] = outputlib.processing.results(model)
 energysystem.results['meta'] = outputlib.processing.meta_results(model)

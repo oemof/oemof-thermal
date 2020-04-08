@@ -16,10 +16,18 @@ import oemof.outputlib as outputlib
 
 from oemof.thermal import facades
 from oemof import solph
+from oemof.tools import economics
 
-# import functions to compare lp-files of new example with old one.
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'tests')))
-from test_constraints import compare_lp_files  # noqa
+
+# set paths
+base_path = os.path.dirname(os.path.abspath(os.path.join(__file__)))
+
+results_path = os.path.join(base_path, 'results/')
+lp_path = os.path.join(base_path, 'lp_files/')
+data_path = os.path.join(base_path, 'data/')
+
+if not os.path.exists(results_path):
+        os.mkdir(results_path)
 
 
 # DATA AND PARAMETERS
@@ -37,19 +45,13 @@ a_2 = 0.016
 temp_collector_inlet = 20
 delta_temp_n = 10
 
-# Set results path
-base_path = os.path.dirname(os.path.abspath(os.path.join(__file__)))
+input_data = pd.read_csv(data_path + 'data_flat_collector_2.csv').head(periods)
+print(input_data)
+input_data['hour'] = pd.to_datetime(input_data['hour'])
+input_data.set_index('hour', inplace=True)
+input_data.index = input_data.index.tz_localize(tz='Europe/Berlin')
 
-results_path = os.path.join(base_path, 'results')
-
-if not os.path.exists(results_path):
-    os.mkdir(results_path)
-
-# Read data for flat collector and heat demand
-dataframe = pd.read_csv(
-    os.path.join(base_path, 'data', 'data_flat_collector.csv'),
-    sep=';',
-)
+date_time_index = input_data.index
 
 # Read demand time series from csv file
 demand_df = pd.read_csv(
