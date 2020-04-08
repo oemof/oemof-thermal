@@ -25,7 +25,7 @@ install:
 script:
   - flake8
   - pylint */*.py
-  - pytest --cov=src/oemof/thermal
+  - pytest --cov=src/oemof/thermal tests/
 #jobs:
 #  include:
 #    - stage: "Tests"                # naming the Tests stage
