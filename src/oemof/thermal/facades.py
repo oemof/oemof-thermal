@@ -123,15 +123,15 @@ class Facade(Node):
         self.build_solph_components()
 
 
-class Collector(Transformer, Facade):       # todo: Solve naming conflict (cf. csp)
+class SolarThermalCollector(Transformer, Facade):       # todo: Solve naming conflict (cf. csp)
     r""" Solar thermal collector unit
     Examples:
     ----------
     >>> from oemof import solph
-    >>> from oemof.thermal.facades import Collector
+    >>> from oemof.thermal.facades import SolarThermalCollector
     >>> bth = solph.Bus(label='thermal_bus')
     >>> bel = solph.Bus(label='electrical_bus')
-    >>> collector = Collector(
+    >>> collector = SolarThermalCollector(
     ...     label='solar_collector',
     ...     output_bus=bth, #*
     ...     electrical_bus=bel, #*
