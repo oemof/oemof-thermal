@@ -9,12 +9,12 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="478.57916"
-   height="321.34943"
-   viewBox="0 0 126.62406 85.023702"
+   width="113.39491mm"
+   height="71.79454mm"
+   viewBox="0 0 113.3949 71.794543"
    version="1.1"
    id="svg8"
-   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   inkscape:version="0.92.2 5c3e80d, 2017-08-06"
    sodipodi:docname="solar_thermal_collector.svg">
   <defs
      id="defs2">
@@ -298,31 +298,30 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.5"
-     inkscape:cx="545.94197"
-     inkscape:cy="170.48993"
+     inkscape:zoom="1.4"
+     inkscape:cx="47.067497"
+     inkscape:cy="163.85326"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1920"
-     inkscape:window-height="1031"
+     inkscape:window-width="1439"
+     inkscape:window-height="803"
      inkscape:window-x="0"
-     inkscape:window-y="25"
-     inkscape:window-maximized="1"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
      showguides="false"
      inkscape:measure-start="370,425"
      inkscape:measure-end="0,0"
      inkscape:snap-global="false"
-     fit-margin-top="25"
-     fit-margin-left="25"
-     fit-margin-right="25"
-     fit-margin-bottom="25"
-     units="px">
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0">
     <inkscape:grid
        type="xygrid"
        id="grid997"
-       originx="-8.0033704"
-       originy="-38.878787" />
+       originx="-14.617959"
+       originy="-45.493363" />
   </sodipodi:namedview>
   <metadata
      id="metadata5">
@@ -332,7 +331,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -340,7 +339,7 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-44.003377,-54.000325)">
+     transform="translate(-50.61796,-60.614909)">
     <path
        style="fill:none;stroke:#f6d30c;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker9821)"
        d="M 72.382351,60.774936 99.539864,93.370373"
@@ -359,6 +358,11 @@
        id="path5659-9-4-5"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M -23245566,-20.073964 H 23245506"
+       id="path10139"
+       inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:#575757;stroke-width:0.40000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker10866)"
        d="m 109.26588,106.97657 c 2.24265,-3.16005 4.48495,-6.31962 5.19953,-5.0764 0.71459,1.24321 -0.0982,6.88866 1.17642,7.20563 1.27461,0.31697 4.63595,-4.6945 5.87853,-4.30016 1.24258,0.39433 0.36627,6.19573 1.62772,6.71113 1.26146,0.51541 4.65994,-4.25448 5.83807,-4.09025 1.17814,0.16423 0.13561,5.26457 0.51163,6.81052 0.37603,1.54596 2.17006,-0.46088 4.15959,-1.00631 1.98953,-0.54543 4.17318,0.36976 6.35764,1.28529"
@@ -603,5 +607,17 @@
          x="64.020233"
          y="101.07912"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444447px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#575757;fill-opacity:1;stroke-width:0.26458332">opt</tspan></text>
+    <circle
+       style="opacity:0.98999999;fill:#575757;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.84439409;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:0.99406529"
+       id="path997"
+       cx="143.49831"
+       cy="106.81408"
+       r="0.67500001" />
+    <circle
+       style="opacity:0.98999999;fill:#575757;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.00272381;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:0.99406529"
+       id="path999"
+       cx="60.870564"
+       cy="85.4459"
+       r="0.67500001" />
   </g>
 </svg>
