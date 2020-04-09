@@ -94,6 +94,51 @@ must hold columns for a date, the ambient temperature and the irradiance. Some o
 parameters which have to be provided for the precalculation define the column names
 of the dataframe.
 
+SolarThermalCollector facade
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Using the StratifiedThermalStorage facade, you can instantiate a solar thermal collector like this:
+
+.. code-block:: python
+
+    from oemof import solph
+    from oemof.thermal.facades import SolarThermalCollector
+    bth = solph.Bus(label='heat_out_bus')
+    bel = solph.Bus(label='electricity_in_bus')
+    collector = SolarThermalCollector(
+        label='solar_collector',
+        heat_out_bus=bth,
+        electricity_in_bus=bel,
+        electrical_consumption=0.02,
+        peripheral_losses=0.05,
+    	dataframe=pd.read_csv(
+    	os.path.join(base_path, 'data', 'data_flat_collector.csv'),
+    	sep=';',
+    	), # todo How to implement the dataframe here??
+    	aperture_area=1000,
+    	latitude=52.2443,
+    	longitude=10.5594,
+    	timezone='Europe/Berlin',
+    	collector_tilt=10,
+    	collector_azimuth=20,
+    	eta_0=0.73,
+    	a_1=1.7,
+    	a_2=0.016,
+    	temp_collector_inlet=20,
+    	delta_temp_n=10,
+    	irradiance_global='global_horizontal_W_m2',
+    	irradiance_diffuse='diffuse_horizontal_W_m2',
+    	temp_amb_col='temp_amb',
+    )
+
+
+To learn about all parameters that can be passed to the facades, have a look at the
+:ref:`api reference for the facade module <api_label>`.
+
+
+Solar thermal collector calculations
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 .. code-block:: python
 
     precalc_data = flat_plate_precalc(
