@@ -211,6 +211,8 @@ class SolarThermalCollector(Transformer, Facade):       # todo: Solve naming con
 
         self.temp_amb = kwargs.get("temp_amb")
 
+        self.expandable = bool(kwargs.get("expandable", False))
+
         data = flat_plate_precalc(
             self.latitude,
             self.longitude,
@@ -243,7 +245,7 @@ class SolarThermalCollector(Transformer, Facade):       # todo: Solve naming con
 
         if self.expandable:
             raise NotImplementedError(
-                "Investment for reservoir class is not implemented."
+                "Investment for solar thermal collector facade has not been implemented yet."
             )
 
         inflow = Source(
