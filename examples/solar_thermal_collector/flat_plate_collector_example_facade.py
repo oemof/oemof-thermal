@@ -62,6 +62,7 @@ costs_storage = economics.annuity(20, 20, 0.06)
 costs_electricity = 1000
 storage_loss_rate = 0.001
 conversion_storage = 0.98
+size_collector = 1000 # m2
 
 # busses
 bth = solph.Bus(label='thermal')
@@ -71,9 +72,9 @@ collector = facades.SolarThermalCollector(
     label='solar_collector',
     output_bus=bth,
     electrical_bus=bel,
-    periods=periods,
     electrical_consumption=elec_consumption,
     peripheral_losses=eta_losses,
+    aperture_area=size_collector,
     latitude=latitude,
     longitude=longitude,
     collector_tilt=collector_tilt,

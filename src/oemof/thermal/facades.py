@@ -246,10 +246,11 @@ class SolarThermalCollector(Transformer, Facade):       # todo: Solve naming con
                 "Investment for reservoir class is not implemented."
             )
 
-        inflow = Source(    # todo: Adjust !
+        inflow = Source(
             label=self.label + "-inflow",
             outputs={
-                self: Flow(                         actual_value=self.collectors_heat,
+                self: Flow(nominal_value=self.aperture_area,
+                           actual_value=self.collectors_heat,
                            fixed=True)
             },
         )
