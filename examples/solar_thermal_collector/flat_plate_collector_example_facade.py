@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
-"""Solar thermal collectors
+"""
+Example to show the functionality of the solar thermal collector with a fixed collector size (aperture area) using the facade.
 
-authors:
+authors: Franziska Pleissner, Caroline Möller, Marie-Claire Gering
 
 SPDX-License-Identifier: GPL-3.0-or-later
 """
@@ -17,16 +18,12 @@ from oemof.tools import economics
 
 # set paths
 base_path = os.path.dirname(os.path.abspath(os.path.join(__file__)))
-
-results_path = os.path.join(base_path, 'results/')
-lp_path = os.path.join(base_path, 'lp_files/')
 data_path = os.path.join(base_path, 'data/')
-
+results_path = os.path.join(base_path, 'results/')
 if not os.path.exists(results_path):
         os.mkdir(results_path)
 
-
-# Set up an energy system model
+# parameters
 periods = 48
 latitude = 52.2443
 longitude = 10.5594
@@ -38,22 +35,6 @@ eta_0 = 0.73
 temp_collector_inlet = 20
 delta_temp_n = 10
 
-input_data = pd.read_csv(data_path + 'data_flat_collector.csv').head(periods)
-print(input_data)
-input_data['hour'] = pd.to_datetime(input_data['hour'])
-input_data.set_index('hour', inplace=True)
-input_data.index = input_data.index.tz_localize(tz='Europe/Berlin')
-
-date_time_index = input_data.index
-
-# Read demand time series from csv file
-demand_df = pd.read_csv(
-    os.path.join(base_path, 'data', 'heat_demand.csv'),
-    sep=','
-)
-demand = list(demand_df['heat_demand'].iloc[:periods])
-
-# Define parameters for the energy system
 eta_losses = 0.05
 elec_consumption = 0.02
 backup_costs = 40
@@ -64,10 +45,26 @@ storage_loss_rate = 0.001
 conversion_storage = 0.98
 size_collector = 1000 # m2
 
+# input data
+input_data = pd.read_csv(data_path + 'data_flat_collector.csv').head(periods)
+input_data['hour'] = pd.to_datetime(input_data['hour'])
+input_data.set_index('hour', inplace=True)
+input_data.index = input_data.index.tz_localize(tz='Europe/Berlin')
+
+demand_df = pd.read_csv(
+    os.path.join(base_path, 'data', 'heat_demand.csv'),
+    sep=','
+)
+demand = list(demand_df['heat_demand'].iloc[:periods])
+
+
+# Set up an energy system model #
+
 # busses
 bth = solph.Bus(label='thermal')
 bel = solph.Bus(label='electricity')
 
+# collector
 collector = facades.SolarThermalCollector(
     label='solar_collector',
     output_bus=bth,
@@ -89,28 +86,25 @@ collector = facades.SolarThermalCollector(
     temp_amb=input_data['temp_amb'],
     )
 
-# Create source for electricity grid.
+# sources and sinks
 el_grid = solph.Source(
     label='grid', outputs={bel: solph.Flow(variable_costs=costs_electricity)}
 )
 
-# Create source for backup heat supply.
 backup = solph.Source(
     label='backup', outputs={bth: solph.Flow(variable_costs=backup_costs)}
 )
 
-# Create sink for heat demand.
 consumer = solph.Sink(
     label='demand',
     inputs={bth: solph.Flow(fixed=True, actual_value=demand, nominal_value=1)},
 )
 
-# Create sink for collector excess heat.
 collector_excess_heat = solph.Sink(
     label='collector_excess_heat', inputs={bth: solph.Flow()}
 )
 
-# Create heat storage.
+# storage
 storage = solph.components.GenericStorage(
     label='storage',
     inputs={bth: solph.Flow()},
@@ -121,6 +115,8 @@ storage = solph.components.GenericStorage(
     investment=solph.Investment(ep_costs=costs_storage),
 )
 
+# build the system and solve the problem
+date_time_index = input_data.index
 energysystem = solph.EnergySystem(timeindex=date_time_index)
 
 energysystem.add(
@@ -134,7 +130,7 @@ energysystem.add(
     storage,
 )
 
+# create and solve the optimization model
 model = solph.Model(energysystem)
-
 model.solve(solver='cbc', solve_kwargs={'tee': True})
 
