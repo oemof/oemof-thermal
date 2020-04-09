@@ -181,11 +181,11 @@ class SolarThermalCollector(Transformer, Facade):       # todo: Solve naming con
 
         self.electrical_bus = kwargs.get("electrical_bus")
 
-        self.periods = kwargs.get("periods")
-
         self.electrical_consumption = kwargs.get("electrical_consumption")
 
-        self.peripheral_losses = kwargs.get("peripheral_losses") # todo: Check if can be deleted
+        self.peripheral_losses = kwargs.get("peripheral_losses")
+
+        self.aperture_area = kwargs.get("aperture_area")
 
         self.latitude = kwargs.get("latitude")
 
@@ -195,11 +195,11 @@ class SolarThermalCollector(Transformer, Facade):       # todo: Solve naming con
 
         self.collector_azimuth = kwargs.get("collector_azimuth")
 
+        self.eta_0 = kwargs.get("eta_0")
+
         self.a_1 = kwargs.get("a_1")
 
         self.a_2 = kwargs.get("a_2")
-
-        self.eta_0 = kwargs.get("eta_0")
 
         self.temp_collector_inlet = kwargs.get("temp_collector_inlet")
 
@@ -210,8 +210,6 @@ class SolarThermalCollector(Transformer, Facade):       # todo: Solve naming con
         self.irradiance_diffuse = kwargs.get("irradiance_diffuse")
 
         self.temp_amb = kwargs.get("temp_amb")
-
-        self.expandable = bool(kwargs.get("expandable", False))
 
         data = flat_plate_precalc(
             self.latitude,
