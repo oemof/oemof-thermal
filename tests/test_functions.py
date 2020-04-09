@@ -379,14 +379,8 @@ def test_eta_andasol():
 
 def test_flat_plate_precalc():
     params = {
-        'df': pd.DataFrame(data={'hour': [1, 2],
-                                 'ghi': [112, 129],
-                                 'dhi': [100.3921648, 93.95959036],
-                                 'temp_amb': [9, 10]}),
-        'periods': 2,
         'lat': 52.2443,
         'long': 10.5594,
-        'tz': 'Europe/Berlin',
         'collector_tilt': 10,
         'collector_azimuth': 20,
         'eta_0': 0.73,
@@ -394,7 +388,9 @@ def test_flat_plate_precalc():
         'a_2': 0.016,
         'temp_collector_inlet': 20,
         'delta_temp_n': 10,
-        'date_col': 'hour'
+        'irradiance_global': [112, 129],
+        'irradiance_diffuse': [100.3921648, 93.95959036],
+        'temp_amb': [9, 10]
     }
     # Save return value from flat_plate_precalc(...) as data
     data = flat_plate_precalc(**params)
