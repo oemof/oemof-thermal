@@ -51,7 +51,7 @@ to get the collectors heat.
      :start-after:  flat_plate_precalc_equation:
      :end-before: Parameters
 
-The three values :math:`Q_{coll}`, :math:`\eta_C` and :math:`E_{coll}` are returned in a dataframe.
+The three values :math:`\dot Q_{coll}`, :math:`\eta_C` and :math:`E_{coll}` are returned in a dataframe.
 Losses, which occur after the heat absorption in the collector (e.g. losses in pipes)
 have to be taken into account in the component, which uses the precalculation
 (see the example).
@@ -85,7 +85,7 @@ These arguments are used in the formulas of the function:
 
     :math:`\eta_0`            :py:obj:`eta_0`                  Optical efficiency of the collector
 
-    :math:`Q_{coll}`          :py:obj:`collector_heat`         Collectors heat
+    :math:`\dot Q_{coll}`          :py:obj:`collector_heat`         Collectors heat
 
     ========================= ================================ ====================================
 
