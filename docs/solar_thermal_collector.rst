@@ -30,9 +30,9 @@ The precalculations for the solar thermal collector calculate the heat of the so
 collector based on global and diffuse horizontal irradiance and information about
 the collector and the location. The following scheme shows the calculation procedure.
 
-.. image:: _pics/solarcollector_scheme.png
-    :width: 100 %
-    :alt: solarcollector_scheme.png
+.. image:: _pics/solar_thermal_collector.png
+    :width: 80 %
+    :alt: solar_thermal_collector.png
     :align: center
 
 The processing of the irradiance data is done by the pvlib, which calculates the total
