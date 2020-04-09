@@ -146,7 +146,7 @@ class TestConstraints:
 
         self.compare_to_reference_lp('stratified_thermal_storage.lp')
 
-    # @pytest.mark.skip(reason="Relies on not yet released oemof v3.3")
+    @pytest.mark.skip(reason="Relies on not yet released oemof v3.3")
     def test_stratified_thermal_storage_invest_option_1_facade(self):
         """
         Constraint test of a StratifiedThermalStorage with investment.
