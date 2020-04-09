@@ -202,7 +202,6 @@ There are two options to choose from:
 
 In many practical cases, thermal storages are dimensioned using a rule of thumb: The storage should
 be able to provide its peak thermal power for 6-7 hours. To apply this in a model, use option 1.
-If you do not want to use a rule of thumb and rather let the model decide, go with option 2.
 
 .. code-block:: python
 
@@ -225,6 +224,9 @@ If you do not want to use a rule of thumb and rather let the model decide, go wi
       marginal_cost=0.0001
   )
 
+If you do not want to use a rule of thumb and rather let the model decide, go with option 2. Do so
+by leaving out :py:attr:`invest_relation_input_capacity` and setting :py:attr:`capacity_cost` to
+a finite value. Also have a look at the examples, where both options are shown.
 
 A 3rd and 4th option, investing into :py:attr:`nominal_storage_capacity` but leaving
 :py:attr:`capacity` fixed or vice versa, can not be modelled with this facade (at the moment).
