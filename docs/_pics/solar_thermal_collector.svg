@@ -298,15 +298,15 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.979899"
-     inkscape:cx="190.33264"
-     inkscape:cy="158.06374"
+     inkscape:zoom="1.4"
+     inkscape:cx="47.067497"
+     inkscape:cy="163.85326"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1439"
      inkscape:window-height="803"
-     inkscape:window-x="3"
+     inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="0"
      showguides="false"
@@ -608,16 +608,16 @@
          y="101.07912"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444447px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#575757;fill-opacity:1;stroke-width:0.26458332">opt</tspan></text>
     <circle
-       style="opacity:0.98999999;fill:#575757;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.69619805;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:0.99406529"
-       id="path976"
-       cx="60.789909"
-       cy="85.14859"
-       r="0.65456814" />
+       style="opacity:0.98999999;fill:#575757;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.84439409;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:0.99406529"
+       id="path997"
+       cx="143.49831"
+       cy="106.81408"
+       r="0.67500001" />
     <circle
-       style="opacity:0.98999999;fill:#575757;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.89428264;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:0.99406529"
-       id="path978"
-       cx="143.40771"
-       cy="106.53224"
-       r="0.65456814" />
+       style="opacity:0.98999999;fill:#575757;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.00272381;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:0.99406529"
+       id="path999"
+       cx="60.870564"
+       cy="85.4459"
+       r="0.67500001" />
   </g>
 </svg>
