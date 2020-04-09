@@ -133,9 +133,10 @@ df = pd.concat(sequences, axis=1)
 # print storage sizing
 built_storage_capacity = results[thermal_storage, None]['scalars']['invest']
 initial_storage_capacity = results[thermal_storage, None]['scalars']['init_cap']
-maximum_heat_flow_charging = results[bus_heat, thermal_storage]['scalars']
+maximum_heat_flow_charging = results[bus_heat, thermal_storage]['scalars']['invest']
 
 dash = '-' * 50
 print(dash)
-print('{:>32s}{:>15.3f}'.format('Built storage capacity [MWh]', built_storage_capacity))
+print('{:>32s}{:>15.3f}'.format('Invested capacity [MW]', maximum_heat_flow_charging))
+print('{:>32s}{:>15.3f}'.format('Invested storage capacity [MWh]', built_storage_capacity))
 print(dash)
