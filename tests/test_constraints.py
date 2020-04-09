@@ -170,4 +170,3 @@ class TestConstraints:
         )
 
         self.compare_to_reference_lp('stratified_thermal_storage_invest.lp')
-
