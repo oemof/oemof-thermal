@@ -67,8 +67,8 @@ bel = solph.Bus(label='electricity')
 # collector
 collector = facades.SolarThermalCollector(
     label='solar_collector',
-    output_bus=bth,
-    electrical_bus=bel,
+    heat_out_bus=bth,
+    electrical_in_bus=bel,
     electrical_consumption=elec_consumption,
     peripheral_losses=eta_losses,
     aperture_area=size_collector,

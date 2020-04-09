@@ -129,12 +129,12 @@ class SolarThermalCollector(Transformer, Facade):       # todo: Solve naming con
     ----------
     >>> from oemof import solph
     >>> from oemof.thermal.facades import SolarThermalCollector
-    >>> bth = solph.Bus(label='thermal_bus')
-    >>> bel = solph.Bus(label='electrical_bus')
+    >>> bth = solph.Bus(label='heat_out_bus')
+    >>> bel = solph.Bus(label='electrical_in_bus')
     >>> collector = SolarThermalCollector(
     ...     label='solar_collector',
-    ...     output_bus=bth, #*
-    ...     electrical_bus=bel, #*
+    ...     heat_out_bus=bth, #*
+    ...     electrical_in_bus=bel, #*
     ...     electrical_consumption=0.02, #*
     ...     peripheral_losses=0.05, #*
     ...     dataframe=pd.read_csv(
@@ -177,9 +177,9 @@ class SolarThermalCollector(Transformer, Facade):       # todo: Solve naming con
 
         self.label = kwargs.get("label")
 
-        self.output_bus = kwargs.get("output_bus")
+        self.heat_out_bus = kwargs.get("heat_out_bus")
 
-        self.electrical_bus = kwargs.get("electrical_bus")
+        self.electrical_in_bus = kwargs.get("electrical_in_bus")
 
         self.electrical_consumption = kwargs.get("electrical_consumption")
 
@@ -237,8 +237,8 @@ class SolarThermalCollector(Transformer, Facade):       # todo: Solve naming con
         """
         self.conversion_factors=\
             {
-                self.electrical_bus: sequence(self.electrical_consumption),
-                self.output_bus: sequence(1-self.peripheral_losses),
+                self.electrical_in_bus: sequence(self.electrical_consumption),
+                self.heat_out_bus: sequence(1-self.peripheral_losses),
             }
 
         if self.expandable:
@@ -257,13 +257,13 @@ class SolarThermalCollector(Transformer, Facade):       # todo: Solve naming con
 
         self.inputs.update(
             {
-                self.electrical_bus: Flow(
+                self.electrical_in_bus: Flow(
                 )
             }
         )
         self.outputs.update(
             {
-                self.output_bus: Flow(
+                self.heat_out_bus: Flow(
                 )
             }
         )
