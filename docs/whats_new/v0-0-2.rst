@@ -21,7 +21,8 @@ New components
 Documentation
 -------------
 
-* Improve the schematic pictures of the components
+* The schematic pictures of the components have been improved
+* Documentation has been extended, in particular for the new facade classes.
 
 Known issues
 ------------
@@ -47,3 +48,4 @@ Contributors
 ------------
 
 * FranziPl
+* jnnr
