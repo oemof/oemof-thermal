@@ -30,10 +30,12 @@ The precalculations for the solar thermal collector calculate the heat of the so
 collector based on global and diffuse horizontal irradiance and information about
 the collector and the location. The following scheme shows the calculation procedure.
 
-.. image:: _pics/solar_thermal_collector.png
+.. figure:: _pics/solar_thermal_collector.png
     :width: 80 %
     :alt: solar_thermal_collector.png
     :align: center
+
+    Fig.1: The energy flows and losses at a flat plate collector.
 
 The processing of the irradiance data is done by the pvlib, which calculates the total
 in-plane irradiance according to the azimuth and tilt angle of the collector.
