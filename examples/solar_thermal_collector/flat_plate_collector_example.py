@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 """
-Example to show the functionality of the solar thermal collector with a fixed collector size (aperture area).
+Example to show the functionality of the solar thermal collector
+with a fixed collector size (aperture area).
 
 authors: Franziska Pleissner, Caroline Möller
 
@@ -23,7 +24,7 @@ base_path = os.path.dirname(os.path.abspath(os.path.join(__file__)))
 data_path = os.path.join(base_path, 'data/')
 results_path = os.path.join(base_path, 'results/')
 if not os.path.exists(results_path):
-        os.mkdir(results_path)
+    os.mkdir(results_path)
 
 # parameters for the precalculation
 periods = 48
@@ -85,7 +86,7 @@ costs_storage = economics.annuity(20, 20, 0.06)
 costs_electricity = 1000
 storage_loss_rate = 0.001
 conversion_storage = 0.98
-size_collector = 1000 # m2
+size_collector = 1000  # m2
 
 # busses
 bth = solph.Bus(label='thermal', balanced=True)

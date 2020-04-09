@@ -237,10 +237,10 @@ class SolarThermalCollector(Transformer, Facade):       # todo: Solve naming con
     def build_solph_components(self):
         """
         """
-        self.conversion_factors=\
+        self.conversion_factors= \
             {
                 self.electricity_in_bus: sequence(self.electrical_consumption),
-                self.heat_out_bus: sequence(1-self.peripheral_losses),
+                self.heat_out_bus: sequence(1 - self.peripheral_losses),
             }
 
         if self.expandable:

@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 """
-Example to show the functionality of the solar thermal collector with a fixed collector size (aperture area) using the facade.
+Example to show the functionality of the solar thermal collector
+with a fixed collector size (aperture area) using the facade.
 
 authors: Franziska Pleissner, Caroline Möller, Marie-Claire Gering
 
@@ -9,7 +10,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 """
 import os
 import pandas as pd
-import oemof.outputlib as outputlib
+# import oemof.outputlib as outputlib
 
 from oemof.thermal import facades
 from oemof import solph
@@ -21,7 +22,7 @@ base_path = os.path.dirname(os.path.abspath(os.path.join(__file__)))
 data_path = os.path.join(base_path, 'data/')
 results_path = os.path.join(base_path, 'results/')
 if not os.path.exists(results_path):
-        os.mkdir(results_path)
+    os.mkdir(results_path)
 
 # parameters
 periods = 48
@@ -43,7 +44,7 @@ costs_storage = economics.annuity(20, 20, 0.06)
 costs_electricity = 1000
 storage_loss_rate = 0.001
 conversion_storage = 0.98
-size_collector = 1000 # m2
+size_collector = 1000  # m2
 
 # input data
 input_data = pd.read_csv(data_path + 'data_flat_collector.csv').head(periods)
@@ -83,8 +84,7 @@ collector = facades.SolarThermalCollector(
     delta_temp_n=delta_temp_n,
     irradiance_global=input_data['global_horizontal_W_m2'],
     irradiance_diffuse=input_data['diffuse_horizontal_W_m2'],
-    temp_amb=input_data['temp_amb'],
-    )
+    temp_amb=input_data['temp_amb'])
 
 # sources and sinks
 el_grid = solph.Source(
@@ -133,4 +133,3 @@ energysystem.add(
 # create and solve the optimization model
 model = solph.Model(energysystem)
 model.solve(solver='cbc', solve_kwargs={'tee': True})
-

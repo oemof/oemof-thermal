@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 """
-Example to show the functionality of the solar thermal collector with a collector size (aperture area) to be invested.
+Example to show the functionality of the solar thermal collector
+with a collector size (aperture area) to be invested.
 
 authors: Franziska Pleissner, Caroline Möller
 
@@ -23,7 +24,7 @@ base_path = os.path.dirname(os.path.abspath(os.path.join(__file__)))
 data_path = os.path.join(base_path, 'data/')
 results_path = os.path.join(base_path, 'results/')
 if not os.path.exists(results_path):
-        os.mkdir(results_path)
+    os.mkdir(results_path)
 
 # parameters for the precalculation
 periods = 48
