@@ -1,17 +1,13 @@
 import os
-import sys
 import pandas as pd
 import numpy as np
 
 from oemof.thermal.stratified_thermal_storage import calculate_storage_u_value
 from oemof.thermal import facades
 
-# import functions to compare lp-files of new example with old one.
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'tests')))
-from test_constraints import compare_lp_files  # noqa
-
-from oemof.solph import (Source, Sink, Bus, Flow,  # noqa: E402
+from oemof.solph import (Source, Sink, Bus, Flow,
                          Model, EnergySystem)
+import oemof.outputlib as outputlib
 
 
 data_path = os.path.join(
@@ -83,13 +79,23 @@ energysystem.add(bus_heat, heat_source, shortage, excess, heat_demand, thermal_s
 
 # create and solve the optimization model
 optimization_model = Model(energysystem)
-optimization_model.write(
-    'storage_model_invest_option_2_facades.lp',
-    io_options={'symbolic_solver_labels': True}
-)
 
-with open('storage_model_invest_option_2_facades.lp') as generated_file:
-    with open('storage_model_invest_option_2.lp') as expected_file:
-        compare_lp_files(generated_file, expected_file)
+optimization_model.solve(solver=solver,
+                         solve_kwargs={'tee': False, 'keepfiles': False})
 
-print('lp-files are equal.')
+# get results
+results = outputlib.processing.results(optimization_model)
+string_results = outputlib.processing.convert_keys_to_strings(results)
+sequences = {k: v['sequences'] for k, v in string_results.items()}
+df = pd.concat(sequences, axis=1)
+
+# print storage sizing
+built_storage_capacity = results[thermal_storage, None]['scalars']['invest']
+initial_storage_capacity = results[thermal_storage, None]['scalars']['init_cap']
+maximum_heat_flow_charging = results[bus_heat, thermal_storage]['scalars']['invest']
+
+dash = '-' * 50
+print(dash)
+print('{:>32s}{:>15.3f}'.format('Invested capacity [MW]', maximum_heat_flow_charging))
+print('{:>32s}{:>15.3f}'.format('Invested storage capacity [MWh]', built_storage_capacity))
+print(dash)
