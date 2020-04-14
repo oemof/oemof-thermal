@@ -123,6 +123,200 @@ class Facade(Node):
         self.build_solph_components()
 
 
+class StratifiedThermalStorage(GenericStorage, Facade):
+    r""" Stratified thermal storage unit
+
+    Parameters
+    ----------
+    bus: oemof.solph.Bus
+        An oemof bus instance where the storage unit is connected to.
+    storage_capacity: numeric
+        The total capacity of the storage (e.g. in MWh)
+    capacity: numeric
+        Maximum production capacity (e.g. in MW)
+    efficiency: numeric
+        Efficiency of charging and discharging process: Default: 1
+    storage_capacity_cost: numeric
+        Investment costs for the storage unit e.g in €/MWh-capacity
+    expandable: boolean
+        True, if capacity can be expanded within optimization. Default: False.
+    storage_capacity_potential: numeric
+        Potential of the investment for storage capacity in MWh
+    capacity_potential: numeric
+        Potential of the investment for capacity in MW
+    input_parameters: dict (optional)
+        Set parameters on the input edge of the storage (see oemof.solph for
+        more information on possible parameters)
+    ouput_parameters: dict (optional)
+        Set parameters on the output edge of the storage (see oemof.solph for
+        more information on possible parameters)
+    Intertemporal energy balance of the storage:
+    .. math::
+        x^{level}(t) =
+        x^{level}(t-1) \cdot (1 - c^{loss\_rate})
+        + \sqrt{c^{efficiency}(t)}  x^{flow, in}(t)
+        - \frac{x^{flow, out}(t)}{\sqrt{c^{efficiency}(t)}}
+        \qquad \forall t \in T
+    .. math::
+        x^{level}(0) = 0.5 \cdot c^{capacity}
+    The **expression** added to the cost minimizing objective funtion
+    for the operation is given as:
+    .. math::
+        x^{opex} = \sum_t (x^{flow, out}(t) \cdot c^{marginal\_cost}(t))
+
+    Examples
+    ---------
+    >>> from oemof import solph
+    >>> from oemof.thermal.facades import StratifiedThermalStorage
+    >>> heat_bus = solph.Bus(label='heat_bus')
+    >>> thermal_storage = StratifiedThermalStorage(
+    ...     label='thermal_storage',
+    ...     bus=heat_bus,
+    ...     diameter=10,
+    ...     height=10,
+    ...     temp_h=95,
+    ...     temp_c=60,
+    ...     temp_env=10,
+    ...     u_value=0.3,
+    ...     initial_storage_level=0.5,
+    ...     min_storage_level=0.05,
+    ...     max_storage_level=0.95
+    ...     capacity=1)
+    """
+
+    def __init__(self, *args, **kwargs):
+
+        super().__init__(
+            _facade_requires_=[
+                "bus", "diameter",
+                "temp_h", "temp_c", "temp_env",
+                "u_value"], *args, **kwargs
+        )
+
+        self.height = kwargs.get("height")
+
+        self.water_properties = {
+            'heat_capacity': kwargs.get("heat_capacity"), 'density': kwargs.get("density")
+        }
+
+        self.capacity = kwargs.get("capacity")
+
+        self.storage_capacity_cost = kwargs.get("storage_capacity_cost")
+
+        self.capacity_cost = kwargs.get("capacity_cost")
+
+        self.storage_capacity_potential = kwargs.get(
+            "storage_capacity_potential", float("+inf")
+        )
+
+        self.capacity_potential = kwargs.get(
+            "capacity_potential", float("+inf")
+        )
+
+        self.minimum_storage_capacity = kwargs.get(
+            "minimum_storage_capacity", 0
+        )
+
+        self.expandable = bool(kwargs.get("expandable", False))
+
+        if self.expandable and self.capacity is None:
+            self.capacity = 0
+
+        self.efficiency = kwargs.get("efficiency", 1)
+
+        self.marginal_cost = kwargs.get("marginal_cost", 0)
+
+        self.input_parameters = kwargs.get("input_parameters", {})
+
+        self.output_parameters = kwargs.get("output_parameters", {})
+
+        losses = calculate_losses(
+            self.u_value,
+            self.diameter,
+            self.temp_h,
+            self.temp_c,
+            self.temp_env,
+            **{key: value for key, value in self.water_properties.items() if value is not None}
+        )
+
+        self.loss_rate = losses[0]
+
+        self.fixed_losses_relative = losses[1]
+
+        self.fixed_losses_absolute = losses[2]
+
+        self.build_solph_components()
+
+    def build_solph_components(self):
+        """
+        """
+        self.inflow_conversion_factor = sequence(self.efficiency)
+
+        self.outflow_conversion_factor = sequence(self.efficiency)
+
+        self.loss_rate = sequence(self.loss_rate)
+
+        self.fixed_losses_relative = sequence(self.fixed_losses_relative)
+
+        self.fixed_losses_absolute = sequence(self.fixed_losses_absolute)
+
+        # make it investment but don't set costs (set below for flow (power))
+        self.investment = self._investment()
+
+        if self.investment:
+            self.invest_relation_input_output = 1
+
+            for attr in ["invest_relation_input_output"]:
+                if getattr(self, attr) is None:
+                    raise AttributeError(
+                        (
+                            "You need to set attr " "`{}` " "for component {}"
+                        ).format(attr, self.label)
+                    )
+
+            # set capacity costs at one of the flows
+            fi = Flow(
+                investment=Investment(
+                    ep_costs=self.capacity_cost,
+                    maximum=self.capacity_potential,
+                    existing=self.capacity,
+                ),
+                **self.input_parameters
+            )
+            # set investment, but no costs (as relation input / output = 1)
+            fo = Flow(
+                investment=Investment(),
+                variable_costs=self.marginal_cost,
+                **self.output_parameters
+            )
+            # required for correct grouping in oemof.solph.components
+            self._invest_group = True
+        else:
+            self.volume = calculate_storage_dimensions(self.height, self.diameter)[0]
+
+            self.nominal_storage_capacity = calculate_capacities(
+                self.volume,
+                self.temp_h,
+                self.temp_c,
+                **{key: value for key, value in self.water_properties.items() if value is not None}
+            )
+
+            fi = Flow(
+                nominal_value=self._nominal_value(), **self.input_parameters
+            )
+            fo = Flow(
+                nominal_value=self._nominal_value(),
+                variable_costs=self.marginal_cost,
+                **self.output_parameters
+            )
+
+        self.inputs.update({self.bus: fi})
+
+        self.outputs.update({self.bus: fo})
+
+        self._set_flows()
+
+
 class SolarThermalCollector(Transformer, Facade):       # todo: Solve naming conflict (cf. csp)
     r""" Solar thermal collector unit
     Examples:
