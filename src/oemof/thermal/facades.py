@@ -27,12 +27,10 @@ from collections import deque
 
 from oemof.thermal.stratified_thermal_storage import calculate_storage_dimensions,\
     calculate_capacities, calculate_losses
-
 from oemof.thermal.concentrating_solar_power import csp_precalc
 from oemof.energy_system import EnergySystem
 from oemof.network import Node
 from oemof.solph import Flow, Investment, Transformer, Source
-
 from oemof.solph.components import GenericStorage
 from oemof.solph.plumbing import sequence
 
@@ -307,7 +305,6 @@ class StratifiedThermalStorage(GenericStorage, Facade):
                 self.volume,
                 self.temp_h,
                 self.temp_c,
-
                 **{key: value for key, value in self.water_properties.items() if value is not None}
             )
 
@@ -327,7 +324,7 @@ class StratifiedThermalStorage(GenericStorage, Facade):
         self._set_flows()
 
 
-class Collector(Transformer, Facade):
+class ParabolicTroughCollector(Transformer, Facade):
     r""" Parabolic trough collector unit
 
     Parameters

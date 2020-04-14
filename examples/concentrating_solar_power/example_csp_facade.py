@@ -61,7 +61,7 @@ bth = solph.Bus(label='thermal')
 bel = solph.Bus(label='electricity')
 
 # collector
-collector = facades.Collector(
+collector = facades.ParabolicTroughCollector(
     label='solar_collector',
     heat_bus=bth,
     electrical_bus=bel,
