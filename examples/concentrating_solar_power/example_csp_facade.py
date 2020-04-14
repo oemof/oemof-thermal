@@ -41,6 +41,7 @@ input_data.set_index('Datum', inplace=True)
 input_data.index = input_data.index.tz_localize(tz='Asia/Muscat')
 
 date_time_index = input_data.index
+date_time_index.freq = 'H'
 
 
 # regular oemof_system #
