@@ -75,6 +75,10 @@ In the case of investment, the diameter :math:`d` is given and the height can be
 adapted to adapt the nominal capacity of the storage. With this assumption,
 all relations stay linear.
 
+Because of the space that diffuser plates for charging/discharging take up, it is assumed that
+the storage can neither be fully charged nor discharged, which is parametrised as a minimal/maximal
+storage level (indicated by the dotted lines in Fig. 1).
+
 These parameters are part of the stratified thermal storage:
 
     ========================= ===================================== ==== ===========
@@ -180,6 +184,9 @@ Using the StratifiedThermalStorage facade, you can instantiate a storage like th
       efficiency=0.9,
       marginal_cost=0.0001
   )
+
+The non-usable storage volume is represented by the parameters
+:py:attr:`min_storage_level` and :py:attr:`max_storage_level`.
 
 To learn about all parameters that can be passed to the facades, have a look at the
 :ref:`api reference for the facade module <api_label>`.
