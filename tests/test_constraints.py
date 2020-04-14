@@ -219,7 +219,7 @@ class TestConstraints:
         input_data.set_index('Datum', inplace=True)
         input_data.index = input_data.index.tz_localize(tz='Asia/Muscat')
 
-        facades.Collector(
+        facades.ParabolicTroughCollector(
             label='solar_collector',
             heat_bus=bus_heat,
             electrical_bus=bus_el,
