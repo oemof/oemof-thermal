@@ -11,22 +11,28 @@ complex classes. The idea is to be able to instantiate a `Facade` using keyword
 arguments, whose value are derived from simple, tabular data sources. Under the
 hood the `Facade` then uses these arguments to construct an `oemof` or
 `oemof.solph` component and sets it up to be easily used in an `EnergySystem`.
+
 **Note** The mathematical notation is as follows:
+
 * Optimization variables (endogenous) are denoted by :math:`x`
 * Optimization parameters (exogenous) are denoted by :math:`c`
 * The set of timesteps :math:`T` describes all timesteps of the optimization
   problem
-SPDX-License-Identifier:
+
+SPDX-License-Identifier: MIT
+
 """
 
 from collections import deque
 
 from oemof.thermal.stratified_thermal_storage import calculate_storage_dimensions,\
     calculate_capacities, calculate_losses
+
 from oemof.thermal.concentrating_solar_power import csp_precalc
 from oemof.energy_system import EnergySystem
 from oemof.network import Node
 from oemof.solph import Flow, Investment, Transformer, Source
+
 from oemof.solph.components import GenericStorage
 from oemof.solph.plumbing import sequence
 
@@ -196,17 +202,7 @@ class StratifiedThermalStorage(GenericStorage, Facade):
                 "u_value"], *args, **kwargs
         )
 
-        self.diameter = kwargs.get("diameter")
-
         self.height = kwargs.get("height")
-
-        self.temp_h = kwargs.get("temp_h")
-
-        self.temp_c = kwargs.get("temp_c")
-
-        self.temp_env = kwargs.get("temp_env")
-
-        self.u_value = kwargs.get("u_value")
 
         self.water_properties = {
             'heat_capacity': kwargs.get("heat_capacity"), 'density': kwargs.get("density")
@@ -311,9 +307,9 @@ class StratifiedThermalStorage(GenericStorage, Facade):
                 self.volume,
                 self.temp_h,
                 self.temp_c,
-                0,
+
                 **{key: value for key, value in self.water_properties.items() if value is not None}
-            )[0]
+            )
 
             fi = Flow(
                 nominal_value=self._nominal_value(), **self.input_parameters
@@ -511,3 +507,4 @@ class Collector(Transformer, Facade):
         )
 
         self.subnodes = (inflow,)
+
