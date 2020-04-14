@@ -28,12 +28,12 @@ A simplified 2-zone-model of a stratified thermal energy storage.
    down or up, respectively. Losses to the environment through the surface of the
    storage depend on the size of the hot and cold zone.
 
-* We assume a cylindrical storage with of diameter d and height h,
+* We assume a cylindrical storage of diameter d and height h,
   with two temperature regions that are perfectly separated.
 * The temperatures are assumed to be constant and correspond to
   the feed-in/return temperature of the heating system.
 * Heat conductivity of the storage has to be passed as well as a timeseries
-  for outside temperatures for the calculation of heat losses.
+  of outside temperatures for the calculation of heat losses.
 * There is no distinction between outside temperature and ground temperature.
 * Material properties are constant.
 
@@ -63,9 +63,9 @@ with
 
 The three terms represent:
 
-* :math:`\delta`, constant heat losses through the top and bottom surfaces ,
+* :math:`\delta`, constant heat losses through the top and bottom surfaces,
 * :math:`\gamma \cdot Q_N`, losses through the total lateral surface assuming the storage
-  to be empty (storage is at :math:`T_{C}` and :math:`\Delta T_{C0}` is the driving
+  to be empty (storage is at :math:`T_{C}`, and :math:`\Delta T_{C0}` is the driving
   temperature difference), depending on the height of the storage,
 * :math:`\beta \cdot Q_{t-1}`, additional losses through lateral surface that
   belong to the hot part of the water body, depending on the state of charge.
@@ -191,9 +191,9 @@ There are two options to choose from:
 
 1. Invest into :py:attr:`nominal_storage_capacity` and :py:attr:`capacity`
    (charging/discharging power) with a fixed ratio. Pass :py:attr:`invest_relation_input_capacity`
-   and either :py:attr:`storage_capacity_cost` or :py:attr:`capacity_cost`
+   and either :py:attr:`storage_capacity_cost` or :py:attr:`capacity_cost`.
 2. Invest into :py:attr:`nominal_storage_capacity` and :py:attr:`capacity` independently with no
-   fixed ratio. Pass :py:attr:`storage_capacity_cost` and :py:attr:`capacity_cost`
+   fixed ratio. Pass :py:attr:`storage_capacity_cost` and :py:attr:`capacity_cost`.
 
 In many practical cases, thermal storages are dimensioned using a rule of thumb: The storage should
 be able to provide its peak thermal power for 6-7 hours. To apply this in a model, use option 1.
@@ -251,7 +251,7 @@ only a loss rate vs. the stratified thermal storage implementation
 
    Fig. 2: Example plot showing the difference between :py:obj:`StratifiedThermalStorages`
    of different storage capacities and a simpler model with a single loss rate. The left panel
-   shows the loss of thermal energy over time. The right panel shows losses vs storage content.
+   shows the loss of thermal energy over time. The right panel shows losses vs. storage content.
 
 Implicit calculations
 ^^^^^^^^^^^^^^^^^^^^^
