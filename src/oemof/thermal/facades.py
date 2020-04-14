@@ -20,7 +20,6 @@ hood the `Facade` then uses these arguments to construct an `oemof` or
   problem
 
 SPDX-License-Identifier: MIT
-
 """
 
 from collections import deque
