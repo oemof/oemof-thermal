@@ -28,7 +28,7 @@ from oemof.thermal.stratified_thermal_storage import calculate_storage_dimension
     calculate_capacities, calculate_losses
 from oemof.thermal.solar_thermal_collector import flat_plate_precalc
 from oemof.energy_system import EnergySystem
-from oemof.network import Node
+from oemof.network import Node, Transformer, Source
 from oemof.solph import Flow, Investment
 from oemof.solph.components import GenericStorage
 from oemof.solph.plumbing import sequence
