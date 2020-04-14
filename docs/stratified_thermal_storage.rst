@@ -31,7 +31,7 @@ A simplified 2-zone-model of a stratified thermal energy storage.
 * We assume a cylindrical storage with of diameter d and height h,
   with two temperature regions that are perfectly separated.
 * The temperatures are assumed to be constant and correspond to
-  the feedin/return temperature of the heating system.
+  the feed-in/return temperature of the heating system.
 * Heat conductivity of the storage has to be passed as well as a timeseries
   for outside temperatures for the calculation of heat losses.
 * There is no distinction between outside temperature and ground temperature.
@@ -67,7 +67,7 @@ The three terms represent:
 * :math:`\gamma \cdot Q_N`, losses through the total lateral surface assuming the storage
   to be empty (storage is at :math:`T_{C}` and :math:`\Delta T_{C0}` is the driving
   temperature difference), depending on the height of the storage,
-* :math:`\beta \cdot Q_{t-1}`, additonal losses through lateral surface that
+* :math:`\beta \cdot Q_{t-1}`, additional losses through lateral surface that
   belong to the hot part of the water body, depending on the state of charge.
 
 
@@ -88,11 +88,6 @@ These parameters are part of the stratified thermal storage:
     :math:`A`                 :py:obj:`surface`                          Storage surface [m2]
 
     :math:`V`                 :py:obj:`volume`                           Storage volume [m3]
-
-    :math:`v_{nonuseable}`    :py:obj:`nonusable_storage_volume`         Factor describing
-                                                                         non-usable
-                                                                         storage volume [-]
-                                                                         (:math:`0<v_{nonusable}<1`)
 
     :math:`\rho`              :py:obj:`density`                          Density of storage
                                                                          medium [kg/m3]
@@ -276,13 +271,12 @@ The dimensions of the storage are calculated with `calculate_storage_dimensions`
   :start-after:  calculate_storage_dimensions-equations:
   :end-before: Parameters
 
-The nominal storage capacity, minimum and maximum storage level are pre-calculated upon initialization
-using `calculate_capacities`.
+The nominal storage capacity is pre-calculated using `calculate_capacities`.
 
 .. code-block:: python
 
-   nominal_storage_capacity, max_storage_level, min_storage_level = calculate_capacities(
-       volume, temp_h, temp_c, nonusable_storage_volume, heat_capacity, density
+   nominal_storage_capacity = calculate_capacities(
+       volume, temp_h, temp_c, heat_capacity, density
    )
 
 .. .. include:: ../src/oemof/thermal/stratified_thermal_storage.py
