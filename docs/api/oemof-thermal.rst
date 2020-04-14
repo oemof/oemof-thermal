@@ -33,3 +33,10 @@ stratified_thermal_storage module
     :members:
     :undoc-members:
     :show-inheritance:
+
+facades module
+==============
+.. automodule:: oemof.thermal.facades
+    :members:
+    :undoc-members:
+    :show-inheritance:

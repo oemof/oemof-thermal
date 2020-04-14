@@ -1,4 +1,4 @@
-Datum,radiation                ,t_amb,wind_dir                 ,wind_vel                 ,direct radiation                  ,diffuse radiation,rel. Humidity,E_dir_hor,E dif hor,E gl hor,ES_load_actual_entsoe_power_statistics
+Datum,radiation,t_amb,wind_dir,wind_vel,direct_radiation,diffuse radiation,rel. Humidity,E_dir_hor,E dif hor,E gl hor,ES_load_actual_entsoe_power_statistics
 01.01.2003 00:00,0.00E+00,1.98E+01,2.21E+02,8.00E-01,0.00E+00,0.00E+00,8.00E+01,0,0,0,24088
 01.01.2003 01:00,0.00E+00,2.22E+01,2.35E+02,1.20E+00,0.00E+00,0.00E+00,7.45E+01,0,0,0,22843
 01.01.2003 02:00,0.00E+00,2.21E+01,2.51E+02,9.50E-01,0.00E+00,0.00E+00,7.20E+01,0,0,0,21297

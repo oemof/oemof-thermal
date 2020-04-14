@@ -39,18 +39,11 @@ loss_rate, fixed_losses_relative, fixed_losses_absolute = calculate_losses(
     input_data['temp_c'],
     input_data['temp_env'])
 
-maximum_heat_flow_charging = 0.9
-maximum_heat_flow_discharging = 0.9
-max_storage_level = 0.975
-min_storage_level = 0.025
 
-
-def print_results():
+def print_parameters():
     parameter = {
         'EQ-cost [Eur/]': 0,
         'U-value [W/(m2*K)]': u_value,
-        'Max. heat flow charging [MW]': maximum_heat_flow_charging,
-        'Max. heat flow discharging [MW]': maximum_heat_flow_discharging,
         'Loss rate [-]': loss_rate,
         'Fixed relative losses [-]': fixed_losses_relative,
         'Fixed absolute losses [MWh]': fixed_losses_absolute,
@@ -68,7 +61,7 @@ def print_results():
     print(dash)
 
 
-print_results()
+print_parameters()
 
 # Set up an energy system model
 solver = 'cbc'
@@ -108,17 +101,19 @@ heat_demand = Sink(
 thermal_storage = GenericStorage(
     label='thermal_storage',
     inputs={bus_heat: Flow(
-        nominal_value=maximum_heat_flow_charging,
-        variable_costs=0.0001)},
+        investment=Investment())},
     outputs={bus_heat: Flow(
-        nominal_value=maximum_heat_flow_discharging)},
-    min_storage_level=min_storage_level,
-    max_storage_level=max_storage_level,
+        investment=Investment(),
+        variable_costs=0.0001)},
+    min_storage_level=input_data['min_storage_level'],
+    max_storage_level=input_data['max_storage_level'],
     loss_rate=loss_rate,
     fixed_losses_relative=fixed_losses_relative,
     fixed_losses_absolute=fixed_losses_absolute,
     inflow_conversion_factor=1.,
     outflow_conversion_factor=1.,
+    invest_relation_input_output=1,
+    invest_relation_input_capacity=1 / 6,
     investment=Investment(ep_costs=400, minimum=1)
 )
 
@@ -126,9 +121,10 @@ energysystem.add(bus_heat, heat_source, shortage, excess, heat_demand, thermal_s
 
 # create and solve the optimization model
 optimization_model = Model(energysystem)
-optimization_model.write('storage_model.lp', io_options={'symbolic_solver_labels': True})
+
 optimization_model.solve(solver=solver,
                          solve_kwargs={'tee': False, 'keepfiles': False})
+
 # get results
 results = outputlib.processing.results(optimization_model)
 string_results = outputlib.processing.convert_keys_to_strings(results)
@@ -138,9 +134,10 @@ df = pd.concat(sequences, axis=1)
 # print storage sizing
 built_storage_capacity = results[thermal_storage, None]['scalars']['invest']
 initial_storage_capacity = results[thermal_storage, None]['scalars']['init_cap']
-maximum_heat_flow_charging = results[bus_heat, thermal_storage]['scalars']
+maximum_heat_flow_charging = results[bus_heat, thermal_storage]['scalars']['invest']
 
 dash = '-' * 50
 print(dash)
-print('{:>32s}{:>15.3f}'.format('Built storage capacity [MWh]', built_storage_capacity))
+print('{:>32s}{:>15.3f}'.format('Invested capacity [MW]', maximum_heat_flow_charging))
+print('{:>32s}{:>15.3f}'.format('Invested storage capacity [MWh]', built_storage_capacity))
 print(dash)

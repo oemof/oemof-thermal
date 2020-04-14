@@ -3,6 +3,7 @@
 """
 Adapted from `oemof.tabular's facades
 <https://github.com/oemof/oemof-tabular/blob/master/src/oemof/tabular/facades.py>`_
+
 Facade's are classes providing a simplified view on more complex classes.
 More specifically, the `Facade`s in this module act as simplified, energy
 specific  wrappers around `oemof`'s and `oemof.solph`'s more abstract and
@@ -10,19 +11,24 @@ complex classes. The idea is to be able to instantiate a `Facade` using keyword
 arguments, whose value are derived from simple, tabular data sources. Under the
 hood the `Facade` then uses these arguments to construct an `oemof` or
 `oemof.solph` component and sets it up to be easily used in an `EnergySystem`.
+
 **Note** The mathematical notation is as follows:
+
 * Optimization variables (endogenous) are denoted by :math:`x`
 * Optimization parameters (exogenous) are denoted by :math:`c`
 * The set of timesteps :math:`T` describes all timesteps of the optimization
   problem
-SPDX-License-Identifier:
+
+SPDX-License-Identifier: MIT
 """
 
 from collections import deque
 
+from oemof.thermal.stratified_thermal_storage import calculate_storage_dimensions,\
+    calculate_capacities, calculate_losses
 from oemof.thermal.solar_thermal_collector import flat_plate_precalc
 from oemof.energy_system import EnergySystem
-from oemof.network import Node, Transformer, Source
+from oemof.network import Node
 from oemof.solph import Flow, Investment
 from oemof.solph.components import GenericStorage
 from oemof.solph.plumbing import sequence

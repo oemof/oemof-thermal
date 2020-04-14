@@ -1,10 +1,12 @@
 # -*- coding: utf-8
 
 """Test the created constraints against approved constraints.
+
 This file is part of project oemof (github.com/oemof/oemof-thermal).
 It's copyrighted by the contributors recorded in the version control
 history of the file, available from its original location
 oemof-thermal/tests/constraint_tests.py
+
 SPDX-License-Identifier: MIT
 """
 
@@ -145,8 +147,10 @@ class TestConstraints:
         self.compare_to_reference_lp('stratified_thermal_storage.lp')
 
     @pytest.mark.skip(reason="Relies on not yet released oemof v3.3")
-    def test_stratified_thermal_storage_invest_facade(self):
-        """Constraint test of a StratifiedThermalStorage with investment.
+    def test_stratified_thermal_storage_invest_option_1_facade(self):
+        """
+        Constraint test of a StratifiedThermalStorage with investment.
+        Ratio between capacity and storage_capacity is fixed.
         """
         bus_heat = solph.Bus(label='bus_heat')
 
@@ -169,4 +173,32 @@ class TestConstraints:
             marginal_cost=0.0001
         )
 
-        self.compare_to_reference_lp('stratified_thermal_storage_invest.lp')
+        self.compare_to_reference_lp('stratified_thermal_storage_invest_option_1.lp')
+
+    @pytest.mark.skip(reason="Relies on not yet released oemof v3.3")
+    def test_stratified_thermal_storage_invest_option_2_facade(self):
+        """
+        Constraint test of a StratifiedThermalStorage with investment.
+        Ratio between capacity and storage_capacity is left open.
+        """
+        bus_heat = solph.Bus(label='bus_heat')
+
+        facades.StratifiedThermalStorage(
+            label='thermal_storage',
+            bus=bus_heat,
+            diameter=10,
+            temp_h=95,
+            temp_c=60,
+            temp_env=10,
+            u_value=0.5,
+            expandable=True,
+            capacity_cost=50,
+            storage_capacity_cost=400,
+            minimum_storage_capacity=1,
+            min_storage_level=0.975,
+            max_storage_level=0.025,
+            efficiency=1,
+            marginal_cost=0.0001
+        )
+
+        self.compare_to_reference_lp('stratified_thermal_storage_invest_option_2.lp')
