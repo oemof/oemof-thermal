@@ -503,4 +503,3 @@ class ParabolicTroughCollector(Transformer, Facade):
         )
 
         self.subnodes = (inflow,)
-
