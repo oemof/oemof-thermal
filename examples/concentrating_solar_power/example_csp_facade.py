@@ -60,7 +60,7 @@ size_collector = 1000
 bth = solph.Bus(label='thermal')
 bel = solph.Bus(label='electricity')
 
-#sources and sinks
+# collector
 collector = facades.Collector(
     label='solar_collector',
     heat_bus=bth,
@@ -85,6 +85,7 @@ collector = facades.Collector(
     temp_amb=input_data['t_amb'],
     irradiance=input_data['E_dir_hor'])
 
+# sources and sinks
 el_grid = solph.Source(
     label='grid',
     outputs={bel: solph.Flow(variable_costs=costs_electricity)})
@@ -105,7 +106,6 @@ excess = solph.Sink(
     inputs={bth: solph.Flow()})
 
 # transformer and storages
-
 turbine = solph.Transformer(
     label='turbine',
     inputs={bth: solph.Flow()},
@@ -121,6 +121,7 @@ storage = solph.components.GenericStorage(
     outflow_conversion_factor=conversion_storage,
     investment=solph.Investment(ep_costs=costs_storage))
 
+ # build the system and solve the problem  
 energysystem = solph.EnergySystem(timeindex=date_time_index)
 
 energysystem.add(bth, bel, el_grid, backup, excess, consumer, storage, turbine,
