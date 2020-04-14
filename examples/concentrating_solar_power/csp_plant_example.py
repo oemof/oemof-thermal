@@ -46,6 +46,7 @@ temp_collector_outlet = 500
 dataframe = pd.read_csv(data_path + 'data_csp_plant.csv').head(periods)
 dataframe['Datum'] = pd.to_datetime(dataframe['Datum'])
 dataframe.set_index('Datum', inplace=True)
+dataframe = dataframe.asfreq('H')
 dataframe.index = dataframe.index.tz_localize(tz='Asia/Muscat')
 
 # precalculation
