@@ -11,7 +11,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 import os
 import pandas as pd
 # import oemof.outputlib as outputlib
-
+import matplotlib.pyplot as plt
 from oemof.thermal import facades
 from oemof import solph
 import oemof.outputlib as outputlib
@@ -150,3 +150,22 @@ df.to_csv(
     os.path.join(results_path, 'thermal_bus_flat_plate_facade.csv'),
     sep=';',
 )
+
+# Example plot
+heat_calc = collector / 1000
+irradiance_on_collector = input_data['diffuse_horizontal_W_m2']
+heat_compare = irradiance_on_collector * eta_0
+t = list(range(1, periods + 1))
+
+fig, ax = plt.subplots()
+ax.plot(t, heat_calc, label='CSP precalculation')
+ax.plot(t, heat_compare, label='constant efficiency')
+ax.set(
+    xlabel='time in h',
+    ylabel='Q_coll in kWh',
+    title='Heat of the collector',
+    )
+ax.grid()
+ax.legend()
+plt.savefig('compare_precalculations.png')
+plt.show()
