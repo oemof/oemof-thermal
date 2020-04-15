@@ -82,9 +82,6 @@ returned. Losses which occur after the heat absorption in the collector
 (e.g. losses in pipes) have to be taken into account in a later step
 (see the example).
 
-Usage
-_____
-
 These arguments are used in the formulas of the function:
 
     ========================= =================================================== ===========
@@ -104,6 +101,14 @@ These arguments are used in the formulas of the function:
 
     :math:`a_2`               :py:obj:`a_2`                                       Parameter 2 for the incident angle modifier
 
+    :math:`a_3`               :py:obj:`a_3`                                       Parameter 3 for the incident angle modifier
+
+    :math:`a_4`               :py:obj:`a_4`                                       Parameter 4 for the incident angle modifier
+
+    :math:`a_5`               :py:obj:`a_5`                                       Parameter 5 for the incident angle modifier
+
+    :math:`a_6`               :py:obj:`a_6`                                       Parameter 6 for the incident angle modifier
+
     :math:`\varTheta`         :py:obj:`aoi`                                       Angle of incidence
 
     :math:`\eta_C`            :py:obj:`eta_c`                                     Collector efficiency
@@ -120,11 +125,25 @@ These arguments are used in the formulas of the function:
 
     ========================= =================================================== ===========
 
+
+Usage
+_____
+
+It is possible to use the precalculation function to calculate the values
+:math:`\dot Q_{coll}`, :math:`\eta_C` and :math:`E_{coll}`. Or it is possible
+to use the ParabolicTroughCollector facade to model a collcector with further
+losses (e.g. in pipes or pumps) and the electrical consumption of pipes.
+
+
+precalculation function
+^^^^^^^^^^^^^^^^^^^^^^^
+
 Please see the API for all parameters which have to be provided, also the ones
-which are not part of the described formulas.
+which are not part of the described formulas above.
 The data for ambient temperature and irradiance must have the same time index.
 Depending on the method, the irradiance must be the horizontal direct
 irradiance or the direct normal irradiance.
+
 
 .. code-block:: python
 
@@ -145,6 +164,11 @@ calculated with a fix efficiency.
    :width: 100 %
    :alt: compare_collector_heat_method1.png
    :align: center
+
+
+ParabolicTroughCollector facade
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 
 References
 __________
