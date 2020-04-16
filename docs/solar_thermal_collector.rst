@@ -58,9 +58,6 @@ Losses, which occur after the heat absorption in the collector (e.g. losses in p
 have to be taken into account in the component, which uses the precalculation
 (see the example).
 
-Usage
-_____
-
 These arguments are used in the formulas of the function:
 
     ========================= ================================ ====================================
@@ -91,15 +88,62 @@ These arguments are used in the formulas of the function:
 
     ========================= ================================ ====================================
 
-Please see the API for all parameters, which have to be provided. The needed dataframe
-must hold columns for a date, the ambient temperature and the irradiance. Some of the
-parameters which have to be provided for the precalculation define the column names
+Please see the API for all parameters, which have to be provided.
+
+Usage
+_____
+
+It is possible to use the precalculation function as stand-alone function to calculate the collector values
+:math:`\dot Q_{coll}`, :math:`\eta_C` and :math:`E_{coll}`. Or it is possible
+to use the ParabolicTroughCollector facade to model a collector with further
+losses (e.g. in pipes or pumps) and the electrical consumption of pipes within a single step.
+Please note: As the unit of the input irradiance is given as power per area,
+the outputs :math:`\dot Q_{coll}` and :math:`E_{coll}` are given in the same
+unit. If these values are used in an oemof source, the unit of the nominal
+value must be an area too.
+
+
+Solar thermal collector calculations
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code-block:: python
+
+    precalc_data = flat_plate_precalc(
+        dataframe,
+        periods,
+        latitude,
+        longitude,
+        timezone,
+        collector_tilt,
+        collector_azimuth,
+        eta_0,
+        a_1,
+        a_2,
+        temp_collector_inlet,
+        delta_temp_n,
+        date_col='hour',
+        irradiance_global_col='global_horizontal_W_m2',
+        irradiance_diffuse_col='diffuse_horizontal_W_m2',
+        temp_amb_col='temp_amb',
+    )
+
+The needed dataframe must hold columns for a date, the ambient temperature and the irradiance. 
+Some of the parameters which have to be provided for the precalculation define the column names
 of the dataframe.
+
+The following figure shows the heat provided by the collector calculated with this
+function in comparison to the heat calculated with a fix efficiency.
+
+.. image:: _pics/solarcollector_compare_precalculations.png
+    :width: 100 %
+    :alt: solarcollector_compare_precalculations.png
+    :align: center
+
 
 SolarThermalCollector facade
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Using the StratifiedThermalStorage facade, you can instantiate a solar thermal collector like this:
+Using the SolarThermalCollector facade, you can instantiate a solar thermal collector like this:
 
 .. code-block:: python
 
@@ -133,39 +177,12 @@ Using the StratifiedThermalStorage facade, you can instantiate a solar thermal c
     	temp_amb_col='temp_amb',
     )
 
+It calculates the heat of the collector in the same
+way as the calculations do. Additionally, it integrates the calculated heat as an input
+into a component, uses an electrical input for pumps and gives a heat output,
+which is reduced by the defined additional losses. See flat_plate_collector_example_facade.py for an application example. It models the same
+system as the flat_plate_collector_example.py, but uses the SolarThermalCollector facade
+instead of separate source and transformer.
 
 To learn about all parameters that can be passed to the facades, have a look at the
 :ref:`api reference for the facade module <api_label>`.
-
-
-Solar thermal collector calculations
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. code-block:: python
-
-    precalc_data = flat_plate_precalc(
-        dataframe,
-        periods,
-        latitude,
-        longitude,
-        timezone,
-        collector_tilt,
-        collector_azimuth,
-        eta_0,
-        a_1,
-        a_2,
-        temp_collector_inlet,
-        delta_temp_n,
-        date_col='hour',
-        irradiance_global_col='global_horizontal_W_m2',
-        irradiance_diffuse_col='diffuse_horizontal_W_m2',
-        temp_amb_col='temp_amb',
-    )
-
-The following figure shows the heat provided by the collector calculated with this
-function in comparison to the heat calculated with a fix efficiency.
-
-.. image:: _pics/solarcollector_compare_precalculations.png
-    :width: 100 %
-    :alt: solarcollector_compare_precalculations.png
-    :align: center
