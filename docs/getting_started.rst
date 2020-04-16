@@ -15,7 +15,17 @@ These functions can be applied to perform pre-calculations of an optimization mo
 optimization results. Besides, they may equally well be used stand-alone (totally independent from
 optimization).
 
-oemof.thermal provides facades for each technology based on the `oemof.tabular.facades module <https://oemof-tabular.readthedocs.io/en/stable/reference/oemof.tabular.html>`_. Facades are classes that allow for a simplified view on more complex classes. More specifically, the facades in this module act as simplified, energy system specific wrappers around oemof's and oemof.solph's more abstract classes. The idea is to be able to instantiate a facade using keyword arguments whose value are derived from simple, tabular data sources. Under the hood the facade then uses these arguments to construct an oemof or oemof.solph component and sets it up to be easily used in an EnergySystem. In oemof.thermal each technology has a facade class, that can be found in the module oemof.thermal.facades. See the :ref:`api reference for the facade module <api_label>` for further information on the structure of these classes.
+To help setting up more detailed components in a simple way, oemof.thermal provides facades based on the
+`oemof.tabular.facades module <https://oemof-tabular.readthedocs.io/en/stable/reference/oemof.tabular.html>`_.
+Facades are classes that offer a simpler interface to more complex classes. More specifically,
+the facades in this module act as simplified, energy system specific wrappers around oemof.solph's
+more abstract classes. Using the facades together with oemof.tabular also makes it possible to
+instantiate a facade using keyword arguments whose value are given as tabular data sources. Under
+the hood the facade then uses these arguments to construct an oemof.solph-component and sets it up
+to be easily used in an :py:obj:`EnergySystem`. In oemof.thermal each technology has a facade class,
+that can be found in the module oemof.thermal.facades. See the
+:ref:`api reference for the facade module <api_label>` for further information on the structure of
+these classes.
 
 For each module, there is a page that explains the scope of the module and its underlying concept.
 Mathematical symbols for commonly used variables and their names in the code are presented in
