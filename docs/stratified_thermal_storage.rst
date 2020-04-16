@@ -108,8 +108,10 @@ These parameters are part of the stratified thermal storage:
     :math:`T_0`               :py:obj:`temp_env`                         Environment temperature
                                                                          timeseries [deg C]
 
-    :math:`Q`                 attribute of oemof-solph component         Stored thermal energy
-                                                                         [MWh]
+    :math:`Q_t`               attribute of oemof-solph component         Stored thermal energy at
+                                                                         time t [MWh]
+
+    :math:`\dot{Q}_{in,t}`    attribute of oemof-solph component         Energy flowing in at time t
 
     :math:`Q_N`               :py:obj:`nominal_storage_capacity`         Maximum amount of
                                                                          stored thermal energy
