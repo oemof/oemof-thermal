@@ -131,19 +131,19 @@ _____
 
 It is possible to use the precalculation function to calculate the values
 :math:`\dot Q_{coll}`, :math:`\eta_C` and :math:`E_{coll}`. Or it is possible
-to use the ParabolicTroughCollector facade to model a collcector with further
+to use the ParabolicTroughCollector facade to model a collector with further
 losses (e.g. in pipes or pumps) and the electrical consumption of pipes.
-Please note: As the unit for the input irradiance is given as power per area,
+Please note: As the unit of the input irradiance is given as power per area,
 the outputs :math:`\dot Q_{coll}` and :math:`E_{coll}` are given in the same
 unit. If this values should be used in an oemof source, the unit of the nominal
-value mus be an area too.
+value must be an area too.
 
 
 precalculation function
 ^^^^^^^^^^^^^^^^^^^^^^^
 
 Please see the :ref:`api of the concentrating_solar_power module <api_label>`
-for all parameters which have to be provided, also the ones which are not part
+for all parameters which have to be provided, also the ones that are not part
 of the described formulas above.
 The data for ambient temperature and irradiance must have the same time index.
 Depending on the method, the irradiance must be the horizontal direct
@@ -174,23 +174,22 @@ calculated with a fix efficiency.
 
 The results of this precalculation can be used in an oemof energy system model
 as an input for a source. To model the behaviour of a collector, it can be
-coplemented with a transformer, which holds the electrical consumption of pumps
-and peripheral heat losses (see the the example "csp_plant_collector).
+complemented with a transformer, which holds the electrical consumption of pumps
+and peripheral heat losses (see the the example csp_plant_collector).
 
 ParabolicTroughCollector facade
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Instead of using the precalculation, it is possible to use the
-ParabolicTroughCollector facade, which will create an oemof component, which
-represent the collector. It calculates the heat of the collector in the same
-way as the precalculation do. Additional, it integrates this heat as an input
+ParabolicTroughCollector facade, which will create an oemof component as a representative for the collector. It calculates the heat of the collector in the same
+way as the precalculation do. Additionally, it integrates this heat as an input
 into a component, uses an electrical input for pumps and gives a heat output,
 which is reduced by the defined additional losses.
-As given in the example, additional parameters are required in addition to the
-parameters for the precalculation. Please see the
+As given in the example, further parameters are required in addition to the
+ones of the precalculation. Please see the
 :ref:`api reference for the facade module <api_label>` for all parameters which
 have to be provided.
-See example example_csp_facade.py for application example. It models the same
+See example_csp_facade.py for an application example. It models the same
 system as the csp_plant_example, but uses the ParabolicTroughCollector facade
 instead of a separate source and transformer.
 
