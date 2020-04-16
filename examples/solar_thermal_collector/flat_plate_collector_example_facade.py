@@ -49,9 +49,10 @@ size_collector = 1000  # m2
 
 # input data
 input_data = pd.read_csv(data_path + 'data_flat_collector.csv').head(periods)
-input_data['hour'] = pd.to_datetime(input_data['hour'])
-input_data.set_index('hour', inplace=True)
+input_data['Datum'] = pd.to_datetime(input_data['Datum'])
+input_data.set_index('Datum', inplace=True)
 input_data.index = input_data.index.tz_localize(tz='Europe/Berlin')
+input_data = input_data.asfreq('H')
 
 demand_df = pd.read_csv(
     os.path.join(base_path, 'data', 'heat_demand.csv'),
