@@ -141,28 +141,35 @@ and flat_plate_collector_example_investment.py).
 SolarThermalCollector facade
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Using the SolarThermalCollector facade, you can instantiate a solar thermal collector like this:
+Instead of using the precalculation, it is possible to use the
+SolarThermalCollector facade, which will create an oemof component 
+as a representative for the collector. It calculates the heat of the collector in the same
+way as the precalculation do. Additionally, it integrates the calculated heat as an input
+into a component, uses an electrical input for pumps and gives a heat output,
+which is reduced by the defined additional losses. As given in the example,
+further parameters are required in addition to the ones of the precalculation. Please see the
+:ref:`api reference for the facade module <api_label>` for all parameters which
+have to be provided.
+
+See flat_plate_collector_example_facade.py for an application example. It models the same
+system as the flat_plate_collector_example.py, but uses the SolarThermalCollector facade
+instead of separate source and transformer.
 
 .. code-block:: python
 
     from oemof import solph
     from oemof.thermal.facades import SolarThermalCollector
-    bth = solph.Bus(label='heat_out_bus')
-    bel = solph.Bus(label='electricity_in_bus')
+    bth = solph.Bus(label='thermal')
+    bel = solph.Bus(label='electricity')
     collector = SolarThermalCollector(
         label='solar_collector',
         heat_out_bus=bth,
         electricity_in_bus=bel,
         electrical_consumption=0.02,
         peripheral_losses=0.05,
-    	dataframe=pd.read_csv(
-    	os.path.join(base_path, 'data', 'data_flat_collector.csv'),
-    	sep=';',
-    	), # todo How to implement the dataframe here??
     	aperture_area=1000,
     	latitude=52.2443,
     	longitude=10.5594,
-    	timezone='Europe/Berlin',
     	collector_tilt=10,
     	collector_azimuth=20,
     	eta_0=0.73,
@@ -170,9 +177,9 @@ Using the SolarThermalCollector facade, you can instantiate a solar thermal coll
     	a_2=0.016,
     	temp_collector_inlet=20,
     	delta_temp_n=10,
-    	irradiance_global='global_horizontal_W_m2',
-    	irradiance_diffuse='diffuse_horizontal_W_m2',
-    	temp_amb_col='temp_amb',
+    	irradiance_global=input_data['global_horizontal_W_m2'],
+    	irradiance_diffuse=input_data['diffuse_horizontal_W_m2'],
+    	temp_amb_col=input_data['temp_amb'],
     )
 
 It calculates the heat of the collector in the same
