@@ -51,7 +51,7 @@ c_e_Transformer_relation(solar_collector_solar_collector_inflow_bus_heat_0)_:
 
 c_e_Transformer_relation(solar_collector_solar_collector_inflow_bus_heat_1)_:
 -1.25 flow(solar_collector_bus_heat_1)
-= -75650.81222326828
+= -75650.812223268411
 
 c_e_Transformer_relation(solar_collector_solar_collector_inflow_bus_heat_2)_:
 -1.25 flow(solar_collector_bus_heat_2)
