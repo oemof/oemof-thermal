@@ -148,7 +148,7 @@ of the described formulas above.
 The data for ambient temperature and irradiance must have the same time index.
 Depending on the method, the irradiance must be the horizontal direct
 irradiance or the direct normal irradiance. Be aware of the correct time index
-regarding the time zone, as the utilized pv lib need the correct time stamp
+regarding the time zone, as the utilized pvlib need the correct time stamp
 corresponding to the location.
 
 
@@ -189,8 +189,9 @@ As given in the example, further parameters are required in addition to the
 ones of the precalculation. Please see the
 :ref:`api reference for the facade module <api_label>` for all parameters which
 have to be provided.
+
 See example_csp_facade.py for an application example. It models the same
-system as the csp_plant_example, but uses the ParabolicTroughCollector facade
+system as the csp_plant_example.py, but uses the ParabolicTroughCollector facade
 instead of separate source and transformer.
 
 
