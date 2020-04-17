@@ -202,3 +202,45 @@ class TestConstraints:
         )
 
         self.compare_to_reference_lp('stratified_thermal_storage_invest_option_2.lp')
+
+
+    def test_solar_thermal_collector_facade(self):
+        """
+        Constraint test of a solar thermal collector.
+        """
+        bus_heat = solph.Bus(label='bus_heat')
+        bus_el = solph.Bus(label='bus_el')
+
+        d = {
+            'Datum': [
+                '01.02.2003 09:00', '01.02.2003 10:00', '01.02.2003 11:00'],
+            'global_horizontal_W_m2': [47, 132, 131],
+            'diffuse_horizontal_W_m2': [37.57155865, 69.72163199, 98.85021832],
+            't_amb': [4, 6, 8]}
+        input_data = pd.DataFrame(data=d)
+        input_data['Datum'] = pd.to_datetime(input_data['Datum'])
+        input_data.set_index('Datum', inplace=True)
+        input_data.index = input_data.index.tz_localize(tz='Europe/Berlin')
+
+        facades.SolarThermalCollector(
+            label='solar_collector',
+            heat_out_bus=bus_heat,
+            electricity_in_bus=bus_el,
+            electrical_consumption=0.02,
+            peripheral_losses=0.05,
+            aperture_area=1000,
+            latitude=52.2443,
+            longitude=10.5594,
+            collector_tilt=10,
+            collector_azimuth=20,
+            eta_0=0.73,
+            a_1=1.7,
+            a_2=0.016,
+            temp_collector_inlet=20,
+            delta_temp_n=10,
+            irradiance_global=input_data['global_horizontal_W_m2'],
+            irradiance_diffuse=input_data['diffuse_horizontal_W_m2'],
+            temp_amb=input_data['temp_amb'])
+            )
+
+        self.compare_to_reference_lp('solar_thermal_collector.lp')
