@@ -103,17 +103,14 @@ unit. If these values are used in an oemof source, the unit of the nominal
 value must be an area too.
 
 
-Solar thermal collector calculations
+Solar thermal collector precalculations
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: python
 
     precalc_data = flat_plate_precalc(
-        dataframe,
-        periods,
         latitude,
         longitude,
-        timezone,
         collector_tilt,
         collector_azimuth,
         eta_0,
@@ -121,15 +118,12 @@ Solar thermal collector calculations
         a_2,
         temp_collector_inlet,
         delta_temp_n,
-        date_col='hour',
-        irradiance_global_col='global_horizontal_W_m2',
-        irradiance_diffuse_col='diffuse_horizontal_W_m2',
-        temp_amb_col='temp_amb',
+        irradiance_global=input_data['global_horizontal_W_m2'],
+        irradiance_diffuse=input_data['diffuse_horizontal_W_m2'],
+        temp_amb=input_data['temp_amb'],
     )
 
-The needed dataframe must hold columns for a date, the ambient temperature and the irradiance. 
-Some of the parameters which have to be provided for the precalculation define the column names
-of the dataframe.
+The input_data must hold columns for the global and diffuse horizontal irradiance and the ambient temperature. 
 
 The following figure shows the heat provided by the collector calculated with this
 function in comparison to the heat calculated with a fix efficiency.
