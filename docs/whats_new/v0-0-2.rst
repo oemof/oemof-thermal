@@ -12,6 +12,9 @@ API changes
 New features
 ------------
 
+* We introduced new facade classes that simplify instantiating components. These facades are now
+  ready to be used: :py:obj:`SolarThermalCollector`, :py:obj:`ParabolicTroughCollector` and
+  :py:obj:`StratifiedThermalStorage`.
 * The function ``compression_heatpumps_and_chillers.calc_cops()`` raises
   Errors in case of wrong argument type or size.
 
@@ -23,7 +26,7 @@ New components
 Documentation
 -------------
 
-* 
+* The documentation has been revised.
 
 Known issues
 ------------
@@ -33,13 +36,18 @@ Known issues
 Bug fixes
 ---------
 
-* Figures and images of svg format did not render in pdfLaTeX (`Issue #46 <https://github.com/oemof/oemof-thermal/issues/46>`_). As a solution to the problem png files have been added and included in the docs.
-* The title of the documentation was 'oemof heat documentation' and not 'oemof.thermal documentation'. Target name and title of documents, that are output within conf.py, have been changed for LaTeX, manual page, Texinfo and Epub.
+* Figures and images of svg format did not render in pdfLaTeX
+  (`Issue #46 <https://github.com/oemof/oemof-thermal/issues/46>`_). As a solution to the problem png
+  files have been added and included in the docs.
+* The title of the documentation was 'oemof heat documentation' and not 'oemof.thermal
+  documentation'. Target name and title of documents, that are output within conf.py,
+  have been changed for LaTeX, manual page, Texinfo and Epub.
 
 Tests
 -----
 
 * The repository now has function tests, see oemof-thermal/tests/test_functions.py
+* The new facade classes are tested with constraint tests oemof-thermal/tests/test_constraints.py
 
 Other changes
 -------------
