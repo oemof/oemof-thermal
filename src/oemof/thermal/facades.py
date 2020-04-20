@@ -135,8 +135,24 @@ class StratifiedThermalStorage(GenericStorage, Facade):
     ----------
     bus: oemof.solph.Bus
         An oemof bus instance where the storage unit is connected to.
-    storage_capacity: numeric
-        The total capacity of the storage (e.g. in MWh)
+    diameter : numeric
+        Diameter of the storage [m]
+    height : numeric
+        Height of the storage [m]
+    temp_h : numeric
+        Temperature of the hot (upper) part of the water body.
+    temp_c : numeric
+        Temperature of the cold (upper) part of the water body.
+    temp_env : numeric
+        Temperature of the environment.
+    u_value : numeric
+        Thermal transmittance [W/(m2*K)]
+    initial_storage_level : numeric
+        Storage level at the start (between 0 and 1).
+    min_storage_level : numeric
+        Minimal storage level (between 0 and 1).
+    max_storage_level : numeric
+            Maximal storage level (between 0 and 1).
     capacity: numeric
         Maximum production capacity (e.g. in MW)
     efficiency: numeric
