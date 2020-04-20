@@ -348,7 +348,8 @@ class ParabolicTroughCollector(Transformer, Facade):
     See the API of csp_precalc in oemof.thermal.concentrating_solar_power for
     the other parameters.
 
-    example:
+    Examples
+    --------
     >>> from oemof import solph
     >>> from oemof.thermal.facades import Collector
     >>> bth = solph.Bus(label='thermal_bus')
@@ -376,7 +377,7 @@ class ParabolicTroughCollector(Transformer, Facade):
     ...     temp_collector_outlet=500,
     ...     temp_amb=input_data['t_amb'],
     ...     irradiance=input_data['E_dir_hor']
-    )
+    ... )
     """
 
     def __init__(self, *args, **kwargs):
