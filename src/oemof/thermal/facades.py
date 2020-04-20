@@ -136,39 +136,44 @@ class StratifiedThermalStorage(GenericStorage, Facade):
     ----------
     bus: oemof.solph.Bus
         An oemof bus instance where the storage unit is connected to.
-    storage_capacity: numeric
-        The total capacity of the storage (e.g. in MWh)
+    diameter : numeric
+        Diameter of the storage [m]
+    height : numeric
+        Height of the storage [m]
+    temp_h : numeric
+        Temperature of the hot (upper) part of the water body.
+    temp_c : numeric
+        Temperature of the cold (upper) part of the water body.
+    temp_env : numeric
+        Temperature of the environment.
+    heat_capacity : numeric
+        Assumed constant for heat capacity of the water.
+    density : numeric
+        Assumed constant for density of the water.
+    u_value : numeric
+        Thermal transmittance [W/(m2*K)]
     capacity: numeric
-        Maximum production capacity (e.g. in MW)
+        Maximum production capacity [MW]
     efficiency: numeric
         Efficiency of charging and discharging process: Default: 1
-    storage_capacity_cost: numeric
-        Investment costs for the storage unit e.g in €/MWh-capacity
+    marginal_cost: numeric
+        Marginal cost for one unit of output.
     expandable: boolean
         True, if capacity can be expanded within optimization. Default: False.
+    storage_capacity_cost: numeric
+        Investment costs for the storage unit [Eur/MWh].
+    capacity_cost : numeric
+        Investment costs for charging/dischargin [Eur/MW]
     storage_capacity_potential: numeric
-        Potential of the investment for storage capacity in MWh
+        Potential of the investment for storage capacity [MWh]
     capacity_potential: numeric
-        Potential of the investment for capacity in MW
+        Potential of the investment for capacity [MW]
     input_parameters: dict (optional)
         Set parameters on the input edge of the storage (see oemof.solph for
         more information on possible parameters)
-    ouput_parameters: dict (optional)
+    output_parameters: dict (optional)
         Set parameters on the output edge of the storage (see oemof.solph for
         more information on possible parameters)
-    Intertemporal energy balance of the storage:
-    .. math::
-        x^{level}(t) =
-        x^{level}(t-1) \cdot (1 - c^{loss\_rate})
-        + \sqrt{c^{efficiency}(t)}  x^{flow, in}(t)
-        - \frac{x^{flow, out}(t)}{\sqrt{c^{efficiency}(t)}}
-        \qquad \forall t \in T
-    .. math::
-        x^{level}(0) = 0.5 \cdot c^{capacity}
-    The **expression** added to the cost minimizing objective funtion
-    for the operation is given as:
-    .. math::
-        x^{opex} = \sum_t (x^{flow, out}(t) \cdot c^{marginal\_cost}(t))
 
     Examples
     ---------
