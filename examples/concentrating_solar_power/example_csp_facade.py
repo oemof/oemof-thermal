@@ -1,3 +1,13 @@
+"""
+Example to show the functionality of the ParabolicTroughCollector facade.
+This application models a csp plant, to meet an electrical demand. The plant
+itself consists of a parabolic trough collector field, a turbine, and a storage.
+The collector is build with the facade, which can be found in the facade modul.
+
+authors: Franziska Pleissner
+
+SPDX-License-Identifier: MIT
+"""
 import os
 import pandas as pd
 import oemof.outputlib as outputlib
