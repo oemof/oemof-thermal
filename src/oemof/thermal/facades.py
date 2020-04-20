@@ -345,6 +345,7 @@ class ParabolicTroughCollector(Transformer, Facade):
     aperture_area: numeric
         Specify the ares or size of the collector.
 
+
     See the API of csp_precalc in oemof.thermal.concentrating_solar_power for
     the other parameters.
 
