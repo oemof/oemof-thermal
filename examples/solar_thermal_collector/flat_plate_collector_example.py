@@ -82,7 +82,6 @@ precalc_data.to_csv(
 eta_losses = 0.05
 elec_consumption = 0.02
 backup_costs = 40
-costs_collector = economics.annuity(20, 20, 0.06)
 costs_storage = economics.annuity(20, 20, 0.06)
 costs_electricity = 1000
 storage_loss_rate = 0.001
