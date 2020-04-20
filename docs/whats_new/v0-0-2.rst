@@ -5,7 +5,7 @@ API changes
 -----------
 
 * concentrating solar power: The input for irradiance is now a time indexed
-series instead of a series and separate information about the date
+  series instead of a series and separate information about the date
 
 
 New features
@@ -21,7 +21,8 @@ New components
 Documentation
 -------------
 
-* Improve the schematic pictures of the components
+* The schematic pictures of the components have been improved
+* Documentation has been extended, in particular for the new facade classes.
 
 Known issues
 ------------
@@ -47,3 +48,4 @@ Contributors
 ------------
 
 * FranziPl
+* jnnr
