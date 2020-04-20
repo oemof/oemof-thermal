@@ -133,8 +133,6 @@ class StratifiedThermalStorage(GenericStorage, Facade):
 
     Parameters
     ----------
-    label : str
-        Unique label.
     bus: oemof.solph.Bus
         An oemof bus instance where the storage unit is connected to.
     diameter : numeric
@@ -147,26 +145,28 @@ class StratifiedThermalStorage(GenericStorage, Facade):
         Temperature of the cold (upper) part of the water body.
     temp_env : numeric
         Temperature of the environment.
+    heat_capacity : numeric
+        Assumed constant for heat capacity of the water.
+    density : numeric
+        Assumed constant for density of the water.
     u_value : numeric
         Thermal transmittance [W/(m2*K)]
-    initial_storage_level : numeric
-        Storage level at the start (between 0 and 1).
-    min_storage_level : numeric
-        Minimal storage level (between 0 and 1).
-    max_storage_level : numeric
-            Maximal storage level (between 0 and 1).
     capacity: numeric
-        Maximum production capacity (e.g. in MW)
+        Maximum production capacity [MW]
     efficiency: numeric
         Efficiency of charging and discharging process: Default: 1
-    storage_capacity_cost: numeric
-        Investment costs for the storage unit e.g in €/MWh-capacity
+    marginal_cost: numeric
+        Marginal cost for one unit of output.
     expandable: boolean
         True, if capacity can be expanded within optimization. Default: False.
+    storage_capacity_cost: numeric
+        Investment costs for the storage unit [Eur/MWh].
+    capacity_cost : numeric
+        Investment costs for charging/dischargin [Eur/MW]
     storage_capacity_potential: numeric
-        Potential of the investment for storage capacity in MWh
+        Potential of the investment for storage capacity [MWh]
     capacity_potential: numeric
-        Potential of the investment for capacity in MW
+        Potential of the investment for capacity [MW]
     input_parameters: dict (optional)
         Set parameters on the input edge of the storage (see oemof.solph for
         more information on possible parameters)
