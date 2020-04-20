@@ -26,9 +26,10 @@ from collections import deque
 
 from oemof.thermal.stratified_thermal_storage import calculate_storage_dimensions,\
     calculate_capacities, calculate_losses
+from oemof.thermal.concentrating_solar_power import csp_precalc
 from oemof.energy_system import EnergySystem
 from oemof.network import Node
-from oemof.solph import Flow, Investment
+from oemof.solph import Flow, Investment, Transformer, Source
 from oemof.solph.components import GenericStorage
 from oemof.solph.plumbing import sequence
 
@@ -320,3 +321,185 @@ class StratifiedThermalStorage(GenericStorage, Facade):
         self.outputs.update({self.bus: fo})
 
         self._set_flows()
+
+
+class ParabolicTroughCollector(Transformer, Facade):
+    r""" Parabolic trough collector unit
+
+    Parameters
+    ----------
+    heat_bus: oemof.solph.Bus
+        An oemof bus instance in which absorbs the collectors heat.
+    electrical_bus: oemof.solph.Bus
+        An oemof bus instance which provides electrical energy to the collector.
+    electrical_consumption: numeric
+        Specifies how much electrical energy is used per provided thermal energy.
+    additional_losses: numeric
+        Specifies how much thermal energy is lost in peripheral parts like
+        pipes and pumps.
+    aperture_area: numeric
+        Specify the ares or size of the collector.
+
+    See the API of csp_precalc in oemof.thermal.concentrating_solar_power for
+    the other parameters.
+
+    example:
+    >>> from oemof import solph
+    >>> from oemof.thermal.facades import Collector
+    >>> bth = solph.Bus(label='thermal_bus')
+    >>> bel = solph.Bus(label='electrical_bus')
+    >>> collector = Collector(
+    ...     label='solar_collector',
+    ...     heat_bus=bth,
+    ...     electrical_bus=bel,
+    ...     electrical_consumption=0.05,
+    ...     additional_losses=0.2,
+    ...     aperture_area=1000,
+    ...     loss_method='Janotte',
+    ...     irradiance_method='horizontal',
+    ...     latitude=23.614328,
+    ...     longitude=58.545284,
+    ...     collector_tilt=10,
+    ...     collector_azimuth=180,
+    ...     x=0.9,
+    ...     a_1=-0.00159,
+    ...     a_2=0.0000977,
+    ...     eta_0=0.816,
+    ...     c_1=0.0622,
+    ...     c_2=0.00023,
+    ...     temp_collector_inlet=435,
+    ...     temp_collector_outlet=500,
+    ...     temp_amb=input_data['t_amb'],
+    ...     irradiance=input_data['E_dir_hor']
+    )
+    """
+
+    def __init__(self, *args, **kwargs):
+
+        kwargs.update(
+            {
+                "_facade_requires_": [
+                    "longitude"
+                ]
+            }
+        )
+        super().__init__(*args, **kwargs)
+
+        self.label = kwargs.get("label")
+
+        self.heat_bus = kwargs.get("heat_bus")
+
+        self.electrical_bus = kwargs.get("electrical_bus")
+
+        self.electrical_consumption = kwargs.get("electrical_consumption")
+
+        self.additional_losses = kwargs.get("additional_losses")
+
+        self.aperture_area = kwargs.get("aperture_area")
+
+        self.latitude = kwargs.get("latitude")
+
+        self.longitude = kwargs.get("longitude")
+
+        self.collector_tilt = kwargs.get("collector_tilt")
+
+        self.collector_azimuth = kwargs.get("collector_azimuth")
+
+        self.cleanliness = kwargs.get("cleanliness")
+
+        self.eta_0 = kwargs.get("eta_0")
+
+        self.c_1 = kwargs.get("c_1")
+
+        self.c_2 = kwargs.get("c_2")
+
+        self.a_1 = kwargs.get("a_1")
+
+        self.a_2 = kwargs.get("a_2")
+
+        self.a_3 = kwargs.get("a_3", 0)
+
+        self.a_4 = kwargs.get("a_4", 0)
+
+        self.a_5 = kwargs.get("a_5", 0)
+
+        self.a_6 = kwargs.get("a_6", 0)
+
+        self.temp_collector_inlet = kwargs.get("temp_collector_inlet")
+
+        self.temp_collector_outlet = kwargs.get("temp_collector_outlet")
+
+        self.temp_amb = kwargs.get("temp_amb")
+
+        self.loss_method = kwargs.get("loss_method")
+
+        self.irradiance_method = kwargs.get("irradiance_method")
+
+        self.irradiance = kwargs.get("irradiance")
+
+        self.expandable = bool(kwargs.get("expandable", False))
+
+        if self.irradiance_method == "horizontal":
+            heat = csp_precalc(
+                self.latitude, self.longitude,
+                self.collector_tilt, self.collector_azimuth, self.cleanliness,
+                self.eta_0, self.c_1, self.c_2,
+                self.temp_collector_inlet, self.temp_collector_outlet,
+                self.temp_amb,
+                self.a_1, self.a_2, self.a_3, self.a_4, self.a_5, self.a_6,
+                loss_method=self.loss_method,
+                irradiance_method=self.irradiance_method,
+                E_dir_hor=self.irradiance
+            )
+        if self.irradiance_method == "normal":
+            heat = csp_precalc(
+                self.latitude, self.longitude,
+                self.collector_tilt, self.collector_azimuth, self.cleanliness,
+                self.eta_0, self.c_1, self.c_2,
+                self.temp_collector_inlet, self.temp_collector_outlet,
+                self.temp_amb,
+                self.a_1, self.a_2, self.a_3, self.a_4, self.a_5, self.a_6,
+                loss_method=self.loss_method,
+                irradiance_method=self.irradiance_method,
+                dni=self.irradiance
+            )
+
+        self.collectors_heat = heat['collector_heat']
+
+        self.build_solph_components()
+
+    def build_solph_components(self):
+        """
+        """
+
+        if self.expandable:
+            raise NotImplementedError(
+                "Investment for reservoir class is not implemented."
+            )
+
+        inflow = Source(
+            label=self.label + "-inflow",
+            outputs={
+                self: Flow(nominal_value=self.aperture_area,
+                           actual_value=self.collectors_heat,
+                           fixed=True)
+            },
+        )
+
+        self.conversion_factors.update(
+            {
+                self.electrical_bus: sequence(self.electrical_consumption
+                                              * (1 - self.additional_losses)),
+                self.heat_bus: sequence(1 - self.additional_losses),
+                inflow: sequence(1)
+            }
+        )
+
+        self.inputs.update(
+            {self.electrical_bus: Flow()}
+        )
+        self.outputs.update(
+            {self.heat_bus: Flow()}
+        )
+
+        self.subnodes = (inflow,)

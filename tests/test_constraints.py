@@ -202,3 +202,45 @@ class TestConstraints:
         )
 
         self.compare_to_reference_lp('stratified_thermal_storage_invest_option_2.lp')
+
+    def test_csp_collector_facade(self):
+        """Constraint test of a csp collector.
+        """
+        bus_heat = solph.Bus(label='bus_heat')
+        bus_el = solph.Bus(label='bus_el')
+
+        d = {
+            'Datum': [
+                '01.02.2003 09:00', '01.02.2003 10:00', '01.02.2003 11:00'],
+            'E_dir_hor': [43.1, 152.7, 76.9],
+            't_amb': [22.2, 23.2, 24.1]}
+        input_data = pd.DataFrame(data=d)
+        input_data['Datum'] = pd.to_datetime(input_data['Datum'])
+        input_data.set_index('Datum', inplace=True)
+        input_data.index = input_data.index.tz_localize(tz='Asia/Muscat')
+
+        facades.ParabolicTroughCollector(
+            label='solar_collector',
+            heat_bus=bus_heat,
+            electrical_bus=bus_el,
+            electrical_consumption=0.05,
+            additional_losses=0.2,
+            aperture_area=1000,
+            loss_method='Janotte',
+            irradiance_method='horizontal',
+            latitude=23.614328,
+            longitude=58.545284,
+            collector_tilt=10,
+            collector_azimuth=180,
+            cleanliness=0.9,
+            a_1=-0.00159,
+            a_2=0.0000977,
+            eta_0=0.816,
+            c_1=0.0622,
+            c_2=0.00023,
+            temp_collector_inlet=435,
+            temp_collector_outlet=500,
+            temp_amb=input_data['t_amb'],
+            irradiance=input_data['E_dir_hor'])
+
+        self.compare_to_reference_lp('csp_collector.lp')

@@ -25,9 +25,13 @@ def csp_precalc(lat, long, collector_tilt, collector_azimuth, cleanliness,
                 irradiance_method='horizontal',
                 **kwargs):
     r"""
-    Calculates collector efficiency and irradiance according to [1] and the
+    Calculates collectors efficiency and irradiance according to [1] and the
     heat of the thermal collector. For the calculation of irradiance pvlib [2]
     is used.
+
+    .. csp_precalc_equation:
+
+    :math:`Q_{coll} = E_{coll} \cdot \eta_C`
 
     functions used
      * pvlib.solarposition.get_solarposition
@@ -379,7 +383,6 @@ def calc_eta_c(eta_0, c_1, c_2, iam,
 
 def calc_heat_coll(eta_c, collector_irradiance):
     r"""
-
     .. csp_heat_equation:
 
     :math:`\dot Q_{coll} = E_{coll} \cdot \eta_C`
@@ -387,7 +390,7 @@ def calc_heat_coll(eta_c, collector_irradiance):
     Parameters
     ----------
     eta_c: series of numeric
-        Collector efficiency.
+        collectors efficiency.
 
     collector_irradiance: series of numeric
         Irradiance on collector after all losses.
