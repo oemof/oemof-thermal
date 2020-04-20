@@ -15,6 +15,8 @@ New features
 * We introduced new facade classes that simplify instantiating components. These facades are now
   ready to be used: :py:obj:`SolarThermalCollector`, :py:obj:`ParabolicTroughCollector` and
   :py:obj:`StratifiedThermalStorage`.
+* We have added a function that implements methods for emission allocation. It is part of a new module
+  :file:`cogeneration.py`.
 * The function ``compression_heatpumps_and_chillers.calc_cops()`` raises
   Errors in case of wrong argument type or size.
 
