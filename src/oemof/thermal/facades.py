@@ -133,6 +133,8 @@ class StratifiedThermalStorage(GenericStorage, Facade):
 
     Parameters
     ----------
+    label : str
+        Unique label.
     bus: oemof.solph.Bus
         An oemof bus instance where the storage unit is connected to.
     diameter : numeric
@@ -168,22 +170,9 @@ class StratifiedThermalStorage(GenericStorage, Facade):
     input_parameters: dict (optional)
         Set parameters on the input edge of the storage (see oemof.solph for
         more information on possible parameters)
-    ouput_parameters: dict (optional)
+    output_parameters: dict (optional)
         Set parameters on the output edge of the storage (see oemof.solph for
         more information on possible parameters)
-    Intertemporal energy balance of the storage:
-    .. math::
-        x^{level}(t) =
-        x^{level}(t-1) \cdot (1 - c^{loss\_rate})
-        + \sqrt{c^{efficiency}(t)}  x^{flow, in}(t)
-        - \frac{x^{flow, out}(t)}{\sqrt{c^{efficiency}(t)}}
-        \qquad \forall t \in T
-    .. math::
-        x^{level}(0) = 0.5 \cdot c^{capacity}
-    The **expression** added to the cost minimizing objective funtion
-    for the operation is given as:
-    .. math::
-        x^{opex} = \sum_t (x^{flow, out}(t) \cdot c^{marginal\_cost}(t))
 
     Examples
     ---------
