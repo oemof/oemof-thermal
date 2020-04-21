@@ -328,7 +328,6 @@ class SolarThermalCollector(Transformer, Facade):       # todo: Solve naming con
 
     Parameters:
     -----------
-
     heat_out_bus: oemof.solph.Bus
         An oemof bus instance which absorbs the collectors heat.
     electrical_in_bus: oemof.solph.Bus
@@ -445,11 +444,6 @@ class SolarThermalCollector(Transformer, Facade):       # todo: Solve naming con
     def build_solph_components(self):
         """
         """
-        self.conversion_factors = \
-            {
-                self.electricity_in_bus: sequence(self.electrical_consumption),
-                self.heat_out_bus: sequence(1 - self.peripheral_losses),
-            }
 
         if self.expandable:
             raise NotImplementedError(
@@ -463,6 +457,15 @@ class SolarThermalCollector(Transformer, Facade):       # todo: Solve naming con
                            actual_value=self.collectors_heat,
                            fixed=True)
             },
+        )
+
+        self.conversion_factors.update(
+            {
+                self.electricity_in_bus: sequence(self.electrical_consumption
+                                                  *(1 - self.peripheral_losses)),
+                self.heat_out_bus: sequence(1 - self.peripheral_losses),
+                inflow: sequence(1)
+            }
         )
 
         self.inputs.update(
