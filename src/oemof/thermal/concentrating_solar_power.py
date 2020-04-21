@@ -25,9 +25,13 @@ def csp_precalc(lat, long, collector_tilt, collector_azimuth, cleanliness,
                 irradiance_method='horizontal',
                 **kwargs):
     r"""
-    Calculates collector efficiency and irradiance according to [1] and the
+    Calculates collectors efficiency and irradiance according to [1] and the
     heat of the thermal collector. For the calculation of irradiance pvlib [2]
     is used.
+
+    .. csp_precalc_equation:
+
+    :math:`Q_{coll} = E_{coll} \cdot \eta_C`
 
     functions used
      * pvlib.solarposition.get_solarposition
@@ -92,16 +96,19 @@ def csp_precalc(lat, long, collector_tilt, collector_azimuth, cleanliness,
 
     Returns
     -------
-    DataFrame: with the following columns
+    data : pandas.DataFrame
+        Dataframe containing the following columns
+
         * collector_irradiance
         * eta_c
         * collector_heat
 
-    collector_irradiance:
-        Calculation of the irradiance which reaches the collector after all
+        collector_irradiance is the irradiance which reaches the collector after all
         losses (incl. cleanliness).
 
-    **comment**
+
+    **Comment**
+
     Series for ambient temperature and irradiance must have the same length
     and the same time index. Be aware of the time one.
 
@@ -379,7 +386,6 @@ def calc_eta_c(eta_0, c_1, c_2, iam,
 
 def calc_heat_coll(eta_c, collector_irradiance):
     r"""
-
     .. csp_heat_equation:
 
     :math:`\dot Q_{coll} = E_{coll} \cdot \eta_C`
@@ -387,7 +393,7 @@ def calc_heat_coll(eta_c, collector_irradiance):
     Parameters
     ----------
     eta_c: series of numeric
-        Collector efficiency.
+        collectors efficiency.
 
     collector_irradiance: series of numeric
         Irradiance on collector after all losses.

@@ -34,7 +34,7 @@ def flat_plate_precalc(
     Calculates collectors heat, efficiency and irradiance
     of a flat plate collector.
 
-    ..flat_plate_precalc_equation:
+    .. flat_plate_precalc_equation:
 
     :math:`Q_{coll} = E_{coll} \cdot \eta_C`
 
@@ -146,7 +146,7 @@ def calc_eta_c_flate_plate(
     r"""
     Calculates collectors efficiency
 
-    ..calc_eta_c_flate_plate_equation:
+    .. calc_eta_c_flate_plate_equation:
 
     :math:`\eta_C = \eta_0 - a_1 \cdot \frac{\Delta T}{E_{coll}}
     - a_2 \cdot \frac{{\Delta T}^2}{E_{coll}}`

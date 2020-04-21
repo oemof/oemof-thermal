@@ -5,13 +5,15 @@ API changes
 -----------
 
 * concentrating solar power: The input for irradiance is now a time indexed
-series instead of a series and separate information about the date
+  series instead of a series and separate information about the date
 
 
 New features
 ------------
-
+* A Facade for the concentrating solar power is now available. There is an
+example which shows how the facade is used.
 * concentrating solar power: losses can be calculated with two methods.
+
 
 New components
 --------------
@@ -21,7 +23,8 @@ New components
 Documentation
 -------------
 
-* Improve the schematic pictures of the components
+* The schematic pictures of the components have been improved
+* Documentation has been extended, in particular for the new facade classes.
 
 Known issues
 ------------
@@ -47,3 +50,4 @@ Contributors
 ------------
 
 * FranziPl
+* jnnr
