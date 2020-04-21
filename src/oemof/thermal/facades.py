@@ -323,7 +323,7 @@ class StratifiedThermalStorage(GenericStorage, Facade):
         self._set_flows()
 
 
-class SolarThermalCollector(Transformer, Facade):       # todo: Solve naming conflict (cf. csp)
+class SolarThermalCollector(Transformer, Facade):
     r""" Solar thermal collector unit
 
     Parameters:
