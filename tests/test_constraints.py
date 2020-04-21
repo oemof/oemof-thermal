@@ -216,7 +216,7 @@ class TestConstraints:
                 '01.02.2003 09:00', '01.02.2003 10:00', '01.02.2003 11:00'],
             'global_horizontal_W_m2': [47, 132, 131],
             'diffuse_horizontal_W_m2': [37.57155865, 69.72163199, 98.85021832],
-            't_amb': [4, 6, 8]}
+            'temp_amb': [4, 6, 8]}
         input_data = pd.DataFrame(data=d)
         input_data['Datum'] = pd.to_datetime(input_data['Datum'])
         input_data.set_index('Datum', inplace=True)
@@ -241,6 +241,5 @@ class TestConstraints:
             irradiance_global=input_data['global_horizontal_W_m2'],
             irradiance_diffuse=input_data['diffuse_horizontal_W_m2'],
             temp_amb=input_data['temp_amb'])
-            )
 
         self.compare_to_reference_lp('solar_thermal_collector.lp')
