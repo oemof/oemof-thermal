@@ -96,16 +96,19 @@ def csp_precalc(lat, long, collector_tilt, collector_azimuth, cleanliness,
 
     Returns
     -------
-    DataFrame: with the following columns
+    data : pandas.DataFrame
+        Dataframe containing the following columns
+
         * collector_irradiance
         * eta_c
         * collector_heat
 
-    collector_irradiance:
-        Calculation of the irradiance which reaches the collector after all
+        collector_irradiance is the irradiance which reaches the collector after all
         losses (incl. cleanliness).
 
-    **comment**
+
+    **Comment**
+
     Series for ambient temperature and irradiance must have the same length
     and the same time index. Be aware of the time one.
 
