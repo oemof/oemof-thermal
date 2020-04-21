@@ -79,7 +79,7 @@ precalc_data.to_csv(
 # regular oemof system #
 
 # parameters for the energy system
-eta_losses = 0.05
+peripheral_losses = 0.05
 elec_consumption = 0.02
 backup_costs = 40
 costs_storage = economics.annuity(20, 20, 0.06)
@@ -130,9 +130,9 @@ collector = solph.Transformer(
     inputs={bcol: solph.Flow(), bel: solph.Flow()},
     outputs={bth: solph.Flow()},
     conversion_factors={
-        bcol: 1 - elec_consumption,
-        bel: elec_consumption,
-        bth: 1 - eta_losses,
+        bcol: 1,
+        bel: elec_consumption * (1 - peripheral_losses),
+        bth: 1 - peripheral_losses
     },
 )
 

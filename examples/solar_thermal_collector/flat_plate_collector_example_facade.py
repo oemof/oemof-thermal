@@ -37,7 +37,7 @@ eta_0 = 0.73
 temp_collector_inlet = 20
 delta_temp_n = 10
 
-eta_losses = 0.05
+peripheral_losses = 0.05
 elec_consumption = 0.02
 backup_costs = 40
 costs_storage = economics.annuity(20, 20, 0.06)
@@ -72,7 +72,7 @@ collector = facades.SolarThermalCollector(
     heat_out_bus=bth,
     electricity_in_bus=bel,
     electrical_consumption=elec_consumption,
-    peripheral_losses=eta_losses,
+    peripheral_losses=peripheral_losses,
     aperture_area=size_collector,
     latitude=latitude,
     longitude=longitude,
