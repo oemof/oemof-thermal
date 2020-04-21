@@ -136,26 +136,20 @@ model = solph.Model(energysystem)
 model.solve(solver='cbc', solve_kwargs={'tee': True})
 
 # save model results to csv
-energysystem.results['main'] = outputlib.processing.results(model)
+results = outputlib.processing.results(model)
 
-collector = outputlib.views.node(energysystem.results['main'],
-                                 'solar_collector-inflow')['sequences']
-thermal_bus = outputlib.views.node(energysystem.results['main'],
-                                   'thermal')['sequences']
-electricity_bus = outputlib.views.node(energysystem.results['main'],
-                                       'electricity')['sequences']
+collector_inflow = outputlib.views.node(
+            results, 'solar_collector-inflow')['sequences']
+thermal_bus = outputlib.views.node(results, 'thermal')['sequences']
+electricity_bus = outputlib.views.node(results, 'electricity')['sequences']
 df = pd.DataFrame()
-df = df.append(collector)
-df = df.join(electricity_bus, lsuffix='_1')
+df = df.append(collector_inflow)
 df = df.join(thermal_bus, lsuffix='_1')
-
-df.to_csv(
-    os.path.join(results_path, 'thermal_bus_flat_plate_facade.csv'),
-    sep=';',
-)
+df = df.join(electricity_bus, lsuffix='_1')
+df.to_csv(results_path + 'facade_results.csv')
 
 # Example plot
-heat_calc = collector / 1000
+heat_calc = collector_inflow / 1000
 irradiance_on_collector = input_data['diffuse_horizontal_W_m2']
 heat_compare = irradiance_on_collector * eta_0
 t = list(range(1, periods + 1))
