@@ -203,7 +203,6 @@ class TestConstraints:
 
         self.compare_to_reference_lp('stratified_thermal_storage_invest_option_2.lp')
 
-
     def test_solar_thermal_collector_facade(self):
         """
         Constraint test of a solar thermal collector.
