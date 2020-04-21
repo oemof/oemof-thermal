@@ -8,9 +8,15 @@ API changes
 * The arguments of ``compression_heatpumps_and_chillers.calc_cops()`` changed.
   ``consider_icing`` was removed. To consider icing in the calculation
   ``factor_icing`` (default value: ``None``) has to be set not None.
+* concentrating solar power: The input for irradiance is now a time indexed
+  series instead of a series and separate information about the date
+
 
 New features
 ------------
+* A Facade for the concentrating solar power is now available. There is an
+example which shows how the facade is used.
+* concentrating solar power: losses can be calculated with two methods.
 
 * We introduced new facade classes that simplify instantiating components. These facades are now
   ready to be used: :py:obj:`SolarThermalCollector`, :py:obj:`ParabolicTroughCollector` and
@@ -29,6 +35,8 @@ Documentation
 -------------
 
 * The documentation has been revised.
+* The schematic pictures of the components have been improved
+* Documentation has been extended, in particular for the new facade classes.
 
 Known issues
 ------------

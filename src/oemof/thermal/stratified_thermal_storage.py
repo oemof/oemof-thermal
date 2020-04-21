@@ -81,7 +81,7 @@ def calculate_storage_dimensions(height, diameter):
 
 
 def calculate_capacities(
-    volume, temp_h, temp_c, nonusable_storage_volume, heat_capacity=4195.52, density=971.803
+    volume, temp_h, temp_c, heat_capacity=4195.52, density=971.803
 ):
     r"""
     Calculates the nominal storage capacity, minimum
@@ -90,10 +90,6 @@ def calculate_capacities(
     .. calculate_capacities-equations:
 
     :math:`Q_N = V \cdot c \cdot \rho \cdot \left( T_{H} - T_{C} \right)`
-
-    :math:`Q_{max} = Q_N \cdot (1-v_{nonusable}/2)`
-
-    :math:`Q_{min} = Q_N \cdot v_{nonusable}/2`
 
     Parameters
     ----------
@@ -105,10 +101,6 @@ def calculate_capacities(
 
     temp_c : numeric
         Temperature of cold storage medium [deg C]
-
-    nonusable_storage_volume : numeric
-        Share of storage volume that is not usable due to occupation by
-        storage inlets [-].
 
     heat_capacity: numeric
         Average specific heat capacity of storage medium [J/(kg*K)]
@@ -125,20 +117,12 @@ def calculate_capacities(
     nominal_storage_capacity : numeric
         Maximum amount of stored thermal energy [MWh]
 
-    max_storage_level : numeric
-        Maximal storage content relative to nominal storage capacity [-]
-
-    min_storage_level : numeric
-        Minimal storage content relative to nominal storage capacity [-]
-
     """
     nominal_storage_capacity = volume * heat_capacity * density * (temp_h - temp_c)
     nominal_storage_capacity *= 1 / 3600  # J to Wh
     nominal_storage_capacity *= 1e-6  # Wh to MWh
-    max_storage_level = 1 - 0.5 * nonusable_storage_volume
-    min_storage_level = 0.5 * nonusable_storage_volume
 
-    return nominal_storage_capacity, max_storage_level, min_storage_level
+    return nominal_storage_capacity
 
 
 def calculate_losses(
