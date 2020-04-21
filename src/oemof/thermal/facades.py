@@ -325,42 +325,50 @@ class StratifiedThermalStorage(GenericStorage, Facade):
 
 class SolarThermalCollector(Transformer, Facade):       # todo: Solve naming conflict (cf. csp)
     r""" Solar thermal collector unit
-    Examples:
+
+    Parameters:
+    -----------
+
+    heat_out_bus: oemof.solph.Bus
+        An oemof bus instance which absorbs the collectors heat.
+    electrical_in_bus: oemof.solph.Bus
+        An oemof bus instance which provides electrical energy to the collector.
+    electrical_consumption: numeric
+        Specifies how much electrical energy is used per provided thermal energy.
+    peripheral_losses: numeric
+        Specifies how much thermal energy is lost in peripheral parts like
+        pipes and pumps as percentage of provided thermal energy.
+    aperture_area: numeric
+        Specifies the size of the collector as surface area.
+
+    See the API of flat_plate_precalc in oemof.thermal.solar_thermal_collector for
+    the other parameters.
+
+    Example:
     ----------
     >>> from oemof import solph
     >>> from oemof.thermal.facades import SolarThermalCollector
-    >>> bth = solph.Bus(label='heat_out_bus')
-    >>> bel = solph.Bus(label='electricity_in_bus')
+    >>> bth = solph.Bus(label='thermal')
+    >>> bel = solph.Bus(label='electricity')
     >>> collector = SolarThermalCollector(
     ...     label='solar_collector',
-    ...     heat_out_bus=bth, #*
-    ...     electricity_in_bus=bel, #*
-    ...     electrical_consumption=0.02, #*
-    ...     peripheral_losses=0.05, #*
-    ...     dataframe=pd.read_csv(
-    ...     os.path.join(base_path, 'data', 'data_flat_collector.csv'),
-    ...     sep=';',
-    ...     ), # todo How to implement the dataframe here??
-    ...     periods=48, #*
-    ...     #aperture_area=1000, # todo: Check if can be deleted
-    ...     #loss_method='Janotte', # todo: Check if can be deleted
-    ...     #irradiance_method='horizontal', # todo: Check if can be deleted
-    ...     latitude=52.2443, #*
-    ...     longitude=10.5594, #*
-    ...     timezone='Europe/Berlin', #*
-    ...     collector_tilt=10, #*
-    ...     collector_azimuth=20, #*
-    ...     #x=0.9, # todo: Check if can be deleted
-    ...     eta_0=0.73, #*
-    ...     a_1=1.7, #*
-    ...     a_2=0.016, #*
-    ...     temp_collector_inlet=20, #*
-    ...     delta_temp_n=10, #*
-    ...     #temp_collector_outlet=500, # todo: Check if can be deleted
-    ...     date_col='hour',
-    ...     irradiance_global_col='global_horizontal_W_m2',
-    ...     irradiance_diffuse_col='diffuse_horizontal_W_m2',
-    ...     temp_amb_col='temp_amb',
+    ...     heat_out_bus=bth,
+    ...     electricity_in_bus=bel,
+    ...     electrical_consumption=0.02,
+    ...     peripheral_losses=0.05,
+    ...     aperture_area=1000,
+    ...     latitude=52.2443,
+    ...     longitude=10.5594,
+    ...     collector_tilt=10,
+    ...     collector_azimuth=20,
+    ...     eta_0=0.73,
+    ...     a_1=1.7,
+    ...     a_2=0.016,
+    ...     temp_collector_inlet=20,
+    ...     delta_temp_n=10,
+    ...     irradiance_global=input_data['global_horizontal_W_m2'],
+    ...     irradiance_diffuse=input_data['diffuse_horizontal_W_m2'],
+    ...     temp_amb=input_data['temp_amb'],
     )
     """
 
