@@ -652,7 +652,7 @@ class SolarThermalCollector(Transformer, Facade):
         self.conversion_factors.update(
             {
                 self.electricity_in_bus: sequence(self.electrical_consumption
-                                                  *(1 - self.peripheral_losses)),
+                                                  * (1 - self.peripheral_losses)),
                 self.heat_out_bus: sequence(1 - self.peripheral_losses),
                 inflow: sequence(1)
             }
