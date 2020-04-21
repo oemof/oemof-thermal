@@ -89,7 +89,7 @@ storage_loss_rate = 0.001
 conversion_storage = 0.98
 
 # busses
-bth = solph.Bus(label='thermal', balanced=True)
+bth = solph.Bus(label='thermal')
 bel = solph.Bus(label='electricity')
 bcol = solph.Bus(label='solar')
 

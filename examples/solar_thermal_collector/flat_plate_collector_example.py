@@ -89,7 +89,7 @@ conversion_storage = 0.98
 size_collector = 1000  # m2
 
 # busses
-bth = solph.Bus(label='thermal', balanced=True)
+bth = solph.Bus(label='thermal')
 bel = solph.Bus(label='electricity')
 bcol = solph.Bus(label='solar')
 
