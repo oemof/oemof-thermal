@@ -93,7 +93,7 @@ _____
 
 It is possible to use the precalculation function as stand-alone function to calculate the collector values
 :math:`\dot Q_{coll}`, :math:`\eta_C` and :math:`E_{coll}`. Or it is possible
-to use the ParabolicTroughCollector facade to model a collector with further
+to use the SolarThermalCollector facade to model a collector with further
 losses (e.g. in pipes or pumps) and the electrical consumption of pipes within a single step.
 Please note: As the unit of the input irradiance is given as power per area,
 the outputs :math:`\dot Q_{coll}` and :math:`E_{coll}` are given in the same
