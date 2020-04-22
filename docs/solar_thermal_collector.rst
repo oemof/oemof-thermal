@@ -182,12 +182,5 @@ instead of separate source and transformer.
     	temp_amb_col=input_data['temp_amb'],
     )
 
-It calculates the heat of the collector in the same
-way as the calculations do. Additionally, it integrates the calculated heat as an input
-into a component, uses an electrical input for pumps and gives a heat output,
-which is reduced by the defined additional losses. See flat_plate_collector_example_facade.py for an application example. It models the same
-system as the flat_plate_collector_example.py, but uses the SolarThermalCollector facade
-instead of separate source and transformer.
-
 To learn about all parameters that can be passed to the facades, have a look at the
 :ref:`api reference for the facade module <api_label>`.
