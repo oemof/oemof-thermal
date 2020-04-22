@@ -103,7 +103,7 @@ value must be an area too.
 
 Solar thermal collector precalculations
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Please see the :ref:`api of the solar_thermal_collector module <api_label>` for all parameters which have to be provided, also the ones that are not part of the described formulas above. The data for the irradiance and the ambient temperature must have the same time index. Be aware of the correct time index regarding the time zone, as the utilized pvlib need the correct time stamp corresponding to the location.
+Please see the :ref:`api of the solar_thermal_collector module <api_label>` for all parameters which have to be provided, also the ones that are not part of the described formulas above. The data for the irradiance and the ambient temperature must have the same time index. Be aware of the correct time index regarding the time zone, as the utilized pvlib needs the correct time stamp corresponding to the location.
 
 .. code-block:: python
 
