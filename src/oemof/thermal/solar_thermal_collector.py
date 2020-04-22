@@ -40,7 +40,7 @@ def flat_plate_precalc(
 
     .. flat_plate_precalc_equation:
 
-    :math:`Q_{coll} = E_{coll} \cdot \eta_C`
+    :math:`\dot Q_{coll} = E_{coll} \cdot \eta_C`
 
     Parameters
     ----------

@@ -53,13 +53,10 @@ to get the collectors heat.
      :start-after:  flat_plate_precalc_equation:
      :end-before: Parameters
 
-The three values :math:`Q_{coll}`, :math:`\eta_C` and :math:`E_{coll}` are returned in a dataframe.
+The three values :math:`\dot Q_{coll}`, :math:`\eta_C` and :math:`E_{coll}` are returned in a dataframe.
 Losses, which occur after the heat absorption in the collector (e.g. losses in pipes)
 have to be taken into account in the component, which uses the precalculation
 (see the example).
-
-Usage
-_____
 
 These arguments are used in the formulas of the function:
 
@@ -87,23 +84,32 @@ These arguments are used in the formulas of the function:
 
     :math:`\eta_0`            :py:obj:`eta_0`                  Optical efficiency of the collector
 
-    :math:`Q_{coll}`          :py:obj:`collector_heat`         Collectors heat
+    :math:`\dot Q_{coll}`          :py:obj:`collector_heat`         Collectors heat
 
     ========================= ================================ ====================================
 
-Please see the API for all parameters, which have to be provided. The needed dataframe
-must hold columns for a date, the ambient temperature and the irradiance. Some of the
-parameters which have to be provided for the precalculation define the column names
-of the dataframe.
+Usage
+_____
+
+It is possible to use the precalculation function as stand-alone function to calculate the collector values
+:math:`\dot Q_{coll}`, :math:`\eta_C` and :math:`E_{coll}`. Or it is possible
+to use the SolarThermalCollector facade to model a collector with further
+losses (e.g. in pipes or pumps) and the electrical consumption of pipes within a single step.
+Please note: As the unit of the input irradiance is given as power per area,
+the outputs :math:`\dot Q_{coll}` and :math:`E_{coll}` are given in the same
+unit. If these values are used in an oemof source, the unit of the nominal
+value must be an area too.
+
+
+Solar thermal collector precalculations
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Please see the :ref:`api of the solar_thermal_collector module <api_label>` for all parameters which have to be provided, also the ones that are not part of the described formulas above. The data for the irradiance and the ambient temperature must have the same time index. Be aware of the correct time index regarding the time zone, as the utilized pvlib needs the correct time stamp corresponding to the location.
 
 .. code-block:: python
 
     precalc_data = flat_plate_precalc(
-        dataframe,
-        periods,
         latitude,
         longitude,
-        timezone,
         collector_tilt,
         collector_azimuth,
         eta_0,
@@ -111,11 +117,12 @@ of the dataframe.
         a_2,
         temp_collector_inlet,
         delta_temp_n,
-        date_col='hour',
-        irradiance_global_col='global_horizontal_W_m2',
-        irradiance_diffuse_col='diffuse_horizontal_W_m2',
-        temp_amb_col='temp_amb',
+        irradiance_global=input_data['global_horizontal_W_m2'],
+        irradiance_diffuse=input_data['diffuse_horizontal_W_m2'],
+        temp_amb=input_data['temp_amb'],
     )
+
+The input_data must hold columns for the global and diffuse horizontal irradiance and the ambient temperature. 
 
 The following figure shows the heat provided by the collector calculated with this
 function in comparison to the heat calculated with a fix efficiency.
@@ -124,3 +131,56 @@ function in comparison to the heat calculated with a fix efficiency.
     :width: 100 %
     :alt: solarcollector_compare_precalculations.png
     :align: center
+
+The results of this precalculation can be used in an oemof energy system model
+as output of a source component. To model the behaviour of a collector, it can be
+complemented with a transformer, which holds the electrical consumption of pumps
+and peripheral heat losses (see the the examples flat_plate_collector_example.py
+and flat_plate_collector_example_investment.py).
+
+SolarThermalCollector facade
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Instead of using the precalculation, it is possible to use the
+SolarThermalCollector facade, which will create an oemof component 
+as a representative for the collector. It calculates the heat of the collector in the same
+way as the precalculation do. Additionally, it integrates the calculated heat as an input
+into a component, uses an electrical input for pumps and gives a heat output,
+which is reduced by the defined additional losses. As given in the example,
+further parameters are required in addition to the ones of the precalculation. Please see the
+:ref:`api reference for the facade module <api_label>` for all parameters which
+have to be provided.
+
+See flat_plate_collector_example_facade.py for an application example. It models the same
+system as the flat_plate_collector_example.py, but uses the SolarThermalCollector facade
+instead of separate source and transformer.
+
+.. code-block:: python
+
+    from oemof import solph
+    from oemof.thermal.facades import SolarThermalCollector
+    bth = solph.Bus(label='thermal')
+    bel = solph.Bus(label='electricity')
+    collector = SolarThermalCollector(
+        label='solar_collector',
+        heat_out_bus=bth,
+        electricity_in_bus=bel,
+        electrical_consumption=0.02,
+        peripheral_losses=0.05,
+    	aperture_area=1000,
+    	latitude=52.2443,
+    	longitude=10.5594,
+    	collector_tilt=10,
+    	collector_azimuth=20,
+    	eta_0=0.73,
+    	a_1=1.7,
+    	a_2=0.016,
+    	temp_collector_inlet=20,
+    	delta_temp_n=10,
+    	irradiance_global=input_data['global_horizontal_W_m2'],
+    	irradiance_diffuse=input_data['diffuse_horizontal_W_m2'],
+    	temp_amb_col=input_data['temp_amb'],
+    )
+
+To learn about all parameters that can be passed to the facades, have a look at the
+:ref:`api reference for the facade module <api_label>`.
