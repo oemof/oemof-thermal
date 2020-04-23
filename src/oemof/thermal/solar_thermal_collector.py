@@ -40,45 +40,47 @@ def flat_plate_precalc(
 
     Parameters
     ----------
-    df: dataframe
-        Holds values for time, the global and diffuse horizontal irradiance and
-        the ambient temperature (in Celsius degrees).
-    periods: numeric
-        Defines the number of timesteps.
-    lat, long: numeric
-        Latitude and longitude of the location.
-    tz: string
-        pytz timezone of the location.
-    collector_tilt, collector_azimuth: numeric
-        Tilt and azimuth of the collector. Azimuth according to pvlib
-        in decimal degrees East of North.
+    lat: numeric
+        Latitude of the location.
+
+    long: numeric
+        Longitude of the location.
+
+    collector_tilt: numeric
+        The tilt of the collector.
+
+    collector_azimuth: numeric
+        The azimuth of the collector. Azimuth according to pvlib in decimal degrees East of North.
+
     eta_0: numeric
         Optical efficiency of the collector.
+
     a_1, a_2: numeric
         Thermal loss parameters.
+
     temp_collector_inlet: numeric or series with length of periods
         Collectors inlet temperature.
+
     delta_temp_n: numeric
         Temperature difference between collector inlet and mean temperature.
-    date_col, irradiance_global_col, irradiance_diffuse_col, temp_amb_col: string
-        Describes the name of the columns in the dataframe df.
-        Defaults: 'date', 'ghi', 'dhi', 'temp_amb'
+
+    irradiance_global: time indexed series
+        Global horizontal irradiance.
+
+    irradiance_diffuse: time indexed series
+        Diffuse irradiance.
+
+    temp_amb: time indexed series
+        Ambient temperature.
 
     Returns
     -------
-    DataFrame
-        The DataFrame will have the following columns:
-        col_ira
-        eta_c
-        collector_heat
+    data : pandas.DataFrame
+        DataFrame containing the followiing columns:
 
-    col_ira:
-        The irradiance on the tilted collector.
-    eta_c:
-        The efficiency of the collector.
-    collector_heat:
-        The heat power output of the collector.
-
+        * col_ira: The irradiance on the tilted collector.
+        * eta_c: The efficiency of the collector.
+        * collector_heat: The heat power output of the collector.
     """
 
     # Creation of a df with 3 columns
