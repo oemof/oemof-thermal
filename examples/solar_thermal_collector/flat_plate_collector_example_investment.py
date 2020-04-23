@@ -163,23 +163,22 @@ energysystem.add(
     collector,
 )
 
+# create and solve the optimization model
 model = solph.Model(energysystem)
 model.solve(solver='cbc', solve_kwargs={'tee': True})
 
-model.write('solar_thermal_collector_model.lp', io_options={'symbolic_solver_labels': True})
+# save model results to csv
+results = outputlib.processing.results(model)
 
-energysystem.results['main'] = outputlib.processing.results(model)
-energysystem.results['meta'] = outputlib.processing.meta_results(model)
-
-collector = outputlib.views.node(energysystem.results['main'], 'collector')
-thermal_bus = outputlib.views.node(energysystem.results['main'], 'thermal')
+collector_inflow = outputlib.views.node(
+            results, 'solar_collector-inflow')['sequences']
+thermal_bus = outputlib.views.node(results, 'thermal')['sequences']
+electricity_bus = outputlib.views.node(results, 'electricity')['sequences']
 df = pd.DataFrame()
-df = df.append(collector['sequences'])
-df = df.join(thermal_bus['sequences'], lsuffix='_1')
-df.to_csv(
-    os.path.join(results_path, 'thermal_bus_flat_plate.csv'),
-    sep=';',
-)
+df = df.append(collector_inflow)
+df = df.join(thermal_bus, lsuffix='_1')
+df = df.join(electricity_bus, lsuffix='_1')
+df.to_csv(results_path + 'flat_plate_investment_results.csv')
 
 # Example plot
 plot_collector_heat(precalc_data, periods, eta_0)
