@@ -71,7 +71,7 @@ precalc_data = flat_plate_precalc(
 )
 
 precalc_data.to_csv(
-    os.path.join(results_path, 'flate_plate_precalcs.csv'),
+    os.path.join(results_path, 'flat_plate_precalcs.csv'),
     sep=';'
 )
 
