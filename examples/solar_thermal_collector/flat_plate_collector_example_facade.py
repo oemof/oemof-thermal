@@ -149,17 +149,14 @@ df = df.join(electricity_bus, lsuffix='_1')
 df.to_csv(results_path + 'facade_results.csv')
 
 # Example plot
-heat_calc = collector_inflow / 1000
-irradiance_on_collector = input_data['diffuse_horizontal_W_m2']
-heat_compare = irradiance_on_collector * eta_0
+heat_calc = collector_inflow
 t = list(range(1, periods + 1))
 
 fig, ax = plt.subplots()
-ax.plot(t, heat_calc, label='CSP precalculation')
-ax.plot(t, heat_compare, label='constant efficiency')
+ax.plot(t, heat_calc)
 ax.set(
     xlabel='time in h',
-    ylabel='Q_coll in kWh',
+    ylabel='Q_coll in W',
     title='Heat of the collector')
 ax.grid()
 ax.legend()
