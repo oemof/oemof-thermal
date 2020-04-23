@@ -86,7 +86,7 @@ costs_storage = economics.annuity(20, 20, 0.06)
 costs_electricity = 1000
 storage_loss_rate = 0.001
 conversion_storage = 0.98
-size_collector = 1000  # m2
+size_collector = 10  # m2
 
 # busses
 bth = solph.Bus(label='thermal')
