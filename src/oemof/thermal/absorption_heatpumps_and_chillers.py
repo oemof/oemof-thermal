@@ -54,7 +54,7 @@ def calc_characteristic_temp(t_hot, t_cool, t_chill, coef_a, coef_e, method):
     Concepts for a reversible operation,”
     in Thermally driven heat pumps for heating and cooling,
     Universitätsverlag der TU Berlin, 2013, pp. 173–184.
-    [http://nbn-resolving.de/urn:nbn:de:kobv:83-opus4-39458]
+    [http://dx.doi.org/10.14279/depositonce-4872]
 
     [2] Maria Puig-Arnavat, Jesús López-Villada, \
     Joan Carles Bruno, Alberto Coronas.
