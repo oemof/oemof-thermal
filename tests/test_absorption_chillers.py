@@ -82,7 +82,7 @@ def test_raised_exception_argument_type():
     with pytest.raises(TypeError):
         ac.calc_characteristic_temp(
             t_hot=[85],
-            t_cool=[30],
+            t_cool=30,
             t_chill=[15],
             coef_a=2.5,
             coef_e=1.8,
