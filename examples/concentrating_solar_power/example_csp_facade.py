@@ -162,7 +162,7 @@ df.to_csv(results_path + 'facade_results.csv')
 
 fig, ax = plt.subplots()
 ax.plot(list(range(periods)), thermal_bus[(('solar_collector', 'thermal'), 'flow')])
-ax.set(xlabel='time [h]', ylabel='Q_coll [W/m2]',
+ax.set(xlabel='time [h]', ylabel='Q_coll [W]',
        title='Heat of the collector')
 ax.grid()
 ax.legend()
