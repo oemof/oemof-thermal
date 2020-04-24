@@ -11,6 +11,7 @@ oemof-thermal/src/oemof/thermal/stratified_thermal_storage.py
 SPDX-License-Identifier: MIT
 """
 
+
 def calc_characteristic_temp(t_hot, t_cool, t_chill, coef_a, coef_e, method):
 
     r"""
@@ -26,10 +27,12 @@ def calc_characteristic_temp(t_hot, t_cool, t_chill, coef_a, coef_e, method):
         External arithmetic mean fluid temperature of hot water at heat exchanger (generator) [K]
 
     t_cool : numeric
-        External arithmetic mean fluid temperature of cooling water at heat exchanger (absorber and condenser) [K]
+        External arithmetic mean fluid temperature of cooling water at
+        heat exchanger (absorber and condenser) [K]
 
     t_chill : numeric
-        External arithmetic mean fluid temperature of chilled water at heat exchanger (evaporater) [K]
+        External arithmetic mean fluid temperature of chilled water at
+        heat exchanger (evaporater) [K]
 
     coeff_a : numeric
         Characteristic parameter [-]
