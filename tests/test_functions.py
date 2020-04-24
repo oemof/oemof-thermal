@@ -362,7 +362,6 @@ def test_csp_wrong_loss_method():
                         a_1, a_2, a_3=0, a_4=0, a_5=0, a_6=0,
                         loss_method='quatsch')
 
-
 def test_eta_janotte():
     s = pd.Series([50], index=[1])
     res = csp.calc_eta_c(0.816, 0.0622, 0.00023, 0.95, 235, 300, 30, s,
@@ -380,6 +379,18 @@ def test_eta_andasol():
 
 
 def test_flat_plate_precalc():
+    d = {
+        'Datum': [
+            '01.01.2003 12:00', '01.01.2003 13:00'],
+        'global_horizontal_W_m2': [112, 129],
+        'diffuse_horizontal_W_m2': [100.3921648, 93.95959036],
+        'temp_amb': [9, 10]}
+
+    input_data = pd.DataFrame(data=d)
+    input_data['Datum'] = pd.to_datetime(input_data['Datum'])
+    input_data.set_index('Datum', inplace=True)
+    input_data.index = input_data.index.tz_localize(tz='Europe/Berlin')
+
     params = {
         'lat': 52.2443,
         'long': 10.5594,
@@ -390,9 +401,9 @@ def test_flat_plate_precalc():
         'a_2': 0.016,
         'temp_collector_inlet': 20,
         'delta_temp_n': 10,
-        'irradiance_global': [112, 129],
-        'irradiance_diffuse': [100.3921648, 93.95959036],
-        'temp_amb': [9, 10]
+        'irradiance_global': input_data['global_horizontal_W_m2'],
+        'irradiance_diffuse': input_data['diffuse_horizontal_W_m2'],
+        'temp_amb': input_data['temp_amb']
     }
     # Save return value from flat_plate_precalc(...) as data
     data = flat_plate_precalc(**params)
