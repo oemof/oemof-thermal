@@ -67,6 +67,16 @@ def calc_characteristic_temp(t_hot, t_cool, t_chill, coef_a, coef_e, method):
     In: International Journal of Refrigeration, 33 (2010) 70-78.
     """
 
+    if not isinstance(t_hot, (list)):
+        raise TypeError("Argument 't_hot' is not of "
+                        "type list!")
+    if not isinstance(t_cool, (list)):
+        raise TypeError("Argument 't_cool' is not of "
+                        "type list!")
+    if not isinstance(t_chill, (list)):
+        raise TypeError("Argument 't_chill' is not of "
+                        "type list!")
+
     lengths = [len(t_hot), len(t_cool), len(t_chill)]
     length = max(lengths)
 
