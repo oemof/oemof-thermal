@@ -409,8 +409,8 @@ def test_flat_plate_precalc():
     data = flat_plate_precalc(**params)
 
     # Data frame containing separately calculated results
-    results = pd.DataFrame({'eta_c': [0.30176452266786186, 0.29787208853863734],
-                            'collectors_heat': [30.128853432617774, 27.848310784333435]})
+    results = pd.DataFrame({'eta_c': [0.32003169094533845, 0.34375125091055275],
+                            'collectors_heat': [33.37642124, 35.95493984]})
 
     assert data['eta_c'].values == approx(results['eta_c'].values) and \
         data['collectors_heat'].values == approx(results['collectors_heat'].values)
