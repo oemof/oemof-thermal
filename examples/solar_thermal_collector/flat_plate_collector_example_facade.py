@@ -139,7 +139,7 @@ model.solve(solver='cbc', solve_kwargs={'tee': True})
 results = outputlib.processing.results(model)
 
 collector_inflow = outputlib.views.node(
-            results, 'solar_collector-inflow')['sequences']
+    results, 'solar_collector-inflow')['sequences']
 thermal_bus = outputlib.views.node(results, 'thermal')['sequences']
 electricity_bus = outputlib.views.node(results, 'electricity')['sequences']
 df = pd.DataFrame()

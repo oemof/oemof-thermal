@@ -173,8 +173,8 @@ electricity_bus = outputlib.views.node(results, 'electricity')['sequences']
 thermal_bus = outputlib.views.node(results, 'thermal')['sequences']
 solar_bus = outputlib.views.node(results, 'solar')['sequences']
 df = pd.merge(
-            pd.merge(electricity_bus, thermal_bus, left_index=True, right_index=True),
-                solar_bus, left_index=True, right_index=True)
+    pd.merge(electricity_bus, thermal_bus, left_index=True, right_index=True),
+    solar_bus, left_index=True, right_index=True)
 df.to_csv(results_path + 'flat_plate_results.csv')
 
 # Example plot
