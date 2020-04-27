@@ -362,6 +362,7 @@ def test_csp_wrong_loss_method():
                         a_1, a_2, a_3=0, a_4=0, a_5=0, a_6=0,
                         loss_method='quatsch')
 
+
 def test_eta_janotte():
     s = pd.Series([50], index=[1])
     res = csp.calc_eta_c(0.816, 0.0622, 0.00023, 0.95, 235, 300, 30, s,
