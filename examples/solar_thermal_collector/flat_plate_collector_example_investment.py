@@ -2,7 +2,7 @@
 
 """
 Example to show the functionality of the solar thermal collector
-with a fixed collector size (aperture area).
+with a collector size (aperture area) to be invested.
 
 authors: Franziska Pleissner, Caroline Möller
 
@@ -71,7 +71,7 @@ precalc_data = flat_plate_precalc(
 )
 
 precalc_data.to_csv(
-    os.path.join(results_path, 'flat_plate_precalcs.csv'),
+    os.path.join(results_path, 'flate_plate_precalcs.csv'),
     sep=';'
 )
 
@@ -82,11 +82,11 @@ precalc_data.to_csv(
 peripheral_losses = 0.05
 elec_consumption = 0.02
 backup_costs = 40
+costs_collector = economics.annuity(20, 20, 0.06)
 costs_storage = economics.annuity(20, 20, 0.06)
 costs_electricity = 1000
 storage_loss_rate = 0.001
 conversion_storage = 0.98
-size_collector = 10  # m2
 
 # busses
 bth = solph.Bus(label='thermal')
@@ -101,7 +101,7 @@ collector_heat = solph.Source(
         bcol: solph.Flow(
             fixed=True,
             actual_value=precalc_data['collectors_heat'],
-            nominal_value=size_collector,
+            investment=solph.Investment(ep_costs=costs_collector),
         )
     },
 )
@@ -163,19 +163,22 @@ energysystem.add(
     collector,
 )
 
+# create and solve the optimization model
 model = solph.Model(energysystem)
 model.solve(solver='cbc', solve_kwargs={'tee': True})
 
 # save model results to csv
 results = outputlib.processing.results(model)
 
-electricity_bus = outputlib.views.node(results, 'electricity')['sequences']
+collector_inflow = outputlib.views.node(
+    results, 'solar_collector-inflow')['sequences']
 thermal_bus = outputlib.views.node(results, 'thermal')['sequences']
-solar_bus = outputlib.views.node(results, 'solar')['sequences']
-df = pd.merge(
-    pd.merge(electricity_bus, thermal_bus, left_index=True, right_index=True),
-    solar_bus, left_index=True, right_index=True)
-df.to_csv(results_path + 'flat_plate_results.csv')
+electricity_bus = outputlib.views.node(results, 'electricity')['sequences']
+df = pd.DataFrame()
+df = df.append(collector_inflow)
+df = df.join(thermal_bus, lsuffix='_1')
+df = df.join(electricity_bus, lsuffix='_1')
+df.to_csv(results_path + 'flat_plate_investment_results.csv')
 
 # Example plot
 plot_collector_heat(precalc_data, periods, eta_0)

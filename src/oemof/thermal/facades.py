@@ -27,6 +27,7 @@ from collections import deque
 from oemof.thermal.stratified_thermal_storage import calculate_storage_dimensions,\
     calculate_capacities, calculate_losses
 from oemof.thermal.concentrating_solar_power import csp_precalc
+from oemof.thermal.solar_thermal_collector import flat_plate_precalc
 from oemof.energy_system import EnergySystem
 from oemof.network import Node
 from oemof.solph import Flow, Investment, Transformer, Source
@@ -507,6 +508,167 @@ class ParabolicTroughCollector(Transformer, Facade):
         )
         self.outputs.update(
             {self.heat_bus: Flow()}
+        )
+
+        self.subnodes = (inflow,)
+
+
+class SolarThermalCollector(Transformer, Facade):
+    r""" Solar thermal collector unit
+
+    Parameters:
+    -----------
+    heat_out_bus: oemof.solph.Bus
+        An oemof bus instance which absorbs the collectors heat.
+    electrical_in_bus: oemof.solph.Bus
+        An oemof bus instance which provides electrical energy to the collector.
+    electrical_consumption: numeric
+        Specifies how much electrical energy is used per provided thermal energy.
+    peripheral_losses: numeric
+        Specifies how much thermal energy is lost in peripheral parts like
+        pipes and pumps as percentage of provided thermal energy.
+    aperture_area: numeric
+        Specifies the size of the collector as surface area.
+
+    See the API of flat_plate_precalc in oemof.thermal.solar_thermal_collector for
+    the other parameters.
+
+    Example:
+    ----------
+    >>> from oemof import solph
+    >>> from oemof.thermal.facades import SolarThermalCollector
+    >>> bth = solph.Bus(label='thermal')
+    >>> bel = solph.Bus(label='electricity')
+    >>> collector = SolarThermalCollector(
+    ...     label='solar_collector',
+    ...     heat_out_bus=bth,
+    ...     electricity_in_bus=bel,
+    ...     electrical_consumption=0.02,
+    ...     peripheral_losses=0.05,
+    ...     aperture_area=1000,
+    ...     latitude=52.2443,
+    ...     longitude=10.5594,
+    ...     collector_tilt=10,
+    ...     collector_azimuth=20,
+    ...     eta_0=0.73,
+    ...     a_1=1.7,
+    ...     a_2=0.016,
+    ...     temp_collector_inlet=20,
+    ...     delta_temp_n=10,
+    ...     irradiance_global=input_data['global_horizontal_W_m2'],
+    ...     irradiance_diffuse=input_data['diffuse_horizontal_W_m2'],
+    ...     temp_amb=input_data['temp_amb'],
+    )
+    """
+
+    def __init__(self, *args, **kwargs):
+
+        kwargs.update(
+            {
+                "_facade_requires_": [
+                    "longitude"
+                ]
+            }
+        )
+        super().__init__(*args, **kwargs)
+
+        self.label = kwargs.get("label")
+
+        self.heat_out_bus = kwargs.get("heat_out_bus")
+
+        self.electricity_in_bus = kwargs.get("electricity_in_bus")
+
+        self.electrical_consumption = kwargs.get("electrical_consumption")
+
+        self.peripheral_losses = kwargs.get("peripheral_losses")
+
+        self.aperture_area = kwargs.get("aperture_area")
+
+        self.latitude = kwargs.get("latitude")
+
+        self.longitude = kwargs.get("longitude")
+
+        self.collector_tilt = kwargs.get("collector_tilt")
+
+        self.collector_azimuth = kwargs.get("collector_azimuth")
+
+        self.eta_0 = kwargs.get("eta_0")
+
+        self.a_1 = kwargs.get("a_1")
+
+        self.a_2 = kwargs.get("a_2")
+
+        self.temp_collector_inlet = kwargs.get("temp_collector_inlet")
+
+        self.delta_temp_n = kwargs.get("delta_temp_n")
+
+        self.irradiance_global = kwargs.get("irradiance_global")
+
+        self.irradiance_diffuse = kwargs.get("irradiance_diffuse")
+
+        self.temp_amb = kwargs.get("temp_amb")
+
+        self.expandable = bool(kwargs.get("expandable", False))
+
+        data = flat_plate_precalc(
+            self.latitude,
+            self.longitude,
+            self.collector_tilt,
+            self.collector_azimuth,
+            self.eta_0,
+            self.a_1,
+            self.a_2,
+            self.temp_collector_inlet,
+            self.delta_temp_n,
+            self.irradiance_global,
+            self.irradiance_diffuse,
+            self.temp_amb,
+        )
+
+        self.collectors_eta_c = data['eta_c']
+
+        self.collectors_heat = data['collectors_heat']
+
+        self.build_solph_components()
+
+    def build_solph_components(self):
+        """
+        """
+
+        if self.expandable:
+            raise NotImplementedError(
+                "Investment for solar thermal collector facade has not been implemented yet."
+            )
+
+        inflow = Source(
+            label=self.label + "-inflow",
+            outputs={
+                self: Flow(nominal_value=self.aperture_area,
+                           actual_value=self.collectors_heat,
+                           fixed=True)
+            },
+        )
+
+        self.conversion_factors.update(
+            {
+                self.electricity_in_bus: sequence(self.electrical_consumption
+                                                  * (1 - self.peripheral_losses)),
+                self.heat_out_bus: sequence(1 - self.peripheral_losses),
+                inflow: sequence(1)
+            }
+        )
+
+        self.inputs.update(
+            {
+                self.electricity_in_bus: Flow(
+                )
+            }
+        )
+        self.outputs.update(
+            {
+                self.heat_out_bus: Flow(
+                )
+            }
         )
 
         self.subnodes = (inflow,)

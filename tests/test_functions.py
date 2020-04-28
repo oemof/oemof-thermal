@@ -380,15 +380,21 @@ def test_eta_andasol():
 
 
 def test_flat_plate_precalc():
+    d = {
+        'Datum': [
+            '01.01.2003 12:00', '01.01.2003 13:00'],
+        'global_horizontal_W_m2': [112, 129],
+        'diffuse_horizontal_W_m2': [100.3921648, 93.95959036],
+        'temp_amb': [9, 10]}
+
+    input_data = pd.DataFrame(data=d)
+    input_data['Datum'] = pd.to_datetime(input_data['Datum'])
+    input_data.set_index('Datum', inplace=True)
+    input_data.index = input_data.index.tz_localize(tz='Europe/Berlin')
+
     params = {
-        'df': pd.DataFrame(data={'hour': [1, 2],
-                                 'ghi': [112, 129],
-                                 'dhi': [100.3921648, 93.95959036],
-                                 'temp_amb': [9, 10]}),
-        'periods': 2,
         'lat': 52.2443,
         'long': 10.5594,
-        'tz': 'Europe/Berlin',
         'collector_tilt': 10,
         'collector_azimuth': 20,
         'eta_0': 0.73,
@@ -396,14 +402,16 @@ def test_flat_plate_precalc():
         'a_2': 0.016,
         'temp_collector_inlet': 20,
         'delta_temp_n': 10,
-        'date_col': 'hour'
+        'irradiance_global': input_data['global_horizontal_W_m2'],
+        'irradiance_diffuse': input_data['diffuse_horizontal_W_m2'],
+        'temp_amb': input_data['temp_amb']
     }
     # Save return value from flat_plate_precalc(...) as data
     data = flat_plate_precalc(**params)
 
     # Data frame containing separately calculated results
-    results = pd.DataFrame({'eta_c': [0.30176452266786186, 0.29787208853863734],
-                            'collectors_heat': [30.128853432617774, 27.848310784333435]})
+    results = pd.DataFrame({'eta_c': [0.32003169094533845, 0.34375125091055275],
+                            'collectors_heat': [33.37642124, 35.95493984]})
 
     assert data['eta_c'].values == approx(results['eta_c'].values) and \
         data['collectors_heat'].values == approx(results['collectors_heat'].values)

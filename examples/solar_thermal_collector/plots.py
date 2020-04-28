@@ -22,7 +22,7 @@ def plot_collector_heat(data_precalc, periods, eta_0):
     ax.plot(t, heat_compare, label='constant efficiency')
     ax.set(
         xlabel='time in h',
-        ylabel='Q_coll in kWh',
+        ylabel='Q_coll in W/m2',
         title='Heat of the collector',
     )
     ax.grid()
