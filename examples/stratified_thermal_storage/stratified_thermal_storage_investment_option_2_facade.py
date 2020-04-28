@@ -2,11 +2,11 @@ import os
 import pandas as pd
 import numpy as np
 
-from oemof.thermal.stratified_thermal_storage import (calculate_storage_u_value,
-                                                      calculate_losses)
+from oemof.thermal.stratified_thermal_storage import calculate_storage_u_value
+from oemof.thermal import facades
+
 from oemof.solph import (Source, Sink, Bus, Flow,
-                         Investment, Model, EnergySystem)
-from oemof.solph.components import GenericStorage
+                         Model, EnergySystem)
 import oemof.outputlib as outputlib
 
 
@@ -21,44 +21,6 @@ u_value = calculate_storage_u_value(
     input_data['lamb_iso'],
     input_data['alpha_inside'],
     input_data['alpha_outside'])
-
-loss_rate, fixed_losses_relative, fixed_losses_absolute = calculate_losses(
-    u_value,
-    input_data['diameter'],
-    input_data['temp_h'],
-    input_data['temp_c'],
-    input_data['temp_env'])
-
-maximum_heat_flow_charging = 0.9
-maximum_heat_flow_discharging = 0.9
-max_storage_level = 0.975
-min_storage_level = 0.025
-
-
-def print_results():
-    parameter = {
-        'EQ-cost [Eur/]': 0,
-        'U-value [W/(m2*K)]': u_value,
-        'Max. heat flow charging [MW]': maximum_heat_flow_charging,
-        'Max. heat flow discharging [MW]': maximum_heat_flow_discharging,
-        'Loss rate [-]': loss_rate,
-        'Fixed relative losses [-]': fixed_losses_relative,
-        'Fixed absolute losses [MWh]': fixed_losses_absolute,
-    }
-
-    dash = '-' * 50
-
-    print(dash)
-    print('{:>32s}{:>15s}'.format('Parameter name', 'Value'))
-    print(dash)
-
-    for name, param in parameter.items():
-        print('{:>32s}{:>15.5f}'.format(name, param))
-
-    print(dash)
-
-
-print_results()
 
 # Set up an energy system model
 solver = 'cbc'
@@ -95,30 +57,32 @@ heat_demand = Sink(
         actual_value=demand_timeseries,
         fixed=True)})
 
-thermal_storage = GenericStorage(
+thermal_storage = facades.StratifiedThermalStorage(
     label='thermal_storage',
-    inputs={bus_heat: Flow(
-        nominal_value=maximum_heat_flow_charging,
-        variable_costs=0.0001)},
-    outputs={bus_heat: Flow(
-        nominal_value=maximum_heat_flow_discharging)},
-    min_storage_level=min_storage_level,
-    max_storage_level=max_storage_level,
-    loss_rate=loss_rate,
-    fixed_losses_relative=fixed_losses_relative,
-    fixed_losses_absolute=fixed_losses_absolute,
-    inflow_conversion_factor=1.,
-    outflow_conversion_factor=1.,
-    investment=Investment(ep_costs=400, minimum=1)
+    bus=bus_heat,
+    diameter=input_data['diameter'],  # TODO: setting to zero should give an error
+    temp_h=input_data['temp_h'],
+    temp_c=input_data['temp_c'],
+    temp_env=input_data['temp_env'],
+    u_value=u_value,
+    expandable=True,
+    capacity_cost=50,
+    storage_capacity_cost=400,
+    minimum_storage_capacity=1,  # TODO: setting to zero should give an error!
+    min_storage_level=input_data['min_storage_level'],
+    max_storage_level=input_data['max_storage_level'],
+    efficiency=1,
+    marginal_cost=0.0001
 )
 
 energysystem.add(bus_heat, heat_source, shortage, excess, heat_demand, thermal_storage)
 
 # create and solve the optimization model
 optimization_model = Model(energysystem)
-optimization_model.write('storage_model.lp', io_options={'symbolic_solver_labels': True})
+
 optimization_model.solve(solver=solver,
                          solve_kwargs={'tee': False, 'keepfiles': False})
+
 # get results
 results = outputlib.processing.results(optimization_model)
 string_results = outputlib.processing.convert_keys_to_strings(results)
@@ -128,9 +92,10 @@ df = pd.concat(sequences, axis=1)
 # print storage sizing
 built_storage_capacity = results[thermal_storage, None]['scalars']['invest']
 initial_storage_capacity = results[thermal_storage, None]['scalars']['init_cap']
-maximum_heat_flow_charging = results[bus_heat, thermal_storage]['scalars']
+maximum_heat_flow_charging = results[bus_heat, thermal_storage]['scalars']['invest']
 
 dash = '-' * 50
 print(dash)
-print('{:>32s}{:>15.3f}'.format('Built storage capacity [MWh]', built_storage_capacity))
+print('{:>32s}{:>15.3f}'.format('Invested capacity [MW]', maximum_heat_flow_charging))
+print('{:>32s}{:>15.3f}'.format('Invested storage capacity [MWh]', built_storage_capacity))
 print(dash)

@@ -1,0 +1,71 @@
+v0.0.2 (2020)
+=============
+
+API changes
+-----------
+
+* The arguments of ``compression_heatpumps_and_chillers.calc_cops()`` changed:
+  ``consider_icing`` was removed. To consider icing in the calculation
+  ``factor_icing`` (default value: ``None``) has to be set not None.
+* concentrating solar power and solar thermal collector: The input for irradiance
+  is now a time indexed series instead of a series and separate information
+  about the date.
+
+New features
+------------
+
+* We introduced new facade classes that simplify instantiating components. These facades are now
+  ready to be used: :py:obj:`SolarThermalCollector`, :py:obj:`ParabolicTroughCollector` and
+  :py:obj:`StratifiedThermalStorage`. There is in each case an example which shows how the facade is used.
+* Concentrating solar power: losses can be calculated with two methods.
+* The function ``compression_heatpumps_and_chillers.calc_cops()`` raises
+  Errors in case of wrong argument type or size.
+* We have added a function that implements methods for emission allocation. It is part of a new module
+  :file:`cogeneration.py`.
+
+Documentation
+-------------
+
+* The documentation has been revised.
+* The schematic pictures of the components have been improved.
+* Documentation has been extended, in particular for the new facade classes.
+* Badges showing build status, docs build status, test coverage and zenodo DOI have been added to the
+  README.rst.
+
+Bug fixes
+---------
+
+* The path to the readin data in csp_collector_plot_example.py has been corrected. The files could not
+  be found because it was given in uppercase letters.
+* Wrong path in api/oemof-thermal.rst automodule has been fixed.
+* The default values for the density and capacity have been corrected in stratified_thermal_storage.py.
+  As a simplification the values are calculated with CoolProp for a constant temperature of 80 °C.
+* Figures and images of svg format did not render in pdfLaTeX
+  (`Issue #46 <https://github.com/oemof/oemof-thermal/issues/46>`_). As a solution to the problem png
+  files have been added and included in the docs.
+* The title of the documentation was 'oemof heat documentation' and not 'oemof.thermal
+  documentation'. Target name and title of documents, that are output within conf.py,
+  have been changed for LaTeX, manual page, Texinfo and Epub.
+
+Tests
+-----
+
+* The repository now has function tests, see oemof-thermal/tests/test_functions.py
+* The new facade classes are tested with constraint tests, see oemof-thermal/tests/test_constraints.py
+
+Other changes
+-------------
+
+* Warnings in the docs and the examples of the stratified thermal storage have been added if
+  the minimum required oemof version for oemof.thermal is not v3.3 while using the attributes
+  fixed_losses_relative and fixed_losses_absolute.
+* The separation in the csv files of the concentrating solar power has been changed from ";" to ",".
+
+Contributors
+------------
+
+* Caroline Möller
+* Franziska Pleißner
+* Jakob Wolf
+* Jann Launer
+* Marie-Claire Gering
