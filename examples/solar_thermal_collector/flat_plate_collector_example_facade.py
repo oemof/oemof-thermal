@@ -160,5 +160,5 @@ ax.set(
     title='Heat of the collector')
 ax.grid()
 ax.legend()
-plt.savefig('compare_precalculations.png')
+plt.savefig('results/compare_precalculations.png')
 plt.show()
