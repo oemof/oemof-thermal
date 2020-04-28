@@ -170,15 +170,13 @@ model.solve(solver='cbc', solve_kwargs={'tee': True})
 # save model results to csv
 results = outputlib.processing.results(model)
 
-collector_inflow = outputlib.views.node(
-    results, 'solar_collector-inflow')['sequences']
-thermal_bus = outputlib.views.node(results, 'thermal')['sequences']
 electricity_bus = outputlib.views.node(results, 'electricity')['sequences']
-df = pd.DataFrame()
-df = df.append(collector_inflow)
-df = df.join(thermal_bus, lsuffix='_1')
-df = df.join(electricity_bus, lsuffix='_1')
-df.to_csv(results_path + 'flat_plate_investment_results.csv')
+thermal_bus = outputlib.views.node(results, 'thermal')['sequences']
+solar_bus = outputlib.views.node(results, 'solar')['sequences']
+df = pd.merge(
+    pd.merge(electricity_bus, thermal_bus, left_index=True, right_index=True),
+    solar_bus, left_index=True, right_index=True)
+df.to_csv(results_path + 'flat_plate_results.csv')
 
 # Example plot
 plot_collector_heat(precalc_data, periods, eta_0)
