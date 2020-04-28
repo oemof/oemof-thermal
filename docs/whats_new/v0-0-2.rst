@@ -4,13 +4,11 @@ v0.0.2 (2020)
 API changes
 -----------
 
-* The components xy has a new API (Facade)...
 * The arguments of ``compression_heatpumps_and_chillers.calc_cops()`` changed.
   ``consider_icing`` was removed. To consider icing in the calculation
   ``factor_icing`` (default value: ``None``) has to be set not None.
 * concentrating solar power: The input for irradiance is now a time indexed
   series instead of a series and separate information about the date
-
 
 New features
 ------------
@@ -24,11 +22,6 @@ New features
 * The function ``compression_heatpumps_and_chillers.calc_cops()`` raises
   Errors in case of wrong argument type or size.
 
-New components
---------------
-
-* 
-
 Documentation
 -------------
 
@@ -37,11 +30,6 @@ Documentation
 * Documentation has been extended, in particular for the new facade classes.
 * Badges showing build status, docs build status, test coverage and zenodo DOI have been added to the
   README.rst
-
-Known issues
-------------
-
-* 
 
 Bug fixes
 ---------
@@ -71,7 +59,6 @@ Other changes
   the minimum required oemof version for oemof.thermal is not v3.3 while using the attributes
   fixed_losses_relative and fixed_losses_absolute.
 * The separation in the csv files of the concentrating solar power has been changed from ";" to ",".
-
 
 Contributors
 ------------
