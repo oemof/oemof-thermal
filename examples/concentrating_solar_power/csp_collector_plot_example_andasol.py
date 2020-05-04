@@ -19,17 +19,17 @@ if not os.path.exists(results_path):
 
 # precalculation #
 
-dataframe = pd.read_csv('csp_data/data_Muscat_22_8.csv')
+dataframe = pd.read_csv('data/data_Muscat_22_8.csv')
 dataframe['Datum'] = pd.to_datetime(dataframe['Datum'])
 dataframe.set_index('Datum', inplace=True)
 dataframe.index = dataframe.index.tz_localize(tz='Asia/Muscat')
 
-df_temp_amb_series = pd.read_csv('csp_data/data_Muscat_22_8_midday.csv')
+df_temp_amb_series = pd.read_csv('data/data_Muscat_22_8_midday.csv')
 df_temp_amb_series['Datum'] = pd.to_datetime(df_temp_amb_series['Datum'])
 df_temp_amb_series.set_index('Datum', inplace=True)
 df_temp_amb_series.index = df_temp_amb_series.index.tz_localize(tz='Asia/Muscat')
 
-temp_amb_series = pd.read_csv('csp_data/temp_ambience.csv')['t_amb']
+temp_amb_series = pd.read_csv('data/temp_ambience.csv')['t_amb']
 
 # parameters for the precalculation
 periods = 24

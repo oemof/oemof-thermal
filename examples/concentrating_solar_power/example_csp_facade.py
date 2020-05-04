@@ -24,7 +24,7 @@ base_path = os.path.dirname(os.path.abspath(os.path.join(__file__)))
 
 results_path = os.path.join(base_path, 'results/')
 lp_path = os.path.join(base_path, 'lp_files/')
-data_path = os.path.join(base_path, 'csp_data/')
+data_path = os.path.join(base_path, 'data/')
 
 if not os.path.exists(results_path):
     os.mkdir(results_path)
