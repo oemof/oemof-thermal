@@ -12,7 +12,7 @@ import oemof.outputlib as outputlib
 
 data_path = os.path.join(
     os.path.dirname(os.path.abspath(__file__)),
-    'stratified_thermal_storage.csv')
+    'data/stratified_thermal_storage.csv')
 
 input_data = pd.read_csv(data_path, index_col=0, header=0)['var_value']
 
