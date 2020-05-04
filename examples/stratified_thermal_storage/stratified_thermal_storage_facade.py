@@ -1,19 +1,15 @@
 import os
-import sys
 import pandas as pd
 import numpy as np
 
+from oemof.solph import Source, Sink, Bus, Flow, Model, EnergySystem  # noqa
 from oemof.thermal import facades
-
-# import functions to compare lp-files of new example with old one.
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'tests')))
-from test_constraints import compare_lp_files  # noqa
-
 from oemof.thermal.stratified_thermal_storage import (  # noqa
     calculate_storage_u_value,
 )
+# import functions to compare lp-files of new example with old one.
+from tests.test_constraints import compare_lp_files  # noqa
 
-from oemof.solph import Source, Sink, Bus, Flow, Model, EnergySystem  # noqa
 
 data_path = os.path.join(
     os.path.dirname(os.path.abspath(__file__)),
