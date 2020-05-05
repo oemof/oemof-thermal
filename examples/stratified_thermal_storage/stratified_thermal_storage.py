@@ -157,7 +157,7 @@ df[[('shortage', 'bus_heat', 'flow'),
     ('heat_source', 'bus_heat', 'flow'),
     ('thermal_storage', 'bus_heat', 'flow')]].plot.area(ax=ax1, stacked=True, color=['y', 'b', 'k'])
 
-(-df[('bus_heat', 'thermal_storage', 'flow')]).plot.area(ax=ax1, color='g')
+(-df[('bus_heat', 'thermal_storage', 'flow')]).plot.area(ax=ax1, color='g', ylim=(-2, 2))
 
 df[('bus_heat', 'heat_demand', 'flow')].plot(ax=ax1, linestyle='-', marker='o', color='r')
 
