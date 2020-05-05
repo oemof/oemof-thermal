@@ -166,5 +166,4 @@ ax.plot(list(range(periods)), thermal_bus[(('collector', 'thermal'), 'flow')])
 ax.set(xlabel='time [h]', ylabel='Q_coll [W]',
        title='Heat of the collector')
 ax.grid()
-ax.legend()
 plt.show()
