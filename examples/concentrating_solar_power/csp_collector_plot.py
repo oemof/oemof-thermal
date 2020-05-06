@@ -1,6 +1,9 @@
 """
-example, which shows the difference between the new approach and a fix
-efficiency
+Example, which shows the difference between the new approach and a fix
+efficiency.
+
+The collectors efficiency and irradiance are calculated depending on
+the default loss method.
 """
 import os
 
