@@ -23,7 +23,6 @@ from oemof.tools import economics
 base_path = os.path.dirname(os.path.abspath(os.path.join(__file__)))
 
 results_path = os.path.join(base_path, 'results/')
-lp_path = os.path.join(base_path, 'lp_files/')
 data_path = os.path.join(base_path, 'data/')
 
 if not os.path.exists(results_path):
@@ -141,12 +140,6 @@ energysystem.add(bth, bel, el_grid, backup, excess, consumer, storage, turbine,
 # create and solve the optimization model
 model = solph.Model(energysystem)
 model.solve(solver='cbc', solve_kwargs={'tee': True})
-
-# if not os.path.exists(lp_path):
-#         os.mkdir(lp_path)
-# model.write(lp_path + 'csp_model_facades.lp',
-#             io_options={'symbolic_solver_labels': True})
-
 
 results = outputlib.processing.results(model)
 
