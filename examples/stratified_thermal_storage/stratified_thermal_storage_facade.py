@@ -7,8 +7,6 @@ from oemof.thermal import facades
 from oemof.thermal.stratified_thermal_storage import (  # noqa
     calculate_storage_u_value,
 )
-# import functions to compare lp-files of new example with old one.
-from tests.test_constraints import compare_lp_files  # noqa
 
 
 data_path = os.path.join(
@@ -98,8 +96,3 @@ energysystem.add(bus_heat, heat_source, shortage, excess, heat_demand, thermal_s
 
 # create and solve the optimization model
 optimization_model = Model(energysystem)
-optimization_model.write('storage_model_facades.lp', io_options={'symbolic_solver_labels': True})
-
-with open('storage_model_facades.lp') as generated_file:
-    with open('storage_model.lp') as expected_file:
-        compare_lp_files(generated_file, expected_file)

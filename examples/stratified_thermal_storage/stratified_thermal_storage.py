@@ -141,7 +141,6 @@ energysystem.add(bus_heat, heat_source, shortage, excess, heat_demand, thermal_s
 
 # create and solve the optimization model
 optimization_model = Model(energysystem)
-optimization_model.write('storage_model.lp', io_options={'symbolic_solver_labels': True})
 optimization_model.solve(solver=solver,
                          solve_kwargs={'tee': False, 'keepfiles': False})
 # get results
