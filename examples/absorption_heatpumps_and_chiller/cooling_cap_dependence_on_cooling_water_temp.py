@@ -44,7 +44,7 @@ Q_dots_evap_80 = abs_hp_chiller.calc_heat_flux(
     method='kuehn_and_ziegler')
 
 
-fig1 = plt.figure()
+fig1 = plt.figure(figsize=(8, 6))
 fig1.set_size_inches(8, 6, forward=True)
 ax1 = fig1.add_subplot(111)
 ax1.grid(axis='y')
