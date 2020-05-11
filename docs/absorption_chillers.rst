@@ -159,9 +159,9 @@ specifications from the manufacturer) if temperatures for at least two
 points of operation are given.
 You find detailed information in the referenced papers.
 
-This package comes with characteristic parameters for five absorption chillers
-published by Puig-Arnavat et al. [2]:
-'Rotartica', 'Safarik', 'Broad_01', 'Broad_02', 'Kuehn'.
+This package comes with characteristic parameters for five absorption chillers.
+Four published by Puig-Arnavat et al. [2]: 'Rotartica', 'Safarik', 'Broad_01' and 'Broad_02' 
+and one published by Kühn and Ziegler [1]: 'Kuehn'.
 If you like to contribute parameters for other machines,
 please feel free to contact us or to contribute directly via github.
 
@@ -210,6 +210,5 @@ __________
 .. include:: ../src/oemof/thermal/absorption_heatpumps_and_chillers.py
   :start-after: Reference**
   :end-before: """
-
 
 
