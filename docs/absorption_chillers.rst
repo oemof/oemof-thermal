@@ -135,7 +135,7 @@ tested at the Technische Universität Berlin [1].
     COPs = Q_dots_evap / Q_dots_gen
 
 Fig.2 illustrates how the cooling capacity and the COP of an absorption
-chiller (here the 10kW absorption chiller mentioned above) depend on the
+chiller (here the 10 kW absorption chiller mentioned above) depend on the
 colling water temperature, i.e. the mean external fluid temperature at
 absorber and condenser.
 
@@ -210,4 +210,3 @@ __________
 .. include:: ../src/oemof/thermal/absorption_heatpumps_and_chillers.py
   :start-after: Reference**
   :end-before: """
-
