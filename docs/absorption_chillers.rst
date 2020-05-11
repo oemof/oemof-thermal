@@ -32,7 +32,7 @@ absorption chillers.
 
 The cooling capacity (:math:`\dot{Q}_{E}`) is determined by a function of
 the characteristic
-temperature difference (:math:`\Delta\Delta T`) that combines the external
+temperature difference (:math:`\Delta\Delta t`) that combines the external
 mean temperatures of the heat exchangers.
 
 Various approaches of the characteristic equation method exists.
@@ -210,5 +210,4 @@ __________
 .. include:: ../src/oemof/thermal/absorption_heatpumps_and_chillers.py
   :start-after: Reference**
   :end-before: """
-
 
