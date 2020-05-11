@@ -22,9 +22,9 @@ A characteristic equation model to describe the performance of
 absorption chillers.
 
 
-.. figure:: _pics/abs_chiller_col_02.png
+.. figure:: _pics/abs_chiller_col.png
     :width: 40 %
-    :alt: abs_chiller_col_02.png
+    :alt: abs_chiller_col.png
     :align: center
     :figclass: align-center
 
