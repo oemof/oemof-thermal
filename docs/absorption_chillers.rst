@@ -136,7 +136,7 @@ tested at the Technische Universität Berlin [1].
 
 Fig.2 illustrates how the cooling capacity and the COP of an absorption
 chiller (here the 10 kW absorption chiller mentioned above) depend on the
-colling water temperature, i.e. the mean external fluid temperature at
+cooling water temperature, i.e. the mean external fluid temperature at
 absorber and condenser.
 
 .. figure:: _pics/cooling_capacity_over_cooling_water_temperature_Kuehn.png
