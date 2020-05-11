@@ -145,7 +145,7 @@ absorber and condenser.
     :align: center
     :figclass: align-center
 
-    Fig.2: Dependency of the cooling capacity and the COP of a 10kW absorption
+    Fig.2: Dependency of the cooling capacity and the COP of a 10 kW absorption
     chiller on the cooling water temperature.
 
 You find the code that is behind Fig.2 in our examples:
