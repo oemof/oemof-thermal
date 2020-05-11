@@ -10,7 +10,7 @@ def read(fname):
 
 
 setup(name='oemof.thermal',
-      version='0.0.1',
+      version='0.0.2',
       author='oemof developer group',
       author_email='oemof@rl-institut.de',
       description=(
@@ -24,5 +24,5 @@ setup(name='oemof.thermal',
       install_requires=['oemof',
                         'matplotlib',
                         'pvlib',
-                        'numpy >= 1.7.0',
-                        'pandas >= 0.18.0'])
+                        'numpy >= 1.7.0, < 1.18',
+                        'pandas >= 0.18.0, < 0.26'])

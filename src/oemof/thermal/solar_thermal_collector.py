@@ -17,11 +17,8 @@ import pandas as pd
 
 
 def flat_plate_precalc(
-    df,
-    periods,
     lat,
     long,
-    tz,
     collector_tilt,
     collector_azimuth,
     eta_0,
@@ -29,80 +26,82 @@ def flat_plate_precalc(
     a_2,
     temp_collector_inlet,
     delta_temp_n,
-    date_col='date',
-    irradiance_global_col='ghi',
-    irradiance_diffuse_col='dhi',
-    temp_amb_col='temp_amb',
+    irradiance_global,
+    irradiance_diffuse,
+    temp_amb
 ):
     r"""
     Calculates collectors heat, efficiency and irradiance
     of a flat plate collector.
 
-    ..flat_plate_precalc_equation:
+    .. flat_plate_precalc_equation:
 
-    :math:`Q_{coll} = E_{coll} \cdot \eta_C`
+    :math:`\dot Q_{coll} = E_{coll} \cdot \eta_C`
 
     Parameters
     ----------
-    df: dataframe
-        Holds values for time, the global and diffuse horizontal irradiance and
-        the ambient temperature (in Celsius degrees).
-    periods: numeric
-        Defines the number of timesteps.
-    lat, long: numeric
-        Latitude and longitude of the location.
-    tz: string
-        pytz timezone of the location.
-    collector_tilt, collector_azimuth: numeric
-        Tilt and azimuth of the collector. Azimuth according to pvlib
-        in decimal degrees East of North.
+    lat: numeric
+        Latitude of the location.
+
+    long: numeric
+        Longitude of the location.
+
+    collector_tilt: numeric
+        The tilt of the collector.
+
+    collector_azimuth: numeric
+        The azimuth of the collector. Azimuth according to pvlib in decimal degrees East of North.
+
     eta_0: numeric
         Optical efficiency of the collector.
+
     a_1, a_2: numeric
         Thermal loss parameters.
+
     temp_collector_inlet: numeric or series with length of periods
         Collectors inlet temperature.
+
     delta_temp_n: numeric
         Temperature difference between collector inlet and mean temperature.
-    date_col, irradiance_global_col, irradiance_diffuse_col, temp_amb_col: string
-        Describes the name of the columns in the dataframe df.
-        Defaults: 'date', 'ghi', 'dhi', 'temp_amb'
+
+    irradiance_global: time indexed series
+        Global horizontal irradiance.
+
+    irradiance_diffuse: time indexed series
+        Diffuse irradiance.
+
+    temp_amb: time indexed series
+        Ambient temperature.
 
     Returns
     -------
-    DataFrame
-        The DataFrame will have the following columns:
-        col_ira
-        eta_c
-        collector_heat
+    data : pandas.DataFrame
+        DataFrame containing the followiing columns:
 
-    col_ira:
-        The irradiance on the tilted collector.
-    eta_c:
-        The efficiency of the collector.
-    collector_heat:
-        The heat power output of the collector.
-
+        * col_ira: The irradiance on the tilted collector.
+        * eta_c: The efficiency of the collector.
+        * collector_heat: The heat power output of the collector.
     """
 
-    date_time_index = pd.date_range(
-        df.loc[0, date_col], periods=periods, freq='H', tz=tz
-    )
-    datainput = df.iloc[:periods]
-
+    # Creation of a df with 3 columns
     data = pd.DataFrame(
         {
-            'date': date_time_index,
-            'ghi': datainput[irradiance_global_col],
-            'dhi': datainput[irradiance_diffuse_col],
-            'temp_amb': datainput[temp_amb_col],
+            'ghi': irradiance_global,
+            'dhi': irradiance_diffuse,
+            'temp_amb': temp_amb
         }
     )
 
-    data.set_index('date', inplace=True)
+    # date_time_index = pd.date_range(
+    #     df.loc[0, date_col], periods=periods, freq='H', tz=tz
+    # )
+    # datainput = df.iloc[:periods]
 
+    # data.set_index('date', inplace=True)
+
+    # Calculation of geometrical position of collector with the pvlib
     solposition = pvlib.solarposition.get_solarposition(
-        time=date_time_index, latitude=lat, longitude=long
+        time=data.index, latitude=lat, longitude=long
     )
 
     dni = pvlib.irradiance.dni(
@@ -149,14 +148,14 @@ def calc_eta_c_flate_plate(
     r"""
     Calculates collectors efficiency
 
-    ..calc_eta_c_flate_plate_equation:
+    .. calc_eta_c_flate_plate_equation:
 
     :math:`\eta_C = \eta_0 - a_1 \cdot \frac{\Delta T}{E_{coll}}
     - a_2 \cdot \frac{{\Delta T}^2}{E_{coll}}`
 
     with
 
-    :math:`\Delta T = T_{collector in} + {\Delta T}_n - T_{amb}`
+    :math:`\Delta T = T_{coll,in} + {\Delta T}_n - T_{amb}`
 
     Parameters
     ----------

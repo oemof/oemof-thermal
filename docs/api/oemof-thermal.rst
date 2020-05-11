@@ -1,7 +1,13 @@
-absorption_heatpumps_and_chillers module
+cogeneration module
 ==========================================================
+.. automodule:: oemof.thermal.cogeneration
+    :members:
+    :undoc-members:
+    :show-inheritance:
 
-.. automodule:: oemof.thermal.absorption_heatpumps_and_chillers
+concentrating_solar_power module
+==========================================================
+.. automodule:: oemof.thermal.concentrating_solar_power
     :members:
     :undoc-members:
     :show-inheritance:
@@ -10,13 +16,6 @@ compression\_heatpumps\_and\_chillers module
 ==========================================================
 
 .. automodule:: oemof.thermal.compression_heatpumps_and_chillers
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-concentrating_solar_power module
-==========================================================
-.. automodule:: oemof.thermal.concentrating_solar_power
     :members:
     :undoc-members:
     :show-inheritance:
@@ -35,9 +34,9 @@ stratified_thermal_storage module
     :undoc-members:
     :show-inheritance:
 
-chp module
-==========================================================
-.. automodule:: oemof.thermal.chp
+facades module
+==============
+.. automodule:: oemof.thermal.facades
     :members:
     :undoc-members:
     :show-inheritance:

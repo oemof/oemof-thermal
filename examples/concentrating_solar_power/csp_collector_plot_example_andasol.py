@@ -9,8 +9,7 @@ import pandas as pd
 
 from oemof.thermal.concentrating_solar_power import csp_precalc
 
-
-# Set results path
+# set results path
 base_path = os.path.dirname(os.path.abspath(os.path.join(__file__)))
 
 results_path = os.path.join(base_path, 'results')
@@ -40,11 +39,16 @@ timezone = 'Asia/Muscat'
 collector_tilt = 10
 collector_azimuth = 180
 cleanliness = 0.9
-a_1 = -0.00159
-a_2 = 0.0000977
-eta_0 = 0.816
-c_1 = 0.0622
-c_2 = 0.00023
+a_1 = -8.65e-4
+a_2 = 8.87e-4
+a_3 = -5.425e-5
+a_4 = 1.665e-6
+a_5 = -2.309e-8
+a_6 = 1.197e-10
+
+eta_0 = 0.78
+c_1 = 64
+c_2 = 0
 temp_collector_inlet = 435
 temp_collector_outlet = 500
 
@@ -55,7 +59,8 @@ data_precalc = csp_precalc(latitude, longitude,
                            eta_0, c_1, c_2,
                            temp_collector_inlet, temp_collector_outlet,
                            dataframe['t_amb'],
-                           a_1, a_2,
+                           a_1, a_2, a_3, a_4, a_5, a_6,
+                           loss_method='Andasol',
                            E_dir_hor=dataframe['E_dir_hor'])
 
 heat_calc = data_precalc['collector_heat']
@@ -68,11 +73,11 @@ t = list(range(1, 25))
 fig, ax = plt.subplots()
 ax.plot(t, heat_calc, label='CSP precalculation')
 ax.plot(t, heat_compare, label='constant efficiency')
-ax.set(xlabel='time [h]', ylabel='Q_coll [W/m2]',
+ax.set(xlabel='time (h)', ylabel='Q_coll [W/m2]',
        title='Heat of the collector')
 ax.grid()
 ax.legend()
-plt.savefig('results/compare_collector_heat_method1.png')
+plt.savefig('results/compare_collector_heat_method2.png')
 
 # plot showing the difference between a constant efficiency and the efficiency
 # depending on the ambient temperature for the same irradiance and hour of the
@@ -86,7 +91,8 @@ for i in range(len(temp_amb_series)):
         eta_0, c_1, c_2,
         temp_collector_inlet, temp_collector_outlet,
         df_temp_amb_series['t_amb'],
-        a_1, a_2,
+        a_1, a_2, a_3, a_4, a_5, a_6,
+        loss_method='Andasol',
         E_dir_hor=df_temp_amb_series['E_dir_hor'])
 
     df_result = df_result.append(data_precalc_temp_amb, ignore_index=True)
@@ -101,4 +107,4 @@ ax.set(xlabel='ambient temperature [°C]', ylabel='eta_collector',
 ax.grid()
 ax.legend()
 plt.show()
-plt.savefig('results/compare_temp_dependency_method1.png')
+plt.savefig('results/compare_temp_dependency_method2.png')

@@ -41,13 +41,10 @@ volume, surface = calculate_storage_dimensions(
     input_data['diameter']
 )
 
-nominal_storage_capacity, max_storage_level, min_storage_level = calculate_capacities(
+nominal_storage_capacity = calculate_capacities(
     volume,
     input_data['temp_h'],
-    input_data['temp_c'],
-    input_data['nonusable_storage_volume'],
-    input_data['heat_capacity'],
-    input_data['density']
+    input_data['temp_c']
 )
 
 loss_rate, fixed_losses_relative, fixed_losses_absolute = calculate_losses(
@@ -58,9 +55,6 @@ loss_rate, fixed_losses_relative, fixed_losses_absolute = calculate_losses(
     input_data['temp_env'],
 )
 
-maximum_heat_flow_charging = 5
-maximum_heat_flow_discharging = 5
-
 
 def print_results():
     parameter = {
@@ -68,10 +62,6 @@ def print_results():
         'Volume [m3]': volume,
         'Surface [m2]': surface,
         'Nominal storage capacity [MWh]': nominal_storage_capacity,
-        'Max. heat flow charging [MW]': maximum_heat_flow_charging,
-        'Max. heat flow discharging [MW]': maximum_heat_flow_discharging,
-        'Max storage level [-]': max_storage_level,
-        'Min storage_level [-]': min_storage_level,
         'Loss rate [-]': loss_rate,
         'Fixed relative losses [-]': fixed_losses_relative,
         'Fixed absolute losses [MWh]': fixed_losses_absolute,
@@ -107,14 +97,14 @@ energysystem.add(bus_simple_thermal_storage)
 storage_list.append(GenericStorage(
     label='simple_thermal_storage',
     inputs={bus_simple_thermal_storage: Flow(
-        nominal_value=maximum_heat_flow_charging,
+        nominal_value=input_data['maximum_heat_flow_charging'],
         variable_costs=0.0001)},
     outputs={bus_simple_thermal_storage: Flow(
-        nominal_value=maximum_heat_flow_discharging,
+        nominal_value=input_data['maximum_heat_flow_discharging'],
         variable_costs=0.0001)},
     nominal_storage_capacity=nominal_storage_capacity,
-    min_storage_level=min_storage_level,
-    max_storage_level=max_storage_level,
+    min_storage_level=input_data['min_storage_level'],
+    max_storage_level=input_data['max_storage_level'],
     initial_storage_level=27 / nominal_storage_capacity,
     loss_rate=0.001,
     inflow_conversion_factor=1.,
@@ -130,14 +120,14 @@ for i, nominal_storage_capacity in enumerate([30, 65, 90]):
     storage_list.append(GenericStorage(
         label=f'stratified_thermal_storage_{nominal_storage_capacity}_MWh',
         inputs={bus_i: Flow(
-            nominal_value=maximum_heat_flow_charging,
+            nominal_value=input_data['maximum_heat_flow_charging'],
             variable_costs=0.0001)},
         outputs={bus_i: Flow(
-            nominal_value=maximum_heat_flow_discharging,
+            nominal_value=input_data['maximum_heat_flow_discharging'],
             variable_costs=0.0001)},
         nominal_storage_capacity=nominal_storage_capacity,
-        min_storage_level=min_storage_level,
-        max_storage_level=max_storage_level,
+        min_storage_level=input_data['min_storage_level'],
+        max_storage_level=input_data['max_storage_level'],
         initial_storage_level=27 / nominal_storage_capacity,
         loss_rate=loss_rate,
         fixed_losses_relative=fixed_losses_relative,

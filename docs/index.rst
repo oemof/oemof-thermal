@@ -3,24 +3,33 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
    
-Welcome oemof-thermal's documentation!
-======================================
+Welcome to oemof.thermal's documentation!
+=========================================
 
-Contents:
+
 
 .. toctree::
    :maxdepth: 1
-
+   :caption: Getting started
 
    getting_started
    examples
-   whats_new
-   concentrating_solar_power
-   heat_pump
-   stratified_thermal_storage
-   solar_thermal_collector
+
+.. toctree::
+   :maxdepth: 1
+   :caption: User's guide
+
+   cogeneration
    compression_heat_pumps_and_chillers
-   absorption_chillers
+   concentrating_solar_power
+   solar_thermal_collector
+   stratified_thermal_storage
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Reference
+
+   whats_new
    api
 
 
@@ -31,4 +40,3 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-

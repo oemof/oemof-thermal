@@ -2,7 +2,7 @@
 
 """
 Example to show the functionality of the solar thermal collector
-with a fixed collector size (aperture area).
+with a collector size (aperture area) to be invested.
 
 authors: Franziska Pleissner, Caroline Möller
 
@@ -71,7 +71,7 @@ precalc_data = flat_plate_precalc(
 )
 
 precalc_data.to_csv(
-    os.path.join(results_path, 'flat_plate_precalcs.csv'),
+    os.path.join(results_path, 'flate_plate_precalcs.csv'),
     sep=';'
 )
 
@@ -82,11 +82,11 @@ precalc_data.to_csv(
 peripheral_losses = 0.05
 elec_consumption = 0.02
 backup_costs = 40
+costs_collector = economics.annuity(20, 20, 0.06)
 costs_storage = economics.annuity(20, 20, 0.06)
 costs_electricity = 1000
 storage_loss_rate = 0.001
 conversion_storage = 0.98
-size_collector = 10  # m2
 
 # busses
 bth = solph.Bus(label='thermal')
@@ -101,7 +101,7 @@ collector_heat = solph.Source(
         bcol: solph.Flow(
             fixed=True,
             actual_value=precalc_data['collectors_heat'],
-            nominal_value=size_collector,
+            investment=solph.Investment(ep_costs=costs_collector),
         )
     },
 )
@@ -163,6 +163,7 @@ energysystem.add(
     collector,
 )
 
+# create and solve the optimization model
 model = solph.Model(energysystem)
 model.solve(solver='cbc', solve_kwargs={'tee': True})
 
