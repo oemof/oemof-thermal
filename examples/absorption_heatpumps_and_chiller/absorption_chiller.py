@@ -10,7 +10,6 @@ import matplotlib.pyplot as plt
 solver = 'cbc'
 debug = False
 number_of_time_steps = 48
-periods = number_of_time_steps
 solver_verbose = False
 
 date_time_index = pd.date_range('1/1/2012', periods=number_of_time_steps,
