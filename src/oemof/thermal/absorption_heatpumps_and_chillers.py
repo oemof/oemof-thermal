@@ -51,15 +51,20 @@ def calc_characteristic_temp(t_hot, t_cool, t_chill, coef_a, coef_e, method):
 
     **Reference**
 
+    [1] A. Kühn, F. Ziegler.
+    “Operational results of a 10 kW absorption chiller and adaptation of
+    the characteristic equation”,
+    Proc. of the 1st Int. Conf. Solar Air Conditioning, 6-7 October 2005,
+    Bad Staffelstein, Germany.
 
-    [1] A. Kühn, C. Özgür-Popanda, and F. Ziegler,
+    [2] A. Kühn, C. Özgür-Popanda, and F. Ziegler.
     “A 10 kW indirectly fired absorption heat pump :
     Concepts for a reversible operation,”
     in Thermally driven heat pumps for heating and cooling,
     Universitätsverlag der TU Berlin, 2013, pp. 173–184.
     [http://dx.doi.org/10.14279/depositonce-4872]
 
-    [2] Maria Puig-Arnavat, Jesús López-Villada, \
+    [3] Maria Puig-Arnavat, Jesús López-Villada, \
     Joan Carles Bruno, Alberto Coronas.
     Analysis and parameter identification for characteristic equations \
     of single- and double-effect absorption chillers by means of \
