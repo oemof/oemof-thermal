@@ -70,15 +70,15 @@ Q_dots_gen = abs_hp_chiller.calc_heat_flux(
     coef_r=charpara[(charpara['name'] == chiller_name)]['r_G'].values[0],
     method='kuehn_and_ziegler')
 COPs = [Qevap / Qgen for Qgen, Qevap in zip(Q_dots_gen, Q_dots_evap)]
-nominal_value = 25
-actual_value = [Q_e / nominal_value for Q_e in Q_dots_evap]
+nominal_Q_dots_evap = 10
+actual_value = [Q_e / nominal_Q_dots_evap for Q_e in Q_dots_evap]
 actual_value_df = pd.DataFrame(actual_value).clip(0)
 
 # Absorption Chiller
 energysystem.add(solph.Transformer(
     label="AC",
     inputs={b_th_high: solph.Flow()},
-    outputs={b_th_low: solph.Flow(nominal_value=nominal_value,
+    outputs={b_th_low: solph.Flow(nominal_value=nominal_Q_dots_evap,
                                   max=actual_value_df.values,
                                   variable_costs=5)},
     conversion_factors={b_th_low: COPs}))
