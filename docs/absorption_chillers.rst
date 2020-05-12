@@ -171,6 +171,8 @@ above in the following way. You find information on the machines in [2].
 .. code-block:: python
 
     import oemof.thermal.absorption_heatpumps_and_chillers as abs_chiller
+    import pandas as pd
+    import os
 
     filename_charpara = os.path.join(os.path.dirname(__file__), 'data/characteristic_parameters.csv')
     charpara = pd.read_csv(filename_charpara)
@@ -197,10 +199,10 @@ above in the following way. You find information on the machines in [2].
     Q_dots_gen = abs_chiller.calc_heat_flux(
         ddts=ddt,
         coef_s=charpara[(charpara['name'] == chiller_name)]['s_G'].values[0],
-        coef_r=charpara[(charpara['name'] == chiller_name)]['R_G'].values[0],
+        coef_r=charpara[(charpara['name'] == chiller_name)]['r_G'].values[0],
         method='kuehn_and_ziegler')
 
-    COPs = Q_dots_evap / Q_dots_gen
+    COPs = [Qevap / Qgen for Qgen, Qevap in zip(Q_dots_gen, Q_dots_evap)]
 
 
 References
