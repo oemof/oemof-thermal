@@ -32,14 +32,14 @@ absorption chillers.
 
 The cooling capacity (:math:`\dot{Q}_{E}`) is determined by a function of
 the characteristic
-temperature difference (:math:`\Delta\Delta t`) that combines the external
+temperature difference (:math:`\Delta\Delta t'`) that combines the external
 mean temperatures of the heat exchangers.
 
 Various approaches of the characteristic equation method exists.
 Here we use the approach described by Kühn and Ziegler [1]:
 
 .. math::
-  \Delta\Delta T = t_{G} - a \cdot t_{AC} + e \cdot t_{E}
+  \Delta\Delta t = t_{G} - a \cdot t_{AC} + e \cdot t_{E}
 
 with the assumption
 
@@ -51,13 +51,13 @@ where :math:`t` is the external mean fluid temperature of the heat exchangers
 and :math:`a` and :math:`e` are characteristic parameters.
 
 The cooling capacity (:math:`\dot{Q}_{E}`) and the driving
-heat (:math:`\dot{Q}_{G}`) can be expressed as linear functions of :math:`\Delta\Delta T`:
+heat (:math:`\dot{Q}_{G}`) can be expressed as linear functions of :math:`\Delta\Delta t'`:
 
 .. math::
-  \dot{Q}_{E} = s_{E} \cdot \Delta\Delta T + r_{E}
+  \dot{Q}_{E} = s_{E} \cdot \Delta\Delta t' + r_{E}
 
 .. math::
-  \dot{Q}_{G} = s_{G} \cdot \Delta\Delta T + r_{G}
+  \dot{Q}_{G} = s_{G} \cdot \Delta\Delta t' + r_{G}
 
 with the characteristic parameters :math:`s_{E}`, :math:`r_{E}`,
 :math:`s_{G}`, and :math:`r_{G}`.
@@ -73,7 +73,7 @@ These arguments are used in the formulas of the function:
     ========================= =================================================== ===========
     symbol                    argument                                            explanation
     ========================= =================================================== ===========
-    :math:`\Delta\Delta T`    :py:obj:`ddt`                                       Characteristic temperature difference
+    :math:`\Delta\Delta t'`    :py:obj:`ddt`                                       Characteristic temperature difference
 
     :math:`t_G`               :py:obj:`t_hot`                                     External mean fluid temperature of generator
 
@@ -160,13 +160,13 @@ points of operation are given.
 You find detailed information in the referenced papers.
 
 This package comes with characteristic parameters for five absorption chillers.
-Four published by Puig-Arnavat et al. [2]: 'Rotartica', 'Safarik', 'Broad_01' and 'Broad_02' 
+Four published by Puig-Arnavat et al. [3]: 'Rotartica', 'Safarik', 'Broad_01' and 'Broad_02'
 and one published by Kühn and Ziegler [1]: 'Kuehn'.
 If you like to contribute parameters for other machines,
 please feel free to contact us or to contribute directly via github.
 
 To model one of the machines provided by this package you can adapt the code
-above in the following way. You find information on the machines in [2].
+above in the following way.
 
 .. code-block:: python
 
@@ -204,6 +204,12 @@ above in the following way. You find information on the machines in [2].
 
     COPs = [Qevap / Qgen for Qgen, Qevap in zip(Q_dots_gen, Q_dots_evap)]
 
+You find information on the machines in [1], [2] and [3].
+Please be aware that [2] introduces a slightly different approach
+(using an improved characteristic equation with :math:`\Delta\Delta t''`
+instead of :math:`\Delta\Delta t'`)
+and therefore find different characteristic parameters that the ones from [1] we
+are using here.
 
 References
 __________
