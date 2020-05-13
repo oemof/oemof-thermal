@@ -1,7 +1,7 @@
-import oemof.thermal.absorption_heatpumps_and_chillers as ac
 import pytest
 import pandas as pd
 import os
+import oemof.thermal.absorption_heatpumps_and_chillers as ac
 
 
 def test_calc_characteristic_temp_Kuehn():
