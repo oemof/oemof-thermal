@@ -1,6 +1,6 @@
+import os
 import pytest
 import pandas as pd
-import os
 import oemof.thermal.absorption_heatpumps_and_chillers as ac
 
 
