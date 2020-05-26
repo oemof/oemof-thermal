@@ -39,8 +39,8 @@ cooling (chiller).
 
 The efficiency of the heat pump cycle process can be described by
 the Coefficient of Performance (COP).
-The COP describes the ratio of useful heat (:math:`\dot{Q}_\mathrm{in}` or :math:`\dot{Q}_\mathrm{out}`) per
-electric work consumed:
+The COP describes the ratio of useful heat :math:`\dot{Q}_\mathrm{useful}` (:math:`\dot{Q}_\mathrm{in}` or :math:`\dot{Q}_\mathrm{out}`) per
+electric work :math:`P_\mathrm{el}` consumed:
 
 .. math::
         COP = \frac{\dot{Q}_\mathrm{useful}}{P_\mathrm{el}}
