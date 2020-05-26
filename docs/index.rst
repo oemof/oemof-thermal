@@ -24,6 +24,7 @@ Welcome to oemof.thermal's documentation!
    concentrating_solar_power
    solar_thermal_collector
    stratified_thermal_storage
+   theoretical_considerations
 
 .. toctree::
    :maxdepth: 1
