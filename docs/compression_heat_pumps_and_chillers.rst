@@ -123,7 +123,6 @@ These arguments are input to the functions:
                     temp_low,
                     quality_grade,
                     temp_threshold_icing,
-                    consider_icing,
                     factor_icing,
                     mode)
 
