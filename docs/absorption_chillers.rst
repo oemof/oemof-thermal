@@ -207,9 +207,8 @@ above in the following way.
 You find information on the machines in [1], [2] and [3].
 Please be aware that [2] introduces a slightly different approach
 (using an improved characteristic equation with :math:`\Delta\Delta t''`
-instead of :math:`\Delta\Delta t'`)
-and therefore find different characteristic parameters that the ones from [1] we
-are using here.
+instead of :math:`\Delta\Delta t'`).
+The characteristic parameters that we use are derived from [2] and therefore differ from those in [1].
 
 References
 __________
