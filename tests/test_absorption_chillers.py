@@ -111,3 +111,15 @@ def test_raised_exception_argument_length_02():
             coef_a=2.5,
             coef_e=1.8,
             method='kuehn_and_ziegler')
+
+
+def test_raised_exception_method_selection():
+    """Test if an exception is raised if unknown method name is passed."""
+    with pytest.raises(ValueError):
+        ac.calc_characteristic_temp(
+            t_hot=[85],
+            t_cool=[30],
+            t_chill=[15],
+            coef_a=2.5,
+            coef_e=1.8,
+            method='shaken_not_stirred')
