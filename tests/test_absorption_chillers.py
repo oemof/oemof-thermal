@@ -93,9 +93,9 @@ def test_raised_exception_argument_length_01():
     """Test if an exception is raised if input argument is too long."""
     with pytest.raises(ValueError):
         ac.calc_characteristic_temp(
-            t_hot=[85],
-            t_cool=[30] * 2,
-            t_chill=[15],
+            t_hot=[85] * 2,
+            t_cool=[30] * 3,
+            t_chill=[15] * 2,
             coef_a=2.5,
             coef_e=1.8,
             method='kuehn_and_ziegler')
