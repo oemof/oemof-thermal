@@ -77,13 +77,37 @@ def test_calc_heat_flux_generator():
     assert Q_dots_gen == [584.92]
 
 
-def test_raised_exception_argument_type():
+def test_raised_exception_argument_type_01():
+    """Test if an exception is raised if input argument is not a list."""
+    with pytest.raises(TypeError):
+        ac.calc_characteristic_temp(
+            t_hot=85,
+            t_cool=[30],
+            t_chill=[15],
+            coef_a=2.5,
+            coef_e=1.8,
+            method='kuehn_and_ziegler')
+
+
+def test_raised_exception_argument_type_02():
     """Test if an exception is raised if input argument is not a list."""
     with pytest.raises(TypeError):
         ac.calc_characteristic_temp(
             t_hot=[85],
             t_cool=30,
             t_chill=[15],
+            coef_a=2.5,
+            coef_e=1.8,
+            method='kuehn_and_ziegler')
+
+
+def test_raised_exception_argument_type_03():
+    """Test if an exception is raised if input argument is not a list."""
+    with pytest.raises(TypeError):
+        ac.calc_characteristic_temp(
+            t_hot=[85],
+            t_cool=[30],
+            t_chill=15,
             coef_a=2.5,
             coef_e=1.8,
             method='kuehn_and_ziegler')
@@ -113,7 +137,7 @@ def test_raised_exception_argument_length_02():
             method='kuehn_and_ziegler')
 
 
-def test_raised_exception_method_selection():
+def test_raised_exception_method_selection_01():
     """Test if an exception is raised if unknown method name is passed."""
     with pytest.raises(ValueError):
         ac.calc_characteristic_temp(
@@ -122,4 +146,14 @@ def test_raised_exception_method_selection():
             t_chill=[15],
             coef_a=2.5,
             coef_e=1.8,
+            method='shaken_not_stirred')
+
+
+def test_raised_exception_method_selection_02():
+    """Test if an exception is raised if unknown method name is passed."""
+    with pytest.raises(ValueError):
+        ac.calc_heat_flux(
+            ddts=25,
+            coef_s=0.42,
+            coef_r=0.9,
             method='shaken_not_stirred')
