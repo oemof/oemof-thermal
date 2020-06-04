@@ -91,27 +91,23 @@ def calc_characteristic_temp(t_hot, t_cool, t_chill, coef_a, coef_e, method):
     elif len(t_hot) == length:
         list_t_g = t_hot
     else:
-        print("")
-        print("ERROR - "
-              "Length of argument 't_hot' seems not to match requirements")
+        raise ValueError("Length of argument 't_hot' does not to match requirements")
+
     # External mean temperature at absorber/condenser (ac)
     if len(t_cool) == 1:
         list_t_ac = t_cool * length
     elif len(t_cool) == length:
         list_t_ac = t_cool
     else:
-        print("")
-        print("ERROR - "
-              "Length of argument 't_cool' seems not to match requirements")
+        raise ValueError("Length of argument 't_cool' does not to match requirements")
+
     # External mean temperature at evaporator (e)
     if len(t_chill) == 1:
         list_t_e = t_chill * length
     elif len(t_chill) == length:
         list_t_e = t_chill
     else:
-        print("")
-        print("ERROR - "
-              "Length of argument 't_chill' seems not to match requirements")
+        raise ValueError("Length of argument 't_chill' does not to match requirements")
 
     if method == 'kuehn_and_ziegler':
         ddts = [t_g - coef_a * t_ac + coef_e * t_e for
