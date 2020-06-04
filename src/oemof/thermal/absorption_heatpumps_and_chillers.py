@@ -114,12 +114,8 @@ def calc_characteristic_temp(t_hot, t_cool, t_chill, coef_a, coef_e, method):
                 t_g, t_ac, t_e in zip(list_t_g, list_t_ac, list_t_e)]
     else:
         ddts = None
-        print("")
-        print("ERROR - Unknown argument 'method'.")
-        print("Possible options: 'kuehn_and_ziegler'")
-        print("ddt was not calculated!")
-        print("")
-
+        raise ValueError("Unrecognized input for argument 'method'. "
+                         "Possible options: 'kuehn_and_ziegler'.")
     return ddts
 
 
