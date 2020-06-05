@@ -19,8 +19,8 @@ import pytest
 import pandas as pd
 
 from oemof.thermal import facades
-from oemof.network import Node
-from oemof.tools import helpers
+from oemof.network.network import Node
+from oemof.solph import helpers
 import oemof.solph as solph
 
 
