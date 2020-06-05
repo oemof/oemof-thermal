@@ -12,7 +12,7 @@ def read(fname):
 setup(name='oemof.thermal',
       version='0.0.2',
       author='oemof developer group',
-      author_email='oemof@rl-institut.de',
+      author_email='contact@oemof.org',
       description=(
           'Thermal energy components for '
           'the open energy modelling framework.'
