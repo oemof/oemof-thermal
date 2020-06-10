@@ -17,7 +17,7 @@ from oemof.thermal.concentrating_solar_power import csp_precalc
 import oemof.outputlib as outputlib
 import matplotlib.pyplot as plt
 
-# set path
+# Set paths
 base_path = os.path.dirname(os.path.abspath(os.path.join(__file__)))
 
 results_path = os.path.join(base_path, 'results/')

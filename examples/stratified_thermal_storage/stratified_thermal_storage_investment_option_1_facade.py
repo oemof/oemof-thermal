@@ -20,6 +20,7 @@ from oemof.solph import (Source, Sink, Bus, Flow,
 import oemof.outputlib as outputlib
 
 
+# Set paths
 data_path = os.path.join(
     os.path.dirname(os.path.abspath(__file__)),
     'data/stratified_thermal_storage.csv')

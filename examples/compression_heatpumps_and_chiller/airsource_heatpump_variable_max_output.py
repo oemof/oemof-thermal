@@ -16,6 +16,10 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
+
+# Set paths
+data_path = os.path.join(os.path.dirname(__file__), 'data/ASHP_example.csv')
+
 solver = 'cbc'
 number_of_time_steps = 24
 solver_verbose = False
@@ -26,8 +30,7 @@ date_time_index = pd.date_range('1/1/2012', periods=number_of_time_steps,
 energysystem = solph.EnergySystem(timeindex=date_time_index)
 
 # Read data file
-filename = os.path.join(os.path.dirname(__file__), 'data/ASHP_example.csv')
-data = pd.read_csv(filename)
+data = pd.read_csv(data_path)
 
 b_el = solph.Bus(label="electricity")
 

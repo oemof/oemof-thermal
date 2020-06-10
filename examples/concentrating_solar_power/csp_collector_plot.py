@@ -13,7 +13,7 @@ import pandas as pd
 from oemof.thermal.concentrating_solar_power import csp_precalc
 
 
-# Set results path
+# Set paths
 base_path = os.path.dirname(os.path.abspath(os.path.join(__file__)))
 
 results_path = os.path.join(base_path, 'results')

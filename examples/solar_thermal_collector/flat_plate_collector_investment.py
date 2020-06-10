@@ -19,7 +19,7 @@ import oemof.outputlib as outputlib
 from plots import plot_collector_heat
 
 
-# set paths
+# Set paths
 base_path = os.path.dirname(os.path.abspath(os.path.join(__file__)))
 data_path = os.path.join(base_path, 'data/')
 results_path = os.path.join(base_path, 'results/')

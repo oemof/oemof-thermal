@@ -19,7 +19,7 @@ from oemof import solph
 from oemof.tools import economics
 
 
-# set paths
+# Set paths
 base_path = os.path.dirname(os.path.abspath(os.path.join(__file__)))
 
 results_path = os.path.join(base_path, 'results/')
