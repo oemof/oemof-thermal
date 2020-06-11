@@ -99,8 +99,7 @@ collector_heat = solph.Source(
     label='collector_heat',
     outputs={
         bcol: solph.Flow(
-            fixed=True,
-            actual_value=precalc_data['collectors_heat'],
+            fix=precalc_data['collectors_heat'],
             investment=solph.Investment(ep_costs=costs_collector),
         )
     },
@@ -117,7 +116,7 @@ backup = solph.Source(
 
 consumer = solph.Sink(
     label='demand',
-    inputs={bth: solph.Flow(fixed=True, actual_value=demand, nominal_value=1)},
+    inputs={bth: solph.Flow(fix=demand, nominal_value=1)},
 )
 
 collector_excess_heat = solph.Sink(

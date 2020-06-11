@@ -49,8 +49,7 @@ energysystem.add(solph.Source(
 
 energysystem.add(solph.Sink(
     label='demand',
-    inputs={b_th_high: solph.Flow(actual_value=data['demand_heat'],
-                                  fixed=True,
+    inputs={b_th_high: solph.Flow(fix=data['demand_heat'],
                                   nominal_value=1)}))
 
 # Pre-Calculate COPs

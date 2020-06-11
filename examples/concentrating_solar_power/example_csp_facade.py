@@ -108,8 +108,7 @@ backup = solph.Source(
 consumer = solph.Sink(
     label='demand',
     inputs={bel: solph.Flow(
-        fixed=True,
-        actual_value=input_data['ES_load_actual_entsoe_power_statistics'],
+        fix=input_data['ES_load_actual_entsoe_power_statistics'],
         nominal_value=1)})
 
 excess = solph.Sink(

@@ -85,8 +85,7 @@ bcol = solph.Bus(label='solar')
 col_heat = solph.Source(
     label='collector_heat',
     outputs={bcol: solph.Flow(
-        fixed=True,
-        actual_value=data_precalc['collector_heat'],
+        fix=data_precalc['collector_heat'],
         nominal_value=size_collector)})
 
 el_grid = solph.Source(
@@ -100,8 +99,7 @@ backup = solph.Source(
 consumer = solph.Sink(
     label='demand',
     inputs={bel: solph.Flow(
-        fixed=True,
-        actual_value=data_precalc['ES_load_actual_entsoe_power_statistics'],
+        fix=data_precalc['ES_load_actual_entsoe_power_statistics'],
         nominal_value=1)})
 
 ambience_sol = solph.Sink(

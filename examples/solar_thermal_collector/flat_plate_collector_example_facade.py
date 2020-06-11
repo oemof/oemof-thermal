@@ -98,7 +98,7 @@ backup = solph.Source(
 
 consumer = solph.Sink(
     label='demand',
-    inputs={bth: solph.Flow(fixed=True, actual_value=demand, nominal_value=1)},
+    inputs={bth: solph.Flow(fix=demand, nominal_value=1)},
 )
 
 collector_excess_heat = solph.Sink(
