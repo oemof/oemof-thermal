@@ -134,7 +134,7 @@ storage = solph.components.GenericStorage(
     outflow_conversion_factor=conversion_storage,
     investment=solph.Investment(ep_costs=costs_storage))
 
-# build the system and solve the problem
+# Build the system and solve the problem
 date_time_index = dataframe.index
 energysystem = solph.EnergySystem(timeindex=date_time_index)
 

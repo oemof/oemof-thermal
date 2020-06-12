@@ -116,7 +116,7 @@ storage = solph.components.GenericStorage(
     investment=solph.Investment(ep_costs=costs_storage),
 )
 
-# build the system and solve the problem
+# Build the system and solve the problem
 date_time_index = input_data.index
 energysystem = solph.EnergySystem(timeindex=date_time_index)
 
