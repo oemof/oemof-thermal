@@ -49,7 +49,7 @@ energysystem.add(solph.Sink(
 
 temp_threshold_icing = 2
 
-# Pre-Calculate COPs
+# Precalculation of COPs
 cops_ASHP = cmpr_hp_chiller.calc_cops(
     temp_high=[40],
     temp_low=data['ambient_temperature'],

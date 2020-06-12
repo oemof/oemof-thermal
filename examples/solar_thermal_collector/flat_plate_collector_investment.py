@@ -51,7 +51,7 @@ demand_df = pd.read_csv(
 )
 demand = list(demand_df['heat_demand'].iloc[:periods])
 
-# precalculation
+# Precalculation
 # - calculate global irradiance on the collector area
 # and collector efficiency depending on the
 # temperature difference -

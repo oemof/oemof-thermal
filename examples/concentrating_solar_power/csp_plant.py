@@ -48,7 +48,7 @@ dataframe.set_index('Datum', inplace=True)
 dataframe = dataframe.asfreq('H')
 dataframe.index = dataframe.index.tz_localize(tz='Asia/Muscat')
 
-# precalculation
+# Precalculation
 data_precalc = csp_precalc(latitude, longitude,
                            collector_tilt, collector_azimuth, cleanliness,
                            eta_0, c_1, c_2,

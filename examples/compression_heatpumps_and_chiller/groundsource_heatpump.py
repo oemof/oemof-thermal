@@ -56,7 +56,7 @@ energysystem.add(solph.Sink(
                                   fixed=True,
                                   nominal_value=1)}))
 
-# Pre-Calculate COPs
+# Precalculation of COPs
 cops_GSHP = cmpr_hp_chiller.calc_cops(
     temp_high=[40],
     temp_low=data['ground_temperature'],
