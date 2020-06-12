@@ -144,7 +144,7 @@ energysystem.add(*storage_list)
 optimization_model = Model(energysystem)
 optimization_model.solve(solver=solver)
 
-# get results
+# Get results
 results = outputlib.processing.results(optimization_model)
 
 storage_content = outputlib.views.node_weight_by_type(results, GenericStorage)\

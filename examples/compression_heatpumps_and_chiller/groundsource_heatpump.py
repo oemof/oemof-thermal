@@ -75,6 +75,7 @@ model = solph.Model(energysystem)
 
 model.solve(solver=solver, solve_kwargs={'tee': solver_verbose})
 
+# Get results
 energysystem.results['main'] = outputlib.processing.results(model)
 energysystem.results['meta'] = outputlib.processing.meta_results(model)
 

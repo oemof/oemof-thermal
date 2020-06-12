@@ -142,6 +142,7 @@ energysystem.add(bth, bel, el_grid, backup, excess, consumer, storage, turbine,
 model = solph.Model(energysystem)
 model.solve(solver='cbc', solve_kwargs={'tee': True})
 
+# Get results
 results = outputlib.processing.results(model)
 
 collector_inflow = outputlib.views.node(

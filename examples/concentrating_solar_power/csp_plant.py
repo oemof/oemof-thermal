@@ -144,6 +144,7 @@ energysystem.add(bth, bcol, bel, col_heat, el_grid, backup, consumer,
 model = solph.Model(energysystem)
 model.solve(solver='cbc', solve_kwargs={'tee': True})
 
+# Get results
 results = outputlib.processing.results(model)
 
 electricity_bus = outputlib.views.node(results, 'electricity')['sequences']

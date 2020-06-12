@@ -166,7 +166,7 @@ energysystem.add(
 model = solph.Model(energysystem)
 model.solve(solver='cbc', solve_kwargs={'tee': True})
 
-# save model results to csv
+# Get results
 results = outputlib.processing.results(model)
 
 electricity_bus = outputlib.views.node(results, 'electricity')['sequences']
