@@ -38,7 +38,7 @@ eta_0 = 0.73
 temp_collector_inlet = 20
 delta_temp_n = 10
 
-# input data
+# Read input data
 input_data = pd.read_csv(data_path + 'data_flat_collector.csv').head(periods)
 input_data['Datum'] = pd.to_datetime(input_data['Datum'])
 input_data.set_index('Datum', inplace=True)

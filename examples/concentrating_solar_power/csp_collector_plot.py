@@ -23,6 +23,7 @@ if not os.path.exists(results_path):
 
 # precalculation #
 
+# Read input data
 dataframe = pd.read_csv('data/data_Muscat_22_8.csv')
 dataframe['Datum'] = pd.to_datetime(dataframe['Datum'])
 dataframe.set_index('Datum', inplace=True)

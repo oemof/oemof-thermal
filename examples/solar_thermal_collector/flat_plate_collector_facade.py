@@ -46,7 +46,7 @@ storage_loss_rate = 0.001
 conversion_storage = 0.98
 size_collector = 10  # m2
 
-# input data
+# Read input data
 input_data = pd.read_csv(data_path + 'data_flat_collector.csv').head(periods)
 input_data['Datum'] = pd.to_datetime(input_data['Datum'])
 input_data.set_index('Datum', inplace=True)

@@ -25,7 +25,7 @@ date_time_index = pd.date_range('1/1/2012', periods=number_of_time_steps,
 
 energysystem = solph.EnergySystem(timeindex=date_time_index)
 
-# Read data file
+# Read input data
 data = pd.read_csv(data_path)
 
 b_el = solph.Bus(label="electricity")

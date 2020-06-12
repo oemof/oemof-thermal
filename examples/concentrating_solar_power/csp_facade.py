@@ -44,6 +44,7 @@ c_2 = 0.00023
 temp_collector_inlet = 435
 temp_collector_outlet = 500
 
+# Read input data
 input_data = pd.read_csv(data_path + 'data_csp_plant.csv').head(periods)
 input_data['Datum'] = pd.to_datetime(input_data['Datum'])
 input_data.set_index('Datum', inplace=True)
