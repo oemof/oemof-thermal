@@ -78,7 +78,7 @@ precalc_data.to_csv(
 
 # regular oemof system #
 
-# parameters for the energy system
+# Parameters for the energy system
 peripheral_losses = 0.05
 elec_consumption = 0.02
 backup_costs = 40

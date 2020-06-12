@@ -56,7 +56,7 @@ date_time_index.freq = 'H'
 
 # regular oemof_system #
 
-# parameters for energy system
+# Parameters for the energy system
 additional_losses = 0.2
 elec_consumption = 0.05
 backup_costs = 1000

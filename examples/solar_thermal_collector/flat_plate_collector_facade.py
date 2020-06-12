@@ -25,7 +25,7 @@ results_path = os.path.join(base_path, 'results/')
 if not os.path.exists(results_path):
     os.mkdir(results_path)
 
-# parameters
+# Parameters for the energy system
 periods = 48
 latitude = 52.2443
 longitude = 10.5594
