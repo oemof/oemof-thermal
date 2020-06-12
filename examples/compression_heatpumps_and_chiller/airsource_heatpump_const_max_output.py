@@ -65,8 +65,8 @@ energysystem.add(solph.Transformer(
     outputs={b_heat: solph.Flow(nominal_value=25, variable_costs=5)},
     conversion_factors={b_heat: cops_ASHP}))
 
+# Create and solve the optimization model
 model = solph.Model(energysystem)
-
 model.solve(solver=solver, solve_kwargs={'tee': solver_verbose})
 
 # Get results

@@ -121,9 +121,8 @@ thermal_storage = GenericStorage(
 
 energysystem.add(bus_heat, heat_source, shortage, excess, heat_demand, thermal_storage)
 
-# create and solve the optimization model
+# Create and solve the optimization model
 optimization_model = Model(energysystem)
-
 optimization_model.solve(solver=solver,
                          solve_kwargs={'tee': False, 'keepfiles': False})
 

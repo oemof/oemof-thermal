@@ -141,6 +141,7 @@ energysystem = solph.EnergySystem(timeindex=date_time_index)
 energysystem.add(bth, bcol, bel, col_heat, el_grid, backup, consumer,
                  ambience_sol, collector, turbine, storage)
 
+# Create and solve the optimization model
 model = solph.Model(energysystem)
 model.solve(solver='cbc', solve_kwargs={'tee': True})
 

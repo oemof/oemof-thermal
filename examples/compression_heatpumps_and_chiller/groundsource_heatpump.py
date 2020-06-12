@@ -71,8 +71,8 @@ energysystem.add(solph.Transformer(
     conversion_factors={b_el: [1 / cop for cop in cops_GSHP],
                         b_th_low: [(cop - 1) / cop for cop in cops_GSHP]}))
 
+# Create and solve the optimization model
 model = solph.Model(energysystem)
-
 model.solve(solver=solver, solve_kwargs={'tee': solver_verbose})
 
 # Get results

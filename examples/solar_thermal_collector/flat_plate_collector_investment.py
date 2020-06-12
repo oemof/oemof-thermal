@@ -163,7 +163,7 @@ energysystem.add(
     collector,
 )
 
-# create and solve the optimization model
+# Create and solve the optimization model
 model = solph.Model(energysystem)
 model.solve(solver='cbc', solve_kwargs={'tee': True})
 
