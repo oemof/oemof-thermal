@@ -21,7 +21,7 @@ results_path = os.path.join(base_path, 'results')
 if not os.path.exists(results_path):
     os.mkdir(results_path)
 
-# precalculation #
+# Precalculation
 
 # Read input data
 dataframe = pd.read_csv('data/data_Muscat_22_8.csv')
@@ -52,7 +52,7 @@ c_2 = 0.00023
 temp_collector_inlet = 435
 temp_collector_outlet = 500
 
-# plot showing the difference between a constant efficiency without considering
+# Plot showing the difference between a constant efficiency without considering
 # cleaniness for the heat of the collector during a day
 data_precalc = csp_precalc(latitude, longitude,
                            collector_tilt, collector_azimuth, cleanliness,
@@ -77,7 +77,7 @@ ax.set(xlabel='time [h]', ylabel='Q_coll [W/m2]',
 ax.grid()
 ax.legend()
 
-# plot showing the difference between a constant efficiency and the efficiency
+# Plot showing the difference between a constant efficiency and the efficiency
 # depending on the ambient temperature for the same irradiance and hour of the
 # day
 df_result = pd.DataFrame()

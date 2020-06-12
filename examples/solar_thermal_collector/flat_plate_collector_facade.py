@@ -60,13 +60,13 @@ demand_df = pd.read_csv(
 demand = list(demand_df['heat_demand'].iloc[:periods])
 
 
-# Set up an energy system model #
+# Set up an energy system model
 
-# busses
+# Busses
 bth = solph.Bus(label='thermal')
 bel = solph.Bus(label='electricity')
 
-# collector
+# Collector
 collector = facades.SolarThermalCollector(
     label='solar_collector',
     heat_out_bus=bth,
@@ -87,7 +87,7 @@ collector = facades.SolarThermalCollector(
     irradiance_diffuse=input_data['diffuse_horizontal_W_m2'],
     temp_amb=input_data['temp_amb'])
 
-# sources and sinks
+# Sources and sinks
 el_grid = solph.Source(
     label='grid', outputs={bel: solph.Flow(variable_costs=costs_electricity)}
 )
@@ -105,7 +105,7 @@ collector_excess_heat = solph.Sink(
     label='collector_excess_heat', inputs={bth: solph.Flow()}
 )
 
-# storage
+# Storage
 storage = solph.components.GenericStorage(
     label='storage',
     inputs={bth: solph.Flow()},

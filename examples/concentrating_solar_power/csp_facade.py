@@ -54,7 +54,7 @@ date_time_index = input_data.index
 date_time_index.freq = 'H'
 
 
-# regular oemof_system #
+# Regular oemof_system
 
 # Parameters for the energy system
 additional_losses = 0.2
@@ -67,11 +67,11 @@ costs_electricity = 1000
 conversion_factor_turbine = 0.4
 size_collector = 1000
 
-# busses
+# Busses
 bth = solph.Bus(label='thermal')
 bel = solph.Bus(label='electricity')
 
-# collector
+# Collector
 collector = facades.ParabolicTroughCollector(
     label='solar_collector',
     heat_bus=bth,
@@ -96,7 +96,7 @@ collector = facades.ParabolicTroughCollector(
     temp_amb=input_data['t_amb'],
     irradiance=input_data['E_dir_hor'])
 
-# sources and sinks
+# Sources and sinks
 el_grid = solph.Source(
     label='grid',
     outputs={bel: solph.Flow(variable_costs=costs_electricity)})
@@ -116,7 +116,7 @@ excess = solph.Sink(
     label='excess',
     inputs={bth: solph.Flow()})
 
-# transformer and storages
+# Transformer and storages
 turbine = solph.Transformer(
     label='turbine',
     inputs={bth: solph.Flow()},

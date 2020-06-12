@@ -92,10 +92,7 @@ energysystem.results['meta'] = outputlib.processing.meta_results(model)
 
 energysystem.dump(dpath=None, filename=None)
 
-# ****************************************************************************
-# ********** PART 2 - Processing the results *********************************
-# ****************************************************************************
-
+# Processing the results
 energysystem = solph.EnergySystem()
 energysystem.restore(dpath=None, filename=None)
 

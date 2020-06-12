@@ -133,7 +133,7 @@ string_results = outputlib.processing.convert_keys_to_strings(results)
 sequences = {k: v['sequences'] for k, v in string_results.items()}
 df = pd.concat(sequences, axis=1)
 
-# print storage sizing
+# Print storage sizing
 built_storage_capacity = results[thermal_storage, None]['scalars']['invest']
 initial_storage_capacity = results[thermal_storage, None]['scalars']['init_cap']
 maximum_heat_flow_charging = results[bus_heat, thermal_storage]['scalars']['invest']

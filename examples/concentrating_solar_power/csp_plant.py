@@ -62,7 +62,7 @@ data_precalc['ES_load_actual_entsoe_power_statistics'] = list(
 
 data_precalc.to_csv('results/results_csp_plant_precalc.csv')
 
-# regular oemof_system #
+# Regular oemof_system
 
 # Parameters for the energy system
 additional_losses = 0.2
@@ -75,12 +75,12 @@ costs_electricity = 1000
 conversion_factor_turbine = 0.4
 size_collector = 1000
 
-# busses
+# Busses
 bth = solph.Bus(label='thermal')
 bel = solph.Bus(label='electricity')
 bcol = solph.Bus(label='solar')
 
-#sources and sinks
+# Sources and sinks
 col_heat = solph.Source(
     label='collector_heat',
     outputs={bcol: solph.Flow(
@@ -107,7 +107,7 @@ ambience_sol = solph.Sink(
     label='ambience_sol',
     inputs={bcol: solph.Flow()})
 
-# transformer and storages
+# Transformer and storages
 collector = solph.Transformer(
     label='collector',
     inputs={

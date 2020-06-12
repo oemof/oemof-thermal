@@ -76,7 +76,7 @@ precalc_data.to_csv(
 )
 
 
-# regular oemof system #
+# Regular oemof system
 
 # Parameters for the energy system
 peripheral_losses = 0.05
@@ -88,12 +88,12 @@ costs_electricity = 1000
 storage_loss_rate = 0.001
 conversion_storage = 0.98
 
-# busses
+# Busses
 bth = solph.Bus(label='thermal')
 bel = solph.Bus(label='electricity')
 bcol = solph.Bus(label='solar')
 
-# source for collector heat.
+# Source for collector heat.
 # - actual_value is the precalculated collector heat -
 collector_heat = solph.Source(
     label='collector_heat',
@@ -106,7 +106,7 @@ collector_heat = solph.Source(
     },
 )
 
-# sources and sinks
+# Sources and sinks
 el_grid = solph.Source(
     label='grid', outputs={bel: solph.Flow(variable_costs=costs_electricity)}
 )
@@ -124,7 +124,7 @@ collector_excess_heat = solph.Sink(
     label='collector_excess_heat', inputs={bcol: solph.Flow()}
 )
 
-# transformer and storage
+# Transformer and storage
 collector = solph.Transformer(
     label='collector',
     inputs={bcol: solph.Flow(), bel: solph.Flow()},
