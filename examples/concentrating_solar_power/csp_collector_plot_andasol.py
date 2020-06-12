@@ -35,7 +35,7 @@ df_temp_amb_series.index = df_temp_amb_series.index.tz_localize(tz='Asia/Muscat'
 
 temp_amb_series = pd.read_csv('data/temp_ambience.csv')['t_amb']
 
-# parameters for the precalculation
+# Parameters for the precalculation
 periods = 24
 latitude = 23.614328
 longitude = 58.545284

@@ -26,7 +26,7 @@ data_path = os.path.join(base_path, 'data/')
 if not os.path.exists(results_path):
     os.mkdir(results_path)
 
-# parameters for the precalculation
+# Parameters for the precalculation
 periods = 50
 latitude = 23.614328
 longitude = 58.545284
