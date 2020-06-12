@@ -14,6 +14,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
+# Set up an energy system model
 solver = 'cbc'
 number_of_time_steps = 24
 solver_verbose = False
