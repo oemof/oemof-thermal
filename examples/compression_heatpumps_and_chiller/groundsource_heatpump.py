@@ -103,6 +103,7 @@ GSHP_input = string_results[
 env_heat = string_results[
     'ambient', 'heat_low_temp']['sequences'].values
 
+# Example plot
 fig2, axs = plt.subplots(3, 1, figsize=(8, 5), sharex=True)
 axs[0].plot(GSHP_output, label='heat output')
 axs[0].plot(demand_h, linestyle='--', label='heat demand')

@@ -58,10 +58,7 @@ for q in quality_grades:
         quality_grade=q,
         mode='heat_pump')
 
-##############################################################################
-# Plot                                                                       #
-##############################################################################
-
+# Example plot
 fig, axs = plt.subplots(1, 1)
 # fig.set_size_inches(10, 6, forward=True)
 fig.set_size_inches(6, 6, forward=True)

@@ -154,7 +154,7 @@ df = pd.merge(
     solar_bus, left_index=True, right_index=True)
 df.to_csv(results_path + 'csp_plant_results.csv')
 
-
+# Example plot
 fig, ax = plt.subplots()
 ax.plot(list(range(periods)), thermal_bus[(('collector', 'thermal'), 'flow')])
 ax.set(xlabel='time [h]', ylabel='Q_coll [W]',

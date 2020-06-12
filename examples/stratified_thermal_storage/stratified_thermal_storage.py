@@ -152,7 +152,7 @@ string_results = outputlib.processing.convert_keys_to_strings(results)
 sequences = {k: v['sequences'] for k, v in string_results.items()}
 df = pd.concat(sequences, axis=1)
 
-# plot results
+# Example plot
 fig, (ax1, ax2) = plt.subplots(2, 1)
 
 df[[('shortage', 'bus_heat', 'flow'),

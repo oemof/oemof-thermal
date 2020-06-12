@@ -68,7 +68,7 @@ irradiance_on_collector = (data_precalc['collector_irradiance']
 heat_compare = irradiance_on_collector * eta_0
 t = list(range(1, 25))
 
-
+# Example plot
 fig, ax = plt.subplots()
 ax.plot(t, heat_calc, label='CSP precalculation')
 ax.plot(t, heat_compare, label='constant efficiency')

@@ -115,6 +115,7 @@ ASHP_input = string_results[
 max_Q_dot_heating_abs = [nominal_conditions['nominal_Q_hot'] * max_heating for
                          max_heating in max_Q_dot_heating]
 
+# Example plot
 fig, axs = plt.subplots(3, 1, figsize=(8, 5), sharex=True)
 axs[0].plot(max_Q_dot_heating_abs,
             linestyle='-.',
