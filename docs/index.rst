@@ -19,6 +19,7 @@ Welcome to oemof.thermal's documentation!
    :maxdepth: 1
    :caption: User's guide
 
+   absorption_chillers
    cogeneration
    compression_heat_pumps_and_chillers
    concentrating_solar_power
