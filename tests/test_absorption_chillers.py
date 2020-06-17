@@ -2,6 +2,7 @@ import os
 import pytest
 import pandas as pd
 import oemof.thermal.absorption_heatpumps_and_chillers as ac
+from pytest import approx
 
 
 def test_calc_characteristic_temp_Kuehn():
@@ -42,6 +43,66 @@ def test_calc_characteristic_temp_Braod_01():
         coef_e=charpara[(charpara['name'] == chiller_name)]['e'].values[0],
         method='kuehn_and_ziegler')
     assert ddt == [61.45, 61.45]
+
+
+def test_calc_characteristic_temp_Braod_02():
+    """Test characteristic temperature calculation for chiller 'Broad_02'."""
+    filename_charpara = os.path.join(
+        os.path.dirname(__file__),
+        '../examples/absorption_heatpumps_and_chiller/'
+        'data/characteristic_parameters.csv')
+    charpara = pd.read_csv(filename_charpara)
+
+    chiller_name = 'Broad_02'
+    n = 2
+    ddt = ac.calc_characteristic_temp(
+        t_hot=[85] * n,
+        t_cool=[30],
+        t_chill=[15],
+        coef_a=charpara[(charpara['name'] == chiller_name)]['a'].values[0],
+        coef_e=charpara[(charpara['name'] == chiller_name)]['e'].values[0],
+        method='kuehn_and_ziegler')
+    assert ddt == [87.625, 87.625]
+
+
+def test_calc_characteristic_temp_Rotartica():
+    """Test characteristic temperature calculation for chiller 'Rotartica'."""
+    filename_charpara = os.path.join(
+        os.path.dirname(__file__),
+        '../examples/absorption_heatpumps_and_chiller/'
+        'data/characteristic_parameters.csv')
+    charpara = pd.read_csv(filename_charpara)
+
+    chiller_name = 'Rotartica'
+    n = 2
+    ddt = ac.calc_characteristic_temp(
+        t_hot=[85] * n,
+        t_cool=[30],
+        t_chill=[15],
+        coef_a=charpara[(charpara['name'] == chiller_name)]['a'].values[0],
+        coef_e=charpara[(charpara['name'] == chiller_name)]['e'].values[0],
+        method='kuehn_and_ziegler')
+    assert ddt == [approx(32.125), approx(32.125)]
+
+
+def test_calc_characteristic_temp_Safarik():
+    """Test characteristic temperature calculation for chiller 'Safarik'."""
+    filename_charpara = os.path.join(
+        os.path.dirname(__file__),
+        '../examples/absorption_heatpumps_and_chiller/'
+        'data/characteristic_parameters.csv')
+    charpara = pd.read_csv(filename_charpara)
+
+    chiller_name = 'Safarik'
+    n = 2
+    ddt = ac.calc_characteristic_temp(
+        t_hot=[85] * n,
+        t_cool=[30],
+        t_chill=[15],
+        coef_a=charpara[(charpara['name'] == chiller_name)]['a'].values[0],
+        coef_e=charpara[(charpara['name'] == chiller_name)]['e'].values[0],
+        method='kuehn_and_ziegler')
+    assert ddt == [approx(54.64), approx(54.64)]
 
 
 def test_calc_characteristic_temp_input_list_single_entry():
