@@ -81,6 +81,4 @@ ax2.set_ylim(0.4, 0.8)
 ax1.set_ylim(0, 24)
 ax1.set_xlim(20, 43)
 
-plt.savefig('cooling_capacity_over_cooling_water_temperature_' + chiller_name,
-            dpi=300)
-# plt.show()
+plt.show()
