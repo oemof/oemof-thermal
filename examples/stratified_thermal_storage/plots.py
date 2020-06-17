@@ -12,15 +12,15 @@ import os
 import pandas as pd
 import matplotlib.pyplot as plt
 
+
 from oemof.thermal.stratified_thermal_storage import (
     calculate_storage_u_value,
     calculate_storage_dimensions,
     calculate_capacities,
     calculate_losses,
 )
-from oemof.solph import Bus, Flow, Model, EnergySystem
+from oemof.solph import processing, views, Bus, Flow, Model, EnergySystem
 from oemof.solph.components import GenericStorage
-import oemof.outputlib as outputlib
 
 
 data_path = os.path.join(
@@ -144,9 +144,9 @@ optimization_model = Model(energysystem)
 optimization_model.solve(solver=solver)
 
 # get results
-results = outputlib.processing.results(optimization_model)
+results = processing.results(optimization_model)
 
-storage_content = outputlib.views.node_weight_by_type(results, GenericStorage)\
+storage_content = views.node_weight_by_type(results, GenericStorage)\
     .reset_index(drop=True)
 
 storage_content.columns = storage_content.columns\

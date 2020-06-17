@@ -14,10 +14,9 @@ import numpy as np
 
 from oemof.thermal.stratified_thermal_storage import (calculate_storage_u_value,
                                                       calculate_losses)
-from oemof.solph import (Source, Sink, Bus, Flow,
+from oemof.solph import (processing, Source, Sink, Bus, Flow,
                          Investment, Model, EnergySystem)
 from oemof.solph.components import GenericStorage
-import oemof.outputlib as outputlib
 
 
 data_path = os.path.join(
@@ -123,8 +122,8 @@ optimization_model.solve(solver=solver,
                          solve_kwargs={'tee': False, 'keepfiles': False})
 
 # get results
-results = outputlib.processing.results(optimization_model)
-string_results = outputlib.processing.convert_keys_to_strings(results)
+results = processing.results(optimization_model)
+string_results = processing.convert_keys_to_strings(results)
 sequences = {k: v['sequences'] for k, v in string_results.items()}
 df = pd.concat(sequences, axis=1)
 
