@@ -17,6 +17,16 @@ Welcome to oemof.thermal's documentation!
 
 .. toctree::
    :maxdepth: 1
+   :caption: Model validation
+
+   validation_absorption_chillers
+   validation_compression_heat_pumps_and_chillers
+   validation_concentrating_solar_power
+   validation_solar_thermal_collector
+   validation_stratified_thermal_storage
+
+.. toctree::
+   :maxdepth: 1
    :caption: User's guide
 
    absorption_chillers
