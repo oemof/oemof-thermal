@@ -19,13 +19,12 @@ temp_ambient = [24, 24, 24, 25, 25, 25,
 
 timestamps = pd.date_range('20200101', periods=24, freq='H')
 
-df_hour = pd.DataFrame(temp_ambient, timestamps)
-series_hour = pd.Series(temp_ambient, timestamps)
-print(df_hour)
-print("")
-print(series_hour)
+# Convert temp_ambient to pandas DataFrame
+df_temp_ambient = pd.DataFrame(temp_ambient, timestamps)
+# Convert temp_ambient to pandas Series
+series_temp_ambient = pd.Series(temp_ambient, timestamps)
 
-cops_chiller = cmpr_hp_chiller.calc_cops(temp_high=series_hour,
+cops_chiller = cmpr_hp_chiller.calc_cops(temp_high=series_temp_ambient,
                                          temp_low=[18],
                                          quality_grade=0.3,
                                          mode='chiller')
