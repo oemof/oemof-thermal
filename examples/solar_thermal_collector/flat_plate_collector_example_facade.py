@@ -10,11 +10,9 @@ SPDX-License-Identifier: GPL-3.0-or-later
 """
 import os
 import pandas as pd
-# import oemof.outputlib as outputlib
 import matplotlib.pyplot as plt
 from oemof.thermal import facades
 from oemof import solph
-import oemof.outputlib as outputlib
 from oemof.tools import economics
 
 
@@ -136,12 +134,12 @@ model = solph.Model(energysystem)
 model.solve(solver='cbc', solve_kwargs={'tee': True})
 
 # save model results to csv
-results = outputlib.processing.results(model)
+results = solph.processing.results(model)
 
-collector_inflow = outputlib.views.node(
+collector_inflow = solph.views.node(
     results, 'solar_collector-inflow')['sequences']
-thermal_bus = outputlib.views.node(results, 'thermal')['sequences']
-electricity_bus = outputlib.views.node(results, 'electricity')['sequences']
+thermal_bus = solph.views.node(results, 'thermal')['sequences']
+electricity_bus = solph.views.node(results, 'electricity')['sequences']
 df = pd.DataFrame()
 df = df.append(collector_inflow)
 df = df.join(thermal_bus, lsuffix='_1')

@@ -10,7 +10,6 @@ SPDX-License-Identifier: MIT
 """
 import os
 import pandas as pd
-import oemof.outputlib as outputlib
 import matplotlib.pyplot as plt
 
 
@@ -147,12 +146,12 @@ model.solve(solver='cbc', solve_kwargs={'tee': True})
 #             io_options={'symbolic_solver_labels': True})
 
 
-results = outputlib.processing.results(model)
+results = solph.processing.results(model)
 
-collector_inflow = outputlib.views.node(
+collector_inflow = solph.views.node(
     results, 'solar_collector-inflow')['sequences']
-thermal_bus = outputlib.views.node(results, 'thermal')['sequences']
-electricity_bus = outputlib.views.node(results, 'electricity')['sequences']
+thermal_bus = solph.views.node(results, 'thermal')['sequences']
+electricity_bus = solph.views.node(results, 'electricity')['sequences']
 df = pd.DataFrame()
 df = df.append(collector_inflow)
 df = df.join(thermal_bus, lsuffix='_1')
