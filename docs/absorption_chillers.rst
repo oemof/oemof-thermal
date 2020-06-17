@@ -39,7 +39,7 @@ Various approaches of the characteristic equation method exists.
 Here we use the approach described by Kühn and Ziegler [1]:
 
 .. math::
-  \Delta\Delta t = t_{G} - a \cdot t_{AC} + e \cdot t_{E}
+  \Delta\Delta t' = t_{G} - a \cdot t_{AC} + e \cdot t_{E}
 
 with the assumption
 
