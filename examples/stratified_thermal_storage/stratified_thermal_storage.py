@@ -1,13 +1,3 @@
-"""
-For this example to work as intended, please use the not yet released oemof branch
-
-https://github.com/oemof/oemof/tree/v0.3
-
-that contains the new attributes for GenericStorage, `fixed_losses_absolute` and
-`fixed_losses_relative`.
-
-"""
-
 import os
 import pandas as pd
 import numpy as np
