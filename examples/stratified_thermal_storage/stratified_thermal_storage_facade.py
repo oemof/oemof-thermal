@@ -17,7 +17,7 @@ from oemof.solph import Source, Sink, Bus, Flow, Model, EnergySystem  # noqa
 
 data_path = os.path.join(
     os.path.dirname(os.path.abspath(__file__)),
-    'stratified_thermal_storage.csv')
+    'storage_sprecification.csv')
 
 input_data = pd.read_csv(data_path, index_col=0, header=0)['var_value']
 
