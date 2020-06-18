@@ -1,3 +1,8 @@
+"""
+This example shows how to use the functions of the stratified thermal storage
+module to specify a storage in an optimization with oemof.solph.
+"""
+
 import os
 import pandas as pd
 import numpy as np
