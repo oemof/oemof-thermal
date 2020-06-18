@@ -1,3 +1,10 @@
+"""
+This example shows how to invest into nominal_storage_capacity and capacity
+(charging/discharging power) independently with no fixed ratio.
+Pass invest_relation_input_capacity plus
+storage_capacity_cost AND capacity_cost.
+"""
+
 import os
 import pandas as pd
 import numpy as np
@@ -91,7 +98,7 @@ heat_demand = Sink(
 thermal_storage = GenericStorage(
     label='thermal_storage',
     inputs={bus_heat: Flow(
-        investment=Investment())},
+        investment=Investment(ep_costs=50))},
     outputs={bus_heat: Flow(
         investment=Investment(),
         variable_costs=0.0001)},
@@ -103,7 +110,6 @@ thermal_storage = GenericStorage(
     inflow_conversion_factor=1.,
     outflow_conversion_factor=1.,
     invest_relation_input_output=1,
-    invest_relation_input_capacity=1 / 6,
     investment=Investment(ep_costs=400, minimum=1)
 )
 
