@@ -190,8 +190,7 @@ Using the StratifiedThermalStorage facade, you can instantiate a storage like th
 The non-usable storage volume is represented by the parameters
 :py:attr:`min_storage_level` and :py:attr:`max_storage_level`.
 
-To learn about all parameters that can be passed to the facades, have a look at the
-:ref:`api reference for the facade module <api_label>`.
+To learn about all parameters that can be passed to the facades, have a look at the API documentation of the :py:class:`~oemof.thermal.facades.StratifiedThermalStorage` class of the facade module.
 
 For the storage investment mode, you still need to provide :py:attr:`diameter`, but
 leave :py:attr:`height` and :py:attr:`capacity` open and set :py:attr:`expandable=True`.
