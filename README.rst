@@ -37,6 +37,12 @@ in your virtualenv. In your code, you can import modules like e.g.:
 
     from oemof.thermal import concentrating_solar_power
 
+If you want to use the latest features, you might want to install the **developer version**. The developer version is not recommended for productive use:
+
+.. code:: bash
+
+    pip install https://github.com/oemof/oemof-thermal/archive/dev.zip
+
 Also, have a look at the
 `examples <https://github.com/oemof/oemof-thermal/tree/dev/examples>`_.
 
