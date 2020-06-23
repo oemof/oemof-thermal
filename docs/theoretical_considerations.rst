@@ -32,3 +32,27 @@ or, also possible:
 Normally there are typical ratios which are used when dimensioning these types of systems.
 So it is possible to aggregate the houses within one type by defining these ratios. This would be more accurate than an aggregation of all installed systems.
 In case of special system modifications, also more than two groups could be defined.
+
+    ============================= =============================================
+    symbol                        explanation
+    ============================= =============================================
+    :math:`\dot{Q}_{add}`         Heat flow from external to consumer [kW]
+
+    :math:`\dot{Q}_{demand}`      Heat flow demand of the consumer [kWh]
+
+    :math:`\dot{Q}_{solar}`       Heat flow from collector [kW]
+
+    :math:`\dot{Q}_{demand,max}`  Maximal value of the consumer's heat flow
+                                  demand [kWh]
+
+    :math:`\dot{Q}_{total}`       ?
+
+    :math:`ratio_1`               Ratio 1
+
+    :math:`ratio_2`               Ratio 2
+
+    :math:`V_{storage}`           Storage volume [m3]
+
+    :math:`A_{collector}`         collector surface [m2]
+
+    ============================= =============================================
