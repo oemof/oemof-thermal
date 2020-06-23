@@ -1,12 +1,8 @@
 .. _theoretical_considerations:
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-Theoretical considerations
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Aggregation of domestic decentral solar thermal systems
-_______________________________________________________
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In this section the aggregation of consumers using solar thermal systems is discussed. Depending on the consumers energy usage the ratio of heat load and collector
 size or storage capacity differs. If you want to model a district with domestic solar systems, it is difficult to aggregate them because of the different sizes of the components and thus different points in time, when the backup heating has to start. The picture shows a scheme of such a system:
