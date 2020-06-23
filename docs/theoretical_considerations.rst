@@ -20,7 +20,7 @@ Concept
 _______
 
 
-Instead of aggregate all storages and all collectors of the systems, which would be really unaccurate, we want to classify two different types of domestic solar systems:
+Instead of aggregate all storages and all collectors of the system, which would be really unaccurate, we want to classify two different types of domestic solar systems:
 
 - systems for hot water provision
 - systems for hot water provision and space heating support
