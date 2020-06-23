@@ -33,6 +33,6 @@ or, also possible:
 
 :math:`ratio_{1} = \frac{V_{storage}}{A_{collector}} \quad \textrm{and} \quad ratio_{2} = \frac{A_{collector}}{\dot{Q}_{total}}`
 
-Usually these ratios are constant within the two types.
+Normally there are typical ratios which are used when dimensioning these types of systems.
 So it is possible to aggregate the houses within one type and define the ratios. This would be more accurate than an aggregation of all installed systems.
 If there are special system modifications, there can be defined more than two groups.
