@@ -35,4 +35,4 @@ or, also possible:
 
 Normally there are typical ratios which are used when dimensioning these types of systems.
 So it is possible to aggregate the houses within one type by defining these ratios. This would be more accurate than an aggregation of all installed systems.
-If there are special system modifications, there can be defined more than two groups.
+In case of special system modifications, also more than two groups could be defined.
