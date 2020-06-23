@@ -22,112 +22,15 @@ hood the `Facade` then uses these arguments to construct an `oemof` or
 SPDX-License-Identifier: MIT
 """
 
-from collections import deque
 
 from oemof.thermal.stratified_thermal_storage import calculate_storage_dimensions,\
     calculate_capacities, calculate_losses
 from oemof.thermal.concentrating_solar_power import csp_precalc
 from oemof.thermal.solar_thermal_collector import flat_plate_precalc
-from oemof.energy_system import EnergySystem
-from oemof.network import Node
 from oemof.solph import Flow, Investment, Transformer, Source
 from oemof.solph.components import GenericStorage
 from oemof.solph.plumbing import sequence
-
-
-def add_subnodes(n, **kwargs):
-    deque((kwargs["EnergySystem"].add(sn) for sn in n.subnodes), maxlen=0)
-
-
-class Facade(Node):
-    """
-    Parameters
-    ----------
-    _facade_requires_ : list of str
-        A list of required attributes. The constructor checks whether these are
-        present as keyword arguments or whether they are already present on
-        self (which means they have been set by constructors of subclasses) and
-        raises an error if he doesn't find them.
-    """
-
-    def __init__(self, *args, **kwargs):
-        """
-        """
-
-        self.mapped_type = type(self)
-
-        self.type = kwargs.get("type")
-
-        required = kwargs.pop("_facade_requires_", [])
-
-        super().__init__(*args, **kwargs)
-
-        self.subnodes = []
-        EnergySystem.signals[EnergySystem.add].connect(
-            add_subnodes, sender=self
-        )
-
-        for r in required:
-            if r in kwargs:
-                setattr(self, r, kwargs[r])
-            elif not hasattr(self, r):
-                raise AttributeError(
-                    (
-                        "Missing required attribute `{}` for `{}` "
-                        "object with name/label `{!r}`."
-                    ).format(r, type(self).__name__, self.label)
-                )
-
-    def _nominal_value(self):
-        """ Returns None if self.expandable ist True otherwise it returns
-        the capacity
-        """
-        if self.expandable is True:
-            return None
-
-        else:
-            return self.capacity
-
-    def _investment(self):
-        if self.expandable is True:
-            if self.capacity_cost is None:
-                msg = (
-                    "If you set `expandable`to True you need to set "
-                    "attribute `capacity_cost` of component {}!"
-                )
-                raise ValueError(msg.format(self.label))
-            else:
-                if isinstance(self, GenericStorage):
-                    if self.storage_capacity_cost is not None:
-                        self.investment = Investment(
-                            ep_costs=self.storage_capacity_cost,
-                            maximum=getattr(
-                                self,
-                                "storage_capacity_potential",
-                                float("+inf"),
-                            ),
-                            minimum=getattr(
-                                self, "minimum_storage_capacity", 0
-                            ),
-                            existing=getattr(self, "storage_capacity", 0),
-                        )
-                    else:
-                        self.investment = Investment()
-                else:
-                    self.investment = Investment(
-                        ep_costs=self.capacity_cost,
-                        maximum=getattr(
-                            self, "capacity_potential", float("+inf")
-                        ),
-                        existing=getattr(self, "capacity", 0),
-                    )
-        else:
-            self.investment = None
-
-        return self.investment
-
-    def update(self):
-        self.build_solph_components()
+from oemof.tabular.facades import Facade as Facade
 
 
 class StratifiedThermalStorage(GenericStorage, Facade):
