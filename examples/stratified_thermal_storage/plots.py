@@ -175,7 +175,7 @@ ax1.get_legend().remove()
 # plot losses vs storage content
 for storage_label in (storage.label for storage in storage_list):
     ax2.scatter(
-        storage_df[(storage_label, 'capacity')],
+        storage_df[(storage_label, 'storage_content')],
         storage_df[(storage_label, 'losses')],
         label=storage_label,
         s=1

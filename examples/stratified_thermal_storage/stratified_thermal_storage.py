@@ -158,7 +158,7 @@ df[[('shortage', 'bus_heat', 'flow'),
 
 df[('bus_heat', 'heat_demand', 'flow')].plot(ax=ax1, linestyle='-', marker='o', color='r')
 
-df[('thermal_storage', 'None', 'capacity')].plot.area(ax=ax2)
+df[('thermal_storage', 'None', 'storage_content')].plot.area(ax=ax2)
 
 ax1.set_title('Heat flow to and from heat bus')
 ax1.set_ylim(-2, 2)
