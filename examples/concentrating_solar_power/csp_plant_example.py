@@ -42,11 +42,18 @@ c_2 = 0.00023
 temp_collector_inlet = 435
 temp_collector_outlet = 500
 
-# input data
+# preprocessing of the input data
+
+# It is necessary, to set a timeindex, so the pvlib is able to process the data
+# Here, the given column 'Datum' is convertet to a datetime and this is used as
+# index:
 dataframe = pd.read_csv(data_path + 'data_csp_plant.csv').head(periods)
 dataframe['Datum'] = pd.to_datetime(dataframe['Datum'])
 dataframe.set_index('Datum', inplace=True)
+# For some pandas version, it is necessary to set the frequence of the df:
 dataframe = dataframe.asfreq('H')
+# The time of the input data is given locally, so it has to be adapted to the
+# correct timezone:
 dataframe.index = dataframe.index.tz_localize(tz='Asia/Muscat')
 
 # precalculation
