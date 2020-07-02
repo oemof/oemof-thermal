@@ -143,9 +143,9 @@ value must be an area too.
 Precalculation function
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-Please see the :ref:`api of the concentrating_solar_power module <api_label>`
-for all parameters which have to be provided, also the ones that are not part
-of the described formulas above.
+Please see the API documentation of the :py:class:`~oemof.thermal.concentrating_solar_power`
+module for all parameters which have to be provided, also the ones that are
+not part of the described formulas above.
 The data for ambient temperature and irradiance must have the same time index.
 Depending on the method, the irradiance must be the horizontal direct
 irradiance or the direct normal irradiance. Be aware of the correct time index
@@ -188,9 +188,8 @@ the same way as the precalculation do. Additionally, it integrates the
 calculated heat as an input into a component, uses an electrical input for
 pumps and gives a heat output, which is reduced by the defined additional losses.
 As given in the example, further parameters are required in addition to the
-ones of the precalculation. Please see the
-:ref:`api reference for the facade module <api_label>` for all parameters which
-have to be provided.
+ones of the precalculation. Please see the API documentation of the :py:class:`~oemof.thermal.facades.ParabolicTroughCollector`
+class of the facade module for all parameters which have to be provided.
 
 See example_csp_facade.py for an application example. It models the same
 system as the csp_plant_example.py, but uses the ParabolicTroughCollector facade
