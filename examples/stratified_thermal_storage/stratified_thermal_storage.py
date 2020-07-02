@@ -1,11 +1,7 @@
 """
-For this example to work as intended, please use the not yet released oemof branch
-
-https://github.com/oemof/oemof/tree/v0.3
-
-that contains the new attributes for GenericStorage, `fixed_losses_absolute` and
-`fixed_losses_relative`.
-
+For this example to work as intended, please use oemof-solph v0.4.0 or higher
+to ensure that the GenericStorage has the attributes
+`fixed_losses_absolute` and `fixed_losses_relative`.
 """
 
 import os
@@ -19,9 +15,8 @@ from oemof.thermal.stratified_thermal_storage import (
     calculate_capacities,
     calculate_losses,
 )
-from oemof.solph import Source, Sink, Bus, Flow, Model, EnergySystem
+from oemof.solph import processing, Source, Sink, Bus, Flow, Model, EnergySystem
 from oemof.solph.components import GenericStorage
-import oemof.outputlib as outputlib
 
 
 data_path = os.path.join(
@@ -101,8 +96,7 @@ heat_source = Source(
     label='heat_source',
     outputs={bus_heat: Flow(
         nominal_value=1,
-        actual_value=heat_feedin_timeseries,
-        fixed=True)})
+        fix=heat_feedin_timeseries)})
 
 shortage = Source(
     label='shortage',
@@ -116,8 +110,7 @@ heat_demand = Sink(
     label='heat_demand',
     inputs={bus_heat: Flow(
         nominal_value=1,
-        actual_value=demand_timeseries,
-        fixed=True)})
+        fix=demand_timeseries)})
 
 thermal_storage = GenericStorage(
     label='thermal_storage',
@@ -145,8 +138,8 @@ optimization_model.write('storage_model.lp', io_options={'symbolic_solver_labels
 optimization_model.solve(solver=solver,
                          solve_kwargs={'tee': False, 'keepfiles': False})
 # get results
-results = outputlib.processing.results(optimization_model)
-string_results = outputlib.processing.convert_keys_to_strings(results)
+results = processing.results(optimization_model)
+string_results = processing.convert_keys_to_strings(results)
 sequences = {k: v['sequences'] for k, v in string_results.items()}
 df = pd.concat(sequences, axis=1)
 
@@ -161,7 +154,7 @@ df[[('shortage', 'bus_heat', 'flow'),
 
 df[('bus_heat', 'heat_demand', 'flow')].plot(ax=ax1, linestyle='-', marker='o', color='r')
 
-df[('thermal_storage', 'None', 'capacity')].plot.area(ax=ax2)
+df[('thermal_storage', 'None', 'storage_content')].plot.area(ax=ax2)
 
 ax1.set_title('Heat flow to and from heat bus')
 ax1.set_ylim(-2, 2)

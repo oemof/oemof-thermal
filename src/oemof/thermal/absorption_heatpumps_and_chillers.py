@@ -6,7 +6,7 @@ This module is designed to hold functions for calculating absorption chillers.
 This file is part of project oemof (github.com/oemof/oemof-thermal). It's copyrighted
 by the contributors recorded in the version control history of the file,
 available from its original location:
-oemof-thermal/src/oemof/thermal/stratified_thermal_storage.py
+oemof-thermal/src/oemof/thermal/absorption_heatpumps_and_chillers.py
 
 SPDX-License-Identifier: MIT
 """

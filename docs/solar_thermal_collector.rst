@@ -31,7 +31,7 @@ collector based on global and diffuse horizontal irradiance and information abou
 the collector and the location. The following scheme shows the calculation procedure.
 
 .. figure:: _pics/solar_thermal_collector.png
-    :width: 80 %
+    :width: 60 %
     :alt: solar_thermal_collector.png
     :align: center
 
