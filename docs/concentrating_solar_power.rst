@@ -182,10 +182,11 @@ ParabolicTroughCollector facade
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Instead of using the precalculation, it is possible to use the
-ParabolicTroughCollector facade, which will create an oemof component as a representative for the collector. It calculates the heat of the collector in the same
-way as the precalculation do. Additionally, it integrates the calculated heat as an input
-into a component, uses an electrical input for pumps and gives a heat output,
-which is reduced by the defined additional losses.
+ParabolicTroughCollector facade, which will create an oemof component as a
+representative for the collector. It calculates the heat of the collector in
+the same way as the precalculation do. Additionally, it integrates the
+calculated heat as an input into a component, uses an electrical input for
+pumps and gives a heat output, which is reduced by the defined additional losses.
 As given in the example, further parameters are required in addition to the
 ones of the precalculation. Please see the
 :ref:`api reference for the facade module <api_label>` for all parameters which
