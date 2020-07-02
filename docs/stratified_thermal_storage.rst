@@ -240,13 +240,9 @@ model it, you can do so by performing the necessary pre-calculations and using o
 
 .. warning::
 
-   For this example to work as intended, please use the not yet released oemof-solph branch
-
-   https://github.com/oemof/oemof-solph/tree/dev
-
-   which contains the new attributes for GenericStorage, `fixed_losses_absolute` and
-   `fixed_losses_relative`. As soon as the feature in oemof is released, no extra steps
-   will be necessary to use them and this warning will be removed.
+   For this example to work as intended, please use oemof-solph v0.4.0 or higher
+   to ensure that the GenericStorage has the attributes :py:attr:`fixed_losses_absolute` and
+   :py:attr:`fixed_losses_relative`.
 
 The following figure shows a comparison of results of a common storage implementation using
 only a loss rate vs. the stratified thermal storage implementation

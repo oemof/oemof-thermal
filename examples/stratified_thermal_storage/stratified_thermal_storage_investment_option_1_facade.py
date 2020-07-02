@@ -1,3 +1,9 @@
+"""
+For this example to work as intended, please use oemof-solph v0.4.0 or higher
+to ensure that the GenericStorage has the attributes
+`fixed_losses_absolute` and `fixed_losses_relative`.
+"""
+
 import os
 import pandas as pd
 import numpy as np
