@@ -31,7 +31,7 @@ solar collector based on the direct horizontal irradiance (DHI) or the direct
 normal irradiance (DNI) and information about the collector and its location.
 The losses can be calculated in 2 different ways.
 
-.. figure:: _pics/concentrating_solar_power.svg
+.. figure:: _pics/concentrating_solar_power.png
     :width: 60 %
     :alt: concentrating_solar_power.png
     :align: center

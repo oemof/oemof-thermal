@@ -15,12 +15,11 @@ import os
 import re
 from difflib import unified_diff
 
-import pytest
 import pandas as pd
 
 from oemof.thermal import facades
-from oemof.network import Node
-from oemof.tools import helpers
+from oemof.network.network import Node
+from oemof.solph import helpers
 import oemof.solph as solph
 
 
@@ -122,7 +121,6 @@ class TestConstraints:
             with open(ref_filepath) as ref_file:
                 compare_lp_files(new_file, ref_file)
 
-    @pytest.mark.skip(reason="Relies on not yet released oemof v3.3")
     def test_stratified_thermal_storage_facade(self):
         """Constraint test of a StratifiedThermalStorage without investment.
         """
@@ -146,7 +144,6 @@ class TestConstraints:
 
         self.compare_to_reference_lp('stratified_thermal_storage.lp')
 
-    @pytest.mark.skip(reason="Relies on not yet released oemof v3.3")
     def test_stratified_thermal_storage_invest_option_1_facade(self):
         """
         Constraint test of a StratifiedThermalStorage with investment.
@@ -175,7 +172,6 @@ class TestConstraints:
 
         self.compare_to_reference_lp('stratified_thermal_storage_invest_option_1.lp')
 
-    @pytest.mark.skip(reason="Relies on not yet released oemof v3.3")
     def test_stratified_thermal_storage_invest_option_2_facade(self):
         """
         Constraint test of a StratifiedThermalStorage with investment.

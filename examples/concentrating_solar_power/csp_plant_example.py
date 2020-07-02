@@ -14,7 +14,6 @@ from oemof import solph
 from oemof.tools import economics
 from oemof.thermal.concentrating_solar_power import csp_precalc
 
-import oemof.outputlib as outputlib
 import matplotlib.pyplot as plt
 
 # set path
@@ -92,8 +91,7 @@ bcol = solph.Bus(label='solar')
 col_heat = solph.Source(
     label='collector_heat',
     outputs={bcol: solph.Flow(
-        fixed=True,
-        actual_value=data_precalc['collector_heat'],
+        fix=data_precalc['collector_heat'],
         nominal_value=size_collector)})
 
 el_grid = solph.Source(
@@ -107,8 +105,7 @@ backup = solph.Source(
 consumer = solph.Sink(
     label='demand',
     inputs={bel: solph.Flow(
-        fixed=True,
-        actual_value=data_precalc['ES_load_actual_entsoe_power_statistics'],
+        fix=data_precalc['ES_load_actual_entsoe_power_statistics'],
         nominal_value=1)})
 
 ambience_sol = solph.Sink(
@@ -157,11 +154,11 @@ model.solve(solver='cbc', solve_kwargs={'tee': True})
 # model.write((lp_path + 'csp_model.lp'),
 #             io_options={'symbolic_solver_labels': True})
 
-results = outputlib.processing.results(model)
+results = solph.processing.results(model)
 
-electricity_bus = outputlib.views.node(results, 'electricity')['sequences']
-thermal_bus = outputlib.views.node(results, 'thermal')['sequences']
-solar_bus = outputlib.views.node(results, 'solar')['sequences']
+electricity_bus = solph.views.node(results, 'electricity')['sequences']
+thermal_bus = solph.views.node(results, 'thermal')['sequences']
+solar_bus = solph.views.node(results, 'solar')['sequences']
 df = pd.merge(
     pd.merge(electricity_bus, thermal_bus, left_index=True, right_index=True),
     solar_bus, left_index=True, right_index=True)
