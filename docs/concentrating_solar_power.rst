@@ -129,10 +129,11 @@ These arguments are used in the formulas of the function:
 Usage
 _____
 
-It is possible to use the precalculation function as stand-alone function to calculate the collector values
-:math:`\dot Q_{coll}`, :math:`\eta_C` and :math:`E_{coll}`. Or it is possible
-to use the ParabolicTroughCollector facade to model a collector with further
-losses (e.g. in pipes or pumps) and the electrical consumption of pipes within a single step.
+It is possible to use the precalculation function as stand-alone function to
+calculate the collector values :math:`\dot Q_{coll}`, :math:`\eta_C` and
+:math:`E_{coll}`. Or it is possible to use the ParabolicTroughCollector facade
+to model a collector with further losses (e.g. in pipes or pumps) and the
+electrical consumption of pipes within a single step.
 Please note: As the unit of the input irradiance is given as power per area,
 the outputs :math:`\dot Q_{coll}` and :math:`E_{coll}` are given in the same
 unit. If these values are used in an oemof source, the unit of the nominal
@@ -149,7 +150,7 @@ The data for ambient temperature and irradiance must have the same time index.
 Depending on the method, the irradiance must be the horizontal direct
 irradiance or the direct normal irradiance. Be aware of the correct time index
 regarding the time zone, as the utilized pvlib need the correct time stamp
-corresponding to the location.
+corresponding to the location (latitude and longitude).
 
 
 .. code-block:: python
@@ -181,10 +182,11 @@ ParabolicTroughCollector facade
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Instead of using the precalculation, it is possible to use the
-ParabolicTroughCollector facade, which will create an oemof component as a representative for the collector. It calculates the heat of the collector in the same
-way as the precalculation do. Additionally, it integrates the calculated heat as an input
-into a component, uses an electrical input for pumps and gives a heat output,
-which is reduced by the defined additional losses.
+ParabolicTroughCollector facade, which will create an oemof component as a
+representative for the collector. It calculates the heat of the collector in
+the same way as the precalculation do. Additionally, it integrates the
+calculated heat as an input into a component, uses an electrical input for
+pumps and gives a heat output, which is reduced by the defined additional losses.
 As given in the example, further parameters are required in addition to the
 ones of the precalculation. Please see the
 :ref:`api reference for the facade module <api_label>` for all parameters which
