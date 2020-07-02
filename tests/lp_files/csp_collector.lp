@@ -71,6 +71,6 @@ bounds
    0 <= flow(solar_collector_bus_heat_1) <= +inf
    0 <= flow(solar_collector_bus_heat_2) <= +inf
    0 <= flow(solar_collector_inflow_solar_collector_0) <= 0
-   0 <= flow(solar_collector_inflow_solar_collector_1) <= 75650.812223268411
+   0 <= flow(solar_collector_inflow_solar_collector_1) <= 75650.81222326828
    0 <= flow(solar_collector_inflow_solar_collector_2) <= 0
 end
