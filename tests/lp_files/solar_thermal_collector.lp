@@ -47,15 +47,18 @@ c_e_Transformer_relation(solar_collector_bus_el_bus_heat_2)_:
 
 c_e_Transformer_relation(solar_collector_solar_collector_inflow_bus_heat_0)_:
 -1.0526315789473684 flow(solar_collector_bus_heat_0)
++1 flow(solar_collector_inflow_solar_collector_0)
 = 0
 
 c_e_Transformer_relation(solar_collector_solar_collector_inflow_bus_heat_1)_:
 -1.0526315789473684 flow(solar_collector_bus_heat_1)
-= -14566.653922252568
++1 flow(solar_collector_inflow_solar_collector_1)
+= 0
 
 c_e_Transformer_relation(solar_collector_solar_collector_inflow_bus_heat_2)_:
 -1.0526315789473684 flow(solar_collector_bus_heat_2)
-= -35868.680625337023
++1 flow(solar_collector_inflow_solar_collector_2)
+= 0
 
 c_e_ONE_VAR_CONSTANT: 
 ONE_VAR_CONSTANT = 1.0
@@ -67,4 +70,7 @@ bounds
    0 <= flow(solar_collector_bus_heat_0) <= +inf
    0 <= flow(solar_collector_bus_heat_1) <= +inf
    0 <= flow(solar_collector_bus_heat_2) <= +inf
+   0 <= flow(solar_collector_inflow_solar_collector_0) <= 0
+   0 <= flow(solar_collector_inflow_solar_collector_1) <= 14566.653922252568
+   0 <= flow(solar_collector_inflow_solar_collector_2) <= 35868.680625336958
 end
