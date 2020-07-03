@@ -18,14 +18,14 @@ from oemof.thermal.solar_thermal_collector import flat_plate_precalc
 from plots import plot_collector_heat
 
 
-# set paths
+# Set paths
 base_path = os.path.dirname(os.path.abspath(os.path.join(__file__)))
-data_path = os.path.join(base_path, 'data/')
-results_path = os.path.join(base_path, 'results/')
+data_path = os.path.join(base_path, 'data')
+results_path = os.path.join(base_path, 'results')
 if not os.path.exists(results_path):
     os.mkdir(results_path)
 
-# parameters for the precalculation
+# Parameters for the precalculation
 periods = 48
 latitude = 52.2443
 longitude = 10.5594
@@ -37,20 +37,20 @@ eta_0 = 0.73
 temp_collector_inlet = 20
 delta_temp_n = 10
 
-# input data
-input_data = pd.read_csv(data_path + 'data_flat_collector.csv').head(periods)
+# Read input data
+input_data = pd.read_csv(os.path.join(data_path, 'data_flat_collector.csv')).head(periods)
 input_data['Datum'] = pd.to_datetime(input_data['Datum'])
 input_data.set_index('Datum', inplace=True)
 input_data.index = input_data.index.tz_localize(tz='Europe/Berlin')
 input_data = input_data.asfreq('H')
 
 demand_df = pd.read_csv(
-    os.path.join(base_path, 'data', 'heat_demand.csv'),
+    os.path.join(data_path, 'heat_demand.csv'),
     sep=','
 )
 demand = list(demand_df['heat_demand'].iloc[:periods])
 
-# precalculation
+# Precalculation
 # - calculate global irradiance on the collector area
 # and collector efficiency depending on the
 # temperature difference -
@@ -75,9 +75,9 @@ precalc_data.to_csv(
 )
 
 
-# regular oemof system #
+# Regular oemof system
 
-# parameters for the energy system
+# Parameters for the energy system
 peripheral_losses = 0.05
 elec_consumption = 0.02
 backup_costs = 40
@@ -87,12 +87,12 @@ costs_electricity = 1000
 storage_loss_rate = 0.001
 conversion_storage = 0.98
 
-# busses
+# Busses
 bth = solph.Bus(label='thermal')
 bel = solph.Bus(label='electricity')
 bcol = solph.Bus(label='solar')
 
-# source for collector heat.
+# Source for collector heat.
 # - actual_value is the precalculated collector heat -
 collector_heat = solph.Source(
     label='collector_heat',
@@ -104,7 +104,7 @@ collector_heat = solph.Source(
     },
 )
 
-# sources and sinks
+# Sources and sinks
 el_grid = solph.Source(
     label='grid', outputs={bel: solph.Flow(variable_costs=costs_electricity)}
 )
@@ -122,7 +122,7 @@ collector_excess_heat = solph.Sink(
     label='collector_excess_heat', inputs={bcol: solph.Flow()}
 )
 
-# transformer and storage
+# Transformer and storage
 collector = solph.Transformer(
     label='collector',
     inputs={bcol: solph.Flow(), bel: solph.Flow()},
@@ -144,7 +144,7 @@ storage = solph.components.GenericStorage(
     investment=solph.Investment(ep_costs=costs_storage),
 )
 
-# build the system and solve the problem
+# Build the system and solve the problem
 date_time_index = input_data.index
 energysystem = solph.EnergySystem(timeindex=date_time_index)
 
@@ -161,11 +161,11 @@ energysystem.add(
     collector,
 )
 
-# create and solve the optimization model
+# Create and solve the optimization model
 model = solph.Model(energysystem)
 model.solve(solver='cbc', solve_kwargs={'tee': True})
 
-# save model results to csv
+# Get results
 results = solph.processing.results(model)
 
 electricity_bus = solph.views.node(results, 'electricity')['sequences']

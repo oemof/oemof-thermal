@@ -18,14 +18,14 @@ from oemof.thermal.solar_thermal_collector import flat_plate_precalc
 from plots import plot_collector_heat
 
 
-# set paths
+# Set paths
 base_path = os.path.dirname(os.path.abspath(os.path.join(__file__)))
-data_path = os.path.join(base_path, 'data/')
-results_path = os.path.join(base_path, 'results/')
+data_path = os.path.join(base_path, 'data')
+results_path = os.path.join(base_path, 'results')
 if not os.path.exists(results_path):
     os.mkdir(results_path)
 
-# parameters for the precalculation
+# Parameters for the precalculation
 periods = 48
 latitude = 52.2443
 longitude = 10.5594
@@ -37,8 +37,8 @@ eta_0 = 0.73
 temp_collector_inlet = 20
 delta_temp_n = 10
 
-# input data
-input_data = pd.read_csv(data_path + 'data_flat_collector.csv').head(periods)
+# Read input data
+input_data = pd.read_csv(os.path.join(data_path, 'data_flat_collector.csv')).head(periods)
 input_data['Datum'] = pd.to_datetime(input_data['Datum'])
 input_data.set_index('Datum', inplace=True)
 input_data.index = input_data.index.tz_localize(tz='Europe/Berlin')
@@ -50,7 +50,7 @@ demand_df = pd.read_csv(
 )
 demand = list(demand_df['heat_demand'].iloc[:periods])
 
-# precalculation
+# Precalculation
 # - calculate global irradiance on the collector area
 # and collector efficiency depending on the
 # temperature difference -
@@ -77,7 +77,7 @@ precalc_data.to_csv(
 
 # regular oemof system #
 
-# parameters for the energy system
+# Parameters for the energy system
 peripheral_losses = 0.05
 elec_consumption = 0.02
 backup_costs = 40
@@ -144,7 +144,7 @@ storage = solph.components.GenericStorage(
     investment=solph.Investment(ep_costs=costs_storage),
 )
 
-# build the system and solve the problem
+# Build the system and solve the problem
 date_time_index = input_data.index
 energysystem = solph.EnergySystem(timeindex=date_time_index)
 
@@ -161,10 +161,11 @@ energysystem.add(
     collector,
 )
 
+# Create and solve the optimization model
 model = solph.Model(energysystem)
 model.solve(solver='cbc', solve_kwargs={'tee': True})
 
-# save model results to csv
+# Get results
 results = solph.processing.results(model)
 
 electricity_bus = solph.views.node(results, 'electricity')['sequences']

@@ -15,12 +15,15 @@ from oemof.solph import (processing, Source, Sink, Bus, Flow,
                          Model, EnergySystem)
 
 
+# Set paths
 data_path = os.path.join(
     os.path.dirname(os.path.abspath(__file__)),
-    'stratified_thermal_storage.csv')
+    'data/stratified_thermal_storage.csv')
 
+# Read input data
 input_data = pd.read_csv(data_path, index_col=0, header=0)['var_value']
 
+# Precalculation
 u_value = calculate_storage_u_value(
     input_data['s_iso'],
     input_data['lamb_iso'],
@@ -80,19 +83,18 @@ thermal_storage = facades.StratifiedThermalStorage(
 
 energysystem.add(bus_heat, heat_source, shortage, excess, heat_demand, thermal_storage)
 
-# create and solve the optimization model
+# Create and solve the optimization model
 optimization_model = Model(energysystem)
-
 optimization_model.solve(solver=solver,
                          solve_kwargs={'tee': False, 'keepfiles': False})
 
-# get results
+# Get results
 results = processing.results(optimization_model)
 string_results = processing.convert_keys_to_strings(results)
 sequences = {k: v['sequences'] for k, v in string_results.items()}
 df = pd.concat(sequences, axis=1)
 
-# print storage sizing
+# Print storage sizing
 built_storage_capacity = results[thermal_storage, None]['scalars']['invest']
 initial_storage_capacity = results[thermal_storage, None]['scalars']['init_content']
 maximum_heat_flow_charging = results[bus_heat, thermal_storage]['scalars']['invest']

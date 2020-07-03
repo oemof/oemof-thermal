@@ -19,12 +19,15 @@ from oemof.solph import processing, Source, Sink, Bus, Flow, Model, EnergySystem
 from oemof.solph.components import GenericStorage
 
 
+# Set paths
 data_path = os.path.join(
     os.path.dirname(os.path.abspath(__file__)),
-    'stratified_thermal_storage.csv')
+    'data', 'stratified_thermal_storage.csv')
 
+# Read input data
 input_data = pd.read_csv(data_path, index_col=0, header=0)['var_value']
 
+# Precalculation
 u_value = calculate_storage_u_value(
     input_data['s_iso'],
     input_data['lamb_iso'],
@@ -132,25 +135,24 @@ thermal_storage = GenericStorage(
 
 energysystem.add(bus_heat, heat_source, shortage, excess, heat_demand, thermal_storage)
 
-# create and solve the optimization model
+# Create and solve the optimization model
 optimization_model = Model(energysystem)
-optimization_model.write('storage_model.lp', io_options={'symbolic_solver_labels': True})
 optimization_model.solve(solver=solver,
                          solve_kwargs={'tee': False, 'keepfiles': False})
-# get results
+# Get results
 results = processing.results(optimization_model)
 string_results = processing.convert_keys_to_strings(results)
 sequences = {k: v['sequences'] for k, v in string_results.items()}
 df = pd.concat(sequences, axis=1)
 
-# plot results
+# Example plot
 fig, (ax1, ax2) = plt.subplots(2, 1)
 
 df[[('shortage', 'bus_heat', 'flow'),
     ('heat_source', 'bus_heat', 'flow'),
     ('thermal_storage', 'bus_heat', 'flow')]].plot.area(ax=ax1, stacked=True, color=['y', 'b', 'k'])
 
-(-df[('bus_heat', 'thermal_storage', 'flow')]).plot.area(ax=ax1, color='g')
+(-df[('bus_heat', 'thermal_storage', 'flow')]).plot.area(ax=ax1, color='g', ylim=(-2, 2))
 
 df[('bus_heat', 'heat_demand', 'flow')].plot(ax=ax1, linestyle='-', marker='o', color='r')
 

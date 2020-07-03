@@ -5,28 +5,25 @@ to ensure that the GenericStorage has the attributes
 """
 
 import os
-import sys
 import pandas as pd
 import numpy as np
 
+from oemof.solph import Source, Sink, Bus, Flow, Model, EnergySystem  # noqa
 from oemof.thermal import facades
-
-# import functions to compare lp-files of new example with old one.
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'tests')))
-from test_constraints import compare_lp_files  # noqa
-
 from oemof.thermal.stratified_thermal_storage import (  # noqa
     calculate_storage_u_value,
 )
 
-from oemof.solph import Source, Sink, Bus, Flow, Model, EnergySystem  # noqa
 
+# Set paths
 data_path = os.path.join(
     os.path.dirname(os.path.abspath(__file__)),
-    'stratified_thermal_storage.csv')
+    'data', 'stratified_thermal_storage.csv')
 
+# Read input data
 input_data = pd.read_csv(data_path, index_col=0, header=0)['var_value']
 
+# Precalculation
 u_value = calculate_storage_u_value(
     input_data['s_iso'],
     input_data['lamb_iso'],
@@ -104,10 +101,5 @@ thermal_storage = facades.StratifiedThermalStorage(
 
 energysystem.add(bus_heat, heat_source, shortage, excess, heat_demand, thermal_storage)
 
-# create and solve the optimization model
+# Create and solve the optimization model
 optimization_model = Model(energysystem)
-optimization_model.write('storage_model_facades.lp', io_options={'symbolic_solver_labels': True})
-
-with open('storage_model_facades.lp') as generated_file:
-    with open('storage_model.lp') as expected_file:
-        compare_lp_files(generated_file, expected_file)
