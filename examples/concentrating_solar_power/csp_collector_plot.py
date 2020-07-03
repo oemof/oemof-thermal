@@ -24,7 +24,7 @@ if not os.path.exists(results_path):
 # Precalculation
 
 # Read input data
-dataframe = pd.read_csv('data/data_Muscat_22_8.csv')
+dataframe = pd.read_csv(os.path.join(base_path, 'data/data_Muscat_22_8.csv'))
 dataframe['Datum'] = pd.to_datetime(dataframe['Datum'])
 dataframe.set_index('Datum', inplace=True)
 dataframe.index = dataframe.index.tz_localize(tz='Asia/Muscat')
