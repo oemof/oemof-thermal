@@ -15,7 +15,6 @@ import pandas as pd
 from oemof import solph
 from oemof.tools import economics
 from oemof.thermal.solar_thermal_collector import flat_plate_precalc
-import oemof.outputlib as outputlib
 from plots import plot_collector_heat
 
 
@@ -99,8 +98,7 @@ collector_heat = solph.Source(
     label='collector_heat',
     outputs={
         bcol: solph.Flow(
-            fixed=True,
-            actual_value=precalc_data['collectors_heat'],
+            fix=precalc_data['collectors_heat'],
             nominal_value=size_collector,
         )
     },
@@ -117,7 +115,7 @@ backup = solph.Source(
 
 consumer = solph.Sink(
     label='demand',
-    inputs={bth: solph.Flow(fixed=True, actual_value=demand, nominal_value=1)},
+    inputs={bth: solph.Flow(fix=demand, nominal_value=1)},
 )
 
 collector_excess_heat = solph.Sink(
@@ -167,11 +165,11 @@ model = solph.Model(energysystem)
 model.solve(solver='cbc', solve_kwargs={'tee': True})
 
 # save model results to csv
-results = outputlib.processing.results(model)
+results = solph.processing.results(model)
 
-electricity_bus = outputlib.views.node(results, 'electricity')['sequences']
-thermal_bus = outputlib.views.node(results, 'thermal')['sequences']
-solar_bus = outputlib.views.node(results, 'solar')['sequences']
+electricity_bus = solph.views.node(results, 'electricity')['sequences']
+thermal_bus = solph.views.node(results, 'thermal')['sequences']
+solar_bus = solph.views.node(results, 'solar')['sequences']
 df = pd.merge(
     pd.merge(electricity_bus, thermal_bus, left_index=True, right_index=True),
     solar_bus, left_index=True, right_index=True)
