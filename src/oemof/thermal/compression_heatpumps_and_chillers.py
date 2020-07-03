@@ -227,7 +227,7 @@ def calc_chiller_quality_grade(nominal_conditions):
 
         :math:`\eta =
         \frac{\dot{Q}_\mathrm{chilled,nominal}}{P_\mathrm{el}} /
-        \frac{T_\mathrm{high, nominal}}{T_\mathrm{high, nominal}
+        \frac{T_\mathrm{low, nominal}}{T_\mathrm{high, nominal}
         - T_\mathrm{low, nominal}}`
 
     Parameters
