@@ -15,6 +15,7 @@ Welcome to oemof.thermal's documentation!
    getting_started
    examples
 
+
 .. toctree::
    :maxdepth: 1
    :caption: User's guide
@@ -25,6 +26,14 @@ Welcome to oemof.thermal's documentation!
    concentrating_solar_power
    solar_thermal_collector
    stratified_thermal_storage
+
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Theoretical considerations
+
+   theoretical_considerations
+
 
 .. toctree::
    :maxdepth: 1
