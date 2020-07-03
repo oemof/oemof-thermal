@@ -1,0 +1,34 @@
+v0.0.3 (2020)
+=============
+
+API changes
+-----------
+
+New features
+------------
+
+* Absorption heatpump and chiller
+
+Documentation
+-------------
+
+* Documentation small improvements
+
+Bug fixes
+---------
+
+Tests
+-----
+
+Other changes
+-------------
+
+Contributors
+------------
+
+* Caroline Möller
+* Franziska Pleißner
+* Jakob Wolf
+* Jann Launer
+* Marie-Claire Gering
+* Patrik Schönfeldt
