@@ -18,8 +18,8 @@ from oemof.tools import economics
 
 # Set paths
 base_path = os.path.dirname(os.path.abspath(os.path.join(__file__)))
-data_path = os.path.join(base_path, 'data/')
-results_path = os.path.join(base_path, 'results/')
+data_path = os.path.join(base_path, 'data')
+results_path = os.path.join(base_path, 'results')
 if not os.path.exists(results_path):
     os.mkdir(results_path)
 
@@ -45,7 +45,7 @@ conversion_storage = 0.98
 size_collector = 10  # m2
 
 # Read input data
-input_data = pd.read_csv(data_path + 'data_flat_collector.csv').head(periods)
+input_data = pd.read_csv(os.path.join(data_path, 'data_flat_collector.csv')).head(periods)
 input_data['Datum'] = pd.to_datetime(input_data['Datum'])
 input_data.set_index('Datum', inplace=True)
 input_data.index = input_data.index.tz_localize(tz='Europe/Berlin')
@@ -157,6 +157,4 @@ ax.set(
     ylabel='Q_coll in W',
     title='Heat of the collector')
 ax.grid()
-ax.legend()
-plt.savefig('results/heat_of_the_collector.png')
 plt.show()
