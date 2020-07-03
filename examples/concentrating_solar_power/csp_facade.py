@@ -21,8 +21,8 @@ from oemof.tools import economics
 # Set paths
 base_path = os.path.dirname(os.path.abspath(os.path.join(__file__)))
 
-results_path = os.path.join(base_path, 'results/')
-data_path = os.path.join(base_path, 'data/')
+results_path = os.path.join(base_path, 'results')
+data_path = os.path.join(base_path, 'data')
 
 if not os.path.exists(results_path):
     os.mkdir(results_path)
@@ -44,7 +44,7 @@ temp_collector_inlet = 435
 temp_collector_outlet = 500
 
 # Read input data
-input_data = pd.read_csv(data_path + 'data_csp_plant.csv').head(periods)
+input_data = pd.read_csv(data_path + '/data_csp_plant.csv').head(periods)
 input_data['Datum'] = pd.to_datetime(input_data['Datum'])
 input_data.set_index('Datum', inplace=True)
 input_data.index = input_data.index.tz_localize(tz='Asia/Muscat')
