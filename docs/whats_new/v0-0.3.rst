@@ -3,30 +3,20 @@ v0.0.3 (2020)
 
 API changes
 -----------
-* The modules have been updated to oemof.solph v0.4.0
+* The repository has been updated to oemof.solph v0.4.1
 
 New features
 ------------
 
-* We have added a new component: Absorption chillers.
-  The module contains functions to calculate the characteristic equation, the heat fluxes
-  at the evaporator and generator and some further specification of the chiller's capacity.
+* We have developed a new component: Absorption chillers
+    The module contains functions to calculate the characteristic equation, the heat fluxes
+    at the evaporator and generator and some further specification of the chiller's capacity.
 
 Documentation
 -------------
 
-* Small improvements have been done
-* Cleaner description of the examples
-
-Bug fixes
----------
-
-Tests
------
-
-Other changes
--------------
-
+* The documentation has been improved.
+* The descriptions in the examples have been cleaned up.
 
 Contributors
 ------------
