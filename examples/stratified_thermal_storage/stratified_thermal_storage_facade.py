@@ -18,7 +18,7 @@ from oemof.thermal.stratified_thermal_storage import (  # noqa
 # Set paths
 data_path = os.path.join(
     os.path.dirname(os.path.abspath(__file__)),
-    'data/stratified_thermal_storage.csv')
+    'data', 'stratified_thermal_storage.csv')
 
 # Read input data
 input_data = pd.read_csv(data_path, index_col=0, header=0)['var_value']
