@@ -10,7 +10,6 @@ SPDX-License-Identifier: MIT
 """
 import os
 import pandas as pd
-import oemof.outputlib as outputlib
 import matplotlib.pyplot as plt
 
 
@@ -108,8 +107,7 @@ backup = solph.Source(
 consumer = solph.Sink(
     label='demand',
     inputs={bel: solph.Flow(
-        fixed=True,
-        actual_value=input_data['ES_load_actual_entsoe_power_statistics'],
+        fix=input_data['ES_load_actual_entsoe_power_statistics'],
         nominal_value=1)})
 
 excess = solph.Sink(
@@ -143,12 +141,12 @@ model = solph.Model(energysystem)
 model.solve(solver='cbc', solve_kwargs={'tee': True})
 
 # Get results
-results = outputlib.processing.results(model)
+results = solph.processing.results(model)
 
-collector_inflow = outputlib.views.node(
+collector_inflow = solph.views.node(
     results, 'solar_collector-inflow')['sequences']
-thermal_bus = outputlib.views.node(results, 'thermal')['sequences']
-electricity_bus = outputlib.views.node(results, 'electricity')['sequences']
+thermal_bus = solph.views.node(results, 'thermal')['sequences']
+electricity_bus = solph.views.node(results, 'electricity')['sequences']
 df = pd.DataFrame()
 df = df.append(collector_inflow)
 df = df.join(thermal_bus, lsuffix='_1')

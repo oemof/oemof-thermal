@@ -1,2 +1,2 @@
-Datum,radiation                ,t_amb,wind_dir                 ,wind_vel                 ,direct radiation                  ,diffuse radiation,rel. Humidity,E_dir_hor,E dif hor,E gl hor,ES_load_actual_entsoe_power_statistics
-08.22.2003 12:00,3.03E+03,3.23E+01,1.59E+02,1.50E+00,1.62E+03,1.41E+03,6.20E+01,449.2,392.8,842,26916
+Datum,t_amb,E_dir_hor
+08.22.2003 12:00,3.23E+01,449.2

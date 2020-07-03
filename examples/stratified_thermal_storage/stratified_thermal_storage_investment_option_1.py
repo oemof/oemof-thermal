@@ -1,11 +1,7 @@
 """
-For this example to work as intended, please use the not yet released oemof branch
-
-https://github.com/oemof/oemof/tree/v0.3
-
-that contains the new attributes for GenericStorage, `fixed_losses_absolute` and
-`fixed_losses_relative`.
-
+For this example to work as intended, please use oemof-solph v0.4.0 or higher
+to ensure that the GenericStorage has the attributes
+`fixed_losses_absolute` and `fixed_losses_relative`.
 """
 
 import os
@@ -17,7 +13,7 @@ from oemof.thermal.stratified_thermal_storage import (calculate_storage_u_value,
 from oemof.solph import (Source, Sink, Bus, Flow,
                          Investment, Model, EnergySystem)
 from oemof.solph.components import GenericStorage
-import oemof.outputlib as outputlib
+from oemof.solph import processing
 
 
 # Set paths
@@ -83,8 +79,7 @@ heat_source = Source(
     label='heat_source',
     outputs={bus_heat: Flow(
         nominal_value=1,
-        actual_value=heat_feedin_timeseries,
-        fixed=True)})
+        fix=heat_feedin_timeseries)})
 
 shortage = Source(
     label='shortage',
@@ -98,8 +93,7 @@ heat_demand = Sink(
     label='heat_demand',
     inputs={bus_heat: Flow(
         nominal_value=1,
-        actual_value=demand_timeseries,
-        fixed=True)})
+        fix=demand_timeseries)})
 
 thermal_storage = GenericStorage(
     label='thermal_storage',
@@ -128,14 +122,14 @@ optimization_model.solve(solver=solver,
                          solve_kwargs={'tee': False, 'keepfiles': False})
 
 # Get results
-results = outputlib.processing.results(optimization_model)
-string_results = outputlib.processing.convert_keys_to_strings(results)
+results = processing.results(optimization_model)
+string_results = processing.convert_keys_to_strings(results)
 sequences = {k: v['sequences'] for k, v in string_results.items()}
 df = pd.concat(sequences, axis=1)
 
 # Print storage sizing
 built_storage_capacity = results[thermal_storage, None]['scalars']['invest']
-initial_storage_capacity = results[thermal_storage, None]['scalars']['init_cap']
+initial_storage_capacity = results[thermal_storage, None]['scalars']['init_content']
 maximum_heat_flow_charging = results[bus_heat, thermal_storage]['scalars']['invest']
 
 dash = '-' * 50

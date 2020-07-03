@@ -8,7 +8,6 @@ We use the soil temperature as low temperature heat reservoir.
 import os
 import oemof.thermal.compression_heatpumps_and_chillers as cmpr_hp_chiller
 import oemof.solph as solph
-import oemof.outputlib as outputlib
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -53,8 +52,7 @@ energysystem.add(solph.Source(
 
 energysystem.add(solph.Sink(
     label='demand',
-    inputs={b_th_high: solph.Flow(actual_value=data['demand_heat'],
-                                  fixed=True,
+    inputs={b_th_high: solph.Flow(fix=data['demand_heat'],
                                   nominal_value=1)}))
 
 # Precalculation of COPs
@@ -77,8 +75,8 @@ model = solph.Model(energysystem)
 model.solve(solver=solver, solve_kwargs={'tee': solver_verbose})
 
 # Get results
-energysystem.results['main'] = outputlib.processing.results(model)
-energysystem.results['meta'] = outputlib.processing.meta_results(model)
+energysystem.results['main'] = solph.processing.results(model)
+energysystem.results['meta'] = solph.processing.meta_results(model)
 
 energysystem.dump(dpath=None, filename=None)
 
@@ -88,10 +86,10 @@ energysystem.restore(dpath=None, filename=None)
 
 results = energysystem.results['main']
 
-electricity_bus = outputlib.views.node(results, 'electricity')
-heat_bus = outputlib.views.node(results, 'heat')
+electricity_bus = solph.views.node(results, 'electricity')
+heat_bus = solph.views.node(results, 'heat')
 
-string_results = outputlib.views.convert_keys_to_strings(
+string_results = solph.views.convert_keys_to_strings(
     energysystem.results['main'])
 GSHP_output = string_results[
     'GSHP', 'heat']['sequences'].values

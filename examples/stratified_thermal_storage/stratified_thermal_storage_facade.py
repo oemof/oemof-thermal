@@ -1,11 +1,7 @@
 """
-For this example to work as intended, please use the not yet released oemof branch
-
-https://github.com/oemof/oemof/tree/v0.3
-
-that contains the new attributes for GenericStorage, `fixed_losses_absolute` and
-`fixed_losses_relative`.
-
+For this example to work as intended, please use oemof-solph v0.4.0 or higher
+to ensure that the GenericStorage has the attributes
+`fixed_losses_absolute` and `fixed_losses_relative`.
 """
 
 import os
@@ -71,8 +67,7 @@ heat_source = Source(
     label='heat_source',
     outputs={bus_heat: Flow(
         nominal_value=1,
-        actual_value=heat_feedin_timeseries,
-        fixed=True)})
+        fix=heat_feedin_timeseries)})
 
 shortage = Source(
     label='shortage',
@@ -86,8 +81,7 @@ heat_demand = Sink(
     label='heat_demand',
     inputs={bus_heat: Flow(
         nominal_value=1,
-        actual_value=demand_timeseries,
-        fixed=True)})
+        fix=demand_timeseries)})
 
 thermal_storage = facades.StratifiedThermalStorage(
     label='thermal_storage',

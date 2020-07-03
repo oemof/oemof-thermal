@@ -31,7 +31,7 @@ collector based on global and diffuse horizontal irradiance and information abou
 the collector and the location. The following scheme shows the calculation procedure.
 
 .. figure:: _pics/solar_thermal_collector.png
-    :width: 80 %
+    :width: 60 %
     :alt: solar_thermal_collector.png
     :align: center
 
@@ -102,8 +102,12 @@ value must be an area too.
 
 
 Solar thermal collector precalculations
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Please see the :ref:`api of the solar_thermal_collector module <api_label>` for all parameters which have to be provided, also the ones that are not part of the described formulas above. The data for the irradiance and the ambient temperature must have the same time index. Be aware of the correct time index regarding the time zone, as the utilized pvlib needs the correct time stamp corresponding to the location.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Please see the API documentation of the :py:class:`~oemof.thermal.solar_thermal_collector`
+module for all parameters which have to be provided, also the ones that are not part of the
+described formulas above. The data for the irradiance and the ambient temperature must have
+the same time index. Be aware of the correct time index regarding the time zone, as the utilized
+pvlib needs the correct time stamp corresponding to the location.
 
 .. code-block:: python
 
@@ -148,8 +152,8 @@ way as the precalculation do. Additionally, it integrates the calculated heat as
 into a component, uses an electrical input for pumps and gives a heat output,
 which is reduced by the defined additional losses. As given in the example,
 further parameters are required in addition to the ones of the precalculation. Please see the
-:ref:`api reference for the facade module <api_label>` for all parameters which
-have to be provided.
+API documentation of the :py:class:`~oemof.thermal.facades.SolarThermalCollector`
+class of the facade module for all parameters which have to be provided.
 
 See flat_plate_collector_example_facade.py for an application example. It models the same
 system as the flat_plate_collector_example.py, but uses the SolarThermalCollector facade
@@ -182,5 +186,3 @@ instead of separate source and transformer.
     	temp_amb_col=input_data['temp_amb'],
     )
 
-To learn about all parameters that can be passed to the facades, have a look at the
-:ref:`api reference for the facade module <api_label>`.
