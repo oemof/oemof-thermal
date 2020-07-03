@@ -9,7 +9,7 @@ New features
 ------------
 
 * We have added a new component: Absorption chillers.
-  The module contains functions to calculate the characteristic equations, the heat fluxes
+  The module contains functions to calculate the characteristic equation, the heat fluxes
   at the evaporator and generator and some further specification of the chiller's capacity.
 
 Documentation
