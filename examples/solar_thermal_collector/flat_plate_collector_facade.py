@@ -144,7 +144,7 @@ df = pd.DataFrame()
 df = df.append(collector_inflow)
 df = df.join(thermal_bus, lsuffix='_1')
 df = df.join(electricity_bus, lsuffix='_1')
-df.to_csv(results_path + 'facade_results.csv')
+df.to_csv(os.path.join(results_path, 'facade_results.csv'))
 
 # Example plot
 heat_calc = collector_inflow
