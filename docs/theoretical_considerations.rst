@@ -23,11 +23,11 @@ Instead of aggregate all storages and all collectors of the system, which would 
 
 The system shown in the picture can be characterized by two ratios:
 
-:math:`ratio_{1} = \frac{V_{storage}}{A_{collector}} \quad \textrm{and} \quad ratio_{2} = \frac{A_{collector}}{\dot{Q}_{demand,max}}`
+:math:`ratio 1 = \frac{V_{storage}}{A_{collector}} \quad \textrm{and} \quad ratio 2 = \frac{A_{collector}}{\dot{Q}_{demand,max}}`
 
 or, also possible:
 
-:math:`ratio_{1} = \frac{V_{storage}}{A_{collector}} \quad \textrm{and} \quad ratio_{2} = \frac{A_{collector}}{\dot{Q}_{total}}`
+:math:`ratio 1 = \frac{V_{storage}}{A_{collector}} \quad \textrm{and} \quad ratio 2 = \frac{A_{collector}}{Q_{demand}}`
 
 Normally there are typical ratios which are used when dimensioning these types of systems.
 So it is possible to aggregate the houses within one type by defining these ratios. This would be more accurate than an aggregation of all installed systems.
@@ -39,23 +39,19 @@ ____________
     ============================= =============================================
     symbol                        explanation
     ============================= =============================================
-    :math:`\dot{Q}_{add}`         Heat flow from external to consumer [kW]
+    :math:`\dot{Q}_{add}`         Heat flow from external to consumer
 
-    :math:`\dot{Q}_{demand}`      Heat flow demand of the consumer [kWh]
+    :math:`\dot{Q}_{demand}`      Heat flow demand of the consumer 
 
-    :math:`\dot{Q}_{solar}`       Heat flow from collector [kW]
+    :math:`\dot{Q}_{solar}`       Heat flow from collector
 
     :math:`\dot{Q}_{demand,max}`  Maximal value of the consumer's heat flow
-                                  demand [kWh]
+                                  demand
 
-    :math:`\dot{Q}_{total}`       ?
+    :math:`Q_{demand}`            Total demand
 
-    :math:`ratio_1`               Ratio 1
+    :math:`V_{storage}`           Storage volume
 
-    :math:`ratio_2`               Ratio 2
-
-    :math:`V_{storage}`           Storage volume [m3]
-
-    :math:`A_{collector}`         collector surface [m2]
+    :math:`A_{collector}`         Collector surface
 
     ============================= =============================================
