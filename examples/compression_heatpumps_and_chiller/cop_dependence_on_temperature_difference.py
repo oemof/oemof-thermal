@@ -59,9 +59,9 @@ for q in quality_grades:
         mode='heat_pump')
 
 # Example plot
-fig, axs = plt.subplots(1, 1)
-# fig.set_size_inches(10, 6, forward=True)
-fig.set_size_inches(6, 6, forward=True)
+fig1 = plt.figure(figsize=(8, 6))
+fig1.set_size_inches(8, 6, forward=True)
+axs = fig1.add_subplot(111)
 plt.plot(cops['temperature_difference_industrial'],
          cops[temp_high_industrial],
          linestyle='-',
