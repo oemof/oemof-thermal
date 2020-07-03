@@ -2,7 +2,6 @@
 # import absorption_heatpumps_and_chillers as abs_hp_chiller
 import oemof.thermal.absorption_heatpumps_and_chillers as abs_hp_chiller
 import oemof.solph as solph
-import oemof.outputlib as outputlib
 import pandas as pd
 import os
 import matplotlib.pyplot as plt
@@ -42,8 +41,7 @@ energysystem.add(solph.Source(
 #     inputs={b_th_medium: solph.Flow(variable_costs=0)}))
 energysystem.add(solph.Sink(
     label='cooling_demand',
-    inputs={b_th_low: solph.Flow(actual_value=1,
-                                 fixed=True,
+    inputs={b_th_low: solph.Flow(fix=True,
                                  nominal_value=35)}))
 
 # Mean cooling water temperature in degC (dry cooling tower)
@@ -87,8 +85,8 @@ model = solph.Model(energysystem)
 
 model.solve(solver=solver, solve_kwargs={'tee': solver_verbose})
 
-energysystem.results['main'] = outputlib.processing.results(model)
-energysystem.results['meta'] = outputlib.processing.meta_results(model)
+energysystem.results['main'] = solph.processing.results(model)
+energysystem.results['meta'] = solph.processing.meta_results(model)
 
 energysystem.dump(dpath=None, filename=None)
 
@@ -102,10 +100,10 @@ energysystem.restore(dpath=None, filename=None)
 
 results = energysystem.results['main']
 
-high_temp_bus = outputlib.views.node(results, 'hot')
-low_temp_bus = outputlib.views.node(results, 'chilled')
+high_temp_bus = solph.views.node(results, 'hot')
+low_temp_bus = solph.views.node(results, 'chilled')
 
-string_results = outputlib.views.convert_keys_to_strings(
+string_results = solph.views.convert_keys_to_strings(
     energysystem.results['main'])
 AC_output = string_results[
     'AC', 'chilled']['sequences'].values
