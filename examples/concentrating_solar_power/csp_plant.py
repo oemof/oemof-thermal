@@ -158,7 +158,7 @@ solar_bus = solph.views.node(results, 'solar')['sequences']
 df = pd.merge(
     pd.merge(electricity_bus, thermal_bus, left_index=True, right_index=True),
     solar_bus, left_index=True, right_index=True)
-df.to_csv(results_path + 'csp_plant_results.csv')
+df.to_csv(os.path.join(results_path, 'csp_plant_results.csv'))
 
 # Example plot
 fig, ax = plt.subplots()
