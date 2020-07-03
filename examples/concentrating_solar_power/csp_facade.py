@@ -53,7 +53,7 @@ date_time_index = input_data.index
 date_time_index.freq = 'H'
 
 
-# Regular oemof_system
+# oemof_system
 
 # Parameters for the energy system
 additional_losses = 0.2
