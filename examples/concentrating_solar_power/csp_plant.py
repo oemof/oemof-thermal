@@ -19,8 +19,8 @@ import matplotlib.pyplot as plt
 # Set paths
 base_path = os.path.dirname(os.path.abspath(os.path.join(__file__)))
 
-results_path = os.path.join(base_path, 'results/')
-data_path = os.path.join(base_path, 'data/')
+results_path = os.path.join(base_path, 'results')
+data_path = os.path.join(base_path, 'data')
 
 if not os.path.exists(results_path):
     os.mkdir(results_path)
@@ -45,7 +45,7 @@ temp_collector_outlet = 500
 # It is necessary, to set a timeindex, so the pvlib is able to process the data
 # Here, the given column 'Datum' is convertet to a datetime and this is used as
 # index:
-dataframe = pd.read_csv(data_path + 'data_csp_plant.csv').head(periods)
+dataframe = pd.read_csv(os.path.join(data_path, 'data_csp_plant.csv')).head(periods)
 dataframe['Datum'] = pd.to_datetime(dataframe['Datum'])
 dataframe.set_index('Datum', inplace=True)
 # For some pandas version, it is necessary to set the frequence of the df:
@@ -66,7 +66,7 @@ data_precalc = csp_precalc(latitude, longitude,
 data_precalc['ES_load_actual_entsoe_power_statistics'] = list(
     dataframe['ES_load_actual_entsoe_power_statistics'].iloc[:periods])
 
-data_precalc.to_csv('results/results_csp_plant_precalc.csv')
+data_precalc.to_csv(os.path.join(results_path, 'results_csp_plant_precalc.csv'))
 
 # Regular oemof_system
 
