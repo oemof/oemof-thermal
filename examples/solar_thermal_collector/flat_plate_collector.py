@@ -20,8 +20,8 @@ from plots import plot_collector_heat
 
 # Set paths
 base_path = os.path.dirname(os.path.abspath(os.path.join(__file__)))
-data_path = os.path.join(base_path, 'data/')
-results_path = os.path.join(base_path, 'results/')
+data_path = os.path.join(base_path, 'data')
+results_path = os.path.join(base_path, 'results')
 if not os.path.exists(results_path):
     os.mkdir(results_path)
 
@@ -38,7 +38,7 @@ temp_collector_inlet = 20
 delta_temp_n = 10
 
 # Read input data
-input_data = pd.read_csv(data_path + 'data_flat_collector.csv').head(periods)
+input_data = pd.read_csv(os.path.join(data_path, 'data_flat_collector.csv')).head(periods)
 input_data['Datum'] = pd.to_datetime(input_data['Datum'])
 input_data.set_index('Datum', inplace=True)
 input_data.index = input_data.index.tz_localize(tz='Europe/Berlin')

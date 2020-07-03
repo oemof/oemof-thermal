@@ -52,7 +52,7 @@ input_data.index = input_data.index.tz_localize(tz='Europe/Berlin')
 input_data = input_data.asfreq('H')
 
 demand_df = pd.read_csv(
-    os.path.join(base_path, 'data', 'heat_demand.csv'),
+    os.path.join(data_path, 'heat_demand.csv'),
     sep=','
 )
 demand = list(demand_df['heat_demand'].iloc[:periods])
