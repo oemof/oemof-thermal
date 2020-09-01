@@ -213,7 +213,7 @@ In Fig.9 the histograms of the heat pump are shown. The peak of the histograms s
 grades (cf. left graph in Fig.9) and to the left with larger quality grades (cf. right graph in Fig.9).
 The values of the coefficients fluctuate more compared to the chiller.
 
-.. figure:: _pics/Histogram_hp.png
+.. figure:: _pics/histogram_hp.png
     :width: 100 %
     :alt: Histogram_hp.png
     :align: center
