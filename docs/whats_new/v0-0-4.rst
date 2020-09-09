@@ -1,5 +1,5 @@
 v0.0.4 (???, 2020)
-=============
+==================
 
 API changes
 -----------
@@ -12,7 +12,7 @@ New features
 * something
 
 New components/constraints
-------------
+--------------------------
 
 * something
 
