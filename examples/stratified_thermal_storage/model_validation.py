@@ -8,8 +8,14 @@ from oemof.thermal.stratified_thermal_storage import (  # noqa
     calculate_storage_dimensions,
     calculate_capacities
 )
-from oemof.solph import Source, Sink, Bus, Flow, Model, EnergySystem  # noqa
 from oemof.thermal import facades
+
+Source = solph.Source
+Sink = solph.Sink
+Bus = solph.Bus
+Flow = solph.Flow
+Model = solph.Model
+EnergySystem = solph.EnergySystem
 
 data_path = os.path.join(
     os.path.dirname(os.path.abspath(__file__)),
