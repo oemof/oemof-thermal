@@ -489,7 +489,7 @@ class ParabolicTroughCollector(Transformer, Facade):
             label=self.label + "-inflow",
             outputs={
                 self: Flow(nominal_value=self.aperture_area,
-                           fix=self.collectors_heat)
+                           max=self.collectors_heat)
             },
         )
 
@@ -643,7 +643,7 @@ class SolarThermalCollector(Transformer, Facade):
             label=self.label + "-inflow",
             outputs={
                 self: Flow(nominal_value=self.aperture_area,
-                           fix=self.collectors_heat)
+                           max=self.collectors_heat)
             },
         )
 
