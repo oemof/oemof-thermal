@@ -17,6 +17,7 @@ data_path = os.path.join(
 
 input_data = pd.read_csv(data_path, index_col=0, header=0)['var_value']
 
+
 def run_storage_model(initial_storage_level, temp_h, temp_c):
     data_path = os.path.join(
         os.path.dirname(os.path.abspath(__file__)),
@@ -29,7 +30,6 @@ def run_storage_model(initial_storage_level, temp_h, temp_c):
         input_data['lamb_iso'],
         input_data['alpha_inside'],
         input_data['alpha_outside'])
-
 
     # Set up an energy system model
     periods = 10
@@ -78,11 +78,18 @@ def run_storage_model(initial_storage_level, temp_h, temp_c):
         marginal_cost=0.0001
     )
 
-    energysystem.add(bus_heat, heat_source, shortage, excess, heat_demand, thermal_storage)
+    energysystem.add(
+        bus_heat,
+        heat_source,
+        shortage,
+        excess,
+        heat_demand,
+        thermal_storage)
 
     # create and solve the optimization model
     optimization_model = Model(energysystem)
-    optimization_model.write('storage_model_facades.lp', io_options={'symbolic_solver_labels': True})
+    optimization_model.write('storage_model_facades.lp',
+                             io_options={'symbolic_solver_labels': True})
     optimization_model.solve(solver='cbc', solve_kwargs={'tee': False})
 
     energysystem.results['main'] = solph.processing.results(optimization_model)
@@ -95,6 +102,7 @@ def run_storage_model(initial_storage_level, temp_h, temp_c):
     TES_soc.to_csv("./data/storage_soc_calculated.csv")
 
     return
+
 
 initial_storage_level = input_data['initial_storage_level']
 
