@@ -72,7 +72,7 @@ Therefore a short time series of measurement data (see Tab.2) is used for the
 validation where no charging or discharging occurs.
 
 ======= ==============
-time      level in %
+Time      Level in %
 ======= ==============
 0.0     	78.50
 0.25     	78.21
