@@ -32,7 +32,7 @@ For some parameters assumptions had to be made.
     height                          2.96 m
     diameter                        1.15 m
     insulation thickness            100 mm
-    temperature of hot layer        82 °C
+    temperature of hot layer        82°C
     temperature of cold layer       55 °C
     **Own Assumptions**
 --------------------------------------------------------------
