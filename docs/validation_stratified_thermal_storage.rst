@@ -16,7 +16,7 @@ Method
 _______
 
 In order to calculate the storage level using the StratifiedThermalStorage
-component from oemof.thermal
+component from oemof-thermal
 the storage geometry,
 the temperatures of the hot and cold layers (top and bottom),
 the temperature of the environment,
@@ -117,5 +117,4 @@ ________
 
 References
 __________
-
 
