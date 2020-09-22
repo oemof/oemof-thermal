@@ -7,7 +7,8 @@ Stratified thermal storage
 Scope
 _____
 
-The validation of the stratified thermal storage has been conducted within the oemof_heat project.
+The validation of the stratified thermal storage has been conducted within
+the `oemof_heat <https://github.com/oemof-thermal>`_ project.
 Measurement data of a reference storage has been provided by the energy supplier Naturstrom AG.
 The set of data contains the storage geometry (height, diameter, insulation thickness),
 temperatures at top and bottom of the storage and a time series of the storage level.
