@@ -104,7 +104,16 @@ Tab.2: Measured storage level.
 Results
 ________
 
+Fig.1 shows the measured and the calculated storage level over a period of 5 1/2 hours.
+The reference storage loses around 1.5% of its content in 5 hours.
+The calculated losses are slightly less.
 
+The trajectory of the measured level is not straight like the
+calculated one but appears to fluctuate.
+This is caused by the way the level is determined.
+It is derived from temperatures measured at discrete points.
+Slight changes of the measured local temperatures lead to the
+fluctuating level signal.
 
 .. figure:: _pics/storage_level.png
     :width: 80 %
@@ -115,6 +124,10 @@ ________
     Fig.1: Measured storage level (red) and calculated storage level (blue).
 
 
+The model allows an approximation of the losses in periods without
+charging or discharging from simple storage geometry data.
 
-References
-__________
+You can reproduce Fig.1 and the calculation with the example ``model_validation.py``
+in the `examples section <https://github.com/oemof/oemof-thermal/tree/dev/examples/stratified_thermal_storage>`_
+on GitHub.
+
