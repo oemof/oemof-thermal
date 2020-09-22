@@ -36,7 +36,7 @@ For some parameters assumptions had to be made.
     temperature of cold layer       55°C
     **Own Assumptions**
 --------------------------------------------------------------
-    temperature of environment      25 °C
+    temperature of environment      25°C
     conductivity of insulation      0.039 W/(m*K)
     heat transfer coef. inside      7 W/(m2*K)
     heat transfer coef. outside     4 W/(m2*K)
