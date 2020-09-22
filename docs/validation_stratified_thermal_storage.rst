@@ -62,7 +62,7 @@ where :math:`n` is the amount of temperature sensors.
 Measurement data
 _______
 
-The measurement data come from a energy system that contains several identical storages.
+The measurement data come from an energy system that contains several identical storages.
 Here, only a single storage is calculated to keep the model simple.
 
 The validation aims on checking how accurately the losses of the storage are predicted.
