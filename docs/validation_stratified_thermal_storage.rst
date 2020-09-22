@@ -33,7 +33,7 @@ For some parameters assumptions had to be made.
     diameter                        1.15 m
     insulation thickness            100 mm
     temperature of hot layer        82°C
-    temperature of cold layer       55 °C
+    temperature of cold layer       55°C
     **Own Assumptions**
 --------------------------------------------------------------
     temperature of environment      25 °C
