@@ -65,7 +65,7 @@ _______
 The measurement data come from an energy system that contains several identical storages.
 Here, only a single storage is calculated to keep the model simple.
 
-The validation aims on checking how accurately the losses of the storage are predicted.
+The validation aims on checking how accurately the losses of the storage are predicted by the model.
 This does not include losses during the charging and discharging
 (inflow_conversion_factor and outflow_conversion_factor).
 Therefore a short time series of measurement data (see Tab.2) is used for the
