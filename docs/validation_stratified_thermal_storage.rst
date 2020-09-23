@@ -30,6 +30,8 @@ For some parameters assumptions had to be made.
 ================================ =============================
     Name                          Value
 ================================ =============================
+**Data of the reference storage**
+--------------------------------------------------------------
     height                          2.96 m
     diameter                        1.15 m
     insulation thickness            100 mm
@@ -130,4 +132,3 @@ charging or discharging from simple storage geometry data.
 You can reproduce Fig.1 and the calculation with the example ``model_validation.py``
 in the `examples section <https://github.com/oemof/oemof-thermal/tree/dev/examples/stratified_thermal_storage>`_
 on GitHub.
-
