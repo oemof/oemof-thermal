@@ -35,7 +35,7 @@ A simplified 2-zone-model of a stratified thermal energy storage.
 * Heat conductivity of the storage has to be passed as well as a timeseries
   of outside temperatures for the calculation of heat losses.
 * There is no distinction between outside temperature and ground temperature.
-* A single value thermal transmittance :math:`U` is assumed, neglecting the
+* A single value for the thermal transmittance :math:`U` is assumed, neglecting the
   fact that the storage's lateral surface is bent and thus has a higher thermal
   transmittance than a flat surface. The relative error introduced here gets
   smaller with larger storage diameters.
