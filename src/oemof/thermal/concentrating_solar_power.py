@@ -15,6 +15,7 @@ SPDX-License-Identifier: MIT
 import pvlib
 import pandas as pd
 import numpy as np
+import warnings
 
 
 def csp_precalc(lat, long, collector_tilt, collector_azimuth, cleanliness,
@@ -71,7 +72,8 @@ def csp_precalc(lat, long, collector_tilt, collector_azimuth, cleanliness,
         Thermal loss parameter 1. Required for both loss methods.
 
     c_2: numeric
-        Thermal loss parameter 2. Required for loss method 'Janotte'.
+        Thermal loss parameter 2. Required for loss method 'Janotte'. If loss
+        method 'Andasol' is used, set it to 0.
 
     temp_collector_inlet: numeric or series with length periods
         Collectors inlet temperature.
@@ -146,6 +148,15 @@ def csp_precalc(lat, long, collector_tilt, collector_azimuth, cleanliness,
     if irradiance_required not in kwargs:
         raise AttributeError(
             f"'{irradiance_required}' necessary for {irradiance_method} is not provided")
+
+    if loss_method == 'Andasol' and (c_2 != 0):
+        warnings.warn(
+            "Parameter c_2 is not used for loss method 'Andasol'")
+
+    if loss_method == 'Andasol' and (a_3 == 0 or a_4 == 0 or
+                                     a_5 == 0 or a_6 == 0):
+        warnings.warn(
+            "Parameters a_3 to a_6 are required for loss method 'Andasol'")
 
     irradiance = kwargs.get(irradiance_required)
 
