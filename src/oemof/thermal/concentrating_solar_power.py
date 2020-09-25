@@ -153,8 +153,7 @@ def csp_precalc(lat, long, collector_tilt, collector_azimuth, cleanliness,
         warnings.warn(
             "Parameter c_2 is not used for loss method 'Andasol'")
 
-    if loss_method == 'Andasol' and (a_3 == 0 or a_4 == 0 or
-                                     a_5 == 0 or a_6 == 0):
+    if loss_method == 'Andasol' and (a_3 == 0 or a_4 == 0 or a_5 == 0 or a_6 == 0):
         warnings.warn(
             "Parameters a_3 to a_6 are required for loss method 'Andasol'")
 
