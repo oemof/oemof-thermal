@@ -26,7 +26,7 @@ from datetime import datetime
 # Define the used directories
 abs_path = os.path.dirname(os.path.abspath(os.path.join(__file__)))
 results_path = abs_path + '/results/'
-data_path = abs_path + '/data/validation_data'
+data_path = abs_path + '/data/validation_data/'
 
 # Read parameter values from parameter file
 file_path_param = data_path + 'validation_parameters.csv'
@@ -89,10 +89,11 @@ collector_precalc_data_horizontal = csp_precalc(
     E_dir_hor=dataframe['E_dir_hor_in_W_per_m2'])
 
 collector_precalc_data_normal.to_csv(
-    results_path + 'precalc_data_normal_{0}.csv'.format(currentdate))
+    results_path + 'validation_precalc_data_normal_{0}.csv'.format(currentdate))
 
 collector_precalc_data_horizontal.to_csv(
-    results_path + 'precalc_data_horizontal_{0}.csv'.format(currentdate))
+    results_path + 'validation_precalc_data_horizontal_{0}.csv'.format(
+        currentdate))
 
 result_df = pd.DataFrame()
 result_df['method normal'] = collector_precalc_data_normal[
