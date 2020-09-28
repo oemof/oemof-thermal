@@ -107,13 +107,13 @@ new_row = pd.Series(
           'method horizontal': result_df['method horizontal'].sum(),
           'Andasol data': result_df['Andasol data'].sum()},
     name='Sums')
-result_df = result_df.append(new_row, ignore_index=False)
-result_df.to_csv(results_path + 'validation.csv')
+result_df_csv = result_df.append(new_row, ignore_index=False)
+result_df_csv.to_csv(results_path + 'validation.csv')
 
 results_summer = result_df[4200:4368]
 results_winter = result_df[672:840]
 
-result_df.plot(kind='line', linewidth=3)
+result_df.plot(kind='line', linewidth=2)
 plt.title('specific collector heat output', size=25)
 plt.ylabel('collector heat output [W/m2]', size=25)
 plt.legend(bbox_to_anchor=(1.02, 1), loc='upper left', borderaxespad=0,
