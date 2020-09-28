@@ -131,7 +131,7 @@ class Facade(Node):
 
 
 class StratifiedThermalStorage(GenericStorage, Facade):
-    r""" Stratified thermal storage unit
+    r""" Stratified thermal storage unit.
 
     Parameters
     ----------
@@ -175,6 +175,11 @@ class StratifiedThermalStorage(GenericStorage, Facade):
     output_parameters: dict (optional)
         Set parameters on the output edge of the storage (see oemof.solph for
         more information on possible parameters)
+
+
+    The attribute :attr:`nominal_storage_capacity` of the base class :class:`GenericStorage`
+    should not be passed because it is determined internally from :attr:`height`
+    and :attr:`parameter`.
 
     Examples
     ---------
