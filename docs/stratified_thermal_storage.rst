@@ -79,7 +79,7 @@ Because of the space that diffuser plates for charging/discharging take up, it i
 the storage can neither be fully charged nor discharged, which is parametrised as a minimal/maximal
 storage level (indicated by the dotted lines in Fig. 1).
 
-These parameters are part of the stratified thermal storage:
+These parameters are part of the stratified thermal storage module:
 
     ========================= ===================================== ==== ===========
     symbol                    attribute                             type explanation
