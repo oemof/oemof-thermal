@@ -4,10 +4,10 @@
 Date: 17.09.2020
 Author: Franziska Pleissner
 
-This file shows a comparison between the collectors heat, which is calculated
-with the oemof.thermal component and the collector heat, which is measured.
+This file shows a comparison between the collector heat, which is calculated
+with the oemof-thermal component and the collector heat, which is measured.
 It uses the irradiance data, which are measured at the same spot and the same
-time as the collector heat data
+time as the collector heat data.
 """
 
 ############
