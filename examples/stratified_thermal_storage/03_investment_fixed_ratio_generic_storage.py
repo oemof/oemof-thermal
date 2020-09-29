@@ -1,7 +1,8 @@
 """
-For this example to work as intended, please use oemof-solph v0.4.0 or higher
-to ensure that the GenericStorage has the attributes
-`fixed_losses_absolute` and `fixed_losses_relative`.
+This example shows how to invest into nominal_storage_capacity and capacity
+(charging/discharging power) with a fixed ratio. Pass invest_relation_input_capacity
+invest_relation_input_output and set equivalent periodical costs on at least one of the
+Investment objects.
 """
 
 import os

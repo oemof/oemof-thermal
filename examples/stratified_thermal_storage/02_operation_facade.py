@@ -1,7 +1,6 @@
 """
-For this example to work as intended, please use oemof-solph v0.4.0 or higher
-to ensure that the GenericStorage has the attributes
-`fixed_losses_absolute` and `fixed_losses_relative`.
+This example shows how to use the facade class StratifiedThermalStorage to add a storage to a model
+that optimizes operation with oemof.solph.
 """
 
 import os

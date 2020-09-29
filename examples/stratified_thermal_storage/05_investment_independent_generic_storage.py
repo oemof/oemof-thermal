@@ -1,7 +1,9 @@
 """
-For this example to work as intended, please use oemof-solph v0.4.0 or higher
-to ensure that the GenericStorage has the attributes
-`fixed_losses_absolute` and `fixed_losses_relative`.
+This example shows how to invest into nominal_storage_capacity and capacity
+(charging/discharging power) independently with no fixed ratio. There is still a
+fixed ratio between input and output capacity which makes sense for a sensible heat storage.
+Equivalent periodical costs have to be set on both the Investment object of the input Flow and the
+GenericStorage.
 """
 
 import os
