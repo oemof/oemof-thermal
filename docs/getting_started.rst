@@ -23,7 +23,7 @@ The concept of the facades has been derived from oemof.tabular. The idea is to b
 instantiate a :class:`Facade` using only keyword arguments. Under the hood the :class:`Facade` then
 uses these arguments to construct an `oemof.solph` component and sets it up to be easily used in an
 :py:obj:`EnergySystem`. Usually, a subset of the attributes of the parent class remains while another
-part can be addressed by more specific or simpler attributes. In oemof.thermal each technology has a facade class,
+part can be addressed by more specific or simpler attributes. In oemof.thermal, some of the technologies have a facade class
 that can be found in the module oemof.thermal.facades. See the
 :ref:`api reference for the facade module <api_label>` for further information on the structure of
 these classes.
