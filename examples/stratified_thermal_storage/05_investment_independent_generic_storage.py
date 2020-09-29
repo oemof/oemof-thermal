@@ -106,8 +106,8 @@ thermal_storage = GenericStorage(
     loss_rate=loss_rate,
     fixed_losses_relative=fixed_losses_relative,
     fixed_losses_absolute=fixed_losses_absolute,
-    inflow_conversion_factor=1.,
-    outflow_conversion_factor=1.,
+    inflow_conversion_factor=input_data['inflow_conversion_factor'],
+    outflow_conversion_factor=input_data['outflow_conversion_factor'],
     invest_relation_input_output=1,
     investment=Investment(ep_costs=400, minimum=1)
 )

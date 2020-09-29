@@ -77,7 +77,7 @@ thermal_storage = facades.StratifiedThermalStorage(
     minimum_storage_capacity=1,  # TODO: setting to zero should give an error!
     min_storage_level=input_data['min_storage_level'],
     max_storage_level=input_data['max_storage_level'],
-    efficiency=1,
+    efficiency=input_data['efficiency'],
     marginal_cost=0.0001
 )
 

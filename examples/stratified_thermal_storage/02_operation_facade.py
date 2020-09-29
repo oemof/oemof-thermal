@@ -95,7 +95,7 @@ thermal_storage = facades.StratifiedThermalStorage(
     min_storage_level=input_data['min_storage_level'],
     max_storage_level=input_data['max_storage_level'],
     capacity=input_data['maximum_heat_flow_charging'],
-    efficiency=1,
+    efficiency=input_data['efficiency'],
     marginal_cost=0.0001
 )
 

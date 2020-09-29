@@ -51,9 +51,6 @@ loss_rate, fixed_losses_relative, fixed_losses_absolute = calculate_losses(
     input_data['temp_c'],
     input_data['temp_env'])
 
-maximum_heat_flow_charging = 2
-maximum_heat_flow_discharging = 2
-
 
 def print_parameters():
     parameter = {
@@ -61,8 +58,6 @@ def print_parameters():
         'Volume [m3]': volume,
         'Surface [m2]': surface,
         'Nominal storage capacity [MWh]': nominal_storage_capacity,
-        'Max. heat flow charging [MW]': maximum_heat_flow_charging,
-        'Max. heat flow discharging [MW]': maximum_heat_flow_discharging,
         'Loss rate [-]': loss_rate,
         'Fixed relative losses [-]': fixed_losses_relative,
         'Fixed absolute losses [MWh]': fixed_losses_absolute,
@@ -118,9 +113,9 @@ heat_demand = Sink(
 thermal_storage = GenericStorage(
     label='thermal_storage',
     inputs={bus_heat: Flow(
-        nominal_value=maximum_heat_flow_charging)},
+        nominal_value=input_data['maximum_heat_flow_charging'])},
     outputs={bus_heat: Flow(
-        nominal_value=maximum_heat_flow_discharging,
+        nominal_value=input_data['maximum_heat_flow_discharging'],
         variable_costs=0.0001
     )},
     nominal_storage_capacity=nominal_storage_capacity,
@@ -129,8 +124,8 @@ thermal_storage = GenericStorage(
     loss_rate=loss_rate,
     fixed_losses_relative=fixed_losses_relative,
     fixed_losses_absolute=fixed_losses_absolute,
-    inflow_conversion_factor=1.0,
-    outflow_conversion_factor=1.0,
+    inflow_conversion_factor=input_data['inflow_conversion_factor'],
+    outflow_conversion_factor=input_data['outflow_conversion_factor'],
 )
 
 energysystem.add(bus_heat, heat_source, shortage, excess, heat_demand, thermal_storage)
