@@ -110,7 +110,8 @@ new_row = pd.Series(
 result_df_csv = result_df.append(new_row, ignore_index=False)
 result_df_csv.to_csv(results_path + 'validation.csv')
 
-results_summer = result_df[4200:4368]
+results_summer_1 = result_df[4080:4248]
+results_summer_2 = result_df[4248:4416]
 results_winter = result_df[672:840]
 
 result_df.plot(kind='line', linewidth=2)
@@ -124,8 +125,8 @@ figure.set_size_inches(30, 15)
 plt.savefig(results_path + 'validation_results_{0}.png'.format(currentdate),
             dpi=150, bbox_inches='tight')
 
-results_summer.plot(kind='line', linewidth=3)
-plt.title('specific collector heat output (25.06-01.07.2019)', size=25)
+results_summer_1.plot(kind='line', linewidth=3)
+plt.title('specific collector heat output (20.06-26.06.2019)', size=25)
 plt.ylabel('collector heat output [W/m2]', size=25)
 plt.legend(bbox_to_anchor=(1.02, 1), loc='upper left', borderaxespad=0,
            prop={'size': 25})
@@ -133,7 +134,20 @@ plt.yticks(size=25)
 figure = plt.gcf()
 figure.set_size_inches(30, 15)
 plt.savefig(
-    results_path + 'validation_results_summer_{0}.png'.format(currentdate),
+    results_path + 'validation_results_summer_1_{0}.png'.format(currentdate),
+    dpi=150,
+    bbox_inches='tight')
+
+results_summer_2.plot(kind='line', linewidth=3)
+plt.title('specific collector heat output (27.06-03.07.2019)', size=25)
+plt.ylabel('collector heat output [W/m2]', size=25)
+plt.legend(bbox_to_anchor=(1.02, 1), loc='upper left', borderaxespad=0,
+           prop={'size': 25})
+plt.yticks(size=25)
+figure = plt.gcf()
+figure.set_size_inches(30, 15)
+plt.savefig(
+    results_path + 'validation_results_summer_2_{0}.png'.format(currentdate),
     dpi=150,
     bbox_inches='tight')
 
