@@ -5,12 +5,14 @@ Adapted from `oemof.tabular's facades
 <https://github.com/oemof/oemof-tabular/blob/master/src/oemof/tabular/facades.py>`_
 
 Facade's are classes providing a simplified view on more complex classes.
-More specifically, the `Facade`s in this module act as simplified, energy
-specific  wrappers around `oemof`'s and `oemof.solph`'s more abstract and
-complex classes. The idea is to be able to instantiate a `Facade` using keyword
-arguments, whose value are derived from simple, tabular data sources. Under the
-hood the `Facade` then uses these arguments to construct an `oemof` or
-`oemof.solph` component and sets it up to be easily used in an `EnergySystem`.
+More specifically, the :class:`Facade` s in this module inherit from `oemof.solph`'s generic
+classes to serve as more concrete and energy specific interface.
+
+The concept of the facades has been derived from oemof.tabular. The idea is to be able to
+instantiate a :class:`Facade` using only keyword arguments. Under the hood the :class:`Facade` then
+uses these arguments to construct an `oemof.solph` component and sets it up to be easily used in an
+:class:`EnergySystem`. Usually, a subset of the attributes of the parent class remains while another
+part can be addressed by more specific or simpler attributes.
 
 **Note** The mathematical notation is as follows:
 
@@ -131,7 +133,7 @@ class Facade(Node):
 
 
 class StratifiedThermalStorage(GenericStorage, Facade):
-    r""" Stratified thermal storage unit
+    r""" Stratified thermal storage unit.
 
     Parameters
     ----------
@@ -175,6 +177,11 @@ class StratifiedThermalStorage(GenericStorage, Facade):
     output_parameters: dict (optional)
         Set parameters on the output edge of the storage (see oemof.solph for
         more information on possible parameters)
+
+
+    The attribute :attr:`nominal_storage_capacity` of the base class :class:`GenericStorage`
+    should not be passed because it is determined internally from :attr:`height`
+    and :attr:`parameter`.
 
     Examples
     ---------
