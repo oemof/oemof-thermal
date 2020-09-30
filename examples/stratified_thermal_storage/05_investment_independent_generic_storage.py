@@ -1,7 +1,9 @@
 """
-For this example to work as intended, please use oemof-solph v0.4.0 or higher
-to ensure that the GenericStorage has the attributes
-`fixed_losses_absolute` and `fixed_losses_relative`.
+This example shows how to invest into nominal_storage_capacity and capacity
+(charging/discharging power) independently with no fixed ratio. There is still a
+fixed ratio between input and output capacity which makes sense for a sensible heat storage.
+Equivalent periodical costs have to be set on both the Investment object of the input Flow and the
+GenericStorage.
 """
 
 import os
@@ -106,8 +108,8 @@ thermal_storage = GenericStorage(
     loss_rate=loss_rate,
     fixed_losses_relative=fixed_losses_relative,
     fixed_losses_absolute=fixed_losses_absolute,
-    inflow_conversion_factor=1.,
-    outflow_conversion_factor=1.,
+    inflow_conversion_factor=input_data['inflow_conversion_factor'],
+    outflow_conversion_factor=input_data['outflow_conversion_factor'],
     invest_relation_input_output=1,
     investment=Investment(ep_costs=400, minimum=1)
 )
