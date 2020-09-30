@@ -1,6 +1,6 @@
 """
 This example shows how to invest into nominal_storage_capacity and capacity
-(charging/discharging power) with a fixed ratio. Pass invest_relation_input_capacity
+(charging/discharging power) with a fixed ratio. Pass invest_relation_input_capacity and
 invest_relation_input_output and set equivalent periodical costs on at least one of the
 Investment objects.
 """
