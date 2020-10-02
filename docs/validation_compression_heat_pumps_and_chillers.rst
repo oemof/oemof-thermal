@@ -20,7 +20,7 @@ be found in the `here <https://github.com/greco-project/heat_pump_validation>`_.
 Method
 _______
 
-In order to calculate the COP and EER using oemof.thermal the temperature of the heat source, the temperature of the
+In order to calculate the COP and EER using oemof-thermal the temperature of the heat source, the temperature of the
 heat sink and the quality grade are required. The quality grade describes the relation between the actual
 coefficient of performance and the coefficient of performance of the Carnot process. Please see the
 `USER'S GUIDE <https://oemof-thermal.readthedocs.io/en/latest/compression_heat_pumps_and_chillers.html>`_
