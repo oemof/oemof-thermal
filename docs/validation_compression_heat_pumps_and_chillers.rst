@@ -145,7 +145,7 @@ grades.
     :figclass: align-center
 
     Fig.5: Correlation between residual and monitored EER of the complete data set with a quality grade of 0.05 (left)
-    and a quality grade of 0.50 (right).
+    and a quality grade of 0.50 (right)
 
 
 Results of the heat pump
