@@ -83,7 +83,6 @@ In the `GitHub organisation of the oemof_heat project <https://github.com/oemof-
 **Solar Cooling Model**
 
 The application models a cooling system for a building with a given cooling demand.
-https://github.com/oemof-heat/solar_models/tree/master/solar_cooling
 
 **Desalination Model**
 
