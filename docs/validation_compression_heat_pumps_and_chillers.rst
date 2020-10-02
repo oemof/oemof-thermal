@@ -38,7 +38,8 @@ compressor of the installation is turned off. These data points are excluded fro
 the ones under operational behavior of the component. For this purpose the data is preprocessed in order to attain
 only data points with electrical power greater or equal to 100 watts and with the integral fan turned on.
 In comparison to the chiller's monitored data, the data of the heat pump contains a higher number of excluded data
-points. It further has multiple downtimes, which lead to reversed temperatures of heat sink and heat source.
+points. It further has multiple downtimes, which lead to reversed temperatures of heat sink and heat source. These data
+points are also excluded from the validation.
 
 The functionalities for calculating the COP and EER of oemof.thermal are made for a stationary process, while the data
 provided by UPM includes mostly data from non-stationary periods as different control modes are explored. To balance the
