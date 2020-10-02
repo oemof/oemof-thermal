@@ -209,7 +209,7 @@ observable: Residuals decrease with rising quality grades.
 
     Fig.8: Correlation between temperature hub and monitored COP with overestimation showing a quality grade of 0.30
     (left), quality grade of 0.35 with least error (middle) and with underestimation connected to a quality grade of
-    0.40 (right).
+    0.40 (right)
 
 
 In Fig.9 the histograms of the heat pump are shown. The peak of the histograms shifts to the right with smaller quality
