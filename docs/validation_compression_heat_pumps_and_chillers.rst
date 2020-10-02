@@ -74,7 +74,7 @@ for 0.35 with 1.181 (cf. Tab.1).
     0.45                            2.732
     0.50                            3.531
 ============================= =============================
-Tab.1: Root square mean error for different quality grades of the chiller
+Tab.1: Root mean square error for different quality grades of the chiller
 
 The correlation with quality grades below 0.30 show an overestimation of the coefficients. In contrast,
 calculated EER at quality grades above 0.30 indicate an underestimation. Fig.1 shows the estimated correlation of EERs
