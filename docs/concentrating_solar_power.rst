@@ -49,7 +49,7 @@ part of the absorbed heat output through thermal losses
 (:math:`\dot Q_{loss,therm}`).
 
 
-The processing of the irradiance data is done by the pvlib, which calculates
+The processing of the irradiance data is done by the `pvlib <https://github.com/pvlib/pvlib-python>_` , which calculates
 the direct irradiance on the collector. This irradiance is reduced by dust and
 dirt on the collector with:
 
