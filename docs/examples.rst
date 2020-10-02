@@ -5,7 +5,7 @@ Examples
 
 In this section we provide several examples to demonstrate how you can use the
 functions and components of *oemof.thermal*:
-[Exapmle Repository](https://github.com/oemof/oemof-thermal/tree/dev/examples.md)
+[Exapmle Repository](https://github.com/oemof/oemof-thermal/tree/dev/examples)
 Among others: 
 
 - functionality of collector facade and efficency calculation 
@@ -31,7 +31,7 @@ This application models a csp plant, to meet an electrical demand. The plant
 itself consists of a parabolic trough collector field, a turbine, and a storage.
 The collector is build with the facade, which can be found in the facade modul.
 
-This Exapmle can be found [here](https://github.com/oemof/oemof-thermal/tree/dev/examples/concentrating_solar_power.md).
+This Exapmle can be found [here](https://github.com/oemof/oemof-thermal/tree/master/examples/concentrating_solar_power).
 
 **Compression heat pumps and chillers**
 
@@ -53,7 +53,7 @@ In addition to that the example provides a manual on useing the 'calc_cops' func
 to get the COPs of a heat pump, by ploting the temperature dependency of the COP, and COPs of an exemplary ground-source heat pump (GSHP)
 useing the soil temperature as low temperature heat reservoir.
 
-This Exapmle can be found [here](https://github.com/oemof/oemof-thermal/tree/dev/examples/compression_heatpumps_and_chiller.md)
+This Exapmle can be found [here](https://github.com/oemof/oemof-thermal/tree/master/examples/compression_heatpumps_and_chiller)
 
 **Solar thermal collector**
 
@@ -61,7 +61,7 @@ In this example the functionality of the solar thermal collector is shown.
 Once with a fixed collector size (aperture area), once with a fixed collector size using the facade and another time with a collector size to be invested.
 It also provides plots which can be called by the flat_plate_collector_example.py.
 
-This Exapmle can be found [here](https://github.com/oemof/oemof-thermal/tree/dev/examples/solar_thermal_collector.md)
+This Exapmle can be found [here](https://github.com/oemof/oemof-thermal/tree/master/examples/solar_thermal_collector)
 
 **Stratified thermal storage**
 
@@ -71,7 +71,7 @@ to specify a storage in a model that optimizes operation with oemof.solph. As we
 Furthermore it shows how to invest into nominal_storage_capacity and capacity
 (charging/discharging power) with a fixed ratio and independently with no fixed ratio (There is still a fixed ratio between input and output capacity).
 
-This Exapmle can be found [here](https://github.com/oemof/oemof-thermal/tree/dev/examples/stratified_thermal_storage.md)
+This Exapmle can be found [here](https://github.com/oemof/oemof-thermal/tree/master/examples/stratified_thermal_storage)
 
 
 
