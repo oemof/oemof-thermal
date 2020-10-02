@@ -241,6 +241,5 @@ The dispersion of residuals in areas of lower as well as higher monitored COP in
 References
 __________
 
-[1] Ziegler, D.-I. F. (1997).
-Sorptionswärmepumpen.
-Erding: Forschungsberichte des Deutschen Kälte- und Klimatechnischen Vereins Nr. 57
+.. [1] Ziegler, D.-I. F. (1997). Sorptionswärmepumpen. Erding: Forschungsberichte des Deutschen Kälte- und Klimatechnischen Vereins Nr. 57
+.. [2] C. Lorenzo, L. Narvarte, R.H. Almeida, A.B. Cristóbal. Technical evaluation of a stand-alone photovoltaic heat pump system without batteries for cooling applications. Solar Energy. Volume 206. 2020. Pages 92-105. ISSN 0038-092X.
