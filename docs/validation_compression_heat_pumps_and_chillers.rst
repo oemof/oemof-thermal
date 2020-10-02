@@ -199,7 +199,7 @@ observable: Residuals decrease with rising quality grades.
 
     Fig.7: Correlation between residual and monitored COP with overestimation showing a quality grade of 0.30 (left),
     quality grade of 0.35 with least error (middle) and with underestimation connected to a quality grade of 0.40
-    (right).
+    (right)
 
 .. figure:: _pics/temphub_cop.png
     :width: 100 %
