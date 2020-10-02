@@ -34,6 +34,14 @@ ground-source heat pump (GSHP) using the soil temperature as low temperature hea
 
 The Examples can be found `here <https://github.com/oemof/oemof-thermal/tree/master/examples/compression_heatpumps_and_chiller>`_.
 
+**Absorption Chillers**
+
+The first example shows the behaviour of the coefficient of performance and heat flows such as the cooling capacity
+for different cooling water temperatures based on the characteristic equation method.
+The second example underlines the dependence of the temperature of the cooling water on the cooling capacity.
+
+The Examples can be found `here <https://github.com/oemof/oemof-thermal/tree/master/examples/absorption_heatpumps_and_chiller>`_.
+
 **Concentrating solar power (CSP)**
 
 These examples shows the difference between the new approach of the oemof-thermal component and a fix efficiency.
