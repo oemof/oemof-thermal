@@ -6,6 +6,7 @@ temp_c,60,degC
 temp_env,10,degC
 inflow_conversion_factor,0.9,
 outflow_conversion_factor,0.9,
+efficiency,0.9,
 min_storage_level,0.025,
 max_storage_level,0.975,
 maximum_heat_flow_charging,2,MW

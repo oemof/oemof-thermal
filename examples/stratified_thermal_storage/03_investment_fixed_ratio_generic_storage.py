@@ -1,11 +1,8 @@
 """
-For this example to work as intended, please use the not yet released oemof branch
-
-https://github.com/oemof/oemof/tree/v0.3
-
-that contains the new attributes for GenericStorage, `fixed_losses_absolute` and
-`fixed_losses_relative`.
-
+This example shows how to invest into nominal_storage_capacity and capacity
+(charging/discharging power) with a fixed ratio. Pass invest_relation_input_capacity and
+invest_relation_input_output and set equivalent periodical costs on at least one of the
+Investment objects.
 """
 
 import os
@@ -17,15 +14,18 @@ from oemof.thermal.stratified_thermal_storage import (calculate_storage_u_value,
 from oemof.solph import (Source, Sink, Bus, Flow,
                          Investment, Model, EnergySystem)
 from oemof.solph.components import GenericStorage
-import oemof.outputlib as outputlib
+from oemof.solph import processing
 
 
+# Set paths
 data_path = os.path.join(
     os.path.dirname(os.path.abspath(__file__)),
-    'stratified_thermal_storage.csv')
+    'data/stratified_thermal_storage.csv')
 
+# Read input data
 input_data = pd.read_csv(data_path, index_col=0, header=0)['var_value']
 
+# Precalculation
 u_value = calculate_storage_u_value(
     input_data['s_iso'],
     input_data['lamb_iso'],
@@ -80,8 +80,7 @@ heat_source = Source(
     label='heat_source',
     outputs={bus_heat: Flow(
         nominal_value=1,
-        actual_value=heat_feedin_timeseries,
-        fixed=True)})
+        fix=heat_feedin_timeseries)})
 
 shortage = Source(
     label='shortage',
@@ -95,13 +94,12 @@ heat_demand = Sink(
     label='heat_demand',
     inputs={bus_heat: Flow(
         nominal_value=1,
-        actual_value=demand_timeseries,
-        fixed=True)})
+        fix=demand_timeseries)})
 
 thermal_storage = GenericStorage(
     label='thermal_storage',
     inputs={bus_heat: Flow(
-        investment=Investment(ep_costs=50))},
+        investment=Investment())},
     outputs={bus_heat: Flow(
         investment=Investment(),
         variable_costs=0.0001)},
@@ -110,29 +108,29 @@ thermal_storage = GenericStorage(
     loss_rate=loss_rate,
     fixed_losses_relative=fixed_losses_relative,
     fixed_losses_absolute=fixed_losses_absolute,
-    inflow_conversion_factor=1.,
-    outflow_conversion_factor=1.,
+    inflow_conversion_factor=input_data['inflow_conversion_factor'],
+    outflow_conversion_factor=input_data['outflow_conversion_factor'],
     invest_relation_input_output=1,
+    invest_relation_input_capacity=1 / 6,
     investment=Investment(ep_costs=400, minimum=1)
 )
 
 energysystem.add(bus_heat, heat_source, shortage, excess, heat_demand, thermal_storage)
 
-# create and solve the optimization model
+# Create and solve the optimization model
 optimization_model = Model(energysystem)
-
 optimization_model.solve(solver=solver,
                          solve_kwargs={'tee': False, 'keepfiles': False})
 
-# get results
-results = outputlib.processing.results(optimization_model)
-string_results = outputlib.processing.convert_keys_to_strings(results)
+# Get results
+results = processing.results(optimization_model)
+string_results = processing.convert_keys_to_strings(results)
 sequences = {k: v['sequences'] for k, v in string_results.items()}
 df = pd.concat(sequences, axis=1)
 
-# print storage sizing
+# Print storage sizing
 built_storage_capacity = results[thermal_storage, None]['scalars']['invest']
-initial_storage_capacity = results[thermal_storage, None]['scalars']['init_cap']
+initial_storage_capacity = results[thermal_storage, None]['scalars']['init_content']
 maximum_heat_flow_charging = results[bus_heat, thermal_storage]['scalars']['invest']
 
 dash = '-' * 50

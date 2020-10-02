@@ -8,10 +8,17 @@ We use the soil temperature as low temperature heat reservoir.
 import os
 import oemof.thermal.compression_heatpumps_and_chillers as cmpr_hp_chiller
 import oemof.solph as solph
-import oemof.outputlib as outputlib
 import pandas as pd
 import matplotlib.pyplot as plt
 
+
+# Set paths
+data_path = os.path.join(os.path.dirname(__file__), 'data/GSHP_example.csv')
+
+# Read input data
+data = pd.read_csv(data_path)
+
+# Set up an energy system model
 solver = 'cbc'
 number_of_time_steps = 24
 solver_verbose = False
@@ -20,10 +27,6 @@ date_time_index = pd.date_range('1/1/2012', periods=number_of_time_steps,
                                 freq='H')
 
 energysystem = solph.EnergySystem(timeindex=date_time_index)
-
-# Read data file
-filename = os.path.join(os.path.dirname(__file__), 'data/GSHP_example.csv')
-data = pd.read_csv(filename)
 
 b_el = solph.Bus(label="electricity")
 
@@ -49,11 +52,10 @@ energysystem.add(solph.Source(
 
 energysystem.add(solph.Sink(
     label='demand',
-    inputs={b_th_high: solph.Flow(actual_value=data['demand_heat'],
-                                  fixed=True,
+    inputs={b_th_high: solph.Flow(fix=data['demand_heat'],
                                   nominal_value=1)}))
 
-# Pre-Calculate COPs
+# Precalculation of COPs
 cops_GSHP = cmpr_hp_chiller.calc_cops(
     temp_high=[40],
     temp_low=data['ground_temperature'],
@@ -68,28 +70,26 @@ energysystem.add(solph.Transformer(
     conversion_factors={b_el: [1 / cop for cop in cops_GSHP],
                         b_th_low: [(cop - 1) / cop for cop in cops_GSHP]}))
 
+# Create and solve the optimization model
 model = solph.Model(energysystem)
-
 model.solve(solver=solver, solve_kwargs={'tee': solver_verbose})
 
-energysystem.results['main'] = outputlib.processing.results(model)
-energysystem.results['meta'] = outputlib.processing.meta_results(model)
+# Get results
+energysystem.results['main'] = solph.processing.results(model)
+energysystem.results['meta'] = solph.processing.meta_results(model)
 
 energysystem.dump(dpath=None, filename=None)
 
-# ****************************************************************************
-# ********** PART 2 - Processing the results *********************************
-# ****************************************************************************
-
+# Processing the results
 energysystem = solph.EnergySystem()
 energysystem.restore(dpath=None, filename=None)
 
 results = energysystem.results['main']
 
-electricity_bus = outputlib.views.node(results, 'electricity')
-heat_bus = outputlib.views.node(results, 'heat')
+electricity_bus = solph.views.node(results, 'electricity')
+heat_bus = solph.views.node(results, 'heat')
 
-string_results = outputlib.views.convert_keys_to_strings(
+string_results = solph.views.convert_keys_to_strings(
     energysystem.results['main'])
 GSHP_output = string_results[
     'GSHP', 'heat']['sequences'].values
@@ -100,6 +100,7 @@ GSHP_input = string_results[
 env_heat = string_results[
     'ambient', 'heat_low_temp']['sequences'].values
 
+# Example plot
 fig2, axs = plt.subplots(3, 1, figsize=(8, 5), sharex=True)
 axs[0].plot(GSHP_output, label='heat output')
 axs[0].plot(demand_h, linestyle='--', label='heat demand')

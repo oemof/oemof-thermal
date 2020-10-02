@@ -2,7 +2,7 @@
 
 """
 Example to show the functionality of the solar thermal collector
-with a collector size (aperture area) to be invested.
+with a fixed collector size (aperture area).
 
 authors: Franziska Pleissner, Caroline Möller
 
@@ -15,18 +15,17 @@ import pandas as pd
 from oemof import solph
 from oemof.tools import economics
 from oemof.thermal.solar_thermal_collector import flat_plate_precalc
-import oemof.outputlib as outputlib
 from plots import plot_collector_heat
 
 
-# set paths
+# Set paths
 base_path = os.path.dirname(os.path.abspath(os.path.join(__file__)))
-data_path = os.path.join(base_path, 'data/')
-results_path = os.path.join(base_path, 'results/')
+data_path = os.path.join(base_path, 'data')
+results_path = os.path.join(base_path, 'results')
 if not os.path.exists(results_path):
     os.mkdir(results_path)
 
-# parameters for the precalculation
+# Parameters for the precalculation
 periods = 48
 latitude = 52.2443
 longitude = 10.5594
@@ -38,8 +37,8 @@ eta_0 = 0.73
 temp_collector_inlet = 20
 delta_temp_n = 10
 
-# input data
-input_data = pd.read_csv(data_path + 'data_flat_collector.csv').head(periods)
+# Read input data
+input_data = pd.read_csv(os.path.join(data_path, 'data_flat_collector.csv')).head(periods)
 input_data['Datum'] = pd.to_datetime(input_data['Datum'])
 input_data.set_index('Datum', inplace=True)
 input_data.index = input_data.index.tz_localize(tz='Europe/Berlin')
@@ -51,7 +50,7 @@ demand_df = pd.read_csv(
 )
 demand = list(demand_df['heat_demand'].iloc[:periods])
 
-# precalculation
+# Precalculation
 # - calculate global irradiance on the collector area
 # and collector efficiency depending on the
 # temperature difference -
@@ -71,22 +70,22 @@ precalc_data = flat_plate_precalc(
 )
 
 precalc_data.to_csv(
-    os.path.join(results_path, 'flate_plate_precalcs.csv'),
+    os.path.join(results_path, 'flat_plate_precalcs.csv'),
     sep=';'
 )
 
 
 # regular oemof system #
 
-# parameters for the energy system
+# Parameters for the energy system
 peripheral_losses = 0.05
 elec_consumption = 0.02
 backup_costs = 40
-costs_collector = economics.annuity(20, 20, 0.06)
 costs_storage = economics.annuity(20, 20, 0.06)
 costs_electricity = 1000
 storage_loss_rate = 0.001
 conversion_storage = 0.98
+size_collector = 10  # m2
 
 # busses
 bth = solph.Bus(label='thermal')
@@ -99,9 +98,8 @@ collector_heat = solph.Source(
     label='collector_heat',
     outputs={
         bcol: solph.Flow(
-            fixed=True,
-            actual_value=precalc_data['collectors_heat'],
-            investment=solph.Investment(ep_costs=costs_collector),
+            fix=precalc_data['collectors_heat'],
+            nominal_value=size_collector,
         )
     },
 )
@@ -117,7 +115,7 @@ backup = solph.Source(
 
 consumer = solph.Sink(
     label='demand',
-    inputs={bth: solph.Flow(fixed=True, actual_value=demand, nominal_value=1)},
+    inputs={bth: solph.Flow(fix=demand, nominal_value=1)},
 )
 
 collector_excess_heat = solph.Sink(
@@ -146,7 +144,7 @@ storage = solph.components.GenericStorage(
     investment=solph.Investment(ep_costs=costs_storage),
 )
 
-# build the system and solve the problem
+# Build the system and solve the problem
 date_time_index = input_data.index
 energysystem = solph.EnergySystem(timeindex=date_time_index)
 
@@ -163,20 +161,20 @@ energysystem.add(
     collector,
 )
 
-# create and solve the optimization model
+# Create and solve the optimization model
 model = solph.Model(energysystem)
 model.solve(solver='cbc', solve_kwargs={'tee': True})
 
-# save model results to csv
-results = outputlib.processing.results(model)
+# Get results
+results = solph.processing.results(model)
 
-electricity_bus = outputlib.views.node(results, 'electricity')['sequences']
-thermal_bus = outputlib.views.node(results, 'thermal')['sequences']
-solar_bus = outputlib.views.node(results, 'solar')['sequences']
+electricity_bus = solph.views.node(results, 'electricity')['sequences']
+thermal_bus = solph.views.node(results, 'thermal')['sequences']
+solar_bus = solph.views.node(results, 'solar')['sequences']
 df = pd.merge(
     pd.merge(electricity_bus, thermal_bus, left_index=True, right_index=True),
     solar_bus, left_index=True, right_index=True)
-df.to_csv(results_path + 'flat_plate_results.csv')
+df.to_csv(os.path.join(results_path, 'flat_plate_results.csv'))
 
 # Example plot
 plot_collector_heat(precalc_data, periods, eta_0)

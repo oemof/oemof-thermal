@@ -1,16 +1,13 @@
 """
-For this script to work as intended, please use the not yet released oemof branch
-
-https://github.com/oemof/oemof/tree/v0.3
-
-that contains the new attributes for GenericStorage, `fixed_losses_absolute` and
-`fixed_losses_relative`.
-
+For this script to work as intended, please use oemof-solph v0.4.0 or higher
+to ensure that the GenericStorage has the attributes
+`fixed_losses_absolute` and `fixed_losses_relative`.
 """
 
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
+
 
 from oemof.thermal.stratified_thermal_storage import (
     calculate_storage_u_value,
@@ -18,14 +15,14 @@ from oemof.thermal.stratified_thermal_storage import (
     calculate_capacities,
     calculate_losses,
 )
-from oemof.solph import Bus, Flow, Model, EnergySystem
+from oemof.solph import processing, views, Bus, Flow, Model, EnergySystem
 from oemof.solph.components import GenericStorage
-import oemof.outputlib as outputlib
 
 
+# Set paths
 data_path = os.path.join(
     os.path.dirname(os.path.abspath(__file__)),
-    'stratified_thermal_storage.csv')
+    'data', 'stratified_thermal_storage.csv')
 
 input_data = pd.read_csv(data_path, index_col=0, header=0)['var_value']
 
@@ -139,14 +136,14 @@ for i, nominal_storage_capacity in enumerate([30, 65, 90]):
 
 energysystem.add(*storage_list)
 
-# create and solve the optimization model
+# Create and solve the optimization model
 optimization_model = Model(energysystem)
 optimization_model.solve(solver=solver)
 
-# get results
-results = outputlib.processing.results(optimization_model)
+# Get results
+results = processing.results(optimization_model)
 
-storage_content = outputlib.views.node_weight_by_type(results, GenericStorage)\
+storage_content = views.node_weight_by_type(results, GenericStorage)\
     .reset_index(drop=True)
 
 storage_content.columns = storage_content.columns\
@@ -163,7 +160,7 @@ storage_df = pd.concat([storage_content, losses], 1)
 
 storage_df = storage_df.reindex(sorted(storage_df.columns), axis=1)
 
-# plot storage_content vs. time
+# Plot storage_content vs. time
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
 storage_content.plot(ax=ax1)
 ax1.set_title('Storage content')
@@ -172,10 +169,10 @@ ax1.set_ylabel('Storage content [MWh]')
 ax1.grid(alpha=0.3)
 ax1.get_legend().remove()
 
-# plot losses vs storage content
+# Plot losses vs storage content
 for storage_label in (storage.label for storage in storage_list):
     ax2.scatter(
-        storage_df[(storage_label, 'capacity')],
+        storage_df[(storage_label, 'storage_content')],
         storage_df[(storage_label, 'losses')],
         label=storage_label,
         s=1

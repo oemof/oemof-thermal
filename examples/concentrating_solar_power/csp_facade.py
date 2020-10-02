@@ -10,7 +10,6 @@ SPDX-License-Identifier: MIT
 """
 import os
 import pandas as pd
-import oemof.outputlib as outputlib
 import matplotlib.pyplot as plt
 
 
@@ -19,12 +18,11 @@ from oemof import solph
 from oemof.tools import economics
 
 
-# set paths
+# Set paths
 base_path = os.path.dirname(os.path.abspath(os.path.join(__file__)))
 
-results_path = os.path.join(base_path, 'results/')
-lp_path = os.path.join(base_path, 'lp_files/')
-data_path = os.path.join(base_path, 'csp_data/')
+results_path = os.path.join(base_path, 'results')
+data_path = os.path.join(base_path, 'data')
 
 if not os.path.exists(results_path):
     os.mkdir(results_path)
@@ -45,7 +43,8 @@ c_2 = 0.00023
 temp_collector_inlet = 435
 temp_collector_outlet = 500
 
-input_data = pd.read_csv(data_path + 'data_csp_plant.csv').head(periods)
+# Read input data
+input_data = pd.read_csv(os.path.join(data_path, 'data_csp_plant.csv')).head(periods)
 input_data['Datum'] = pd.to_datetime(input_data['Datum'])
 input_data.set_index('Datum', inplace=True)
 input_data.index = input_data.index.tz_localize(tz='Asia/Muscat')
@@ -54,9 +53,9 @@ date_time_index = input_data.index
 date_time_index.freq = 'H'
 
 
-# regular oemof_system #
+# oemof_system
 
-# parameters for energy system
+# Parameters for the energy system
 additional_losses = 0.2
 elec_consumption = 0.05
 backup_costs = 1000
@@ -67,11 +66,11 @@ costs_electricity = 1000
 conversion_factor_turbine = 0.4
 size_collector = 1000
 
-# busses
+# Busses
 bth = solph.Bus(label='thermal')
 bel = solph.Bus(label='electricity')
 
-# collector
+# Collector
 collector = facades.ParabolicTroughCollector(
     label='solar_collector',
     heat_bus=bth,
@@ -96,7 +95,7 @@ collector = facades.ParabolicTroughCollector(
     temp_amb=input_data['t_amb'],
     irradiance=input_data['E_dir_hor'])
 
-# sources and sinks
+# Sources and sinks
 el_grid = solph.Source(
     label='grid',
     outputs={bel: solph.Flow(variable_costs=costs_electricity)})
@@ -108,15 +107,14 @@ backup = solph.Source(
 consumer = solph.Sink(
     label='demand',
     inputs={bel: solph.Flow(
-        fixed=True,
-        actual_value=input_data['ES_load_actual_entsoe_power_statistics'],
+        fix=input_data['ES_load_actual_entsoe_power_statistics'],
         nominal_value=1)})
 
 excess = solph.Sink(
     label='excess',
     inputs={bth: solph.Flow()})
 
-# transformer and storages
+# Transformer and storages
 turbine = solph.Transformer(
     label='turbine',
     inputs={bth: solph.Flow()},
@@ -132,38 +130,33 @@ storage = solph.components.GenericStorage(
     outflow_conversion_factor=conversion_storage,
     investment=solph.Investment(ep_costs=costs_storage))
 
-# build the system and solve the problem
+# Build the system and solve the problem
 energysystem = solph.EnergySystem(timeindex=date_time_index)
 
 energysystem.add(bth, bel, el_grid, backup, excess, consumer, storage, turbine,
                  collector)
 
-# create and solve the optimization model
+# Create and solve the optimization model
 model = solph.Model(energysystem)
 model.solve(solver='cbc', solve_kwargs={'tee': True})
 
-# if not os.path.exists(lp_path):
-#         os.mkdir(lp_path)
-# model.write(lp_path + 'csp_model_facades.lp',
-#             io_options={'symbolic_solver_labels': True})
+# Get results
+results = solph.processing.results(model)
 
-
-results = outputlib.processing.results(model)
-
-collector_inflow = outputlib.views.node(
+collector_inflow = solph.views.node(
     results, 'solar_collector-inflow')['sequences']
-thermal_bus = outputlib.views.node(results, 'thermal')['sequences']
-electricity_bus = outputlib.views.node(results, 'electricity')['sequences']
+thermal_bus = solph.views.node(results, 'thermal')['sequences']
+electricity_bus = solph.views.node(results, 'electricity')['sequences']
 df = pd.DataFrame()
 df = df.append(collector_inflow)
 df = df.join(thermal_bus, lsuffix='_1')
 df = df.join(electricity_bus, lsuffix='_1')
-df.to_csv(results_path + 'facade_results.csv')
+df.to_csv(os.path.join(results_path, 'facade_results.csv'))
 
+# Example plot
 fig, ax = plt.subplots()
 ax.plot(list(range(periods)), thermal_bus[(('solar_collector', 'thermal'), 'flow')])
 ax.set(xlabel='time [h]', ylabel='Q_coll [W]',
        title='Heat of the collector')
 ax.grid()
-ax.legend()
 plt.show()

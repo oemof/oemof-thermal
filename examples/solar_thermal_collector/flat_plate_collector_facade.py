@@ -10,22 +10,20 @@ SPDX-License-Identifier: GPL-3.0-or-later
 """
 import os
 import pandas as pd
-# import oemof.outputlib as outputlib
 import matplotlib.pyplot as plt
 from oemof.thermal import facades
 from oemof import solph
-import oemof.outputlib as outputlib
 from oemof.tools import economics
 
 
-# set paths
+# Set paths
 base_path = os.path.dirname(os.path.abspath(os.path.join(__file__)))
-data_path = os.path.join(base_path, 'data/')
-results_path = os.path.join(base_path, 'results/')
+data_path = os.path.join(base_path, 'data')
+results_path = os.path.join(base_path, 'results')
 if not os.path.exists(results_path):
     os.mkdir(results_path)
 
-# parameters
+# Parameters for the energy system
 periods = 48
 latitude = 52.2443
 longitude = 10.5594
@@ -46,27 +44,27 @@ storage_loss_rate = 0.001
 conversion_storage = 0.98
 size_collector = 10  # m2
 
-# input data
-input_data = pd.read_csv(data_path + 'data_flat_collector.csv').head(periods)
+# Read input data
+input_data = pd.read_csv(os.path.join(data_path, 'data_flat_collector.csv')).head(periods)
 input_data['Datum'] = pd.to_datetime(input_data['Datum'])
 input_data.set_index('Datum', inplace=True)
 input_data.index = input_data.index.tz_localize(tz='Europe/Berlin')
 input_data = input_data.asfreq('H')
 
 demand_df = pd.read_csv(
-    os.path.join(base_path, 'data', 'heat_demand.csv'),
+    os.path.join(data_path, 'heat_demand.csv'),
     sep=','
 )
 demand = list(demand_df['heat_demand'].iloc[:periods])
 
 
-# Set up an energy system model #
+# Set up an energy system model
 
-# busses
+# Busses
 bth = solph.Bus(label='thermal')
 bel = solph.Bus(label='electricity')
 
-# collector
+# Collector
 collector = facades.SolarThermalCollector(
     label='solar_collector',
     heat_out_bus=bth,
@@ -87,7 +85,7 @@ collector = facades.SolarThermalCollector(
     irradiance_diffuse=input_data['diffuse_horizontal_W_m2'],
     temp_amb=input_data['temp_amb'])
 
-# sources and sinks
+# Sources and sinks
 el_grid = solph.Source(
     label='grid', outputs={bel: solph.Flow(variable_costs=costs_electricity)}
 )
@@ -98,14 +96,14 @@ backup = solph.Source(
 
 consumer = solph.Sink(
     label='demand',
-    inputs={bth: solph.Flow(fixed=True, actual_value=demand, nominal_value=1)},
+    inputs={bth: solph.Flow(fix=demand, nominal_value=1)},
 )
 
 collector_excess_heat = solph.Sink(
     label='collector_excess_heat', inputs={bth: solph.Flow()}
 )
 
-# storage
+# Storage
 storage = solph.components.GenericStorage(
     label='storage',
     inputs={bth: solph.Flow()},
@@ -116,7 +114,7 @@ storage = solph.components.GenericStorage(
     investment=solph.Investment(ep_costs=costs_storage),
 )
 
-# build the system and solve the problem
+# Build the system and solve the problem
 date_time_index = input_data.index
 energysystem = solph.EnergySystem(timeindex=date_time_index)
 
@@ -131,22 +129,22 @@ energysystem.add(
     storage,
 )
 
-# create and solve the optimization model
+# Create and solve the optimization model
 model = solph.Model(energysystem)
 model.solve(solver='cbc', solve_kwargs={'tee': True})
 
-# save model results to csv
-results = outputlib.processing.results(model)
+# Get results
+results = solph.processing.results(model)
 
-collector_inflow = outputlib.views.node(
+collector_inflow = solph.views.node(
     results, 'solar_collector-inflow')['sequences']
-thermal_bus = outputlib.views.node(results, 'thermal')['sequences']
-electricity_bus = outputlib.views.node(results, 'electricity')['sequences']
+thermal_bus = solph.views.node(results, 'thermal')['sequences']
+electricity_bus = solph.views.node(results, 'electricity')['sequences']
 df = pd.DataFrame()
 df = df.append(collector_inflow)
 df = df.join(thermal_bus, lsuffix='_1')
 df = df.join(electricity_bus, lsuffix='_1')
-df.to_csv(results_path + 'facade_results.csv')
+df.to_csv(os.path.join(results_path, 'facade_results.csv'))
 
 # Example plot
 heat_calc = collector_inflow
@@ -159,6 +157,4 @@ ax.set(
     ylabel='Q_coll in W',
     title='Heat of the collector')
 ax.grid()
-ax.legend()
-plt.savefig('results/heat_of_the_collector.png')
 plt.show()

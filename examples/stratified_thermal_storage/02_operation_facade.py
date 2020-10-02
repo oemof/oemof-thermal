@@ -1,26 +1,53 @@
+"""
+This example shows how to use the facade class StratifiedThermalStorage to add a storage to a model
+that optimizes operation with oemof.solph.
+"""
+
 import os
 import pandas as pd
 import numpy as np
 
-from oemof.thermal.stratified_thermal_storage import calculate_storage_u_value
+from oemof.solph import Source, Sink, Bus, Flow, Model, EnergySystem  # noqa
 from oemof.thermal import facades
+from oemof.thermal.stratified_thermal_storage import (  # noqa
+    calculate_storage_u_value,
+)
 
-from oemof.solph import (Source, Sink, Bus, Flow,
-                         Model, EnergySystem)
-import oemof.outputlib as outputlib
 
-
+# Set paths
 data_path = os.path.join(
     os.path.dirname(os.path.abspath(__file__)),
-    'stratified_thermal_storage.csv')
+    'data', 'stratified_thermal_storage.csv')
 
+# Read input data
 input_data = pd.read_csv(data_path, index_col=0, header=0)['var_value']
 
+# Precalculation
 u_value = calculate_storage_u_value(
     input_data['s_iso'],
     input_data['lamb_iso'],
     input_data['alpha_inside'],
     input_data['alpha_outside'])
+
+
+def print_parameters():
+    parameter = {
+        'U-value [W/(m2*K)]': u_value,
+    }
+
+    dash = '-' * 50
+
+    print(dash)
+    print('{:>32s}{:>15s}'.format('Parameter name', 'Value'))
+    print(dash)
+
+    for name, param in parameter.items():
+        print('{:>32s}{:>15.5f}'.format(name, param))
+
+    print(dash)
+
+
+print_parameters()
 
 # Set up an energy system model
 solver = 'cbc'
@@ -39,8 +66,7 @@ heat_source = Source(
     label='heat_source',
     outputs={bus_heat: Flow(
         nominal_value=1,
-        actual_value=heat_feedin_timeseries,
-        fixed=True)})
+        fix=heat_feedin_timeseries)})
 
 shortage = Source(
     label='shortage',
@@ -54,49 +80,25 @@ heat_demand = Sink(
     label='heat_demand',
     inputs={bus_heat: Flow(
         nominal_value=1,
-        actual_value=demand_timeseries,
-        fixed=True)})
+        fix=demand_timeseries)})
 
 thermal_storage = facades.StratifiedThermalStorage(
     label='thermal_storage',
     bus=bus_heat,
-    diameter=input_data['diameter'],  # TODO: setting to zero should give an error
+    diameter=input_data['diameter'],
+    height=input_data['height'],
     temp_h=input_data['temp_h'],
     temp_c=input_data['temp_c'],
     temp_env=input_data['temp_env'],
     u_value=u_value,
-    expandable=True,
-    capacity_cost=0,
-    storage_capacity_cost=400,
-    minimum_storage_capacity=1,  # TODO: setting to zero should give an error!
-    invest_relation_input_capacity=1 / 6,
     min_storage_level=input_data['min_storage_level'],
     max_storage_level=input_data['max_storage_level'],
-    efficiency=1,
+    capacity=input_data['maximum_heat_flow_charging'],
+    efficiency=input_data['efficiency'],
     marginal_cost=0.0001
 )
 
 energysystem.add(bus_heat, heat_source, shortage, excess, heat_demand, thermal_storage)
 
-# create and solve the optimization model
+# Create and solve the optimization model
 optimization_model = Model(energysystem)
-
-optimization_model.solve(solver=solver,
-                         solve_kwargs={'tee': False, 'keepfiles': False})
-
-# get results
-results = outputlib.processing.results(optimization_model)
-string_results = outputlib.processing.convert_keys_to_strings(results)
-sequences = {k: v['sequences'] for k, v in string_results.items()}
-df = pd.concat(sequences, axis=1)
-
-# print storage sizing
-built_storage_capacity = results[thermal_storage, None]['scalars']['invest']
-initial_storage_capacity = results[thermal_storage, None]['scalars']['init_cap']
-maximum_heat_flow_charging = results[bus_heat, thermal_storage]['scalars']['invest']
-
-dash = '-' * 50
-print(dash)
-print('{:>32s}{:>15.3f}'.format('Invested capacity [MW]', maximum_heat_flow_charging))
-print('{:>32s}{:>15.3f}'.format('Invested storage capacity [MWh]', built_storage_capacity))
-print(dash)

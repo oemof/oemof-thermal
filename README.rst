@@ -20,7 +20,7 @@ oemof.solph. Currently, most of the functions collected here are intended to be 
 together with oemof.solph. However, in some instances they may be useful independently
 of oemof.solph.
 
-oemof.thermal is rather new and under active development. Contributions are welcome.
+oemof.thermal is under active development. Contributions are welcome.
 
 Quickstart
 ==========
@@ -48,9 +48,8 @@ Find the documentation at `<https://oemof-thermal.readthedocs.io>`_.
 Contributing
 ============
 
-Everybody is welcome to contribute to the development of oemof.thermal. The `developer
-guidelines of oemof <https://oemof.readthedocs.io/en/stable/developing_oemof.html>`_
-are in most parts equally applicable to oemof.thermal.
+Everybody is welcome to contribute to the development of oemof.thermal. Find here the `developer
+guidelines of oemof <https://oemof.readthedocs.io/en/latest/developing_oemof.html>`_.
 
 License
 =======

@@ -14,20 +14,18 @@ from oemof import solph
 from oemof.tools import economics
 from oemof.thermal.concentrating_solar_power import csp_precalc
 
-import oemof.outputlib as outputlib
 import matplotlib.pyplot as plt
 
-# set path
+# Set paths
 base_path = os.path.dirname(os.path.abspath(os.path.join(__file__)))
 
-results_path = os.path.join(base_path, 'results/')
-lp_path = os.path.join(base_path, 'lp_files/')
-data_path = os.path.join(base_path, 'csp_data/')
+results_path = os.path.join(base_path, 'results')
+data_path = os.path.join(base_path, 'data')
 
 if not os.path.exists(results_path):
     os.mkdir(results_path)
 
-# parameters for the precalculation
+# Parameters for the precalculation
 periods = 50
 latitude = 23.614328
 longitude = 58.545284
@@ -42,14 +40,21 @@ c_2 = 0.00023
 temp_collector_inlet = 435
 temp_collector_outlet = 500
 
-# input data
-dataframe = pd.read_csv(data_path + 'data_csp_plant.csv').head(periods)
+# Read and preprocess input data
+
+# It is necessary, to set a timeindex, so the pvlib is able to process the data
+# Here, the given column 'Datum' is convertet to a datetime and this is used as
+# index:
+dataframe = pd.read_csv(os.path.join(data_path, 'data_csp_plant.csv')).head(periods)
 dataframe['Datum'] = pd.to_datetime(dataframe['Datum'])
 dataframe.set_index('Datum', inplace=True)
+# For some pandas version, it is necessary to set the frequence of the df:
 dataframe = dataframe.asfreq('H')
+# The time of the input data is given locally, so it has to be adapted to the
+# correct timezone:
 dataframe.index = dataframe.index.tz_localize(tz='Asia/Muscat')
 
-# precalculation
+# Precalculation
 data_precalc = csp_precalc(latitude, longitude,
                            collector_tilt, collector_azimuth, cleanliness,
                            eta_0, c_1, c_2,
@@ -61,11 +66,11 @@ data_precalc = csp_precalc(latitude, longitude,
 data_precalc['ES_load_actual_entsoe_power_statistics'] = list(
     dataframe['ES_load_actual_entsoe_power_statistics'].iloc[:periods])
 
-data_precalc.to_csv('results/results_csp_plant_precalc.csv')
+data_precalc.to_csv(os.path.join(results_path, 'results_csp_plant_precalc.csv'))
 
-# regular oemof_system #
+# Regular oemof_system
 
-# parameters for energy system
+# Parameters for the energy system
 additional_losses = 0.2
 elec_consumption = 0.05
 backup_costs = 1000
@@ -76,17 +81,16 @@ costs_electricity = 1000
 conversion_factor_turbine = 0.4
 size_collector = 1000
 
-# busses
+# Busses
 bth = solph.Bus(label='thermal')
 bel = solph.Bus(label='electricity')
 bcol = solph.Bus(label='solar')
 
-#sources and sinks
+# Sources and sinks
 col_heat = solph.Source(
     label='collector_heat',
     outputs={bcol: solph.Flow(
-        fixed=True,
-        actual_value=data_precalc['collector_heat'],
+        fix=data_precalc['collector_heat'],
         nominal_value=size_collector)})
 
 el_grid = solph.Source(
@@ -100,15 +104,14 @@ backup = solph.Source(
 consumer = solph.Sink(
     label='demand',
     inputs={bel: solph.Flow(
-        fixed=True,
-        actual_value=data_precalc['ES_load_actual_entsoe_power_statistics'],
+        fix=data_precalc['ES_load_actual_entsoe_power_statistics'],
         nominal_value=1)})
 
 ambience_sol = solph.Sink(
     label='ambience_sol',
     inputs={bcol: solph.Flow()})
 
-# transformer and storages
+# Transformer and storages
 collector = solph.Transformer(
     label='collector',
     inputs={
@@ -135,36 +138,32 @@ storage = solph.components.GenericStorage(
     outflow_conversion_factor=conversion_storage,
     investment=solph.Investment(ep_costs=costs_storage))
 
-# build the system and solve the problem
+# Build the system and solve the problem
 date_time_index = dataframe.index
 energysystem = solph.EnergySystem(timeindex=date_time_index)
 
 energysystem.add(bth, bcol, bel, col_heat, el_grid, backup, consumer,
                  ambience_sol, collector, turbine, storage)
 
+# Create and solve the optimization model
 model = solph.Model(energysystem)
 model.solve(solver='cbc', solve_kwargs={'tee': True})
 
-# if not os.path.exists(lp_path):
-#         os.mkdir(lp_path)
-# model.write((lp_path + 'csp_model.lp'),
-#             io_options={'symbolic_solver_labels': True})
+# Get results
+results = solph.processing.results(model)
 
-results = outputlib.processing.results(model)
-
-electricity_bus = outputlib.views.node(results, 'electricity')['sequences']
-thermal_bus = outputlib.views.node(results, 'thermal')['sequences']
-solar_bus = outputlib.views.node(results, 'solar')['sequences']
+electricity_bus = solph.views.node(results, 'electricity')['sequences']
+thermal_bus = solph.views.node(results, 'thermal')['sequences']
+solar_bus = solph.views.node(results, 'solar')['sequences']
 df = pd.merge(
     pd.merge(electricity_bus, thermal_bus, left_index=True, right_index=True),
     solar_bus, left_index=True, right_index=True)
-df.to_csv(results_path + 'csp_plant_results.csv')
+df.to_csv(os.path.join(results_path, 'csp_plant_results.csv'))
 
-
+# Example plot
 fig, ax = plt.subplots()
 ax.plot(list(range(periods)), thermal_bus[(('collector', 'thermal'), 'flow')])
 ax.set(xlabel='time [h]', ylabel='Q_coll [W]',
        title='Heat of the collector')
 ax.grid()
-ax.legend()
 plt.show()

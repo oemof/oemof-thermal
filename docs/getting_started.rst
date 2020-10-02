@@ -17,12 +17,13 @@ optimization).
 
 To help setting up more detailed components in a simple way, oemof.thermal provides facades based on the
 `oemof.tabular.facades module <https://oemof-tabular.readthedocs.io/en/stable/reference/oemof.tabular.html>`_.
-Facades are classes that offer a simpler interface to more complex classes. More specifically,
-the facades in this module act as simplified, energy system specific wrappers around oemof.solph's
-more abstract classes. Using the facades together with oemof.tabular also makes it possible to
-instantiate a facade using keyword arguments whose value are given as tabular data sources. Under
-the hood the facade then uses these arguments to construct an oemof.solph-component and sets it up
-to be easily used in an :py:obj:`EnergySystem`. In oemof.thermal each technology has a facade class,
+Facades are classes that offer a simpler interface to more complex classes. More specifically, the :class:`Facade` s
+in this module inherit from `oemof.solph`'s generic classes to serve as more concrete and energy specific interface.
+The concept of the facades has been derived from oemof.tabular. The idea is to be able to
+instantiate a :class:`Facade` using only keyword arguments. Under the hood the :class:`Facade` then
+uses these arguments to construct an `oemof.solph` component and sets it up to be easily used in an
+:py:obj:`EnergySystem`. Usually, a subset of the attributes of the parent class remains while another
+part can be addressed by more specific or simpler attributes. In oemof.thermal, some of the technologies have a facade class
 that can be found in the module oemof.thermal.facades. See the
 :ref:`api reference for the facade module <api_label>` for further information on the structure of
 these classes.
@@ -34,7 +35,8 @@ references to the literature are listed that the reader can refer to if she want
 information on the background.
 
 Finally, there are a couple of examples that can give an idea of how the functionality of
-oemof.thermal can be utilized.
+oemof.thermal can be utilized. Some models have undergone validation whose results you'll find
+in the section "Model validation".
 
 .. contents:: `Contents`
     :depth: 1
@@ -73,6 +75,8 @@ Examples
 --------
 
 We provide examples described in the section :ref:`examples_label`.
+Further we developed some complex models with the oemof-thermal components
+which are described in this section as well.
 
 
 Contributing to oemof.thermal

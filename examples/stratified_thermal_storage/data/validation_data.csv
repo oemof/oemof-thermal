@@ -1,0 +1,17 @@
+stratified_thermal_storage.csvvar_name,var_value,var_unit
+height,2.96,m
+diameter,1.15,m
+temp_h,82,degC
+temp_c,55,degC
+temp_env,25,degC
+inflow_conversion_factor,1,
+outflow_conversion_factor,1,
+min_storage_level,0.25,
+max_storage_level,0.95,
+initial_storage_level,0.785,
+maximum_heat_flow_charging,2,MW
+maximum_heat_flow_discharging,2,MW
+s_iso,100,mm
+lamb_iso,0.039,W/(m*K)
+alpha_inside,7,W/(m2*K)
+alpha_outside,4,W/(m2*K)

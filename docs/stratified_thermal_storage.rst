@@ -28,13 +28,17 @@ A simplified 2-zone-model of a stratified thermal energy storage.
    down or up, respectively. Losses to the environment through the surface of the
    storage depend on the size of the hot and cold zone.
 
-* We assume a cylindrical storage of diameter d and height h,
+* We assume a cylindrical storage of (inner) diameter d and height h,
   with two temperature regions that are perfectly separated.
 * The temperatures are assumed to be constant and correspond to
   the feed-in/return temperature of the heating system.
 * Heat conductivity of the storage has to be passed as well as a timeseries
   of outside temperatures for the calculation of heat losses.
 * There is no distinction between outside temperature and ground temperature.
+* A single value for the thermal transmittance :math:`U` is assumed, neglecting the
+  fact that the storage's lateral surface is bent and thus has a higher thermal
+  transmittance than a flat surface. The relative error introduced here gets
+  smaller with larger storage diameters.
 * Material properties are constant.
 
 The equation describing the storage content at timestep t is the following:
@@ -79,7 +83,7 @@ Because of the space that diffuser plates for charging/discharging take up, it i
 the storage can neither be fully charged nor discharged, which is parametrised as a minimal/maximal
 storage level (indicated by the dotted lines in Fig. 1).
 
-These parameters are part of the stratified thermal storage:
+These parameters are part of the stratified thermal storage module:
 
     ========================= ===================================== ==== ===========
     symbol                    attribute                             type explanation
@@ -190,8 +194,7 @@ Using the StratifiedThermalStorage facade, you can instantiate a storage like th
 The non-usable storage volume is represented by the parameters
 :py:attr:`min_storage_level` and :py:attr:`max_storage_level`.
 
-To learn about all parameters that can be passed to the facades, have a look at the
-:ref:`api reference for the facade module <api_label>`.
+To learn about all parameters that can be passed to the facades, have a look at the API documentation of the :py:class:`~oemof.thermal.facades.StratifiedThermalStorage` class of the facade module.
 
 For the storage investment mode, you still need to provide :py:attr:`diameter`, but
 leave :py:attr:`height` and :py:attr:`capacity` open and set :py:attr:`expandable=True`.
@@ -240,13 +243,9 @@ model it, you can do so by performing the necessary pre-calculations and using o
 
 .. warning::
 
-   For this example to work as intended, please use the not yet released oemof-solph branch
-
-   https://github.com/oemof/oemof-solph/tree/dev
-
-   which contains the new attributes for GenericStorage, `fixed_losses_absolute` and
-   `fixed_losses_relative`. As soon as the feature in oemof is released, no extra steps
-   will be necessary to use them and this warning will be removed.
+   For this example to work as intended, please use oemof-solph v0.4.0 or higher
+   to ensure that the GenericStorage has the attributes :py:attr:`fixed_losses_absolute` and
+   :py:attr:`fixed_losses_relative`.
 
 The following figure shows a comparison of results of a common storage implementation using
 only a loss rate vs. the stratified thermal storage implementation

@@ -1,4 +1,4 @@
-v0.0.1 (December 17, 2019)
+v0.0.1 (December 19, 2019)
 ==========================
 
 First release by the oemof developing group.

@@ -27,6 +27,7 @@ df = pd.DataFrame(emissions_dict, index=['el', 'th']).T
 
 print(df)
 
+# Example plot
 fig, ax = plt.subplots()
 df.loc[:, 'el'] *= -1
 bars = df.plot.barh(stacked=True, ax=ax)

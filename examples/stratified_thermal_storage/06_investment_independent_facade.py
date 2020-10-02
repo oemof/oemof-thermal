@@ -1,3 +1,10 @@
+"""
+This example shows how to invest into nominal_storage_capacity and capacity
+(charging/discharging power) independently with no fixed ratio. There is still a
+fixed ratio between input and output capacity which makes sense for a sensible heat storage.
+Make sure to pass both capacity_cost and storage_capacity_cost.
+"""
+
 import os
 import pandas as pd
 import numpy as np
@@ -5,17 +12,19 @@ import numpy as np
 from oemof.thermal.stratified_thermal_storage import calculate_storage_u_value
 from oemof.thermal import facades
 
-from oemof.solph import (Source, Sink, Bus, Flow,
+from oemof.solph import (processing, Source, Sink, Bus, Flow,
                          Model, EnergySystem)
-import oemof.outputlib as outputlib
 
 
+# Set paths
 data_path = os.path.join(
     os.path.dirname(os.path.abspath(__file__)),
-    'stratified_thermal_storage.csv')
+    'data/stratified_thermal_storage.csv')
 
+# Read input data
 input_data = pd.read_csv(data_path, index_col=0, header=0)['var_value']
 
+# Precalculation
 u_value = calculate_storage_u_value(
     input_data['s_iso'],
     input_data['lamb_iso'],
@@ -39,8 +48,7 @@ heat_source = Source(
     label='heat_source',
     outputs={bus_heat: Flow(
         nominal_value=1,
-        actual_value=heat_feedin_timeseries,
-        fixed=True)})
+        fix=heat_feedin_timeseries)})
 
 shortage = Source(
     label='shortage',
@@ -54,8 +62,7 @@ heat_demand = Sink(
     label='heat_demand',
     inputs={bus_heat: Flow(
         nominal_value=1,
-        actual_value=demand_timeseries,
-        fixed=True)})
+        fix=demand_timeseries)})
 
 thermal_storage = facades.StratifiedThermalStorage(
     label='thermal_storage',
@@ -71,31 +78,30 @@ thermal_storage = facades.StratifiedThermalStorage(
     minimum_storage_capacity=1,  # TODO: setting to zero should give an error!
     min_storage_level=input_data['min_storage_level'],
     max_storage_level=input_data['max_storage_level'],
-    efficiency=1,
+    efficiency=input_data['efficiency'],
     marginal_cost=0.0001
 )
 
 energysystem.add(bus_heat, heat_source, shortage, excess, heat_demand, thermal_storage)
 
-# create and solve the optimization model
+# Create and solve the optimization model
 optimization_model = Model(energysystem)
-
 optimization_model.solve(solver=solver,
                          solve_kwargs={'tee': False, 'keepfiles': False})
 
-# get results
-results = outputlib.processing.results(optimization_model)
-string_results = outputlib.processing.convert_keys_to_strings(results)
+# Get results
+results = processing.results(optimization_model)
+string_results = processing.convert_keys_to_strings(results)
 sequences = {k: v['sequences'] for k, v in string_results.items()}
 df = pd.concat(sequences, axis=1)
 
-# print storage sizing
+# Print storage sizing
 built_storage_capacity = results[thermal_storage, None]['scalars']['invest']
-initial_storage_capacity = results[thermal_storage, None]['scalars']['init_cap']
-maximum_heat_flow_charging = results[bus_heat, thermal_storage]['scalars']['invest']
+initial_storage_capacity = results[thermal_storage, None]['scalars']['init_content']
+built_capacity = results[bus_heat, thermal_storage]['scalars']['invest']
 
 dash = '-' * 50
 print(dash)
-print('{:>32s}{:>15.3f}'.format('Invested capacity [MW]', maximum_heat_flow_charging))
+print('{:>32s}{:>15.3f}'.format('Invested capacity [MW]', built_capacity))
 print('{:>32s}{:>15.3f}'.format('Invested storage capacity [MWh]', built_storage_capacity))
 print(dash)

@@ -31,7 +31,7 @@ solar collector based on the direct horizontal irradiance (DHI) or the direct
 normal irradiance (DNI) and information about the collector and its location.
 The losses can be calculated in 2 different ways.
 
-.. figure:: _pics/concentrating_solar_power.svg
+.. figure:: _pics/concentrating_solar_power.png
     :width: 60 %
     :alt: concentrating_solar_power.png
     :align: center
@@ -49,7 +49,7 @@ part of the absorbed heat output through thermal losses
 (:math:`\dot Q_{loss,therm}`).
 
 
-The processing of the irradiance data is done by the pvlib, which calculates
+The processing of the irradiance data is done by the `pvlib <https://github.com/pvlib/pvlib-python>`_, which calculates
 the direct irradiance on the collector. This irradiance is reduced by dust and
 dirt on the collector with:
 
@@ -129,10 +129,11 @@ These arguments are used in the formulas of the function:
 Usage
 _____
 
-It is possible to use the precalculation function as stand-alone function to calculate the collector values
-:math:`\dot Q_{coll}`, :math:`\eta_C` and :math:`E_{coll}`. Or it is possible
-to use the ParabolicTroughCollector facade to model a collector with further
-losses (e.g. in pipes or pumps) and the electrical consumption of pipes within a single step.
+It is possible to use the precalculation function as stand-alone function to
+calculate the collector values :math:`\dot Q_{coll}`, :math:`\eta_C` and
+:math:`E_{coll}`. Or it is possible to use the ParabolicTroughCollector facade
+to model a collector with further losses (e.g. in pipes or pumps) and the
+electrical consumption of pipes within a single step.
 Please note: As the unit of the input irradiance is given as power per area,
 the outputs :math:`\dot Q_{coll}` and :math:`E_{coll}` are given in the same
 unit. If these values are used in an oemof source, the unit of the nominal
@@ -142,14 +143,14 @@ value must be an area too.
 Precalculation function
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-Please see the :ref:`api of the concentrating_solar_power module <api_label>`
-for all parameters which have to be provided, also the ones that are not part
-of the described formulas above.
+Please see the API documentation of the :py:class:`~oemof.thermal.concentrating_solar_power`
+module for all parameters which have to be provided, also the ones that are
+not part of the described formulas above.
 The data for ambient temperature and irradiance must have the same time index.
 Depending on the method, the irradiance must be the horizontal direct
 irradiance or the direct normal irradiance. Be aware of the correct time index
 regarding the time zone, as the utilized pvlib need the correct time stamp
-corresponding to the location.
+corresponding to the location (latitude and longitude).
 
 
 .. code-block:: python
@@ -181,14 +182,14 @@ ParabolicTroughCollector facade
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Instead of using the precalculation, it is possible to use the
-ParabolicTroughCollector facade, which will create an oemof component as a representative for the collector. It calculates the heat of the collector in the same
-way as the precalculation do. Additionally, it integrates the calculated heat as an input
-into a component, uses an electrical input for pumps and gives a heat output,
-which is reduced by the defined additional losses.
+ParabolicTroughCollector facade, which will create an oemof component as a
+representative for the collector. It calculates the heat of the collector in
+the same way as the precalculation do. Additionally, it integrates the
+calculated heat as an input into a component, uses an electrical input for
+pumps and gives a heat output, which is reduced by the defined additional losses.
 As given in the example, further parameters are required in addition to the
-ones of the precalculation. Please see the
-:ref:`api reference for the facade module <api_label>` for all parameters which
-have to be provided.
+ones of the precalculation. Please see the API documentation of the :py:class:`~oemof.thermal.facades.ParabolicTroughCollector`
+class of the facade module for all parameters which have to be provided.
 
 See example_csp_facade.py for an application example. It models the same
 system as the csp_plant_example.py, but uses the ParabolicTroughCollector facade
@@ -198,10 +199,10 @@ instead of separate source and transformer.
 .. code-block:: python
 
     from oemof import solph
-        >>> from oemof.thermal.facades import Collector
+        >>> from oemof.thermal.facades import ParabolicTroughCollector
         >>> bth = solph.Bus(label='thermal_bus')
         >>> bel = solph.Bus(label='electrical_bus')
-        >>> collector = Collector(
+        >>> collector = ParabolicTroughCollector(
         ...     label='solar_collector',
         ...     heat_bus=bth,
         ...     electrical_bus=bel,

@@ -10,7 +10,7 @@ Scope
 _____
 
 This module was developed to provide the heat of a flat plate collector
-based on temperatures and collectors location, tilt and azimuth for energy
+based on temperatures and collector's location, tilt and azimuth for energy
 systems optimizations with oemof.solph.
 
 In
@@ -20,7 +20,7 @@ with flat plate collector, storage and backup to provide a given heat demand.
 The time series of the pre-calculated heat is output of a source (an oemof.solph
 component) representing the collector, and a transformer (an oemof.solph component)
 is used to hold electrical power consumption and further thermal losses of the
-collector in an energy system optimization. In addition, you will find an plot,
+collector in an energy system optimization. In addition, you will find a plot,
 which compares this precalculation with a calculation with a constant efficiency.
 
 Concept
@@ -31,13 +31,13 @@ collector based on global and diffuse horizontal irradiance and information abou
 the collector and the location. The following scheme shows the calculation procedure.
 
 .. figure:: _pics/solar_thermal_collector.png
-    :width: 80 %
+    :width: 60 %
     :alt: solar_thermal_collector.png
     :align: center
 
     Fig.1: The energy flows and losses at a flat plate collector.
 
-The processing of the irradiance data is done by the pvlib, which calculates the total
+The processing of the irradiance data is done by the `pvlib <https://github.com/pvlib/pvlib-python>`_, which calculates the total
 in-plane irradiance according to the azimuth and tilt angle of the collector.
 
 The efficiency of the collector is calculated with
@@ -102,8 +102,12 @@ value must be an area too.
 
 
 Solar thermal collector precalculations
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Please see the :ref:`api of the solar_thermal_collector module <api_label>` for all parameters which have to be provided, also the ones that are not part of the described formulas above. The data for the irradiance and the ambient temperature must have the same time index. Be aware of the correct time index regarding the time zone, as the utilized pvlib needs the correct time stamp corresponding to the location.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Please see the API documentation of the :py:class:`~oemof.thermal.solar_thermal_collector`
+module for all parameters which have to be provided, also the ones that are not part of the
+described formulas above. The data for the irradiance and the ambient temperature must have
+the same time index. Be aware of the correct time index regarding the time zone, as the utilized
+pvlib needs the correct time stamp corresponding to the location.
 
 .. code-block:: python
 
@@ -148,8 +152,8 @@ way as the precalculation do. Additionally, it integrates the calculated heat as
 into a component, uses an electrical input for pumps and gives a heat output,
 which is reduced by the defined additional losses. As given in the example,
 further parameters are required in addition to the ones of the precalculation. Please see the
-:ref:`api reference for the facade module <api_label>` for all parameters which
-have to be provided.
+API documentation of the :py:class:`~oemof.thermal.facades.SolarThermalCollector`
+class of the facade module for all parameters which have to be provided.
 
 See flat_plate_collector_example_facade.py for an application example. It models the same
 system as the flat_plate_collector_example.py, but uses the SolarThermalCollector facade
@@ -181,6 +185,3 @@ instead of separate source and transformer.
     	irradiance_diffuse=input_data['diffuse_horizontal_W_m2'],
     	temp_amb_col=input_data['temp_amb'],
     )
-
-To learn about all parameters that can be passed to the facades, have a look at the
-:ref:`api reference for the facade module <api_label>`.
