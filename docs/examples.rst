@@ -5,7 +5,7 @@ Examples
 
 In this section we provide several examples to demonstrate how you can use the
 functions and components of *oemof.thermal*:
-<https://github.com/oemof/oemof-thermal/tree/dev/examples>
+[Exapmle Repository](https://github.com/oemof/oemof-thermal/tree/dev/examples)
 Among others: 
 
 - functionality of collector facade and efficency calculation 
