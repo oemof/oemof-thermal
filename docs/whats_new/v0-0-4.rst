@@ -1,4 +1,4 @@
-v0.0.4 (???, 2020)
+v0.0.4 (October 2, 2020)
 =============
 
 API changes
@@ -9,7 +9,8 @@ API changes
 New features
 ------------
 
-* something
+* We have validated the following components: heat pump, chiller, stratified thermal storage and concentrating solar power.
+* An excess sink has been defined in the facade example of the concentrating solar power component.
 
 New components/constraints
 ------------
@@ -19,12 +20,13 @@ New components/constraints
 Documentation
 -------------
 
-* something
+* Some minor improvements in the documentation of the stratified thermal storage have been made.
+* We improved the documentation on the examples
 
 Bug fixes
 ---------
 
-* something
+* A warning has been implemented for the concentrating solar power component, if required parameters are missing.
 
 Known issues
 ------------
@@ -39,10 +41,15 @@ Tests
 Other changes
 -------------
 
-* something
+* We have cleaned the examples of the stratified thermal storage component and made it more transparent.
 
 Contributors
 ------------
 
-* someone
+* Caroline Möller
+* Franziska Pleißner
+* Jakob Wolf
+* Jann Launer
+* Marie-Claire Gering
+* Felix Janiak
 
