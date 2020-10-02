@@ -5,7 +5,8 @@ Examples
 
 In this section we provide several examples to demonstrate how you can use the
 functions and components of *oemof.thermal*:
-https://github.com/oemof/oemof-thermal/tree/dev/examples
+<https://github.com/oemof/oemof-thermal/tree/dev/examples>
+Among others: 
 
 - functionality of collector facade and efficency calculation 
 - calculation of max possible heat output
@@ -28,7 +29,7 @@ the default loss method and once on the loss method 'Andasol.
 It also shows the functionality of the concentrating solar thermal collector and of the ParabolicTroughCollector facade.
 This application models a csp plant, to meet an electrical demand. The plant
 itself consists of a parabolic trough collector field, a turbine, and a storage.
-The collector is build with the facade, which can be found in the facade modul
+The collector is build with the facade, which can be found in the facade modul.
 
 
 **Compression heat pumps and chillers**
@@ -53,14 +54,18 @@ useing the soil temperature as low temperature heat reservoir.
 
 **Solar thermal collector**
 
-- flat_plate_collector_example [1]_
-- plots
+In this example the functionality of the solar thermal collector is shown. 
+Once with a fixed collector size (aperture area), once with a fixed collector size using the facade and another time with a collector size to be invested.
+It also provides plots which can be called by the flat_plate_collector_example.py.
 
 **Stratified thermal storage**
 
-- stratified thermal storage [1]_
-- stratified thermal storage (investment mode) [1]_
-- plots
+This example explains how to use the functions of oemof.thermal's stratified thermal storage module
+to specify a storage in a model that optimizes operation with oemof.solph. As well as how to use the facade class StratifiedThermalStorage to add a storage.
+
+Furthermore it shows how to invest into nominal_storage_capacity and capacity
+(charging/discharging power) with a fixed ratio and independently with no fixed ratio.
+(There is still afixed ratio between input and output capacity)
 
 
 
