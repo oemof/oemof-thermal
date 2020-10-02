@@ -10,7 +10,9 @@ The validation of the compression heat pump and chiller has been conducted withi
 `GRECO project <https://www.greco-project.eu/>`_ in collaboration with the `oemof_heat project
 <https://github.com/oemof-heat>`_.
 Monitored data of the two components in combination with PV without storage has been provided by Universidad
-Politécnica de Madrid (UPM). Both, heat pump and chiller, are working with air to air technology.
+Politécnica de Madrid (UPM). An open access publication containing further description of the data and experiments done
+in [2] is planned for November 2020.
+Both, heat pump and chiller, are working with air to air technology.
 The set of data contains amongst others external and internal temperatures of the components and a calculated
 Coefficient of performance (COP) / Energy Efficiency Ratio (EER) value. The code used for the validation can
 be found in the `here <https://github.com/greco-project/heat_pump_validation>`_.
