@@ -10,7 +10,7 @@ New features
 ------------
 
 * We have validated the following components: heat pump, chiller, stratified thermal storage and concentrating solar power (CSP). The documentation of the CSP validation is postponed due to data licensing issues.
-* An excess sink has been defined in the facade example of the concentrating solar power component.
+* An excess sink has been defined in the facades of the solar thermal and the concentrating solar power component to prevent energy systems from being unsolvable because of heat overproduction.
 
 New components/constraints
 ------------
