@@ -44,8 +44,8 @@ For some parameters assumptions had to be made.
     heat transfer coef. inside      7 W/(m2*K)
     heat transfer coef. outside     4 W/(m2*K)
 ================================ =============================
-Tab.1: Input parameters used for the model validation
 
+Tab.1: Input parameters used for the model validation
 
 Please see the
 `USER'S GUIDE <https://oemof-thermal.readthedocs.io/en/latest/stratified_thermal_storage.html>`_ on the stratified thermal storage for further information.
@@ -102,6 +102,7 @@ Time      Level in %
 5.25        76.54
 5.5         76.33
 ======= ==============
+
 Tab.2: Measured storage level.
 
 Results
