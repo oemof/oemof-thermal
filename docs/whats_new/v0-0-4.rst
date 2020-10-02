@@ -9,7 +9,7 @@ API changes
 New features
 ------------
 
-* We have validated the following components: heat pump, chiller, stratified thermal storage and concentrating solar power.
+* We have validated the following components: heat pump, chiller, stratified thermal storage and concentrating solar power (CSP). The documentation of the CSP validation is postponed due to data licensing issues.
 * An excess sink has been defined in the facade example of the concentrating solar power component.
 
 New components/constraints
@@ -52,4 +52,3 @@ Contributors
 * Jann Launer
 * Marie-Claire Gering
 * Felix Janiak
-
