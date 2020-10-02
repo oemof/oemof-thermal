@@ -223,7 +223,7 @@ The values of the coefficients fluctuate more compared to the chiller.
     :figclass: align-center
 
     Fig.9: Histogram of residuals with overestimation showing a quality grade of 0.30 (left), quality grade of 0.35
-    with least error (middle) and with underestimation connected to a quality grade of 0.40 (right).
+    with least error (middle) and with underestimation connected to a quality grade of 0.40 (right)
 
 .. figure:: _pics/Correlation_COP_whole.png
     :width: 75 %
