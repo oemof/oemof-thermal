@@ -2,7 +2,7 @@
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~
-Absorption chillers
+Absorption chiller
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 Calculations for absorption chillers based on the characteristic equation method.
