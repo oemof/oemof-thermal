@@ -7,7 +7,8 @@ Scope
 _____
 
 The validation of the compression heat pump and chiller has been conducted within the
-`GRECO project <https://github.com/greco-project>`_.
+`GRECO project <https://www.greco-project.eu/>`_ in collaboration with the `oemof_heat project
+<https://github.com/oemof-heat>`_.
 Monitored data of the two components in combination with PV without storage has been provided by Universidad
 Politécnica de Madrid (UPM).
 The set of data contains amongst others external and internal temperatures of the components and a calculated
@@ -243,4 +244,3 @@ __________
 [1] Ziegler, D.-I. F. (1997).
 Sorptionswärmepumpen.
 Erding: Forschungsberichte des Deutschen Kälte- und Klimatechnischen Vereins Nr. 57
-
