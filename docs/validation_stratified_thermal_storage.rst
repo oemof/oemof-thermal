@@ -8,7 +8,7 @@ Scope
 _____
 
 The validation of the stratified thermal storage has been conducted within
-the `oemof_heat <https://github.com/oemof-thermal>`_ project.
+the `oemof_heat <https://github.com/oemof-heat>`_ project.
 Measurement data of a reference storage has been provided by the energy supplier Naturstrom AG.
 The set of data contains the storage geometry (height, diameter, insulation thickness),
 temperatures at top and bottom of the storage and a time series of the storage level.
@@ -44,6 +44,7 @@ For some parameters assumptions had to be made.
     heat transfer coef. inside      7 W/(m2*K)
     heat transfer coef. outside     4 W/(m2*K)
 ================================ =============================
+
 Tab.1: Input parameters used for the model validation
 
 Please see the
@@ -63,7 +64,7 @@ where :math:`T_\mathrm{mean}` is the arithmetic mean temperature of the storage.
 where :math:`n` is the amount of temperature sensors.
 
 Measurement data
-_______
+________________
 
 The measurement data come from an energy system that contains several identical storages.
 Here, only a single storage is calculated to keep the model simple.
@@ -101,6 +102,7 @@ Time      Level in %
 5.25        76.54
 5.5         76.33
 ======= ==============
+
 Tab.2: Measured storage level.
 
 Results
@@ -126,8 +128,8 @@ fluctuating level signal.
     Fig.1: Measured storage level (red) and calculated storage level (blue).
 
 
-The model allows an approximation of the losses in periods without
-charging or discharging from simple storage geometry data.
+The model allows an approximation of the losses from simple storage geometry data
+in periods without charging or discharging.
 
 You can reproduce Fig.1 and the calculation with the example ``model_validation.py``
 in the `examples section <https://github.com/oemof/oemof-thermal/tree/dev/examples/stratified_thermal_storage>`_

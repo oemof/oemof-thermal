@@ -35,7 +35,8 @@ references to the literature are listed that the reader can refer to if she want
 information on the background.
 
 Finally, there are a couple of examples that can give an idea of how the functionality of
-oemof.thermal can be utilized.
+oemof.thermal can be utilized. Some models have undergone validation whose results you'll find
+in the section "Model validation".
 
 .. contents:: `Contents`
     :depth: 1
@@ -74,6 +75,8 @@ Examples
 --------
 
 We provide examples described in the section :ref:`examples_label`.
+Further we developed some complex models with the oemof-thermal components
+which are described in this section as well.
 
 
 Contributing to oemof.thermal

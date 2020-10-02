@@ -1,7 +1,7 @@
 .. _compression_heat_pumps_label:
 
-Compression Heat Pumps and Chillers
-===================================
+Compression heat pump and chiller
+=================================
 
 Simple calculations for compression heat pumps and chillers.
 
