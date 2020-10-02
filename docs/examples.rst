@@ -72,14 +72,13 @@ The Examples can be found `here <https://github.com/oemof/oemof-thermal/tree/mas
 **Cogeneration**
 
 We further provide an example on different emission allocation methods in cogeneration.
-
 This Example can be found `here <https://github.com/oemof/oemof-thermal/tree/master/examples/cogeneration>`_.
 
 
 List of Available Models
 ________________________
 
-In this `section <https://github.com/oemof-heat/solar_models>` you will find more complex models, which use the components "solar_thermal_collector" and "concentrating_solar_power" from oemof_thermal.
+In the `GitHub organisation of the oemof_heat project <https://github.com/oemof-heat/solar_models>`_ you will find more complex models which use the components "solar_thermal_collector" and "concentrating_solar_power" from oemof_thermal.
 
 **Solar Cooling Model**
 
