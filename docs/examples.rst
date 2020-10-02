@@ -22,6 +22,8 @@ __________________________
 
 **Concentrating solar power (CSP)**
 
+https://github.com/oemof/oemof-thermal/tree/dev/examples/concentrating_solar_power
+
 This example shows the difference between the new approach and a fix efficiency.
 The therefor calculated collectors efficiency and irradiance are once depending on
 the default loss method and once on the loss method 'Andasol.
@@ -33,6 +35,8 @@ The collector is build with the facade, which can be found in the facade modul.
 
 
 **Compression heat pumps and chillers**
+
+https://github.com/oemof/oemof-thermal/tree/dev/examples/compression_heatpumps_and_chiller
 
 A different example provides an "how to" on the use of the 'calc_cops' function to get the
 COPs of an exemplary air-source heat pump (ASHP). It also shows how to use the
@@ -54,11 +58,15 @@ useing the soil temperature as low temperature heat reservoir.
 
 **Solar thermal collector**
 
+https://github.com/oemof/oemof-thermal/tree/dev/examples/solar_thermal_collector
+
 In this example the functionality of the solar thermal collector is shown. 
 Once with a fixed collector size (aperture area), once with a fixed collector size using the facade and another time with a collector size to be invested.
 It also provides plots which can be called by the flat_plate_collector_example.py.
 
 **Stratified thermal storage**
+
+https://github.com/oemof/oemof-thermal/tree/dev/examples/stratified_thermal_storage
 
 This example explains how to use the functions of oemof.thermal's stratified thermal storage module
 to specify a storage in a model that optimizes operation with oemof.solph. As well as how to use the facade class StratifiedThermalStorage to add a storage.
