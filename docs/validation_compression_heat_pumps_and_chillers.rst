@@ -10,10 +10,9 @@ The validation of the compression heat pump and chiller has been conducted withi
 `GRECO project <https://www.greco-project.eu/>`_ in collaboration with the `oemof_heat project
 <https://github.com/oemof-heat>`_.
 Monitored data of the two components in combination with PV without storage has been provided by Universidad
-Politécnica de Madrid (UPM).
+Politécnica de Madrid (UPM). Both, heat pump and chiller, are working with air to air technology.
 The set of data contains amongst others external and internal temperatures of the components and a calculated
-COP / EER value.
-** TODO: what technology - air to air? **
+Coefficient of performance (COP) / Energy Efficiency Ratio (EER) value.
 
 Method
 _______
