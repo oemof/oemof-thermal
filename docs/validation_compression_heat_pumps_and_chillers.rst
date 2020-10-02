@@ -78,9 +78,9 @@ Tab.1: Root mean square error for different quality grades of the chiller
     0.50                            3.531
 ============================= =============================
 
-The correlation with quality grades below 0.30 show an overestimation of the coefficients. In contrast,
-calculated EER at quality grades above 0.30 indicate an underestimation. Fig.1 shows the estimated correlation of EERs
-in the middle together with over- and underestimation to the left and right:
+The correlation with quality grades below 0.30 show an underestimation of the coefficients. In contrast,
+calculated EER at quality grades above 0.30 indicate an overestimation. Fig.1 shows the estimated correlation of EERs
+in the middle together with under- and overestimation to the left and right:
 
 .. figure:: _pics/Correlation_EERs.png
     :width: 100 %
@@ -88,8 +88,8 @@ in the middle together with over- and underestimation to the left and right:
     :align: center
     :figclass: align-center
 
-    Fig.1: Correlation between monitored and calculated EER with overestimation showing a quality grade of 0.25 (left),
-    quality grade of 0.30 with least error (middle) and with underestimation connected to a quality grade of 0.35
+    Fig.1: Correlation between monitored and calculated EER with underestimation showing a quality grade of 0.25 (left),
+    quality grade of 0.30 with least error (middle) and with overestimation connected to a quality grade of 0.35
     (right).
 
 Fig.2 shows the residual over monitored EER for quality grades of 0.25, 0.30 and 0.35. In Fig.3 the residual is plotted
@@ -104,9 +104,8 @@ residuals decrease with rising quality grades.
     :align: center
     :figclass: align-center
 
-    Fig.2: Correlation between residual and monitored EER with overestimation showing a quality grade of 0.25 (left),
-    quality grade of 0.30 with least error (middle) and with underestimation connected to a quality grade of 0.35
-    (right).
+    Fig.2: Correlation between residual and monitored EER showing a quality grade of 0.25 (left),
+    quality grade of 0.30 with least error (middle) and a quality grade of 0.35 (right).
 
 .. figure:: _pics/temphub_eer.png
     :width: 100 %
@@ -114,9 +113,8 @@ residuals decrease with rising quality grades.
     :align: center
     :figclass: align-center
 
-    Fig.3: Correlation between temperature hub and monitored EER with overestimation showing a quality grade of 0.25
-    (left), quality grade of 0.30 with least error (middle) and with underestimation connected to a quality grade of
-    0.35 (right).
+    Fig.3: Correlation between residual and temperature hub showing a quality grade of 0.25 (left), quality grade of
+    0.30 with least error (middle) and a quality grade of 0.35 (right).
 
 The histogram in Fig.4 depicts that most of the calculated coefficients have small deviations with the quality grade of
 0.30 (middle). Based on the left graph it gets clear that the average calculated EER decreases with lower quality grades
@@ -129,8 +127,8 @@ increases with higher quality grades due to the shift to the left of the histogr
     :align: center
     :figclass: align-center
 
-    Fig.4: Histogram of residuals with overestimation showing a quality grade of 0.25 (left), quality grade of 0.30
-    with least error (middle) and with underestimation connected to a quality grade of 0.35 (right).
+    Fig.4: Histogram of residuals with underestimation showing a quality grade of 0.25 (left), quality grade of 0.30
+    with least error (middle) and with overestimation connected to a quality grade of 0.35 (right).
 
 The outliers in the monitored data could be due to the start-up and shutdown of the prototypes’ compressor.
 
@@ -182,11 +180,11 @@ contains higher deviations.
     :align: center
     :figclass: align-center
 
-    Fig.6: Correlation between monitored and calculated COP with overestimation showing a quality grade of 0.30 (left),
-    quality grade of 0.35 with least error (middle) and with underestimation connected to a quality grade of 0.40
+    Fig.6: Correlation between monitored and calculated COP with underestimation showing a quality grade of 0.30 (left),
+    quality grade of 0.35 with least error (middle) and with overestimation connected to a quality grade of 0.40
     (right).
 
-Just as with the chiller, the correlations indicate an overestimation at lower quality grades and an underestimation at
+Just as with the chiller, the correlations indicate an underestimation at lower quality grades and an overestimation at
 larger quality grades.
 
 In Fig.7 shows the residual over monitored COP for quality grades of 0.30, 0.35 and 0.40. In Fig.8 the residual is
@@ -200,9 +198,8 @@ observable: Residuals decrease with rising quality grades.
     :align: center
     :figclass: align-center
 
-    Fig.7: Correlation between residual and monitored COP with overestimation showing a quality grade of 0.30 (left),
-    quality grade of 0.35 with least error (middle) and with underestimation connected to a quality grade of 0.40
-    (right)
+    Fig.7: Correlation between residual and monitored COP showing a quality grade of 0.30 (left), quality grade of 0.35
+    with least error (middle) and a quality grade of 0.40 (right)
 
 .. figure:: _pics/temphub_cop.png
     :width: 100 %
@@ -210,9 +207,8 @@ observable: Residuals decrease with rising quality grades.
     :align: center
     :figclass: align-center
 
-    Fig.8: Correlation between temperature hub and monitored COP with overestimation showing a quality grade of 0.30
-    (left), quality grade of 0.35 with least error (middle) and with underestimation connected to a quality grade of
-    0.40 (right)
+    Fig.8: Correlation between residual and temperature hub showing a quality grade of 0.30 (left), a quality grade of
+    0.35 with least error (middle) and a quality grade of 0.40 (right)
 
 
 In Fig.9 the histograms of the heat pump are shown. The peak of the histograms shifts to the right with smaller quality
@@ -225,8 +221,8 @@ The values of the coefficients fluctuate more compared to the chiller.
     :align: center
     :figclass: align-center
 
-    Fig.9: Histogram of residuals with overestimation showing a quality grade of 0.30 (left), quality grade of 0.35
-    with least error (middle) and with underestimation connected to a quality grade of 0.40 (right)
+    Fig.9: Histogram of residuals with underestimation showing a quality grade of 0.30 (left), quality grade of 0.35
+    with least error (middle) and with overestimation connected to a quality grade of 0.40 (right)
 
 .. figure:: _pics/Correlation_COP_whole.png
     :width: 75 %
