@@ -168,7 +168,7 @@ for 0.30 with 1.123 and for 0.40 with 1.206 (cf. Tab.1).
     0.45                            1.635
     0.50                            2.155
 ============================= =============================
-Tab.2: Root square mean error for different quality grades of the heat pump
+Tab.2: Root mean square error for different quality grades of the heat pump
 
 The comparison of the smallest RSME of both chiller and heat pump indicates that the monitored data of the heat pump
 contains higher deviations.
