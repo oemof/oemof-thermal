@@ -4,7 +4,7 @@ Examples
 ========
 
 In this section we provide several examples to demonstrate how you can use the
-functions and components of *oemof.thermal*. You can find them in the [oemof´s exapmle repository](https://github.com/oemof/oemof-thermal/tree/master/examples)
+functions and components of *oemof.thermal*. You can find them in the [oemof´s example repository](https://github.com/oemof/oemof-thermal/tree/master/examples)
 Among them are the following: 
 
 - functionality of collector facade and efficency calculation 
@@ -76,4 +76,21 @@ This Exapmle can be found [here](https://github.com/oemof/oemof-thermal/tree/mas
 
 List of Available Models
 ________________________
+
+In this [section](https://github.com/oemof-heat/solar_models) you will find our models, which use the components "solar_thermal_collector" and "concentrating_solar_power" from oemof_thermal.
+
+**Solar Cooling Model**
+
+The application models a cooling system for a building with a given cooling demand.
+https://github.com/oemof-heat/solar_models/tree/master/solar_cooling
+
+**Desalination Model**
+
+The application models a desalination system with a given water demand.
+
+
+
+
+
+
 
