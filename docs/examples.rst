@@ -39,3 +39,8 @@ __________________________
 - plots
 
 .. [1] Example uses *oemof.solph*
+
+
+List of Available Models
+________________________
+
