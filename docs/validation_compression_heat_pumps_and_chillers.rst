@@ -45,7 +45,7 @@ provided by UPM includes mostly data from non-stationary periods as different co
 fluctuating values we decided to analyze average hourly values.
 
 Various types of charts are used for the validation of the calculated COP and EER. For the validation the residual,
-which corresponds to the difference of the monitored and calculated coefficients is used. For both, chiller and heat
+which corresponds to the difference of the monitored and calculated coefficients, is used. For both, chiller and heat
 pump, correlations with the residual are shown in various types of charts: the histograms, the correlation between
 calculated and monitored coefficients, the root mean square error (RMSE), the relation between the residuals and
 temperature hub as well as the relation between residuals and monitored coefficients.
