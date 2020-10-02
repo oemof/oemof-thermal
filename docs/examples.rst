@@ -16,7 +16,7 @@ Most of the examples show the usage of *oemof-thermal* together with *oemof-solp
 However, *oemof-thermal* is a stand-alone package and you can
 use the package and its calculations in any other context as well.
 
-List of Available Examples
+List of available examples
 __________________________
 
 **Compression heat pump and chiller**
@@ -76,7 +76,7 @@ We further provide an example on different emission allocation methods in cogene
 This Example can be found `here <https://github.com/oemof/oemof-thermal/tree/master/examples/cogeneration>`_.
 
 
-List of Available Models
+List of available models
 ________________________
 
 In the `GitHub organisation of the oemof_heat project <https://github.com/oemof-heat/solar_models>`_ you will find more complex models which use the components "solar_thermal_collector" and "concentrating_solar_power" from oemof_thermal.
