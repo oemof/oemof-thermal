@@ -37,7 +37,7 @@ the collector and the location. The following scheme shows the calculation proce
 
     Fig.1: The energy flows and losses at a flat plate collector.
 
-The processing of the irradiance data is done by the pvlib, which calculates the total
+The processing of the irradiance data is done by the `pvlib <https://github.com/pvlib/pvlib-python>_` , which calculates the total
 in-plane irradiance according to the azimuth and tilt angle of the collector.
 
 The efficiency of the collector is calculated with
