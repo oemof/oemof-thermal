@@ -64,8 +64,8 @@ This example explains how to use the functions of oemof.thermal's stratified the
 to specify a storage in a model that optimizes operation with oemof.solph. As well as how to use the facade class StratifiedThermalStorage to add a storage.
 
 Furthermore it shows how to invest into nominal_storage_capacity and capacity
-(charging/discharging power) with a fixed ratio and independently with no fixed ratio.
-(There is still afixed ratio between input and output capacity)
+(charging/discharging power) with a fixed ratio and independently with no fixed ratio (There is still a fixed ratio between input and output capacity).
+
 
 
 
