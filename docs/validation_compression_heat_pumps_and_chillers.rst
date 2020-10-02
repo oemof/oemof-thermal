@@ -234,7 +234,7 @@ The values of the coefficients fluctuate more compared to the chiller.
     Fig.10: Correlation between residual and monitored COP of the complete data set with a quality grade of 0.05 (left)
     and a quality grade of 0.50 (right)
 
-Looking at the whole preprocessed, monitored data, a linear dependence of the residuals to monitored COP values can
+Looking at the whole preprocessed monitored data, a linear dependence of the residuals to monitored COP values can
 be identified. The linear dependency for two quality grades 0.05 (left) and 0.5 (right) is depicted in Fig.10. Just as
 with the chiller the linearity dependence is higher for smaller quality grades such as 0.05 (cf. left graph in Fig.10).
 The dispersion of residuals in areas of lower as well as higher monitored COP increases with larger quality grades.
