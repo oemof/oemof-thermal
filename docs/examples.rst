@@ -34,7 +34,7 @@ ground-source heat pump (GSHP) using the soil temperature as low temperature hea
 
 The Examples can be found `here <https://github.com/oemof/oemof-thermal/tree/master/examples/compression_heatpumps_and_chiller>`_.
 
-**Absorption Chillers**
+**Absorption Chiller**
 
 The first example shows the behaviour of the coefficient of performance and heat flows such as the cooling capacity
 for different cooling water temperatures based on the characteristic equation method.
@@ -88,7 +88,6 @@ The application models a cooling system for a building with a given cooling dema
 **Desalination Model**
 
 The application models a desalination system with a given water demand.
-
 
 
 
