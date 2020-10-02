@@ -46,6 +46,7 @@ For some parameters assumptions had to be made.
 ================================ =============================
 Tab.1: Input parameters used for the model validation
 
+
 Please see the
 `USER'S GUIDE <https://oemof-thermal.readthedocs.io/en/latest/stratified_thermal_storage.html>`_ on the stratified thermal storage for further information.
 
@@ -63,7 +64,7 @@ where :math:`T_\mathrm{mean}` is the arithmetic mean temperature of the storage.
 where :math:`n` is the amount of temperature sensors.
 
 Measurement data
-_______
+________________
 
 The measurement data come from an energy system that contains several identical storages.
 Here, only a single storage is calculated to keep the model simple.
