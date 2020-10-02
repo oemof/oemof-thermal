@@ -75,6 +75,8 @@ Examples
 --------
 
 We provide examples described in the section :ref:`examples_label`.
+Further we developed some complex models with the oemof-thermal components
+which are described in this section as well.
 
 
 Contributing to oemof.thermal
