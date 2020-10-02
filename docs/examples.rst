@@ -4,9 +4,8 @@ Examples
 ========
 
 In this section we provide several examples to demonstrate how you can use the
-functions and components of *oemof.thermal*:
-[Exapmle Repository](https://github.com/oemof/oemof-thermal/tree/dev/examples)
-Among others: 
+functions and components of *oemof.thermal*. You can find them in the [oemof´s exapmle repository](https://github.com/oemof/oemof-thermal/tree/master/examples)
+Among them are the following: 
 
 - functionality of collector facade and efficency calculation 
 - calculation of max possible heat output
