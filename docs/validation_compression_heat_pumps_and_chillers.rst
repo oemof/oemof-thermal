@@ -182,7 +182,7 @@ contains higher deviations.
 
     Fig.6: Correlation between monitored and calculated COP with underestimation showing a quality grade of 0.30 (left),
     quality grade of 0.35 with least error (middle) and with overestimation connected to a quality grade of 0.40
-    (right).
+    (right)
 
 Just as with the chiller, the correlations indicate an underestimation at lower quality grades and an overestimation at
 larger quality grades.
