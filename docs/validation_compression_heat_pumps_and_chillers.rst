@@ -187,7 +187,7 @@ contains higher deviations.
 Just as with the chiller, the correlations indicate an underestimation at lower quality grades and an overestimation at
 larger quality grades.
 
-In Fig.7 shows the residual over monitored COP for quality grades of 0.30, 0.35 and 0.40. In Fig.8 the residual is
+Fig.7 shows the residual over monitored COP for quality grades of 0.30, 0.35 and 0.40. In Fig.8 the residual is
 plotted over the temperature hub for the three quality grades. From both graphs can be derived that the residual is
 minimal for a quality grade of 0.35. As in the cooler's results the dependency of residuals and both parameter is
 observable: Residuals decrease with rising quality grades.
