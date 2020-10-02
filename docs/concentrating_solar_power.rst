@@ -199,10 +199,10 @@ instead of separate source and transformer.
 .. code-block:: python
 
     from oemof import solph
-        >>> from oemof.thermal.facades import Collector
+        >>> from oemof.thermal.facades import ParabolicTroughCollector
         >>> bth = solph.Bus(label='thermal_bus')
         >>> bel = solph.Bus(label='electrical_bus')
-        >>> collector = Collector(
+        >>> collector = ParabolicTroughCollector(
         ...     label='solar_collector',
         ...     heat_bus=bth,
         ...     electrical_bus=bel,
