@@ -90,7 +90,7 @@ in the middle together with under- and overestimation to the left and right:
 
     Fig.1: Correlation between monitored and calculated EER with underestimation showing a quality grade of 0.25 (left),
     quality grade of 0.30 with least error (middle) and with overestimation connected to a quality grade of 0.35
-    (right).
+    (right)
 
 Fig.2 shows the residual over monitored EER for quality grades of 0.25, 0.30 and 0.35. In Fig.3 the residual is plotted
 over the temperature hub for the three quality grades. From both graphs can be derived that the residual is minimal
