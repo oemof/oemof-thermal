@@ -19,16 +19,6 @@ use the package and its calculations in any other context as well.
 List of Available Examples
 __________________________
 
-**Concentrating solar power (CSP)**
-
-These examples shows the difference between the new approach of the oemof-thermal component and a fix efficiency.
-The collector's efficiency and irradiance can be calculated with two different loss methods. The examples also shows the functionalitiy of the ParabolicTroughCollector facade.
-
-An application is presented which models a csp plant to meet an electrical demand. The plant
-itself consists of a parabolic trough collector field, a turbine, and a storage.
-
-The Examples can be found `here <https://github.com/oemof/oemof-thermal/tree/master/examples/concentrating_solar_power>`_.
-
 **Compression heat pump and chiller**
 
 A different example provides an "how to" on the use of the 'calc_cops' function to get the
@@ -51,6 +41,16 @@ using the soil temperature as low temperature heat reservoir.
 
 The Examples can be found `here <https://github.com/oemof/oemof-thermal/tree/master/examples/compression_heatpumps_and_chiller>`_.
 
+**Concentrating solar power (CSP)**
+
+These examples shows the difference between the new approach of the oemof-thermal component and a fix efficiency.
+The collector's efficiency and irradiance can be calculated with two different loss methods. The examples also shows the functionalitiy of the ParabolicTroughCollector facade.
+
+An application is presented which models a csp plant to meet an electrical demand. The plant
+itself consists of a parabolic trough collector field, a turbine, and a storage.
+
+The Examples can be found `here <https://github.com/oemof/oemof-thermal/tree/master/examples/concentrating_solar_power>`_.
+
 **Solar thermal collector**
 
 In these examples the functionality of the solar thermal collector is shown. 
@@ -69,6 +69,11 @@ Furthermore the examples show how to invest into nominal_storage_capacity and ca
 
 The Examples can be found `here <https://github.com/oemof/oemof-thermal/tree/master/examples/stratified_thermal_storage>`_.
 
+**Cogeneration**
+
+We further provide an example on different emission allocation methods in cogeneration.
+
+This Example can be found `here <https://github.com/oemof/oemof-thermal/tree/master/examples/cogeneration>`_.
 
 
 List of Available Models
