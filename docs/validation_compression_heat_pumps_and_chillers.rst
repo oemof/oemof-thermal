@@ -60,6 +60,7 @@ The RMSE for the validated quality grades presents the standard deviation of the
 grades for the chiller, the RMSE is smallest for the quality grade 0.30 with 0.573 and larger for 0.25 with 0.758 and
 for 0.35 with 1.181 (cf. Tab.1).
 
+Tab.1: Root mean square error for different quality grades of the chiller
 ============================= =============================
     Quality grade                   RSME
 ============================= =============================
@@ -74,7 +75,6 @@ for 0.35 with 1.181 (cf. Tab.1).
     0.45                            2.732
     0.50                            3.531
 ============================= =============================
-Tab.1: Root mean square error for different quality grades of the chiller
 
 The correlation with quality grades below 0.30 show an overestimation of the coefficients. In contrast,
 calculated EER at quality grades above 0.30 indicate an underestimation. Fig.1 shows the estimated correlation of EERs
@@ -154,6 +154,7 @@ ________________________
 The RMSE calculated using the heat pump's monitored data is smallest for the quality grade 0.35 with 0.991 and larger
 for 0.30 with 1.123 and for 0.40 with 1.206 (cf. Tab.1).
 
+Tab.2: Root mean square error for different quality grades of the heat pump
 ============================= =============================
     Quality grade                   RSME
 ============================= =============================
@@ -168,7 +169,6 @@ for 0.30 with 1.123 and for 0.40 with 1.206 (cf. Tab.1).
     0.45                            1.635
     0.50                            2.155
 ============================= =============================
-Tab.2: Root mean square error for different quality grades of the heat pump
 
 The comparison of the smallest RSME of both chiller and heat pump indicates that the monitored data of the heat pump
 contains higher deviations.
