@@ -61,6 +61,7 @@ grades for the chiller, the RMSE is smallest for the quality grade 0.30 with 0.5
 for 0.35 with 1.181 (cf. Tab.1).
 
 Tab.1: Root mean square error for different quality grades of the chiller
+
 ============================= =============================
     Quality grade                   RSME
 ============================= =============================
@@ -155,6 +156,7 @@ The RMSE calculated using the heat pump's monitored data is smallest for the qua
 for 0.30 with 1.123 and for 0.40 with 1.206 (cf. Tab.1).
 
 Tab.2: Root mean square error for different quality grades of the heat pump
+
 ============================= =============================
     Quality grade                   RSME
 ============================= =============================
