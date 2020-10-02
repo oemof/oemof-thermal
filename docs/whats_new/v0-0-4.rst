@@ -1,21 +1,11 @@
 v0.0.4 (???, 2020)
 =============
 
-API changes
------------
-
-* something
-
 New features
 ------------
 
 * We have validated the following components: heat pump, chiller, stratified thermal storage and concentrating solar power (CSP). The documentation of the CSP validation is postponed due to data licensing issues.
 * An excess sink has been defined in the facades of the solar thermal and the concentrating solar power component to prevent energy systems from being unsolvable because of heat overproduction.
-
-New components/constraints
-------------
-
-* something
 
 Documentation
 -------------
@@ -27,16 +17,6 @@ Bug fixes
 ---------
 
 * A warning for missing required parameters has been implemented in the concentrating solar power component.
-
-Known issues
-------------
-
-* something
-
-Tests
------
-
-* something
 
 Other changes
 -------------
