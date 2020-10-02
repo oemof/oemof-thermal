@@ -21,23 +21,16 @@ __________________________
 
 **Compression heat pump and chiller**
 
-A different example provides an "how to" on the use of the 'calc_cops' function to get the
+An example provides an "how to" on the use of the 'calc_cops' function to get the
 COPs of an exemplary air-source heat pump (ASHP). It also shows how to use the
 pre-calculated COPs in a solph.Transformer.
 Furthermore, the maximal possible heat output of the heat pump is
 pre-calculated and varies with the temperature levels of the heat reservoirs.
 In the example the ambient air is used as low temperature heat reservoir.
 
-It will also be explained how to use the 'calc_cops' function to get the
-COPs of a compression chiller using pd.Time-Series as input.
-Therefor the ambient air is used as heat sink (high temperature reservoir). 
-The input is a list to show how the function can be applied on several time steps. 
-The output is a list as well and may serve as input (conversion_factor) for an
-oemof.solph.transformer.
-
-In addition to that the example provides a manual on using the 'calc_cops' function 
-to get the COPs of a heat pump, by plotting the temperature dependency of the COP, and COPs of an exemplary ground-source heat pump (GSHP)
-using the soil temperature as low temperature heat reservoir.
+In addition to that, the example provides a manual on using the 'calc_cops' function
+to get the COPs of a heat pump, by plotting the temperature dependency of the COP, and COPs of an exemplary
+ground-source heat pump (GSHP) using the soil temperature as low temperature heat reservoir.
 
 The Examples can be found `here <https://github.com/oemof/oemof-thermal/tree/master/examples/compression_heatpumps_and_chiller>`_.
 
