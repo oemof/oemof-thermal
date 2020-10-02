@@ -4,14 +4,14 @@ v0.0.4 (October 2, 2020)
 New features
 ------------
 
-* We have validated the following components: heat pump, chiller, stratified thermal storage and concentrating solar power (CSP). The documentation of the CSP validation is postponed due to data licensing issues.
+* We have validated the following components: compression heat pump, compression chiller, stratified thermal storage and concentrating solar power (CSP). The documentation of the CSP validation is postponed due to data licensing issues.
 * An excess sink has been defined in the facades of the solar thermal and the concentrating solar power component to prevent energy systems from being unsolvable because of heat overproduction.
 
 Documentation
 -------------
 
-* Some minor improvements in the documentation of the stratified thermal storage have been made.
-* We improved the examples section in the documentation.
+* Improvements in the documentation of the stratified thermal storage have been made.
+* We improved and extended the examples section in the documentation.
 
 Bug fixes
 ---------
