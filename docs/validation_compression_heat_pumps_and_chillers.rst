@@ -41,7 +41,7 @@ In comparison to the chiller's monitored data, the data of the heat pump contain
 points. It further has multiple downtimes, which lead to reversed temperatures of heat sink and heat source. These data
 points are also excluded from the validation.
 
-The functionalities for calculating the COP and EER of oemof.thermal are made for a stationary process, while the data
+The functionalities for calculating the COP and EER of oemof-thermal are made for a stationary process, while the data
 provided by UPM includes mostly data from non-stationary periods as different control modes are explored. To balance the
 fluctuating values we decided to analyze average hourly values.
 
