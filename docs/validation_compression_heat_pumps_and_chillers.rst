@@ -133,7 +133,7 @@ increases with higher quality grades due to the shift to the left of the histogr
 The outliers in the monitored data could be due to the start-up and shutdown of the prototypes’ compressor.
 
 An examination of the complete data set of the chiller shows a linear dependence of the residuals to the monitored EER.
-In Fig.5 this linearity can be seen for a quality grad of 0.05 (left graph) and a quality grade of 0.50 (right graph).
+In Fig.5 this linearity can be seen for a quality grade of 0.05 (left graph) and a quality grade of 0.50 (right graph).
 It is striking that the linearity dependence is higher for smaller quality grades such as 0.05 (cf. left graph in
 Fig.5). The dispersion of residuals in areas of lower as well as higher monitored EER increases with larger quality
 grades.
