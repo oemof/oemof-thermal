@@ -21,7 +21,7 @@ Documentation
 -------------
 
 * Some minor improvements in the documentation of the stratified thermal storage have been made.
-* We improved the documentation on the examples
+* We improved the examples section in the documentation.
 
 Bug fixes
 ---------
