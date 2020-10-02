@@ -26,7 +26,7 @@ Documentation
 Bug fixes
 ---------
 
-* A warning has been implemented for the concentrating solar power component, if required parameters are missing.
+* A warning for missing required parameters has been implemented in the concentrating solar power component.
 
 Known issues
 ------------
