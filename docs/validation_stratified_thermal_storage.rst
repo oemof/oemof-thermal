@@ -126,8 +126,8 @@ fluctuating level signal.
     Fig.1: Measured storage level (red) and calculated storage level (blue).
 
 
-The model allows an approximation of the losses in periods without
-charging or discharging from simple storage geometry data.
+The model allows an approximation of the losses from simple storage geometry data
+in periods without charging or discharging.
 
 You can reproduce Fig.1 and the calculation with the example ``model_validation.py``
 in the `examples section <https://github.com/oemof/oemof-thermal/tree/dev/examples/stratified_thermal_storage>`_
