@@ -10,7 +10,7 @@ Scope
 _____
 
 This module was developed to provide the heat of a flat plate collector
-based on temperatures and collectors location, tilt and azimuth for energy
+based on temperatures and collector's location, tilt and azimuth for energy
 systems optimizations with oemof.solph.
 
 In
@@ -20,7 +20,7 @@ with flat plate collector, storage and backup to provide a given heat demand.
 The time series of the pre-calculated heat is output of a source (an oemof.solph
 component) representing the collector, and a transformer (an oemof.solph component)
 is used to hold electrical power consumption and further thermal losses of the
-collector in an energy system optimization. In addition, you will find an plot,
+collector in an energy system optimization. In addition, you will find a plot,
 which compares this precalculation with a calculation with a constant efficiency.
 
 Concept
