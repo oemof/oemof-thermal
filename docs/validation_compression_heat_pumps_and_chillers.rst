@@ -12,7 +12,8 @@ The validation of the compression heat pump and chiller has been conducted withi
 Monitored data of the two components in combination with PV without storage has been provided by Universidad
 Politécnica de Madrid (UPM). Both, heat pump and chiller, are working with air to air technology.
 The set of data contains amongst others external and internal temperatures of the components and a calculated
-Coefficient of performance (COP) / Energy Efficiency Ratio (EER) value.
+Coefficient of performance (COP) / Energy Efficiency Ratio (EER) value. The code used for the validation can
+be found in the `here <https://github.com/greco-project/heat_pump_validation>`_.
 
 Method
 _______
