@@ -28,13 +28,17 @@ A simplified 2-zone-model of a stratified thermal energy storage.
    down or up, respectively. Losses to the environment through the surface of the
    storage depend on the size of the hot and cold zone.
 
-* We assume a cylindrical storage of diameter d and height h,
+* We assume a cylindrical storage of (inner) diameter d and height h,
   with two temperature regions that are perfectly separated.
 * The temperatures are assumed to be constant and correspond to
   the feed-in/return temperature of the heating system.
 * Heat conductivity of the storage has to be passed as well as a timeseries
   of outside temperatures for the calculation of heat losses.
 * There is no distinction between outside temperature and ground temperature.
+* A single value for the thermal transmittance :math:`U` is assumed, neglecting the
+  fact that the storage's lateral surface is bent and thus has a higher thermal
+  transmittance than a flat surface. The relative error introduced here gets
+  smaller with larger storage diameters.
 * Material properties are constant.
 
 The equation describing the storage content at timestep t is the following:
@@ -79,7 +83,7 @@ Because of the space that diffuser plates for charging/discharging take up, it i
 the storage can neither be fully charged nor discharged, which is parametrised as a minimal/maximal
 storage level (indicated by the dotted lines in Fig. 1).
 
-These parameters are part of the stratified thermal storage:
+These parameters are part of the stratified thermal storage module:
 
     ========================= ===================================== ==== ===========
     symbol                    attribute                             type explanation

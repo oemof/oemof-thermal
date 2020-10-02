@@ -10,7 +10,7 @@ def read(fname):
 
 
 setup(name='oemof.thermal',
-      version='0.0.3',
+      version='0.0.4dev',
       author='oemof developer group',
       author_email='contact@oemof.org',
       description=(

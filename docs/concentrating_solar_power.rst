@@ -49,7 +49,7 @@ part of the absorbed heat output through thermal losses
 (:math:`\dot Q_{loss,therm}`).
 
 
-The processing of the irradiance data is done by the pvlib, which calculates
+The processing of the irradiance data is done by the `pvlib <https://github.com/pvlib/pvlib-python>`_, which calculates
 the direct irradiance on the collector. This irradiance is reduced by dust and
 dirt on the collector with:
 
@@ -199,10 +199,10 @@ instead of separate source and transformer.
 .. code-block:: python
 
     from oemof import solph
-        >>> from oemof.thermal.facades import Collector
+        >>> from oemof.thermal.facades import ParabolicTroughCollector
         >>> bth = solph.Bus(label='thermal_bus')
         >>> bel = solph.Bus(label='electrical_bus')
-        >>> collector = Collector(
+        >>> collector = ParabolicTroughCollector(
         ...     label='solar_collector',
         ...     heat_bus=bth,
         ...     electrical_bus=bel,
