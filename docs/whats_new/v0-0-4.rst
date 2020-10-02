@@ -51,4 +51,5 @@ Contributors
 * Jakob Wolf
 * Jann Launer
 * Marie-Claire Gering
+* Patrik Schönfeldt
 * Felix Janiak
