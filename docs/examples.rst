@@ -6,11 +6,11 @@ Examples
 In this section we provide several examples to demonstrate how you can use the
 functions and components of *oemof-thermal*. You can find them in the `example folder <https://github.com/oemof/oemof-thermal/tree/master/examples>`_
 of the repository.
-Among them are the following: 
+Among them are the following calculations: 
 
-- functionality of solar thermal and concentrating solar collector's facade and efficiency calculation 
-- calculation of maximum possible heat output of heat pumps
-- investment decision on thermal storage and capacity
+- Functionality of solar thermal and concentrating solar collector's facade and efficiency calculation 
+- Calculation of maximum possible heat output of heat pumps
+- Investment decision on thermal storage and capacity
 
 Most of the examples show the usage of *oemof-thermal* together with *oemof-solph*.
 However, *oemof-thermal* is a stand-alone package and you can
@@ -21,11 +21,9 @@ __________________________
 
 **Concentrating solar power (CSP)**
 
-These examples shows the difference between the new approach and a fix efficiency.
-The therefor calculated collector's efficiency and irradiance can be calculated
-with two different loss methods.
+These examples shows the difference between the new approach of the oemof-thermal component and a fix efficiency.
+The collector's efficiency and irradiance can be calculated with two different loss methods. The examples also shows the functionalitiy of the ParabolicTroughCollector facade.
 
-The examples also shows the functionality of the concentrating solar thermal collector and of the ParabolicTroughCollector facade.
 An application is presented which models a csp plant to meet an electrical demand. The plant
 itself consists of a parabolic trough collector field, a turbine, and a storage.
 
@@ -51,15 +49,15 @@ In addition to that the example provides a manual on using the 'calc_cops' funct
 to get the COPs of a heat pump, by plotting the temperature dependency of the COP, and COPs of an exemplary ground-source heat pump (GSHP)
 using the soil temperature as low temperature heat reservoir.
 
-The Examples can be found `here <https://github.com/oemof/oemof-thermal/tree/master/examples/compression_heatpumps_and_chiller>`.
+The Examples can be found `here <https://github.com/oemof/oemof-thermal/tree/master/examples/compression_heatpumps_and_chiller>`_.
 
 **Solar thermal collector**
 
-In these example the functionality of the solar thermal collector is shown. 
+In these examples the functionality of the solar thermal collector is shown. 
 Once with a fixed collector size (aperture area), once with a fixed collector size using the facade and another time with a collector size to be invested.
 It also provides plots which can be called by the flat_plate_collector_example.py.
 
-The Examples can be found `here <https://github.com/oemof/oemof-thermal/tree/master/examples/solar_thermal_collector>`.
+The Examples can be found `here <https://github.com/oemof/oemof-thermal/tree/master/examples/solar_thermal_collector>`_.
 
 **Stratified thermal storage**
 
@@ -69,7 +67,7 @@ to specify a storage in a model that optimizes operation with oemof-solph. Furth
 Furthermore the examples show how to invest into nominal_storage_capacity and capacity
 (charging/discharging power) with a fixed ratio and independently with no fixed ratio.
 
-The Examples can be found `here <https://github.com/oemof/oemof-thermal/tree/master/examples/stratified_thermal_storage>`.
+The Examples can be found `here <https://github.com/oemof/oemof-thermal/tree/master/examples/stratified_thermal_storage>`_.
 
 
 
