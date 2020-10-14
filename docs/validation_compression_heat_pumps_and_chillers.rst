@@ -1,7 +1,7 @@
 .. _validation_compression_heat_pumps_label:
 
-Compression Heat Pumps and Chillers
-===================================
+Compression Heat Pump and Chiller
+=================================
 
 Scope
 _____
@@ -105,7 +105,7 @@ residuals decrease with rising quality grades.
     :figclass: align-center
 
     Fig.2: Correlation between residual and monitored EER showing a quality grade of 0.25 (left),
-    quality grade of 0.30 with least error (middle) and a quality grade of 0.35 (right).
+    quality grade of 0.30 with least error (middle) and a quality grade of 0.35 (right)
 
 .. figure:: _pics/temphub_eer.png
     :width: 100 %
@@ -114,7 +114,7 @@ residuals decrease with rising quality grades.
     :figclass: align-center
 
     Fig.3: Correlation between residual and temperature hub showing a quality grade of 0.25 (left), quality grade of
-    0.30 with least error (middle) and a quality grade of 0.35 (right).
+    0.30 with least error (middle) and a quality grade of 0.35 (right)
 
 The histogram in Fig.4 depicts that most of the calculated coefficients have small deviations with the quality grade of
 0.30 (middle). Based on the left graph it gets clear that the average calculated EER decreases with lower quality grades
@@ -128,7 +128,7 @@ increases with higher quality grades due to the shift to the left of the histogr
     :figclass: align-center
 
     Fig.4: Histogram of residuals with underestimation showing a quality grade of 0.25 (left), quality grade of 0.30
-    with least error (middle) and with overestimation connected to a quality grade of 0.35 (right).
+    with least error (middle) and with overestimation connected to a quality grade of 0.35 (right)
 
 The outliers in the monitored data could be due to the start-up and shutdown of the prototypes’ compressor.
 
