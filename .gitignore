@@ -61,3 +61,5 @@ target/
 
 # results
 examples/**/results
+
+.venv
