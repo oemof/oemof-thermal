@@ -445,7 +445,7 @@ def test_calc_characteristic_temp_Kuehn():
     """Test characteristic temperature calculation for chiller 'Kuehn'."""
     filename_charpara = os.path.join(
         os.path.dirname(__file__),
-        '../examples/absorption_heatpumps_and_chiller/'
+        '../examples/absorption_heatpump_and_chiller/'
         'data/characteristic_parameters.csv')
     charpara = pd.read_csv(filename_charpara)
 
@@ -465,7 +465,7 @@ def test_calc_characteristic_temp_Braod_01():
     """Test characteristic temperature calculation for chiller 'Broad_01'."""
     filename_charpara = os.path.join(
         os.path.dirname(__file__),
-        '../examples/absorption_heatpumps_and_chiller/'
+        '../examples/absorption_heatpump_and_chiller/'
         'data/characteristic_parameters.csv')
     charpara = pd.read_csv(filename_charpara)
 
@@ -485,7 +485,7 @@ def test_calc_characteristic_temp_Braod_02():
     """Test characteristic temperature calculation for chiller 'Broad_02'."""
     filename_charpara = os.path.join(
         os.path.dirname(__file__),
-        '../examples/absorption_heatpumps_and_chiller/'
+        '../examples/absorption_heatpump_and_chiller/'
         'data/characteristic_parameters.csv')
     charpara = pd.read_csv(filename_charpara)
 
@@ -505,7 +505,7 @@ def test_calc_characteristic_temp_Rotartica():
     """Test characteristic temperature calculation for chiller 'Rotartica'."""
     filename_charpara = os.path.join(
         os.path.dirname(__file__),
-        '../examples/absorption_heatpumps_and_chiller/'
+        '../examples/absorption_heatpump_and_chiller/'
         'data/characteristic_parameters.csv')
     charpara = pd.read_csv(filename_charpara)
 
@@ -525,7 +525,7 @@ def test_calc_characteristic_temp_Safarik():
     """Test characteristic temperature calculation for chiller 'Safarik'."""
     filename_charpara = os.path.join(
         os.path.dirname(__file__),
-        '../examples/absorption_heatpumps_and_chiller/'
+        '../examples/absorption_heatpump_and_chiller/'
         'data/characteristic_parameters.csv')
     charpara = pd.read_csv(filename_charpara)
 
