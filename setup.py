@@ -24,5 +24,5 @@ setup(name='oemof.thermal',
       install_requires=['oemof.solph',
                         'matplotlib',
                         'pvlib',
-                        'numpy >= 1.7.0',
+                        'numpy >= 1.16.5',
                         'pandas >= 0.18.0'])
