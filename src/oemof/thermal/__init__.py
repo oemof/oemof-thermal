@@ -1,4 +1,4 @@
-__version__ = '0.0.5dev'
+__version__ = '0.0.5'
 __project__ = 'oemof.thermal'
 
 from . import absorption_heatpumps_and_chillers  # noqa: F401
