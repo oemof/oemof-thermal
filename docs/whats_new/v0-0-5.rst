@@ -1,6 +1,11 @@
 v0.0.5 (November 12, 2021)
 ==========================
 
+API Changes
+-----------
+
+* Explicitly define public API
+
 Other changes
 -------------
 
