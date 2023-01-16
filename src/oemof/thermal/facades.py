@@ -32,9 +32,21 @@ from oemof.thermal.concentrating_solar_power import csp_precalc
 from oemof.thermal.solar_thermal_collector import flat_plate_precalc
 from oemof.network.energy_system import EnergySystem
 from oemof.network.network import Node
-from oemof.solph import Flow, Investment, Transformer, Source
-from oemof.solph.components import GenericStorage
-from oemof.solph.plumbing import sequence
+try:
+    from oemof.solph import (
+        Flow,
+        Investment,
+        sequence,
+    )
+    from oemof.solph.components import (
+        GenericStorage,
+        Transformer,
+        Source,
+    )
+except ImportError:  # solph <= v0.4
+    from oemof.solph import Flow, Investment, Transformer, Source
+    from oemof.solph.components import GenericStorage
+    from oemof.solph.plumbing import sequence
 
 
 def add_subnodes(n, **kwargs):
