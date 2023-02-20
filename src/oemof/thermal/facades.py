@@ -215,19 +215,65 @@ class StratifiedThermalStorage(GenericStorage, Facade):
     ...     capacity=1)
     """
 
-    def __init__(self, *args, **kwargs):
+    def __init__(
+            self,
+            label=None,
+            inputs=None,
+            outputs=None,
+            nominal_storage_capacity=None,
+            initial_storage_level=None,
+            investment=None,
+            invest_relation_input_output=None,
+            invest_relation_input_capacity=None,
+            invest_relation_output_capacity=None,
+            min_storage_level=0.0,
+            max_storage_level=1.0,
+            balanced=True,
+            loss_rate=0,
+            fixed_losses_relative=0,
+            fixed_losses_absolute=0,
+            inflow_conversion_factor=1,
+            outflow_conversion_factor=1,
+            custom_attributes=None,
+            **kwargs
+    ):
 
-        super().__init__(
+        Facade.__init__(
+            self,
             _facade_requires_=[
                 "bus", "diameter",
                 "temp_h", "temp_c", "temp_env",
-                "u_value"], *args, **kwargs
+                "u_value"],
+            **kwargs
+        )
+
+        GenericStorage.__init__(
+            self,
+            label=label,
+            inputs=inputs,
+            outputs=outputs,
+            nominal_storage_capacity=nominal_storage_capacity,
+            initial_storage_level=initial_storage_level,
+            investment=investment,
+            invest_relation_input_output=invest_relation_input_output,
+            invest_relation_input_capacity=invest_relation_input_capacity,
+            invest_relation_output_capacity=invest_relation_output_capacity,
+            min_storage_level=min_storage_level,
+            max_storage_level=max_storage_level,
+            balanced=balanced,
+            loss_rate=loss_rate,
+            fixed_losses_relative=fixed_losses_relative,
+            fixed_losses_absolute=fixed_losses_absolute,
+            inflow_conversion_factor=inflow_conversion_factor,
+            outflow_conversion_factor=outflow_conversion_factor,
+            custom_attributes=custom_attributes,
         )
 
         self.height = kwargs.get("height")
 
         self.water_properties = {
-            'heat_capacity': kwargs.get("heat_capacity"), 'density': kwargs.get("density")
+            'heat_capacity': kwargs.get("heat_capacity"),
+            'density': kwargs.get("density")
         }
 
         self.capacity = kwargs.get("capacity")

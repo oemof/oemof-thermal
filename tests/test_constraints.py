@@ -94,10 +94,9 @@ class TestConstraints:
         logging.info(cls.tmpdir)
 
     @classmethod
-    def setup(cls):
-        cls.energysystem = solph.EnergySystem(groupings=solph.GROUPINGS,
-                                              timeindex=cls.date_time_index)
-        Node.registry = cls.energysystem
+    def setup_method(self):
+        self.energysystem = solph.EnergySystem(groupings=solph.GROUPINGS,
+                                              timeindex=self.date_time_index)
 
     def get_om(self):
         return solph.Model(self.energysystem,
@@ -125,8 +124,9 @@ class TestConstraints:
         """Constraint test of a StratifiedThermalStorage without investment.
         """
         bus_heat = solph.Bus(label='bus_heat')
+        self.energysystem.add(bus_heat)
 
-        facades.StratifiedThermalStorage(
+        self.energysystem.add(facades.StratifiedThermalStorage(
             label='thermal_storage',
             bus=bus_heat,
             diameter=10,
@@ -140,7 +140,7 @@ class TestConstraints:
             capacity=2,
             efficiency=1,
             marginal_cost=0.0001
-        )
+        ))
 
         self.compare_to_reference_lp('stratified_thermal_storage.lp')
 
@@ -151,7 +151,9 @@ class TestConstraints:
         """
         bus_heat = solph.Bus(label='bus_heat')
 
-        facades.StratifiedThermalStorage(
+        self.energysystem.add(bus_heat)
+
+        self.energysystem.add(facades.StratifiedThermalStorage(
             label='thermal_storage',
             bus=bus_heat,
             diameter=10,
@@ -168,7 +170,7 @@ class TestConstraints:
             max_storage_level=0.025,
             efficiency=1,
             marginal_cost=0.0001
-        )
+        ))
 
         self.compare_to_reference_lp('stratified_thermal_storage_invest_option_1.lp')
 
@@ -178,8 +180,9 @@ class TestConstraints:
         Ratio between capacity and storage_capacity is left open.
         """
         bus_heat = solph.Bus(label='bus_heat')
+        self.energysystem.add(bus_heat)
 
-        facades.StratifiedThermalStorage(
+        self.energysystem.add(facades.StratifiedThermalStorage(
             label='thermal_storage',
             bus=bus_heat,
             diameter=10,
@@ -195,7 +198,7 @@ class TestConstraints:
             max_storage_level=0.025,
             efficiency=1,
             marginal_cost=0.0001
-        )
+        ))
 
         self.compare_to_reference_lp('stratified_thermal_storage_invest_option_2.lp')
 
