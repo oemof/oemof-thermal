@@ -456,7 +456,8 @@ class ParabolicTroughCollector(Transformer, Facade):
                 ]
             }
         )
-        super().__init__(*args, **kwargs)
+        Facade.__init__(self, *args, **kwargs)
+        Transformer.__init__(self)
 
         self.label = kwargs.get("label")
 
@@ -634,7 +635,8 @@ class SolarThermalCollector(Transformer, Facade):
                 ]
             }
         )
-        super().__init__(*args, **kwargs)
+        Facade.__init__(self, *args, **kwargs)
+        Transformer.__init__(self)
 
         self.label = kwargs.get("label")
 

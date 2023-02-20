@@ -208,6 +208,8 @@ class TestConstraints:
         bus_heat = solph.Bus(label='bus_heat')
         bus_el = solph.Bus(label='bus_el')
 
+        self.energysystem.add(bus_heat, bus_el)
+
         d = {
             'Datum': [
                 '01.02.2003 09:00', '01.02.2003 10:00', '01.02.2003 11:00'],
@@ -218,7 +220,7 @@ class TestConstraints:
         input_data.set_index('Datum', inplace=True)
         input_data.index = input_data.index.tz_localize(tz='Asia/Muscat')
 
-        facades.ParabolicTroughCollector(
+        self.energysystem.add(facades.ParabolicTroughCollector(
             label='solar_collector',
             heat_bus=bus_heat,
             electrical_bus=bus_el,
@@ -240,7 +242,8 @@ class TestConstraints:
             temp_collector_inlet=435,
             temp_collector_outlet=500,
             temp_amb=input_data['t_amb'],
-            irradiance=input_data['E_dir_hor'])
+            irradiance=input_data['E_dir_hor'],
+        ))
 
         self.compare_to_reference_lp('csp_collector.lp')
 
@@ -250,6 +253,8 @@ class TestConstraints:
         """
         bus_heat = solph.Bus(label='bus_heat')
         bus_el = solph.Bus(label='bus_el')
+
+        self.energysystem.add(bus_heat, bus_el)
 
         d = {
             'Datum': [
@@ -262,7 +267,7 @@ class TestConstraints:
         input_data.set_index('Datum', inplace=True)
         input_data.index = input_data.index.tz_localize(tz='Europe/Berlin')
 
-        facades.SolarThermalCollector(
+        self.energysystem.add(facades.SolarThermalCollector(
             label='solar_collector',
             heat_out_bus=bus_heat,
             electricity_in_bus=bus_el,
@@ -280,6 +285,7 @@ class TestConstraints:
             delta_temp_n=10,
             irradiance_global=input_data['global_horizontal_W_m2'],
             irradiance_diffuse=input_data['diffuse_horizontal_W_m2'],
-            temp_amb=input_data['temp_amb'])
+            temp_amb=input_data['temp_amb'],
+        ))
 
         self.compare_to_reference_lp('solar_thermal_collector.lp')
