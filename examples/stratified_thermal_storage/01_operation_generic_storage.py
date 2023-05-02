@@ -14,8 +14,8 @@ from oemof.thermal.stratified_thermal_storage import (
     calculate_capacities,
     calculate_losses,
 )
-from oemof.solph import processing, Source, Sink, Bus, Flow, Model, EnergySystem
-from oemof.solph.components import GenericStorage
+from oemof.solph import processing, Bus, Flow, Model, EnergySystem
+from oemof.solph.components import GenericStorage, Source, Sink
 
 
 # Set paths

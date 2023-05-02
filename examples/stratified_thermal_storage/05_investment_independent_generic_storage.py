@@ -12,9 +12,9 @@ import numpy as np
 
 from oemof.thermal.stratified_thermal_storage import (calculate_storage_u_value,
                                                       calculate_losses)
-from oemof.solph import (processing, Source, Sink, Bus, Flow,
+from oemof.solph import (processing, Bus, Flow,
                          Investment, Model, EnergySystem)
-from oemof.solph.components import GenericStorage
+from oemof.solph.components import GenericStorage, Source, Sink
 
 
 # Set paths

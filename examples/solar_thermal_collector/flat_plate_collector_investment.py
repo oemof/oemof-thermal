@@ -94,7 +94,7 @@ bcol = solph.Bus(label='solar')
 
 # Source for collector heat.
 # - actual_value is the precalculated collector heat -
-collector_heat = solph.Source(
+collector_heat = solph.components.Source(
     label='collector_heat',
     outputs={
         bcol: solph.Flow(
@@ -105,25 +105,25 @@ collector_heat = solph.Source(
 )
 
 # Sources and sinks
-el_grid = solph.Source(
+el_grid = solph.components.Source(
     label='grid', outputs={bel: solph.Flow(variable_costs=costs_electricity)}
 )
 
-backup = solph.Source(
+backup = solph.components.Source(
     label='backup', outputs={bth: solph.Flow(variable_costs=backup_costs)}
 )
 
-consumer = solph.Sink(
+consumer = solph.components.Sink(
     label='demand',
     inputs={bth: solph.Flow(fix=demand, nominal_value=1)},
 )
 
-collector_excess_heat = solph.Sink(
+collector_excess_heat = solph.components.Sink(
     label='collector_excess_heat', inputs={bcol: solph.Flow()}
 )
 
 # Transformer and storage
-collector = solph.Transformer(
+collector = solph.components.Transformer(
     label='collector',
     inputs={bcol: solph.Flow(), bel: solph.Flow()},
     outputs={bth: solph.Flow()},

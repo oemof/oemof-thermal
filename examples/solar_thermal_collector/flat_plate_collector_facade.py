@@ -86,20 +86,20 @@ collector = facades.SolarThermalCollector(
     temp_amb=input_data['temp_amb'])
 
 # Sources and sinks
-el_grid = solph.Source(
+el_grid = solph.components.Source(
     label='grid', outputs={bel: solph.Flow(variable_costs=costs_electricity)}
 )
 
-backup = solph.Source(
+backup = solph.components.Source(
     label='backup', outputs={bth: solph.Flow(variable_costs=backup_costs)}
 )
 
-consumer = solph.Sink(
+consumer = solph.components.Sink(
     label='demand',
     inputs={bth: solph.Flow(fix=demand, nominal_value=1)},
 )
 
-collector_excess_heat = solph.Sink(
+collector_excess_heat = solph.components.Sink(
     label='collector_excess_heat', inputs={bth: solph.Flow()}
 )
 
@@ -151,7 +151,7 @@ heat_calc = collector_inflow
 t = list(range(1, periods + 1))
 
 fig, ax = plt.subplots()
-ax.plot(t, heat_calc)
+ax.plot(t, heat_calc[:-1])
 ax.set(
     xlabel='time in h',
     ylabel='Q_coll in W',

@@ -7,7 +7,8 @@ import os
 import pandas as pd
 import numpy as np
 
-from oemof.solph import Source, Sink, Bus, Flow, Model, EnergySystem  # noqa
+from oemof.solph import Bus, Flow, Model, EnergySystem  # noqa
+from oemof.solph.components import Sink, Source
 from oemof.thermal import facades
 from oemof.thermal.stratified_thermal_storage import (  # noqa
     calculate_storage_u_value,

@@ -9,8 +9,9 @@ import numpy as np
 from oemof.thermal.stratified_thermal_storage import calculate_storage_u_value
 from oemof.thermal import facades
 
-from oemof.solph import (processing, Source, Sink, Bus, Flow,
+from oemof.solph import (processing, Bus, Flow,
                          Model, EnergySystem)
+from oemof.solph.components import Source, Sink
 
 
 # Set paths

@@ -10,8 +10,8 @@ from oemof.thermal.stratified_thermal_storage import (  # noqa
 )
 from oemof.thermal import facades
 
-Source = solph.Source
-Sink = solph.Sink
+Source = solph.components.Source
+Sink = solph.components.Sink
 Bus = solph.Bus
 Flow = solph.Flow
 Model = solph.Model
