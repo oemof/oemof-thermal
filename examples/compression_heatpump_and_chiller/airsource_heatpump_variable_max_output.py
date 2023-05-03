@@ -38,15 +38,15 @@ b_heat = solph.Bus(label="heat")
 
 energysystem.add(b_el, b_heat)
 
-energysystem.add(solph.Source(
+energysystem.add(solph.components.Source(
     label='el_grid',
     outputs={b_el: solph.Flow(variable_costs=10)}))
 
-energysystem.add(solph.Source(
+energysystem.add(solph.components.Source(
     label='backup_heating',
     outputs={b_heat: solph.Flow(variable_costs=10)}))
 
-energysystem.add(solph.Sink(
+energysystem.add(solph.components.Sink(
     label='demand',
     inputs={b_heat: solph.Flow(fix=data['demand_heat'],
                                nominal_value=1)}))
@@ -71,7 +71,7 @@ max_Q_dot_heating = cmpr_hp_chiller.calc_max_Q_dot_heat(nominal_conditions,
                                                         cops_ASHP)
 
 # Air-Source Heat Pump
-energysystem.add(solph.Transformer(
+energysystem.add(solph.components.Transformer(
     label="ASHP",
     inputs={b_el: solph.Flow()},
     outputs={b_heat: solph.Flow(

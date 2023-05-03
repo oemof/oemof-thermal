@@ -30,16 +30,16 @@ b_th_high = solph.Bus(label="hot")
 b_th_low = solph.Bus(label="chilled")
 energysystem.add(b_th_high, b_th_low)
 
-energysystem.add(solph.Source(
+energysystem.add(solph.components.Source(
     label='driving_heat',
     outputs={b_th_high: solph.Flow(variable_costs=0)}))
-energysystem.add(solph.Source(
+energysystem.add(solph.components.Source(
     label='cooling_shortage',
     outputs={b_th_low: solph.Flow(variable_costs=20)}))
-# energysystem.add(solph.Sink(
+# energysystem.add(solph.components.Sink(
 #     label='dry_cooling_tower',
 #     inputs={b_th_medium: solph.Flow(variable_costs=0)}))
-energysystem.add(solph.Sink(
+energysystem.add(solph.components.Sink(
     label='cooling_demand',
     inputs={b_th_low: solph.Flow(fix=True,
                                  nominal_value=35)}))
@@ -73,7 +73,7 @@ actual_value = [Q_e / nominal_Q_dots_evap for Q_e in Q_dots_evap]
 actual_value_df = pd.DataFrame(actual_value).clip(0)
 
 # Absorption Chiller
-energysystem.add(solph.Transformer(
+energysystem.add(solph.components.Transformer(
     label="AC",
     inputs={b_th_high: solph.Flow()},
     outputs={b_th_low: solph.Flow(nominal_value=nominal_Q_dots_evap,

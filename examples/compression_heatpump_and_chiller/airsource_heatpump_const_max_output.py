@@ -37,15 +37,15 @@ b_heat = solph.Bus(label="heat")
 
 energysystem.add(b_el, b_heat)
 
-energysystem.add(solph.Source(
+energysystem.add(solph.components.Source(
     label='grid_el',
     outputs={b_el: solph.Flow(variable_costs=10)}))
 
-energysystem.add(solph.Source(
+energysystem.add(solph.components.Source(
     label='backup_heating',
     outputs={b_heat: solph.Flow(variable_costs=10)}))
 
-energysystem.add(solph.Sink(
+energysystem.add(solph.components.Sink(
     label='demand',
     inputs={b_heat: solph.Flow(fix=data['demand_heat'],
                                nominal_value=1)}))
@@ -62,7 +62,7 @@ cops_ASHP = cmpr_hp_chiller.calc_cops(
     factor_icing=0.8)
 
 # Air-Source Heat Pump
-energysystem.add(solph.Transformer(
+energysystem.add(solph.components.Transformer(
     label="ASHP",
     inputs={b_el: solph.Flow()},
     outputs={b_heat: solph.Flow(nominal_value=25, variable_costs=5)},

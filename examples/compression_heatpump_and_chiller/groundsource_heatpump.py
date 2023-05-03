@@ -36,21 +36,21 @@ b_th_low = solph.Bus(label="heat_low_temp")
 
 energysystem.add(b_el, b_th_high, b_th_low)
 
-energysystem.add(solph.Source(
+energysystem.add(solph.components.Source(
     label='el_grid',
     outputs={b_el: solph.Flow(variable_costs=10)}))
 
-energysystem.add(solph.Source(
+energysystem.add(solph.components.Source(
     label='backup_heating',
     outputs={b_th_high: solph.Flow(variable_costs=10)}))
 
 # Borehole that acts as heat source for the heat pump with
 # limited extraction heat flow rate
-energysystem.add(solph.Source(
+energysystem.add(solph.components.Source(
     label='ambient',
     outputs={b_th_low: solph.Flow(nominal_value=30)}))
 
-energysystem.add(solph.Sink(
+energysystem.add(solph.components.Sink(
     label='demand',
     inputs={b_th_high: solph.Flow(fix=data['demand_heat'],
                                   nominal_value=1)}))
@@ -63,7 +63,7 @@ cops_GSHP = cmpr_hp_chiller.calc_cops(
     mode='heat_pump')
 
 # Ground-Source Heat Pump
-energysystem.add(solph.Transformer(
+energysystem.add(solph.components.Transformer(
     label="GSHP",
     inputs={b_el: solph.Flow(), b_th_low: solph.Flow()},
     outputs={b_th_high: solph.Flow(nominal_value=25, variable_costs=5)},
