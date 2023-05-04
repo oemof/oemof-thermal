@@ -1,0 +1,6 @@
+
+from absorption_heatpump_and_chiller.absorption_chiller import absorption_chiller_exaple
+from absorption_heatpump_and_chiller.cooling_cap_dependence_on_cooling_water_temp import cooling_cap_example
+
+absorption_chiller_exaple()
+cooling_cap_example()
