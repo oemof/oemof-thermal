@@ -27,7 +27,7 @@ from stratified_thermal_storage.investment_independent_facade import invest_inde
 from stratified_thermal_storage.investment_independent_generic_storage import invest_independent_example
 
 
-# absorption_chiller_exaple()
+# absorption_chiller_example()
 cooling_cap_example()
 
 emission_allocation_example()

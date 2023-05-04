@@ -6,7 +6,7 @@ import pandas as pd
 import os
 import matplotlib.pyplot as plt
 
-def absorption_chiller_exaple():
+def absorption_chiller_example():
     solver = 'cbc'
     debug = False
     number_of_time_steps = 48
@@ -70,14 +70,13 @@ def absorption_chiller_exaple():
     COPs = [Qevap / Qgen for Qgen, Qevap in zip(Q_dots_gen, Q_dots_evap)]
     nominal_Q_dots_evap = 10
     actual_value = [Q_e / nominal_Q_dots_evap for Q_e in Q_dots_evap]
-    actual_value_df = pd.DataFrame(actual_value).clip(0)
 
     # Absorption Chiller
     energysystem.add(solph.components.Transformer(
         label="AC",
         inputs={b_th_high: solph.Flow()},
         outputs={b_th_low: solph.Flow(nominal_value=nominal_Q_dots_evap,
-                                      max=actual_value_df.values,
+                                      max=actual_value,
                                       variable_costs=5)},
         conversion_factors={b_th_low: COPs}))
 
@@ -137,5 +136,6 @@ def absorption_chiller_exaple():
     print(high_temp_bus['sequences'].sum(axis=0))
     print(low_temp_bus['sequences'].sum(axis=0))
 
+
 if __name__ == "__main__":
-    absorption_chiller_exaple()
+    absorption_chiller_example()
