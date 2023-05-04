@@ -42,8 +42,7 @@ def absorption_chiller_exaple():
     #     inputs={b_th_medium: solph.Flow(variable_costs=0)}))
     energysystem.add(solph.components.Sink(
         label='cooling_demand',
-        inputs={b_th_low: solph.Flow(fix=True,
-                                    nominal_value=35)}))
+        inputs={b_th_low: solph.Flow(fix=1, nominal_value=35)}))
 
     # Mean cooling water temperature in degC (dry cooling tower)
     temp_difference = 4
@@ -78,8 +77,8 @@ def absorption_chiller_exaple():
         label="AC",
         inputs={b_th_high: solph.Flow()},
         outputs={b_th_low: solph.Flow(nominal_value=nominal_Q_dots_evap,
-                                    max=actual_value_df.values,
-                                    variable_costs=5)},
+                                      max=actual_value_df.values,
+                                      variable_costs=5)},
         conversion_factors={b_th_low: COPs}))
 
     model = solph.Model(energysystem)

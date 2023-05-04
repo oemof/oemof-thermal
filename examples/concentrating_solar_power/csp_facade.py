@@ -96,26 +96,26 @@ def csp_facade_example():
         irradiance=input_data['E_dir_hor'])
 
     # Sources and sinks
-    el_grid = solph.Source(
+    el_grid = solph.components.Source(
         label='grid',
         outputs={bel: solph.Flow(variable_costs=costs_electricity)})
 
-    backup = solph.Source(
+    backup = solph.components.Source(
         label='backup',
         outputs={bth: solph.Flow(variable_costs=backup_costs)})
 
-    consumer = solph.Sink(
+    consumer = solph.components.Sink(
         label='demand',
         inputs={bel: solph.Flow(
             fix=input_data['ES_load_actual_entsoe_power_statistics'],
             nominal_value=1)})
 
-    excess = solph.Sink(
+    excess = solph.components.Sink(
         label='excess',
         inputs={bth: solph.Flow()})
 
     # Transformer and storages
-    turbine = solph.Transformer(
+    turbine = solph.components.Transformer(
         label='turbine',
         inputs={bth: solph.Flow()},
         outputs={bel: solph.Flow()},
@@ -155,7 +155,7 @@ def csp_facade_example():
 
     # Example plot
     fig, ax = plt.subplots()
-    ax.plot(list(range(periods)), thermal_bus[(('solar_collector', 'thermal'), 'flow')])
+    ax.plot(list(range(periods)), thermal_bus[(('solar_collector', 'thermal'), 'flow')][:-1])
     ax.set(xlabel='time [h]', ylabel='Q_coll [W]',
         title='Heat of the collector')
     ax.grid()

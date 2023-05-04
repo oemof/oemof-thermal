@@ -89,32 +89,32 @@ def csp_plant_example():
     bcol = solph.Bus(label='solar')
 
     # Sources and sinks
-    col_heat = solph.Source(
+    col_heat = solph.components.Source(
         label='collector_heat',
         outputs={bcol: solph.Flow(
             fix=data_precalc['collector_heat'],
             nominal_value=size_collector)})
 
-    el_grid = solph.Source(
+    el_grid = solph.components.Source(
         label='grid',
         outputs={bel: solph.Flow(variable_costs=costs_electricity)})
 
-    backup = solph.Source(
+    backup = solph.components.Source(
         label='backup',
         outputs={bth: solph.Flow(variable_costs=backup_costs)})
 
-    consumer = solph.Sink(
+    consumer = solph.components.Sink(
         label='demand',
         inputs={bel: solph.Flow(
             fix=data_precalc['ES_load_actual_entsoe_power_statistics'],
             nominal_value=1)})
 
-    ambience_sol = solph.Sink(
+    ambience_sol = solph.components.Sink(
         label='ambience_sol',
         inputs={bcol: solph.Flow()})
 
     # Transformer and storages
-    collector = solph.Transformer(
+    collector = solph.components.Transformer(
         label='collector',
         inputs={
             bcol: solph.Flow(),
@@ -125,7 +125,7 @@ def csp_plant_example():
             bel: elec_consumption * (1 - additional_losses),
             bth: 1 - additional_losses})
 
-    turbine = solph.Transformer(
+    turbine = solph.components.Transformer(
         label='turbine',
         inputs={bth: solph.Flow()},
         outputs={bel: solph.Flow()},
@@ -141,6 +141,7 @@ def csp_plant_example():
         investment=solph.Investment(ep_costs=costs_storage))
 
     # Build the system and solve the problem
+    dataframe.index.freq = pd.infer_freq(dataframe.index)
     date_time_index = dataframe.index
     energysystem = solph.EnergySystem(timeindex=date_time_index)
 
@@ -164,7 +165,7 @@ def csp_plant_example():
 
     # Example plot
     fig, ax = plt.subplots()
-    ax.plot(list(range(periods)), thermal_bus[(('collector', 'thermal'), 'flow')])
+    ax.plot(list(range(periods)), thermal_bus[(('collector', 'thermal'), 'flow')][:-1])
     ax.set(xlabel='time [h]', ylabel='Q_coll [W]',
         title='Heat of the collector')
     ax.grid()

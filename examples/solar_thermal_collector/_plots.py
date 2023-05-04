@@ -2,8 +2,8 @@
 Example plots which can be called by the flat_plate_collector_example.py
 """
 
+import os
 import matplotlib.pyplot as plt
-
 
 def plot_collector_heat(data_precalc, periods, eta_0):
     '''
@@ -27,7 +27,9 @@ def plot_collector_heat(data_precalc, periods, eta_0):
     )
     ax.grid()
     ax.legend()
-    plt.savefig('results/compare_precalculations.png')
+
+    base_path = os.path.dirname(os.path.abspath(os.path.join(__file__)))
+    plt.savefig(os.path.join(base_path, 'results/compare_precalculations.png'))
     plt.show()
 
     return

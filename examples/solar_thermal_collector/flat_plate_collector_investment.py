@@ -15,7 +15,8 @@ import pandas as pd
 from oemof import solph
 from oemof.tools import economics
 from oemof.thermal.solar_thermal_collector import flat_plate_precalc
-from _plots import plot_collector_heat
+
+from ._plots import plot_collector_heat
 
 def flat_plate_collector_investment_example():
     # Set paths

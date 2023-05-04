@@ -14,7 +14,7 @@ from oemof.solph import (processing, Bus, Flow,
 from oemof.solph.components import Source, Sink
 
 
-def fixed_ratio_invest_facade_exapmle():
+def fixed_ratio_invest_facade_example():
     # Set paths
     data_path = os.path.join(
         os.path.dirname(os.path.abspath(__file__)),
@@ -107,4 +107,4 @@ def fixed_ratio_invest_facade_exapmle():
     print(dash)
 
 if __name__ == "__main__":
-    fixed_ratio_invest_facade_exapmle()
+    fixed_ratio_invest_facade_example()
