@@ -23,7 +23,7 @@ part can be addressed by more specific or simpler attributes.
 
 SPDX-License-Identifier: MIT
 """
-
+import warnings
 from collections import deque
 
 from oemof.thermal.stratified_thermal_storage import calculate_storage_dimensions,\
@@ -32,6 +32,8 @@ from oemof.thermal.concentrating_solar_power import csp_precalc
 from oemof.thermal.solar_thermal_collector import flat_plate_precalc
 from oemof.network.energy_system import EnergySystem
 from oemof.network.network import Node
+
+from oemof.tools.debugging import SuspiciousUsageWarning
 try:
     from oemof.solph import (
         Flow,
@@ -237,7 +239,6 @@ class StratifiedThermalStorage(GenericStorage, Facade):
             custom_attributes=None,
             **kwargs
     ):
-
         Facade.__init__(
             self,
             _facade_requires_=[
@@ -246,28 +247,30 @@ class StratifiedThermalStorage(GenericStorage, Facade):
                 "u_value"],
             **kwargs
         )
+        with warnings.catch_warnings():
+            warnings.filterwarnings("ignore", category=SuspiciousUsageWarning)
 
-        GenericStorage.__init__(
-            self,
-            label=label,
-            inputs=inputs,
-            outputs=outputs,
-            nominal_storage_capacity=nominal_storage_capacity,
-            initial_storage_level=initial_storage_level,
-            investment=investment,
-            invest_relation_input_output=invest_relation_input_output,
-            invest_relation_input_capacity=invest_relation_input_capacity,
-            invest_relation_output_capacity=invest_relation_output_capacity,
-            min_storage_level=min_storage_level,
-            max_storage_level=max_storage_level,
-            balanced=balanced,
-            loss_rate=loss_rate,
-            fixed_losses_relative=fixed_losses_relative,
-            fixed_losses_absolute=fixed_losses_absolute,
-            inflow_conversion_factor=inflow_conversion_factor,
-            outflow_conversion_factor=outflow_conversion_factor,
-            custom_attributes=custom_attributes,
-        )
+            GenericStorage.__init__(
+                self,
+                label=label,
+                inputs=inputs,
+                outputs=outputs,
+                nominal_storage_capacity=nominal_storage_capacity,
+                initial_storage_level=initial_storage_level,
+                investment=investment,
+                invest_relation_input_output=invest_relation_input_output,
+                invest_relation_input_capacity=invest_relation_input_capacity,
+                invest_relation_output_capacity=invest_relation_output_capacity,
+                min_storage_level=min_storage_level,
+                max_storage_level=max_storage_level,
+                balanced=balanced,
+                loss_rate=loss_rate,
+                fixed_losses_relative=fixed_losses_relative,
+                fixed_losses_absolute=fixed_losses_absolute,
+                inflow_conversion_factor=inflow_conversion_factor,
+                outflow_conversion_factor=outflow_conversion_factor,
+                custom_attributes=custom_attributes,
+            )
 
         self.height = kwargs.get("height")
 
