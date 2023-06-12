@@ -1,0 +1,12 @@
+v0.0.6 (June 12, 2023)
+======================
+
+Bug fixes
+---------
+
+* Made compatible to oemof.solph v0.5
+
+
+Contributors
+------------
+Patrik Schönfeldt
