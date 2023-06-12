@@ -16,6 +16,9 @@ Documentation
 Bug fixes
 ---------
 
+* Improve quality of pip package
+
+
 Known issues
 ------------
 
@@ -24,3 +27,6 @@ Other changes
 
 Contributors
 ------------
+
+* Patrik Schönfeldt
+
