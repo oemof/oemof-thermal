@@ -37,7 +37,6 @@ classifiers = [
 
 requires-python = ">=3.10"
 dependencies = [
-    'oemof.network < 0.5',
     'oemof.solph',
     'matplotlib',
     'pvlib',

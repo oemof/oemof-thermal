@@ -26,29 +26,28 @@ SPDX-License-Identifier: MIT
 import warnings
 from collections import deque
 
-from oemof.thermal.stratified_thermal_storage import calculate_storage_dimensions,\
-    calculate_capacities, calculate_losses
+from oemof.thermal.stratified_thermal_storage import (
+    calculate_storage_dimensions,
+    calculate_capacities,
+    calculate_losses,
+)
 from oemof.thermal.concentrating_solar_power import csp_precalc
 from oemof.thermal.solar_thermal_collector import flat_plate_precalc
 from oemof.network.energy_system import EnergySystem
 from oemof.network.network import Node
 
 from oemof.tools.debugging import SuspiciousUsageWarning
-try:
-    from oemof.solph import (
-        Flow,
-        Investment,
-        sequence,
-    )
-    from oemof.solph.components import (
-        GenericStorage,
-        Transformer,
-        Source,
-    )
-except ImportError:  # solph <= v0.4
-    from oemof.solph import Flow, Investment, Transformer, Source
-    from oemof.solph.components import GenericStorage
-    from oemof.solph.plumbing import sequence
+
+from oemof.solph import (
+    Flow,
+    Investment,
+    sequence,
+)
+from oemof.solph.components import (
+    GenericStorage,
+    Transformer,
+    Source,
+)
 
 
 def add_subnodes(n, **kwargs):
@@ -66,9 +65,8 @@ class Facade(Node):
         raises an error if he doesn't find them.
     """
 
-    def __init__(self, *args, **kwargs):
-        """
-        """
+    def __init__(self, *_, **kwargs):
+        """ """
 
         self.mapped_type = type(self)
 
@@ -76,12 +74,10 @@ class Facade(Node):
 
         required = kwargs.pop("_facade_requires_", [])
 
-        super().__init__(*args, **kwargs)
+        super().__init__(label=kwargs.get("label"))
 
         self.subnodes = []
-        EnergySystem.signals[EnergySystem.add].connect(
-            add_subnodes, sender=self
-        )
+        EnergySystem.signals[EnergySystem.add].connect(add_subnodes, sender=self)
 
         for r in required:
             if r in kwargs:
@@ -95,7 +91,7 @@ class Facade(Node):
                 )
 
     def _nominal_value(self):
-        """ Returns None if self.expandable ist True otherwise it returns
+        """Returns None if self.expandable ist True otherwise it returns
         the capacity
         """
         if self.expandable is True:
@@ -122,9 +118,7 @@ class Facade(Node):
                                 "storage_capacity_potential",
                                 float("+inf"),
                             ),
-                            minimum=getattr(
-                                self, "minimum_storage_capacity", 0
-                            ),
+                            minimum=getattr(self, "minimum_storage_capacity", 0),
                             existing=getattr(self, "storage_capacity", 0),
                         )
                     else:
@@ -132,9 +126,7 @@ class Facade(Node):
                 else:
                     self.investment = Investment(
                         ep_costs=self.capacity_cost,
-                        maximum=getattr(
-                            self, "capacity_potential", float("+inf")
-                        ),
+                        maximum=getattr(self, "capacity_potential", float("+inf")),
                         existing=getattr(self, "capacity", 0),
                     )
         else:
@@ -147,7 +139,7 @@ class Facade(Node):
 
 
 class StratifiedThermalStorage(GenericStorage, Facade):
-    r""" Stratified thermal storage unit.
+    r"""Stratified thermal storage unit.
 
     Parameters
     ----------
@@ -218,34 +210,42 @@ class StratifiedThermalStorage(GenericStorage, Facade):
     """
 
     def __init__(
-            self,
-            label=None,
-            inputs=None,
-            outputs=None,
-            nominal_storage_capacity=None,
-            initial_storage_level=None,
-            investment=None,
-            invest_relation_input_output=None,
-            invest_relation_input_capacity=None,
-            invest_relation_output_capacity=None,
-            min_storage_level=0.0,
-            max_storage_level=1.0,
-            balanced=True,
-            loss_rate=0,
-            fixed_losses_relative=0,
-            fixed_losses_absolute=0,
-            inflow_conversion_factor=1,
-            outflow_conversion_factor=1,
-            custom_attributes=None,
-            **kwargs
+        self,
+        label=None,
+        inputs=None,
+        outputs=None,
+        nominal_storage_capacity=None,
+        initial_storage_level=None,
+        investment=None,
+        invest_relation_input_output=None,
+        invest_relation_input_capacity=None,
+        invest_relation_output_capacity=None,
+        min_storage_level=0.0,
+        max_storage_level=1.0,
+        balanced=True,
+        loss_rate=0,
+        fixed_losses_relative=0,
+        fixed_losses_absolute=0,
+        inflow_conversion_factor=1,
+        outflow_conversion_factor=1,
+        custom_attributes=None,
+        **kwargs,
     ):
+        kwargs.update(
+            {
+                "_facade_requires_": [
+                    "bus",
+                    "diameter",
+                    "temp_h",
+                    "temp_c",
+                    "temp_env",
+                    "u_value",
+                ]
+            }
+        )
         Facade.__init__(
             self,
-            _facade_requires_=[
-                "bus", "diameter",
-                "temp_h", "temp_c", "temp_env",
-                "u_value"],
-            **kwargs
+            **kwargs,
         )
         with warnings.catch_warnings():
             warnings.filterwarnings("ignore", category=SuspiciousUsageWarning)
@@ -275,8 +275,8 @@ class StratifiedThermalStorage(GenericStorage, Facade):
         self.height = kwargs.get("height")
 
         self.water_properties = {
-            'heat_capacity': kwargs.get("heat_capacity"),
-            'density': kwargs.get("density")
+            "heat_capacity": kwargs.get("heat_capacity"),
+            "density": kwargs.get("density"),
         }
 
         self.capacity = kwargs.get("capacity")
@@ -289,13 +289,9 @@ class StratifiedThermalStorage(GenericStorage, Facade):
             "storage_capacity_potential", float("+inf")
         )
 
-        self.capacity_potential = kwargs.get(
-            "capacity_potential", float("+inf")
-        )
+        self.capacity_potential = kwargs.get("capacity_potential", float("+inf"))
 
-        self.minimum_storage_capacity = kwargs.get(
-            "minimum_storage_capacity", 0
-        )
+        self.minimum_storage_capacity = kwargs.get("minimum_storage_capacity", 0)
 
         self.expandable = bool(kwargs.get("expandable", False))
 
@@ -316,7 +312,11 @@ class StratifiedThermalStorage(GenericStorage, Facade):
             self.temp_h,
             self.temp_c,
             self.temp_env,
-            **{key: value for key, value in self.water_properties.items() if value is not None}
+            **{
+                key: value
+                for key, value in self.water_properties.items()
+                if value is not None
+            },
         )
 
         self.loss_rate = losses[0]
@@ -328,8 +328,7 @@ class StratifiedThermalStorage(GenericStorage, Facade):
         self.build_solph_components()
 
     def build_solph_components(self):
-        """
-        """
+        """ """
         self.inflow_conversion_factor = sequence(self.efficiency)
 
         self.outflow_conversion_factor = sequence(self.efficiency)
@@ -349,9 +348,9 @@ class StratifiedThermalStorage(GenericStorage, Facade):
             for attr in ["invest_relation_input_output"]:
                 if getattr(self, attr) is None:
                     raise AttributeError(
-                        (
-                            "You need to set attr " "`{}` " "for component {}"
-                        ).format(attr, self.label)
+                        ("You need to set attr " "`{}` " "for component {}").format(
+                            attr, self.label
+                        )
                     )
 
             # set capacity costs at one of the flows
@@ -361,13 +360,13 @@ class StratifiedThermalStorage(GenericStorage, Facade):
                     maximum=self.capacity_potential,
                     existing=self.capacity,
                 ),
-                **self.input_parameters
+                **self.input_parameters,
             )
             # set investment, but no costs (as relation input / output = 1)
             fo = Flow(
                 investment=Investment(),
                 variable_costs=self.marginal_cost,
-                **self.output_parameters
+                **self.output_parameters,
             )
             # required for correct grouping in oemof.solph.components
             self._invest_group = True
@@ -378,16 +377,18 @@ class StratifiedThermalStorage(GenericStorage, Facade):
                 self.volume,
                 self.temp_h,
                 self.temp_c,
-                **{key: value for key, value in self.water_properties.items() if value is not None}
+                **{
+                    key: value
+                    for key, value in self.water_properties.items()
+                    if value is not None
+                },
             )
 
-            fi = Flow(
-                nominal_value=self._nominal_value(), **self.input_parameters
-            )
+            fi = Flow(nominal_value=self._nominal_value(), **self.input_parameters)
             fo = Flow(
                 nominal_value=self._nominal_value(),
                 variable_costs=self.marginal_cost,
-                **self.output_parameters
+                **self.output_parameters,
             )
 
         self.inputs.update({self.bus: fi})
@@ -398,7 +399,7 @@ class StratifiedThermalStorage(GenericStorage, Facade):
 
 
 class ParabolicTroughCollector(Transformer, Facade):
-    r""" Parabolic trough collector unit
+    r"""Parabolic trough collector unit
 
     Parameters
     ----------
@@ -450,19 +451,11 @@ class ParabolicTroughCollector(Transformer, Facade):
     ... )
     """
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, **kwargs):
 
-        kwargs.update(
-            {
-                "_facade_requires_": [
-                    "longitude"
-                ]
-            }
-        )
-        Facade.__init__(self, *args, **kwargs)
+        kwargs.update({"_facade_requires_": ["longitude"]})
+        Facade.__init__(self, **kwargs)
         Transformer.__init__(self)
-
-        self.label = kwargs.get("label")
 
         self.heat_bus = kwargs.get("heat_bus")
 
@@ -518,36 +511,57 @@ class ParabolicTroughCollector(Transformer, Facade):
 
         if self.irradiance_method == "horizontal":
             heat = csp_precalc(
-                self.latitude, self.longitude,
-                self.collector_tilt, self.collector_azimuth, self.cleanliness,
-                self.eta_0, self.c_1, self.c_2,
-                self.temp_collector_inlet, self.temp_collector_outlet,
+                self.latitude,
+                self.longitude,
+                self.collector_tilt,
+                self.collector_azimuth,
+                self.cleanliness,
+                self.eta_0,
+                self.c_1,
+                self.c_2,
+                self.temp_collector_inlet,
+                self.temp_collector_outlet,
                 self.temp_amb,
-                self.a_1, self.a_2, self.a_3, self.a_4, self.a_5, self.a_6,
+                self.a_1,
+                self.a_2,
+                self.a_3,
+                self.a_4,
+                self.a_5,
+                self.a_6,
                 loss_method=self.loss_method,
                 irradiance_method=self.irradiance_method,
-                E_dir_hor=self.irradiance
+                E_dir_hor=self.irradiance,
             )
         if self.irradiance_method == "normal":
             heat = csp_precalc(
-                self.latitude, self.longitude,
-                self.collector_tilt, self.collector_azimuth, self.cleanliness,
-                self.eta_0, self.c_1, self.c_2,
-                self.temp_collector_inlet, self.temp_collector_outlet,
+                self.latitude,
+                self.longitude,
+                self.collector_tilt,
+                self.collector_azimuth,
+                self.cleanliness,
+                self.eta_0,
+                self.c_1,
+                self.c_2,
+                self.temp_collector_inlet,
+                self.temp_collector_outlet,
                 self.temp_amb,
-                self.a_1, self.a_2, self.a_3, self.a_4, self.a_5, self.a_6,
+                self.a_1,
+                self.a_2,
+                self.a_3,
+                self.a_4,
+                self.a_5,
+                self.a_6,
                 loss_method=self.loss_method,
                 irradiance_method=self.irradiance_method,
-                dni=self.irradiance
+                dni=self.irradiance,
             )
 
-        self.collectors_heat = heat['collector_heat']
+        self.collectors_heat = heat["collector_heat"]
 
         self.build_solph_components()
 
     def build_solph_components(self):
-        """
-        """
+        """ """
 
         if self.expandable:
             raise NotImplementedError(
@@ -557,32 +571,28 @@ class ParabolicTroughCollector(Transformer, Facade):
         inflow = Source(
             label=self.label + "-inflow",
             outputs={
-                self: Flow(nominal_value=self.aperture_area,
-                           max=self.collectors_heat)
+                self: Flow(nominal_value=self.aperture_area, max=self.collectors_heat)
             },
         )
 
         self.conversion_factors.update(
             {
-                self.electrical_bus: sequence(self.electrical_consumption
-                                              * (1 - self.additional_losses)),
+                self.electrical_bus: sequence(
+                    self.electrical_consumption * (1 - self.additional_losses)
+                ),
                 self.heat_bus: sequence(1 - self.additional_losses),
-                inflow: sequence(1)
+                inflow: sequence(1),
             }
         )
 
-        self.inputs.update(
-            {self.electrical_bus: Flow()}
-        )
-        self.outputs.update(
-            {self.heat_bus: Flow()}
-        )
+        self.inputs.update({self.electrical_bus: Flow()})
+        self.outputs.update({self.heat_bus: Flow()})
 
         self.subnodes = (inflow,)
 
 
 class SolarThermalCollector(Transformer, Facade):
-    r""" Solar thermal collector unit
+    r"""Solar thermal collector unit
 
     Parameters:
     -----------
@@ -629,19 +639,11 @@ class SolarThermalCollector(Transformer, Facade):
     )
     """
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, **kwargs):
 
-        kwargs.update(
-            {
-                "_facade_requires_": [
-                    "longitude"
-                ]
-            }
-        )
-        Facade.__init__(self, *args, **kwargs)
+        kwargs.update({"_facade_requires_": ["longitude"]})
+        Facade.__init__(self, **kwargs)
         Transformer.__init__(self)
-
-        self.label = kwargs.get("label")
 
         self.heat_out_bus = kwargs.get("heat_out_bus")
 
@@ -694,15 +696,14 @@ class SolarThermalCollector(Transformer, Facade):
             self.temp_amb,
         )
 
-        self.collectors_eta_c = data['eta_c']
+        self.collectors_eta_c = data["eta_c"]
 
-        self.collectors_heat = data['collectors_heat']
+        self.collectors_heat = data["collectors_heat"]
 
         self.build_solph_components()
 
     def build_solph_components(self):
-        """
-        """
+        """ """
 
         if self.expandable:
             raise NotImplementedError(
@@ -712,31 +713,21 @@ class SolarThermalCollector(Transformer, Facade):
         inflow = Source(
             label=self.label + "-inflow",
             outputs={
-                self: Flow(nominal_value=self.aperture_area,
-                           max=self.collectors_heat)
+                self: Flow(nominal_value=self.aperture_area, max=self.collectors_heat)
             },
         )
 
         self.conversion_factors.update(
             {
-                self.electricity_in_bus: sequence(self.electrical_consumption
-                                                  * (1 - self.peripheral_losses)),
+                self.electricity_in_bus: sequence(
+                    self.electrical_consumption * (1 - self.peripheral_losses)
+                ),
                 self.heat_out_bus: sequence(1 - self.peripheral_losses),
-                inflow: sequence(1)
+                inflow: sequence(1),
             }
         )
 
-        self.inputs.update(
-            {
-                self.electricity_in_bus: Flow(
-                )
-            }
-        )
-        self.outputs.update(
-            {
-                self.heat_out_bus: Flow(
-                )
-            }
-        )
+        self.inputs.update({self.electricity_in_bus: Flow()})
+        self.outputs.update({self.heat_out_bus: Flow()})
 
         self.subnodes = (inflow,)
