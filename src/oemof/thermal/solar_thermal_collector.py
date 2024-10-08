@@ -12,8 +12,8 @@ SPDX-License-Identifier: MIT
 """
 
 
-import pvlib
 import pandas as pd
+import pvlib
 
 
 def flat_plate_precalc(

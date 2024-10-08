@@ -12,10 +12,11 @@ SPDX-License-Identifier: MIT
 """
 
 
-import pvlib
-import pandas as pd
-import numpy as np
 import warnings
+
+import numpy as np
+import pandas as pd
+import pvlib
 
 
 def csp_precalc(lat, long, collector_tilt, collector_azimuth, cleanliness,

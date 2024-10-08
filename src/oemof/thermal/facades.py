@@ -26,27 +26,18 @@ SPDX-License-Identifier: MIT
 import warnings
 from collections import deque
 
-from oemof.thermal.stratified_thermal_storage import (
-    calculate_storage_dimensions,
-    calculate_capacities,
-    calculate_losses,
-)
-from oemof.thermal.concentrating_solar_power import csp_precalc
-from oemof.thermal.solar_thermal_collector import flat_plate_precalc
 from oemof.network.energy_system import EnergySystem
 from oemof.network.network import Node
-
+from oemof.solph import Flow, Investment, sequence
+from oemof.solph.components import GenericStorage, Source, Transformer
 from oemof.tools.debugging import SuspiciousUsageWarning
 
-from oemof.solph import (
-    Flow,
-    Investment,
-    sequence,
-)
-from oemof.solph.components import (
-    GenericStorage,
-    Transformer,
-    Source,
+from oemof.thermal.concentrating_solar_power import csp_precalc
+from oemof.thermal.solar_thermal_collector import flat_plate_precalc
+from oemof.thermal.stratified_thermal_storage import (
+    calculate_capacities,
+    calculate_losses,
+    calculate_storage_dimensions,
 )
 
 

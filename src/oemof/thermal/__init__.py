@@ -1,13 +1,15 @@
 __version__ = '0.0.7.dev0'
 __project__ = 'oemof.thermal'
 
-from . import absorption_heatpumps_and_chillers
-from . import compression_heatpumps_and_chillers
-from . import facades
-from . import stratified_thermal_storage
-from . import cogeneration
-from . import concentrating_solar_power
-from . import solar_thermal_collector
+from . import (
+    absorption_heatpumps_and_chillers,
+    cogeneration,
+    compression_heatpumps_and_chillers,
+    concentrating_solar_power,
+    facades,
+    solar_thermal_collector,
+    stratified_thermal_storage,
+)
 
 __all__ = [
     "absorption_heatpumps_and_chillers",
