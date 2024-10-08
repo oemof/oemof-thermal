@@ -32,7 +32,10 @@ def test_calc_cops_with_Series_01():
     ambient_temp_each_hour = {"01:00": 12, "02:00": 12, "03:00": 12}
     temp_l_series = pd.Series(ambient_temp_each_hour)
     cops_HP = cmpr_hp_chllr.calc_cops(
-        temp_high=[40], temp_low=temp_l_series, quality_grade=0.4, mode="heat_pump"
+        temp_high=[40],
+        temp_low=temp_l_series,
+        quality_grade=0.4,
+        mode="heat_pump",
     )
     assert cops_HP == [4.473571428571428, 4.473571428571428, 4.473571428571428]
 
@@ -41,7 +44,10 @@ def test_calc_cops_with_Series_02():
     set_temp_each_hour = {"01:00": 40, "02:00": 40, "03:00": 40}
     temp_h_series = pd.Series(set_temp_each_hour)
     cops_HP = cmpr_hp_chllr.calc_cops(
-        temp_high=temp_h_series, temp_low=[12], quality_grade=0.4, mode="heat_pump"
+        temp_high=temp_h_series,
+        temp_low=[12],
+        quality_grade=0.4,
+        mode="heat_pump",
     )
     assert cops_HP == [4.473571428571428, 4.473571428571428, 4.473571428571428]
 
@@ -171,7 +177,9 @@ def test_raised_exceptions_05():
     with pytest.raises(TypeError):
         actual_cop = 4.5  # ERROR - has to be of type list!
         nom_cond = {"nominal_Q_chill": 20, "nominal_el_consumption": 5}
-        cmpr_hp_chllr.calc_max_Q_dot_chill(nominal_conditions=nom_cond, cops=actual_cop)
+        cmpr_hp_chllr.calc_max_Q_dot_chill(
+            nominal_conditions=nom_cond, cops=actual_cop
+        )
 
 
 def test_calc_max_Q_dot_heat():
@@ -190,7 +198,9 @@ def test_calc_chiller_quality_grade():
         "t_high_nominal": 35,
         "t_low_nominal": 7,
     }
-    q_grade = cmpr_hp_chllr.calc_chiller_quality_grade(nominal_conditions=nom_cond)
+    q_grade = cmpr_hp_chllr.calc_chiller_quality_grade(
+        nominal_conditions=nom_cond
+    )
     assert q_grade == 0.39978582902016785
 
 
@@ -236,7 +246,9 @@ def test_calculate_losses():
         "temp_env": 10,  # deg C
     }
 
-    loss_rate, fixed_losses_relative, fixed_losses_absolute = calculate_losses(**params)
+    loss_rate, fixed_losses_relative, fixed_losses_absolute = calculate_losses(
+        **params
+    )
     assert (
         loss_rate == 0.0003531819182021882
         and fixed_losses_relative == 0.00028254553456175054
@@ -297,7 +309,8 @@ def test_calculation_of_collector_irradiance():
     s = pd.Series([10, 20, 30], index=[1, 2, 3])
     res = csp.calc_collector_irradiance(s, 0.9)
     result = pd.Series(
-        [8.5381496824546242, 17.0762993649092484, 25.614449047363873], index=[1, 2, 3]
+        [8.5381496824546242, 17.0762993649092484, 25.614449047363873],
+        index=[1, 2, 3],
     )
     assert res.values == approx(result.values)
 
@@ -310,7 +323,14 @@ def test_calculation_iam_for_single_value():
 
 def test_calculation_iam_andasol():
     res = csp.calc_iam(
-        -8.65e-4, 8.87e-4, -5.425e-5, 1.665e-6, -2.309e-8, 1.197e-10, 50, "Andasol"
+        -8.65e-4,
+        8.87e-4,
+        -5.425e-5,
+        1.665e-6,
+        -2.309e-8,
+        1.197e-10,
+        50,
+        "Andasol",
     )
 
     assert res == 0.5460625000000001
@@ -390,7 +410,9 @@ def test_csp_wrong_loss_method():
 
 def test_eta_janotte():
     s = pd.Series([50], index=[1])
-    res = csp.calc_eta_c(0.816, 0.0622, 0.00023, 0.95, 235, 300, 30, s, "Janotte")
+    res = csp.calc_eta_c(
+        0.816, 0.0622, 0.00023, 0.95, 235, 300, 30, s, "Janotte"
+    )
     result = pd.Series([0.22028124999999987], index=[1])
     assert res.eq(result).all()
 
@@ -693,4 +715,6 @@ def test_raised_exception_method_selection_01():
 def test_raised_exception_method_selection_02():
     """Test if an exception is raised if unknown method name is passed."""
     with pytest.raises(ValueError):
-        ac.calc_heat_flux(ddts=25, coef_s=0.42, coef_r=0.9, method="shaken_not_stirred")
+        ac.calc_heat_flux(
+            ddts=25, coef_s=0.42, coef_r=0.9, method="shaken_not_stirred"
+        )

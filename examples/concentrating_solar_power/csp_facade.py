@@ -8,6 +8,7 @@ authors: Franziska Pleissner
 
 SPDX-License-Identifier: MIT
 """
+
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -17,16 +18,16 @@ from oemof.thermal import facades
 from oemof import solph
 from oemof.tools import economics
 
+
 def csp_facade_example():
     # Set paths
     base_path = os.path.dirname(os.path.abspath(os.path.join(__file__)))
 
-    results_path = os.path.join(base_path, 'results')
-    data_path = os.path.join(base_path, 'data')
+    results_path = os.path.join(base_path, "results")
+    data_path = os.path.join(base_path, "data")
 
     if not os.path.exists(results_path):
         os.mkdir(results_path)
-
 
     # Set up an energy system model
     periods = 50
@@ -44,14 +45,15 @@ def csp_facade_example():
     temp_collector_outlet = 500
 
     # Read input data
-    input_data = pd.read_csv(os.path.join(data_path, 'data_csp_plant.csv')).head(periods)
-    input_data['Datum'] = pd.to_datetime(input_data['Datum'])
-    input_data.set_index('Datum', inplace=True)
-    input_data.index = input_data.index.tz_localize(tz='Asia/Muscat')
+    input_data = pd.read_csv(
+        os.path.join(data_path, "data_csp_plant.csv")
+    ).head(periods)
+    input_data["Datum"] = pd.to_datetime(input_data["Datum"])
+    input_data.set_index("Datum", inplace=True)
+    input_data.index = input_data.index.tz_localize(tz="Asia/Muscat")
 
     date_time_index = input_data.index
-    date_time_index.freq = 'H'
-
+    date_time_index.freq = "H"
 
     # oemof_system
 
@@ -67,19 +69,19 @@ def csp_facade_example():
     size_collector = 1000
 
     # Busses
-    bth = solph.Bus(label='thermal')
-    bel = solph.Bus(label='electricity')
+    bth = solph.Bus(label="thermal")
+    bel = solph.Bus(label="electricity")
 
     # Collector
     collector = facades.ParabolicTroughCollector(
-        label='solar_collector',
+        label="solar_collector",
         heat_bus=bth,
         electrical_bus=bel,
         electrical_consumption=elec_consumption,
         additional_losses=additional_losses,
         aperture_area=size_collector,
-        loss_method='Janotte',
-        irradiance_method='horizontal',
+        loss_method="Janotte",
+        irradiance_method="horizontal",
         latitude=latitude,
         longitude=longitude,
         collector_tilt=collector_tilt,
@@ -92,72 +94,92 @@ def csp_facade_example():
         c_2=c_2,
         temp_collector_inlet=temp_collector_inlet,
         temp_collector_outlet=temp_collector_outlet,
-        temp_amb=input_data['t_amb'],
-        irradiance=input_data['E_dir_hor'])
+        temp_amb=input_data["t_amb"],
+        irradiance=input_data["E_dir_hor"],
+    )
 
     # Sources and sinks
     el_grid = solph.components.Source(
-        label='grid',
-        outputs={bel: solph.Flow(variable_costs=costs_electricity)})
+        label="grid",
+        outputs={bel: solph.Flow(variable_costs=costs_electricity)},
+    )
 
     backup = solph.components.Source(
-        label='backup',
-        outputs={bth: solph.Flow(variable_costs=backup_costs)})
+        label="backup", outputs={bth: solph.Flow(variable_costs=backup_costs)}
+    )
 
     consumer = solph.components.Sink(
-        label='demand',
-        inputs={bel: solph.Flow(
-            fix=input_data['ES_load_actual_entsoe_power_statistics'],
-            nominal_value=1)})
+        label="demand",
+        inputs={
+            bel: solph.Flow(
+                fix=input_data["ES_load_actual_entsoe_power_statistics"],
+                nominal_value=1,
+            )
+        },
+    )
 
-    excess = solph.components.Sink(
-        label='excess',
-        inputs={bth: solph.Flow()})
+    excess = solph.components.Sink(label="excess", inputs={bth: solph.Flow()})
 
     # Transformer and storages
     turbine = solph.components.Transformer(
-        label='turbine',
+        label="turbine",
         inputs={bth: solph.Flow()},
         outputs={bel: solph.Flow()},
-        conversion_factors={bel: conversion_factor_turbine})
+        conversion_factors={bel: conversion_factor_turbine},
+    )
 
     storage = solph.components.GenericStorage(
-        label='storage_th',
+        label="storage_th",
         inputs={bth: solph.Flow()},
         outputs={bth: solph.Flow()},
         loss_rate=cap_loss,
         inflow_conversion_factor=conversion_storage,
         outflow_conversion_factor=conversion_storage,
-        investment=solph.Investment(ep_costs=costs_storage))
+        investment=solph.Investment(ep_costs=costs_storage),
+    )
 
     # Build the system and solve the problem
     energysystem = solph.EnergySystem(timeindex=date_time_index)
 
-    energysystem.add(bth, bel, el_grid, backup, excess, consumer, storage, turbine,
-                    collector)
+    energysystem.add(
+        bth,
+        bel,
+        el_grid,
+        backup,
+        excess,
+        consumer,
+        storage,
+        turbine,
+        collector,
+    )
 
     # Create and solve the optimization model
     model = solph.Model(energysystem)
-    model.solve(solver='cbc', solve_kwargs={'tee': True})
+    model.solve(solver="cbc", solve_kwargs={"tee": True})
 
     # Get results
     results = solph.processing.results(model)
 
-    collector_inflow = solph.views.node(
-        results, 'solar_collector-inflow')['sequences']
-    thermal_bus = solph.views.node(results, 'thermal')['sequences']
-    electricity_bus = solph.views.node(results, 'electricity')['sequences']
+    collector_inflow = solph.views.node(results, "solar_collector-inflow")[
+        "sequences"
+    ]
+    thermal_bus = solph.views.node(results, "thermal")["sequences"]
+    electricity_bus = solph.views.node(results, "electricity")["sequences"]
     df = pd.DataFrame()
     df = df.append(collector_inflow)
-    df = df.join(thermal_bus, lsuffix='_1')
-    df = df.join(electricity_bus, lsuffix='_1')
-    df.to_csv(os.path.join(results_path, 'facade_results.csv'))
+    df = df.join(thermal_bus, lsuffix="_1")
+    df = df.join(electricity_bus, lsuffix="_1")
+    df.to_csv(os.path.join(results_path, "facade_results.csv"))
 
     # Example plot
     fig, ax = plt.subplots()
-    ax.plot(list(range(periods)), thermal_bus[(('solar_collector', 'thermal'), 'flow')][:-1])
-    ax.set(xlabel='time [h]', ylabel='Q_coll [W]',
-        title='Heat of the collector')
+    ax.plot(
+        list(range(periods)),
+        thermal_bus[(("solar_collector", "thermal"), "flow")][:-1],
+    )
+    ax.set(
+        xlabel="time [h]", ylabel="Q_coll [W]", title="Heat of the collector"
+    )
     ax.grid()
     plt.show()
 

@@ -15,7 +15,12 @@ import pandas as pd
 
 
 def calc_cops(
-    mode, temp_high, temp_low, quality_grade, temp_threshold_icing=2, factor_icing=None
+    mode,
+    temp_high,
+    temp_low,
+    quality_grade,
+    temp_threshold_icing=2,
+    factor_icing=None,
 ):
     r"""
     Calculates the Coefficient of Performance (COP) of heat pumps and chillers
@@ -70,10 +75,14 @@ def calc_cops(
     """
     # Check if input arguments have proper type and length
     if not isinstance(temp_low, (list, pd.Series)):
-        raise TypeError("Argument 'temp_low' is not of type list or pd.Series!")
+        raise TypeError(
+            "Argument 'temp_low' is not of type list or pd.Series!"
+        )
 
     if not isinstance(temp_high, (list, pd.Series)):
-        raise TypeError("Argument 'temp_high' is not of " "type list or pd.Series!")
+        raise TypeError(
+            "Argument 'temp_high' is not of " "type list or pd.Series!"
+        )
 
     if len(temp_high) != len(temp_low):
         if (len(temp_high) != 1) and ((len(temp_low) != 1)):

@@ -68,7 +68,9 @@ class Facade(Node):
         super().__init__(label=kwargs.get("label"))
 
         self.subnodes = []
-        EnergySystem.signals[EnergySystem.add].connect(add_subnodes, sender=self)
+        EnergySystem.signals[EnergySystem.add].connect(
+            add_subnodes, sender=self
+        )
 
         for r in required:
             if r in kwargs:
@@ -109,7 +111,9 @@ class Facade(Node):
                                 "storage_capacity_potential",
                                 float("+inf"),
                             ),
-                            minimum=getattr(self, "minimum_storage_capacity", 0),
+                            minimum=getattr(
+                                self, "minimum_storage_capacity", 0
+                            ),
                             existing=getattr(self, "storage_capacity", 0),
                         )
                     else:
@@ -117,7 +121,9 @@ class Facade(Node):
                 else:
                     self.investment = Investment(
                         ep_costs=self.capacity_cost,
-                        maximum=getattr(self, "capacity_potential", float("+inf")),
+                        maximum=getattr(
+                            self, "capacity_potential", float("+inf")
+                        ),
                         existing=getattr(self, "capacity", 0),
                     )
         else:
@@ -280,9 +286,13 @@ class StratifiedThermalStorage(GenericStorage, Facade):
             "storage_capacity_potential", float("+inf")
         )
 
-        self.capacity_potential = kwargs.get("capacity_potential", float("+inf"))
+        self.capacity_potential = kwargs.get(
+            "capacity_potential", float("+inf")
+        )
 
-        self.minimum_storage_capacity = kwargs.get("minimum_storage_capacity", 0)
+        self.minimum_storage_capacity = kwargs.get(
+            "minimum_storage_capacity", 0
+        )
 
         self.expandable = bool(kwargs.get("expandable", False))
 
@@ -339,9 +349,9 @@ class StratifiedThermalStorage(GenericStorage, Facade):
             for attr in ["invest_relation_input_output"]:
                 if getattr(self, attr) is None:
                     raise AttributeError(
-                        ("You need to set attr " "`{}` " "for component {}").format(
-                            attr, self.label
-                        )
+                        (
+                            "You need to set attr " "`{}` " "for component {}"
+                        ).format(attr, self.label)
                     )
 
             # set capacity costs at one of the flows
@@ -362,7 +372,9 @@ class StratifiedThermalStorage(GenericStorage, Facade):
             # required for correct grouping in oemof.solph.components
             self._invest_group = True
         else:
-            self.volume = calculate_storage_dimensions(self.height, self.diameter)[0]
+            self.volume = calculate_storage_dimensions(
+                self.height, self.diameter
+            )[0]
 
             self.nominal_storage_capacity = calculate_capacities(
                 self.volume,
@@ -375,7 +387,9 @@ class StratifiedThermalStorage(GenericStorage, Facade):
                 },
             )
 
-            fi = Flow(nominal_value=self._nominal_value(), **self.input_parameters)
+            fi = Flow(
+                nominal_value=self._nominal_value(), **self.input_parameters
+            )
             fo = Flow(
                 nominal_value=self._nominal_value(),
                 variable_costs=self.marginal_cost,
@@ -562,7 +576,9 @@ class ParabolicTroughCollector(Transformer, Facade):
         inflow = Source(
             label=self.label + "-inflow",
             outputs={
-                self: Flow(nominal_value=self.aperture_area, max=self.collectors_heat)
+                self: Flow(
+                    nominal_value=self.aperture_area, max=self.collectors_heat
+                )
             },
         )
 
@@ -704,7 +720,9 @@ class SolarThermalCollector(Transformer, Facade):
         inflow = Source(
             label=self.label + "-inflow",
             outputs={
-                self: Flow(nominal_value=self.aperture_area, max=self.collectors_heat)
+                self: Flow(
+                    nominal_value=self.aperture_area, max=self.collectors_heat
+                )
             },
         )
 

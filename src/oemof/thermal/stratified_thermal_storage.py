@@ -42,7 +42,9 @@ def calculate_storage_u_value(s_iso, lamb_iso, alpha_inside, alpha_outside):
     u_value : numeric
         Thermal transmittance (U-value) [W/(m2*K)]
     """
-    denominator = 1 / alpha_inside + s_iso * 1e-3 / lamb_iso + 1 / alpha_outside
+    denominator = (
+        1 / alpha_inside + s_iso * 1e-3 / lamb_iso + 1 / alpha_outside
+    )
     u_value = 1 / denominator
 
     return u_value
@@ -74,8 +76,8 @@ def calculate_storage_dimensions(height, diameter):
     surface : numeric
         Total surface of storage [m2]
     """
-    volume = 0.25 * np.pi * diameter ** 2 * height
-    surface = np.pi * diameter * height + 0.5 * np.pi * diameter ** 2
+    volume = 0.25 * np.pi * diameter**2 * height
+    surface = np.pi * diameter * height + 0.5 * np.pi * diameter**2
 
     return volume, surface
 
@@ -118,7 +120,9 @@ def calculate_capacities(
         Maximum amount of stored thermal energy [MWh]
 
     """
-    nominal_storage_capacity = volume * heat_capacity * density * (temp_h - temp_c)
+    nominal_storage_capacity = (
+        volume * heat_capacity * density * (temp_h - temp_c)
+    )
     nominal_storage_capacity *= 1 / 3600  # J to Wh
     nominal_storage_capacity *= 1e-6  # Wh to MWh
 
@@ -192,19 +196,31 @@ def calculate_losses(
         nominal storage capacity between two consecutive timesteps [MWh]
     """
     loss_rate = (
-        4 * u_value * 1 / (diameter * density * heat_capacity) * time_increment
+        4
+        * u_value
+        * 1
+        / (diameter * density * heat_capacity)
+        * time_increment
         * 3600  # Ws to Wh
     )
 
     fixed_losses_relative = (
-        4 * u_value * (temp_c - temp_env)
-        * 1 / ((diameter * density * heat_capacity) * (temp_h - temp_c))
+        4
+        * u_value
+        * (temp_c - temp_env)
+        * 1
+        / ((diameter * density * heat_capacity) * (temp_h - temp_c))
         * time_increment
         * 3600  # Ws to Wh
     )
 
     fixed_losses_absolute = (
-        0.25 * u_value * np.pi * diameter ** 2 * (temp_h + temp_c - 2 * temp_env) * time_increment
+        0.25
+        * u_value
+        * np.pi
+        * diameter**2
+        * (temp_h + temp_c - 2 * temp_env)
+        * time_increment
     )
 
     fixed_losses_absolute *= 1e-6  # Wh to MWh

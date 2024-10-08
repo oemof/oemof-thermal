@@ -39,7 +39,8 @@ def normalize_to_positive_results(lines):
         n for n, line in enumerate(lines) if re.match("^= -", line)
     ]
     equation_start_indices = [
-        [n for n in reversed(range(0, nri)) if re.match(".*:$", lines[n])][0] + 1
+        [n for n in reversed(range(0, nri)) if re.match(".*:$", lines[n])][0]
+        + 1
         for nri in negative_result_indices
     ]
     for start, end in zip(equation_start_indices, negative_result_indices):
@@ -95,7 +96,9 @@ class TestConstraints:
         )
 
     def get_om(self):
-        return solph.Model(self.energysystem, timeindex=self.energysystem.timeindex)
+        return solph.Model(
+            self.energysystem, timeindex=self.energysystem.timeindex
+        )
 
     def compare_to_reference_lp(self, ref_filename, my_om=None):
         if my_om is None:
@@ -109,7 +112,9 @@ class TestConstraints:
 
         om.write(new_filepath, io_options={"symbolic_solver_labels": True})
 
-        ref_filepath = os.path.join(os.path.dirname(__file__), "lp_files", ref_filename)
+        ref_filepath = os.path.join(
+            os.path.dirname(__file__), "lp_files", ref_filename
+        )
 
         with open(new_filepath) as new_file:
             with open(ref_filepath) as ref_file:
@@ -170,7 +175,9 @@ class TestConstraints:
             )
         )
 
-        self.compare_to_reference_lp("stratified_thermal_storage_invest_option_1.lp")
+        self.compare_to_reference_lp(
+            "stratified_thermal_storage_invest_option_1.lp"
+        )
 
     def test_stratified_thermal_storage_invest_option_2_facade(self):
         """
@@ -200,7 +207,9 @@ class TestConstraints:
             )
         )
 
-        self.compare_to_reference_lp("stratified_thermal_storage_invest_option_2.lp")
+        self.compare_to_reference_lp(
+            "stratified_thermal_storage_invest_option_2.lp"
+        )
 
     def test_csp_collector_facade(self):
         """Constraint test of a csp collector."""
@@ -210,7 +219,11 @@ class TestConstraints:
         self.energysystem.add(bus_heat, bus_el)
 
         d = {
-            "Datum": ["01.02.2003 09:00", "01.02.2003 10:00", "01.02.2003 11:00"],
+            "Datum": [
+                "01.02.2003 09:00",
+                "01.02.2003 10:00",
+                "01.02.2003 11:00",
+            ],
             "E_dir_hor": [43.1, 152.7, 76.9],
             "t_amb": [22.2, 23.2, 24.1],
         }
@@ -258,7 +271,11 @@ class TestConstraints:
         self.energysystem.add(bus_heat, bus_el)
 
         d = {
-            "Datum": ["01.02.2003 09:00", "01.02.2003 10:00", "01.02.2003 11:00"],
+            "Datum": [
+                "01.02.2003 09:00",
+                "01.02.2003 10:00",
+                "01.02.2003 11:00",
+            ],
             "global_horizontal_W_m2": [47, 132, 131],
             "diffuse_horizontal_W_m2": [37.57155865, 69.72163199, 98.85021832],
             "temp_amb": [4, 6, 8],

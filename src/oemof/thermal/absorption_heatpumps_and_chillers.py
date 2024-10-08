@@ -13,7 +13,6 @@ SPDX-License-Identifier: MIT
 
 
 def calc_characteristic_temp(t_hot, t_cool, t_chill, coef_a, coef_e, method):
-
     r"""
     Calculates the characteristic temperature difference.
 
@@ -73,14 +72,11 @@ def calc_characteristic_temp(t_hot, t_cool, t_chill, coef_a, coef_e, method):
     """
 
     if not isinstance(t_hot, (list)):
-        raise TypeError("Argument 't_hot' is not of "
-                        "type list!")
+        raise TypeError("Argument 't_hot' is not of " "type list!")
     if not isinstance(t_cool, (list)):
-        raise TypeError("Argument 't_cool' is not of "
-                        "type list!")
+        raise TypeError("Argument 't_cool' is not of " "type list!")
     if not isinstance(t_chill, (list)):
-        raise TypeError("Argument 't_chill' is not of "
-                        "type list!")
+        raise TypeError("Argument 't_chill' is not of " "type list!")
 
     lengths = [len(t_hot), len(t_cool), len(t_chill)]
     length = max(lengths)
@@ -91,7 +87,9 @@ def calc_characteristic_temp(t_hot, t_cool, t_chill, coef_a, coef_e, method):
     elif len(t_hot) == length:
         list_t_g = t_hot
     else:
-        raise ValueError("Length of argument 't_hot' does not to match requirements")
+        raise ValueError(
+            "Length of argument 't_hot' does not to match requirements"
+        )
 
     # External mean temperature at absorber/condenser (ac)
     if len(t_cool) == 1:
@@ -99,7 +97,9 @@ def calc_characteristic_temp(t_hot, t_cool, t_chill, coef_a, coef_e, method):
     elif len(t_cool) == length:
         list_t_ac = t_cool
     else:
-        raise ValueError("Length of argument 't_cool' does not to match requirements")
+        raise ValueError(
+            "Length of argument 't_cool' does not to match requirements"
+        )
 
     # External mean temperature at evaporator (e)
     if len(t_chill) == 1:
@@ -107,50 +107,58 @@ def calc_characteristic_temp(t_hot, t_cool, t_chill, coef_a, coef_e, method):
     elif len(t_chill) == length:
         list_t_e = t_chill
     else:
-        raise ValueError("Length of argument 't_chill' does not to match requirements")
+        raise ValueError(
+            "Length of argument 't_chill' does not to match requirements"
+        )
 
-    if method == 'kuehn_and_ziegler':
-        ddts = [t_g - coef_a * t_ac + coef_e * t_e for
-                t_g, t_ac, t_e in zip(list_t_g, list_t_ac, list_t_e)]
+    if method == "kuehn_and_ziegler":
+        ddts = [
+            t_g - coef_a * t_ac + coef_e * t_e
+            for t_g, t_ac, t_e in zip(list_t_g, list_t_ac, list_t_e)
+        ]
     else:
-        raise ValueError("Unrecognized input for argument 'method'. "
-                         "Possible options: 'kuehn_and_ziegler'.")
+        raise ValueError(
+            "Unrecognized input for argument 'method'. "
+            "Possible options: 'kuehn_and_ziegler'."
+        )
     return ddts
 
 
 def calc_heat_flux(ddts, coef_s, coef_r, method):
     r"""
-        Calculates the heat flux at external heat exchanger.
+    Calculates the heat flux at external heat exchanger.
 
-        .. calc_heat_flux-equations:
+    .. calc_heat_flux-equations:
 
-        :math:`\dot{Q} = s \cdot \Delta\Delta T + r`
+    :math:`\dot{Q} = s \cdot \Delta\Delta T + r`
 
-        Parameters
-        ----------
-        ddt : numeric
-            Characteristic temperature difference [K]
+    Parameters
+    ----------
+    ddt : numeric
+        Characteristic temperature difference [K]
 
-        coeff_s : numeric
-            Characteristic parameter [-]
+    coeff_s : numeric
+        Characteristic parameter [-]
 
-        coeff_r : numeric
-            Characteristic parameter [-]
+    coeff_r : numeric
+        Characteristic parameter [-]
 
-        method : string
-            Method to calculate characteristic temperature difference
+    method : string
+        Method to calculate characteristic temperature difference
 
-        Returns
-        -------
-        Q_dots : numeric
-            Heat flux [W]
+    Returns
+    -------
+    Q_dots : numeric
+        Heat flux [W]
 
-        """
-    if method == 'kuehn_and_ziegler':
+    """
+    if method == "kuehn_and_ziegler":
         Q_dots = [coef_s * ddt + coef_r for ddt in ddts]
     else:
-        raise ValueError("Unrecognized input for argument 'method'. "
-                         "Possible options: 'kuehn_and_ziegler'.")
+        raise ValueError(
+            "Unrecognized input for argument 'method'. "
+            "Possible options: 'kuehn_and_ziegler'."
+        )
     return Q_dots
 
 
@@ -190,8 +198,8 @@ def define_AC_specs(Q_dots_evap, Q_dots_gen):
 
     """
     AC_specs = {
-        'COPs': [Q_e / Q_g for Q_e, Q_g in zip(Q_dots_evap, Q_dots_gen)],
-        'Q_chill_max': [Q_e / max(Q_dots_evap) for Q_e in Q_dots_evap],
-        'Q_chill_nominal': max(Q_dots_evap)
+        "COPs": [Q_e / Q_g for Q_e, Q_g in zip(Q_dots_evap, Q_dots_gen)],
+        "Q_chill_max": [Q_e / max(Q_dots_evap) for Q_e in Q_dots_evap],
+        "Q_chill_nominal": max(Q_dots_evap),
     }
     return AC_specs
