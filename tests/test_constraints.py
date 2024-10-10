@@ -13,7 +13,8 @@ SPDX-License-Identifier: MIT
 import logging
 import os
 import re
-from difflib import unified_diff
+
+from pyomo.repn.tests.lp_diff import lp_diff
 
 import oemof.solph as solph
 import pandas as pd
@@ -54,26 +55,25 @@ def normalize_to_positive_results(lines):
     return lines
 
 
-def compare_lp_files(lp_file_1, lp_file_2, ignored=None):
-    lines_1 = remove(ignored, chop_trailing_whitespace(lp_file_1.readlines()))
-    lines_2 = remove(ignored, chop_trailing_whitespace(lp_file_2.readlines()))
+def compare_lp_files(lp_file_1, lp_file_2):
+    r"""Compare lp-files to check constraints generated within solph."""
+    exp = lp_file_1.read()
+    gen = lp_file_2.read()
 
-    lines_1 = normalize_to_positive_results(lines_1)
-    lines_2 = normalize_to_positive_results(lines_2)
+    # lp_diff returns two arrays of strings with cleaned lp syntax
+    # It automatically prints the diff
+    exp_diff, gen_diff = lp_diff(exp, gen)
 
-    if not lines_1 == lines_2:
-        raise AssertionError(
-            "Failed matching lp_file_1 with lp_file_2:\n"
-            + "\n".join(
-                unified_diff(
-                    lines_1,
-                    lines_2,
-                    fromfile=os.path.relpath(lp_file_1.name),
-                    tofile=os.path.basename(lp_file_2.name),
-                    lineterm="",
-                )
-            )
-        )
+    # sometimes, 0.0 is printed, sometimes 0, harmonise that
+    exp_diff = [line + " ".replace(" 0.0 ", " 0 ") for line in exp_diff]
+    gen_diff = [line + " ".replace(" 0.0 ", " 0 ") for line in gen_diff]
+
+    assert len(exp_diff) == len(gen_diff)
+
+    # Created the LP files do not have a reproducible
+    # order of the lines. Thus, we sort the lines.
+    for exp, gen in zip(sorted(exp_diff), sorted(gen_diff)):
+        assert exp == gen, "Failed matching expected with generated lp file."
 
 
 class TestConstraints:
