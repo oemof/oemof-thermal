@@ -98,8 +98,6 @@ def fixed_ratio_invest_facade_example():
 
     # Get results
     results = processing.results(optimization_model)
-    string_results = processing.convert_keys_to_strings(results)
-    sequences = {k: v["sequences"] for k, v in string_results.items()}
     # Print storage sizing
     built_storage_capacity = results[thermal_storage, None]["scalars"][
         "invest"
