@@ -10,7 +10,6 @@ include = [
     "examples/",
     "src/",
     "tests/",
-    ".flake8",
     ".pylintrc",
 ]
 
