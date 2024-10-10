@@ -45,10 +45,8 @@ def csp_andasol_example():
     )["t_amb"]
 
     # Parameters for the precalculation
-    periods = 24
     latitude = 23.614328
     longitude = 58.545284
-    timezone = "Asia/Muscat"
     collector_tilt = 10
     collector_azimuth = 180
     cleanliness = 0.9
@@ -97,7 +95,7 @@ def csp_andasol_example():
     t = list(range(1, 25))
 
     # Example plot
-    fig, ax = plt.subplots()
+    _, ax = plt.subplots()
     ax.plot(t, heat_calc, label="CSP precalculation")
     ax.plot(t, heat_compare, label="constant efficiency")
     ax.set(
@@ -138,7 +136,7 @@ def csp_andasol_example():
 
         df_result = df_result.append(data_precalc_temp_amb, ignore_index=True)
 
-    fig, ax = plt.subplots()
+    _, ax = plt.subplots()
     ax.plot(
         temp_amb_series,
         df_result["eta_c"],

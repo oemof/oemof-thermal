@@ -19,7 +19,7 @@ def plot_collector_heat(data_precalc, periods, eta_0):
     heat_compare = irradiance_on_collector * eta_0
     t = list(range(1, periods + 1))
 
-    fig, ax = plt.subplots()
+    _, ax = plt.subplots()
     ax.plot(t, heat_calc, label="Solar thermal precalculation")
     ax.plot(t, heat_compare, label="constant efficiency")
     ax.set(

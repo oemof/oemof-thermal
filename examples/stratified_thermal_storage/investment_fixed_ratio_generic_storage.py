@@ -138,9 +138,6 @@ def fixed_ratio_invest_example():
     built_storage_capacity = results[thermal_storage, None]["scalars"][
         "invest"
     ]
-    initial_storage_capacity = results[thermal_storage, None]["scalars"][
-        "init_content"
-    ]
     maximum_heat_flow_charging = results[bus_heat, thermal_storage]["scalars"][
         "invest"
     ]

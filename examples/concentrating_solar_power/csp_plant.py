@@ -204,7 +204,7 @@ def csp_plant_example():
     df.to_csv(os.path.join(results_path, "csp_plant_results.csv"))
 
     # Example plot
-    fig, ax = plt.subplots()
+    _, ax = plt.subplots()
     ax.plot(
         list(range(periods)),
         thermal_bus[(("collector", "thermal"), "flow")][:-1],

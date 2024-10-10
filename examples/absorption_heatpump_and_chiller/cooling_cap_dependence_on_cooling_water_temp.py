@@ -59,7 +59,7 @@ def cooling_cap_example():
     ax1 = fig1.add_subplot(111)
     ax1.grid(axis="y")
 
-    line1 = ax1.plot(
+    ax1.plot(
         t_cooling,
         Q_dots_evap_80,
         linestyle="dotted",
@@ -67,7 +67,7 @@ def cooling_cap_example():
         color="black",
         label="Cooling capacity ($80°$C driving heat)",
     )
-    line2 = ax1.plot(
+    ax1.plot(
         t_cooling,
         Q_dots_evap_75,
         linestyle="dashed",
@@ -77,7 +77,7 @@ def cooling_cap_example():
     )
     plt.ylabel("Cooling capacity in kW")
     ax2 = fig1.add_subplot(111, sharex=ax1, frameon=False)
-    line3 = ax2.plot(
+    ax2.plot(
         t_cooling,
         COPs_75,
         linestyle="-",

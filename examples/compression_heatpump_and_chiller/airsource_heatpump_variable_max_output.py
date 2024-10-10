@@ -117,9 +117,6 @@ def airource_hp_variable_example():
 
     results = energysystem.results["main"]
 
-    electricity_bus = solph.views.node(results, "electricity")
-    heat_bus = solph.views.node(results, "heat")
-
     string_results = solph.views.convert_keys_to_strings(
         energysystem.results["main"]
     )
@@ -134,7 +131,7 @@ def airource_hp_variable_example():
     ]
 
     # Example plot
-    fig, axs = plt.subplots(3, 1, figsize=(8, 5), sharex=True)
+    _, axs = plt.subplots(3, 1, figsize=(8, 5), sharex=True)
     axs[0].plot(max_Q_dot_heating_abs, linestyle="-.", label="max heat output")
     axs[0].plot(ASHP_output, label="actual heat output")
     axs[0].plot(demand_h, linestyle="--", label="heat demand")

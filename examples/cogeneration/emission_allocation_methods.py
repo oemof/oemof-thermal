@@ -32,7 +32,7 @@ def emission_allocation_example():
     # Example plot
     fig, ax = plt.subplots()
     df.loc[:, "el"] *= -1
-    bars = df.plot.barh(stacked=True, ax=ax)
+    df.plot.barh(stacked=True, ax=ax)
 
     for i, (el, th) in enumerate(zip(df["el"], df["th"])):
         ax.text(el, i, round(-el), ha="left")

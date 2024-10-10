@@ -156,7 +156,7 @@ def flat_plate_collector_facade_example():
     heat_calc = collector_inflow
     t = list(range(1, periods + 1))
 
-    fig, ax = plt.subplots()
+    _, ax = plt.subplots()
     ax.plot(t, heat_calc[:-1])
     ax.set(
         xlabel="time in h", ylabel="Q_coll in W", title="Heat of the collector"

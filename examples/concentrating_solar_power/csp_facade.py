@@ -172,7 +172,7 @@ def csp_facade_example():
     df.to_csv(os.path.join(results_path, "facade_results.csv"))
 
     # Example plot
-    fig, ax = plt.subplots()
+    _, ax = plt.subplots()
     ax.plot(
         list(range(periods)),
         thermal_bus[(("solar_collector", "thermal"), "flow")][:-1],

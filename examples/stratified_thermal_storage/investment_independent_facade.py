@@ -108,9 +108,6 @@ def invest_independent_facade_example():
     built_storage_capacity = results[thermal_storage, None]["scalars"][
         "invest"
     ]
-    initial_storage_capacity = results[thermal_storage, None]["scalars"][
-        "init_content"
-    ]
     built_capacity = results[bus_heat, thermal_storage]["scalars"]["invest"]
 
     dash = "-" * 50

@@ -105,11 +105,11 @@ def calc_cops(
     length = max([len(temp_high), len(temp_low)])
     if len(temp_high) == 1:
         list_temp_high_K = [temp_high[0] + 273.15] * length
-    elif len(temp_high) == length:
+    else:  # len(temp_high) == length:
         list_temp_high_K = [t + 273.15 for t in temp_high]
     if len(temp_low) == 1:
         list_temp_low_K = [temp_low[0] + 273.15] * length
-    elif len(temp_low) == length:
+    else:  # len(temp_low) == length:
         list_temp_low_K = [t + 273.15 for t in temp_low]
 
     # Calculate COPs depending on selected mode (without icing).

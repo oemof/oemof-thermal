@@ -188,7 +188,7 @@ def plots():
     storage_df = storage_df.reindex(sorted(storage_df.columns), axis=1)
 
     # Plot storage_content vs. time
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
+    _, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
     storage_content.plot(ax=ax1)
     ax1.set_title("Storage content")
     ax1.set_xlabel("Timesteps")

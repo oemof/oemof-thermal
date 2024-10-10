@@ -119,11 +119,10 @@ def groundsource_hp_example():
     )
     GSHP_output = string_results["GSHP", "heat"]["sequences"].values
     demand_h = string_results["heat", "demand"]["sequences"].values
-    GSHP_input = string_results["electricity", "GSHP"]["sequences"].values
     env_heat = string_results["ambient", "heat_low_temp"]["sequences"].values
 
     # Example plot
-    fig2, axs = plt.subplots(3, 1, figsize=(8, 5), sharex=True)
+    _, axs = plt.subplots(3, 1, figsize=(8, 5), sharex=True)
     axs[0].plot(GSHP_output, label="heat output")
     axs[0].plot(demand_h, linestyle="--", label="heat demand")
     axs[0].plot(env_heat, label="heat from environment")

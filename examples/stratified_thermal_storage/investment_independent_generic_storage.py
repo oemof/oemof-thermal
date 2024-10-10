@@ -132,14 +132,10 @@ def invest_independent_example():
     results = processing.results(optimization_model)
     string_results = processing.convert_keys_to_strings(results)
     sequences = {k: v["sequences"] for k, v in string_results.items()}
-    df = pd.concat(sequences, axis=1)
 
     # Print storage sizing
     built_storage_capacity = results[thermal_storage, None]["scalars"][
         "invest"
-    ]
-    initial_storage_capacity = results[thermal_storage, None]["scalars"][
-        "init_content"
     ]
     maximum_heat_flow_charging = results[bus_heat, thermal_storage]["scalars"][
         "invest"

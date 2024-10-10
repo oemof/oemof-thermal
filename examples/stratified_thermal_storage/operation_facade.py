@@ -106,9 +106,6 @@ def operation_facade_example():
         bus_heat, heat_source, shortage, excess, heat_demand, thermal_storage
     )
 
-    # Create and solve the optimization model
-    optimization_model = Model(energysystem)
-
 
 if __name__ == "__main__":
     operation_facade_example()

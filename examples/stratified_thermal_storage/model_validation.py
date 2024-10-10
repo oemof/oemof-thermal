@@ -160,7 +160,7 @@ def model_validation():
     t_meas = np.arange(0, (len(level_meas) / 4), 0.25)
 
     plt.style.use("ggplot")
-    fig, ax = plt.subplots()
+    _, ax = plt.subplots()
 
     # Plot horizontal line (initial level)
     init_level = level_meas["level"][0]

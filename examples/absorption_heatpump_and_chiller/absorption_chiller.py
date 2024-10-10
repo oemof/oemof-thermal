@@ -10,7 +10,6 @@ import oemof.thermal.absorption_heatpumps_and_chillers as abs_hp_chiller
 
 def absorption_chiller_example():
     solver = "cbc"
-    debug = False
     number_of_time_steps = 48
     solver_verbose = True
 
@@ -133,9 +132,8 @@ def absorption_chiller_example():
     demand_cooling = string_results["chilled", "cooling_demand"][
         "sequences"
     ].values
-    ASHP_input = string_results["hot", "AC"]["sequences"].values
 
-    fig2, axs = plt.subplots(3, 1, figsize=(8, 5), sharex=True)
+    _, axs = plt.subplots(3, 1, figsize=(8, 5), sharex=True)
     axs[0].plot(AC_output, label="cooling output")
     axs[0].plot(demand_cooling, linestyle="--", label="cooling demand")
     axs[1].plot(COPs, linestyle="-.")
