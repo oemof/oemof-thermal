@@ -63,7 +63,7 @@ class Facade(Node):
         raises an error if he doesn't find them.
     """
 
-    def __init__(self, *_, **kwargs):
+    def __init__(self, label, **kwargs):
         """ """
 
         self.mapped_type = type(self)
@@ -72,7 +72,7 @@ class Facade(Node):
 
         required = kwargs.pop("_facade_requires_", [])
 
-        super().__init__(label=kwargs.get("label"))
+        super().__init__(label=label)
 
         self.subnodes = []
         EnergySystem.signals[EnergySystem.add].connect(
@@ -249,6 +249,7 @@ class StratifiedThermalStorage(GenericStorage, Facade):
         )
         Facade.__init__(
             self,
+            label=label,
             **kwargs,
         )
         with warnings.catch_warnings():
@@ -469,7 +470,7 @@ class ParabolicTroughCollector(Transformer, Facade):
 
         kwargs.update({"_facade_requires_": ["longitude"]})
         Facade.__init__(self, **kwargs)
-        Transformer.__init__(self)
+        Transformer.__init__(self, label=kwargs.get("label"))
 
         self.heat_bus = kwargs.get("heat_bus")
 
@@ -661,7 +662,7 @@ class SolarThermalCollector(Transformer, Facade):
 
         kwargs.update({"_facade_requires_": ["longitude"]})
         Facade.__init__(self, **kwargs)
-        Transformer.__init__(self)
+        Transformer.__init__(self, label=kwargs.get("label"))
 
         self.heat_out_bus = kwargs.get("heat_out_bus")
 
