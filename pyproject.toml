@@ -11,6 +11,7 @@ include = [
     "src/",
     "tests/",
     ".pylintrc",
+    "tox.ini",
 ]
 
 [project]
@@ -49,3 +50,7 @@ license = {text = "MIT"}
 [tool.black]
 line-length = 79
 target-version = ['py39', 'py310', 'py311']
+
+[tool.isort]
+force_single_line = true
+line_length = 79
