@@ -6,10 +6,12 @@ We use the soil temperature as low temperature heat reservoir.
 """
 
 import os
-import oemof.thermal.compression_heatpumps_and_chillers as cmpr_hp_chiller
+
+import matplotlib.pyplot as plt
 import oemof.solph as solph
 import pandas as pd
-import matplotlib.pyplot as plt
+
+import oemof.thermal.compression_heatpumps_and_chillers as cmpr_hp_chiller
 
 
 def groundsource_hp_example():

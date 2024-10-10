@@ -11,9 +11,9 @@ SPDX-License-Identifier: GPL-3.0-or-later
 import os
 
 import pandas as pd
+from oemof.tools import economics
 
 from oemof import solph
-from oemof.tools import economics
 from oemof.thermal.solar_thermal_collector import flat_plate_precalc
 
 from ._plots import plot_collector_heat

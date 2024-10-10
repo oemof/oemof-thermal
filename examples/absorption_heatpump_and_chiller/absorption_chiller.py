@@ -1,9 +1,11 @@
 # import absorption_heatpumps_and_chillers as abs_hp_chiller
-import oemof.thermal.absorption_heatpumps_and_chillers as abs_hp_chiller
+import os
+
+import matplotlib.pyplot as plt
 import oemof.solph as solph
 import pandas as pd
-import os
-import matplotlib.pyplot as plt
+
+import oemof.thermal.absorption_heatpumps_and_chillers as abs_hp_chiller
 
 
 def absorption_chiller_example():

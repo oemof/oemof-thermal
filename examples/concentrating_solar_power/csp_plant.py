@@ -8,13 +8,12 @@ SPDX-License-Identifier: GPL-3.0-or-later
 """
 import os
 
+import matplotlib.pyplot as plt
 import pandas as pd
+from oemof.tools import economics
 
 from oemof import solph
-from oemof.tools import economics
 from oemof.thermal.concentrating_solar_power import csp_precalc
-
-import matplotlib.pyplot as plt
 
 
 def csp_plant_example():

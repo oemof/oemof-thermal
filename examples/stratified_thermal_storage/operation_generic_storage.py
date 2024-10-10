@@ -4,18 +4,25 @@ to specify a storage in a model that optimizes operation with oemof.solph.
 """
 
 import os
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
 
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+from oemof.solph import Bus
+from oemof.solph import EnergySystem
+from oemof.solph import Flow
+from oemof.solph import Model
+from oemof.solph import processing
+from oemof.solph.components import GenericStorage
+from oemof.solph.components import Sink
+from oemof.solph.components import Source
+
+from oemof.thermal.stratified_thermal_storage import calculate_capacities
+from oemof.thermal.stratified_thermal_storage import calculate_losses
 from oemof.thermal.stratified_thermal_storage import (
-    calculate_storage_u_value,
     calculate_storage_dimensions,
-    calculate_capacities,
-    calculate_losses,
 )
-from oemof.solph import processing, Bus, Flow, Model, EnergySystem
-from oemof.solph.components import GenericStorage, Source, Sink
+from oemof.thermal.stratified_thermal_storage import calculate_storage_u_value
 
 
 def operation_example():

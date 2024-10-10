@@ -9,11 +9,13 @@ authors: Franziska Pleissner, Caroline Möller, Marie-Claire Gering
 SPDX-License-Identifier: GPL-3.0-or-later
 """
 import os
-import pandas as pd
+
 import matplotlib.pyplot as plt
-from oemof.thermal import facades
-from oemof import solph
+import pandas as pd
 from oemof.tools import economics
+
+from oemof import solph
+from oemof.thermal import facades
 
 
 def flat_plate_collector_facade_example():

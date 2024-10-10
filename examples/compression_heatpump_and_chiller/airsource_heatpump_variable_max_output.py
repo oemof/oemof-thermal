@@ -9,11 +9,13 @@ We use the ambient air as low temperature heat reservoir.
 """
 
 import os
-import oemof.thermal.compression_heatpumps_and_chillers as cmpr_hp_chiller
-import oemof.solph as solph
-import pandas as pd
+
 import matplotlib.pyplot as plt
 import numpy as np
+import oemof.solph as solph
+import pandas as pd
+
+import oemof.thermal.compression_heatpumps_and_chillers as cmpr_hp_chiller
 
 
 def airource_hp_variable_example():

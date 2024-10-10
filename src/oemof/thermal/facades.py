@@ -5,14 +5,17 @@ Adapted from `oemof.tabular's facades
 <https://github.com/oemof/oemof-tabular/blob/master/src/oemof/tabular/facades.py>`_
 
 Facade's are classes providing a simplified view on more complex classes.
-More specifically, the :class:`Facade` s in this module inherit from `oemof.solph`'s generic
-classes to serve as more concrete and energy specific interface.
+More specifically, the :class:`Facade` s in this module inherit from
+`oemof.solph`'s generic classes to serve as more concrete and energy specific
+interface.
 
-The concept of the facades has been derived from oemof.tabular. The idea is to be able to
-instantiate a :class:`Facade` using only keyword arguments. Under the hood the :class:`Facade` then
-uses these arguments to construct an `oemof.solph` component and sets it up to be easily used in an
-:class:`EnergySystem`. Usually, a subset of the attributes of the parent class remains while another
-part can be addressed by more specific or simpler attributes.
+The concept of the facades has been derived from oemof.tabular. The idea is to
+be able to instantiate a :class:`Facade` using only keyword arguments. Under
+the hood the :class:`Facade` then uses these arguments to construct an
+`oemof.solph` component and sets it up to be easily used in an
+:class:`EnergySystem`. Usually, a subset of the attributes of the parent class
+remains while another part can be addressed by more specific or simpler
+attributes.
 
 **Note** The mathematical notation is as follows:
 
@@ -28,15 +31,19 @@ from collections import deque
 
 from oemof.network.energy_system import EnergySystem
 from oemof.network.network import Node
-from oemof.solph import Flow, Investment, sequence
-from oemof.solph.components import GenericStorage, Source, Transformer
+from oemof.solph import Flow
+from oemof.solph import Investment
+from oemof.solph import sequence
+from oemof.solph.components import GenericStorage
+from oemof.solph.components import Source
+from oemof.solph.components import Transformer
 from oemof.tools.debugging import SuspiciousUsageWarning
 
 from oemof.thermal.concentrating_solar_power import csp_precalc
 from oemof.thermal.solar_thermal_collector import flat_plate_precalc
+from oemof.thermal.stratified_thermal_storage import calculate_capacities
+from oemof.thermal.stratified_thermal_storage import calculate_losses
 from oemof.thermal.stratified_thermal_storage import (
-    calculate_capacities,
-    calculate_losses,
     calculate_storage_dimensions,
 )
 
@@ -182,9 +189,9 @@ class StratifiedThermalStorage(GenericStorage, Facade):
         more information on possible parameters)
 
 
-    The attribute :attr:`nominal_storage_capacity` of the base class :class:`GenericStorage`
-    should not be passed because it is determined internally from :attr:`height`
-    and :attr:`parameter`.
+    The attribute :attr:`nominal_storage_capacity` of the base class
+    :class:`GenericStorage` should not be passed because it is determined
+    internally from :attr:`height` and :attr:`parameter`.
 
     Examples
     ---------
@@ -411,9 +418,11 @@ class ParabolicTroughCollector(Transformer, Facade):
     heat_bus: oemof.solph.Bus
         An oemof bus instance in which absorbs the collectors heat.
     electrical_bus: oemof.solph.Bus
-        An oemof bus instance which provides electrical energy to the collector.
+        An oemof bus instance which provides electrical energy to the
+        collector.
     electrical_consumption: numeric
-        Specifies how much electrical energy is used per provided thermal energy.
+        Specifies how much electrical energy is used per provided thermal
+        energy.
     additional_losses: numeric
         Specifies how much thermal energy is lost in peripheral parts like
         pipes and pumps.
@@ -606,17 +615,19 @@ class SolarThermalCollector(Transformer, Facade):
     heat_out_bus: oemof.solph.Bus
         An oemof bus instance which absorbs the collectors heat.
     electrical_in_bus: oemof.solph.Bus
-        An oemof bus instance which provides electrical energy to the collector.
+        An oemof bus instance which provides electrical energy to the
+        collector.
     electrical_consumption: numeric
-        Specifies how much electrical energy is used per provided thermal energy.
+        Specifies how much electrical energy is used per provided thermal
+        energy.
     peripheral_losses: numeric
         Specifies how much thermal energy is lost in peripheral parts like
         pipes and pumps as percentage of provided thermal energy.
     aperture_area: numeric
         Specifies the size of the collector as surface area.
 
-    See the API of flat_plate_precalc in oemof.thermal.solar_thermal_collector for
-    the other parameters.
+    See the API of flat_plate_precalc in oemof.thermal.solar_thermal_collector
+    for the other parameters.
 
     Example:
     ----------
@@ -714,7 +725,8 @@ class SolarThermalCollector(Transformer, Facade):
 
         if self.expandable:
             raise NotImplementedError(
-                "Investment for solar thermal collector facade has not been implemented yet."
+                "Investment for solar thermal collector"
+                " facade has not been implemented yet."
             )
 
         inflow = Source(

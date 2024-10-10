@@ -1,25 +1,24 @@
 import os
+
 import matplotlib.pyplot as plt
-import pandas as pd
 import numpy as np
 import oemof.solph as solph
+import pandas as pd
+from oemof.solph import Bus
+from oemof.solph import EnergySystem
+from oemof.solph import Flow
+from oemof.solph import Model
+from oemof.solph.components import Sink
+from oemof.solph.components import Source
+
+from oemof.thermal import facades
 from oemof.thermal.stratified_thermal_storage import (  # noqa
-    calculate_storage_u_value,
-    calculate_storage_dimensions,
     calculate_capacities,
 )
-from oemof.thermal import facades
-
-from oemof.solph.components import (
-    Source,
-    Sink,
+from oemof.thermal.stratified_thermal_storage import (
+    calculate_storage_dimensions,
 )
-from oemof.solph import (
-    Bus,
-    Flow,
-    Model,
-    EnergySystem,
-)
+from oemof.thermal.stratified_thermal_storage import calculate_storage_u_value
 
 
 def model_validation():

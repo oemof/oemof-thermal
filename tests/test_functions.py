@@ -9,16 +9,14 @@ import oemof.thermal.absorption_heatpumps_and_chillers as ac
 import oemof.thermal.compression_heatpumps_and_chillers as cmpr_hp_chllr
 import oemof.thermal.concentrating_solar_power as csp
 from oemof.thermal.cogeneration import allocate_emissions
-from oemof.thermal.solar_thermal_collector import (
-    calc_eta_c_flate_plate,
-    flat_plate_precalc,
-)
+from oemof.thermal.solar_thermal_collector import calc_eta_c_flate_plate
+from oemof.thermal.solar_thermal_collector import flat_plate_precalc
+from oemof.thermal.stratified_thermal_storage import calculate_capacities
+from oemof.thermal.stratified_thermal_storage import calculate_losses
 from oemof.thermal.stratified_thermal_storage import (
-    calculate_capacities,
-    calculate_losses,
     calculate_storage_dimensions,
-    calculate_storage_u_value,
 )
+from oemof.thermal.stratified_thermal_storage import calculate_storage_u_value
 
 
 def test_cop_calculation_hp():

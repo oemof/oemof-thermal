@@ -6,18 +6,23 @@ were introduced, but the imports need to be changed.
 """
 
 import os
-import pandas as pd
+
 import matplotlib.pyplot as plt
-
-
-from oemof.thermal.stratified_thermal_storage import (
-    calculate_storage_u_value,
-    calculate_storage_dimensions,
-    calculate_capacities,
-    calculate_losses,
-)
-from oemof.solph import processing, views, Bus, Flow, Model, EnergySystem
+import pandas as pd
+from oemof.solph import Bus
+from oemof.solph import EnergySystem
+from oemof.solph import Flow
+from oemof.solph import Model
+from oemof.solph import processing
+from oemof.solph import views
 from oemof.solph.components import GenericStorage
+
+from oemof.thermal.stratified_thermal_storage import calculate_capacities
+from oemof.thermal.stratified_thermal_storage import calculate_losses
+from oemof.thermal.stratified_thermal_storage import (
+    calculate_storage_dimensions,
+)
+from oemof.thermal.stratified_thermal_storage import calculate_storage_u_value
 
 
 def plots():

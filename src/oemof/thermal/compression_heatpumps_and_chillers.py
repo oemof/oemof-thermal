@@ -4,9 +4,9 @@
 This module provides functions to calculate compression heat pumps and
 compression chillers.
 
-This file is part of project oemof (github.com/oemof/oemof-thermal). It's copyrighted
-by the contributors recorded in the version control history of the file,
-available from its original location:
+This file is part of project oemof (github.com/oemof/oemof-thermal). It's
+copyrighted by the contributors recorded in the version control history of the
+file, available from its original location:
 oemof-thermal/src/oemof/thermal/compression_heatpumps_and_chillers.py
 
 SPDX-License-Identifier: MIT

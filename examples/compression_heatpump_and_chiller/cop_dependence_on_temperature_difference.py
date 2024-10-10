@@ -5,9 +5,10 @@ COPs of a heat pump.
 This example plots the temperature dependency of the COP.
 """
 
-import oemof.thermal.compression_heatpumps_and_chillers as cmpr_hp_chiller
-import pandas as pd
 import matplotlib.pyplot as plt
+import pandas as pd
+
+import oemof.thermal.compression_heatpumps_and_chillers as cmpr_hp_chiller
 
 
 def cop_temperature_example():

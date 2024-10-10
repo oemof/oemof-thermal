@@ -8,8 +8,9 @@ output is a list as well and may serve as input (conversion_factor) for a
 oemof.solph.transformer.
 """
 
-import oemof.thermal.compression_heatpumps_and_chillers as cmpr_hp_chiller
 import pandas as pd
+
+import oemof.thermal.compression_heatpumps_and_chillers as cmpr_hp_chiller
 
 
 def chiller_cop_timeseries_example():

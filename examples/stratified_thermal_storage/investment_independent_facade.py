@@ -6,14 +6,19 @@ Make sure to pass both capacity_cost and storage_capacity_cost.
 """
 
 import os
-import pandas as pd
+
 import numpy as np
+import pandas as pd
+from oemof.solph import Bus
+from oemof.solph import EnergySystem
+from oemof.solph import Flow
+from oemof.solph import Model
+from oemof.solph import processing
+from oemof.solph.components import Sink
+from oemof.solph.components import Source
 
-from oemof.thermal.stratified_thermal_storage import calculate_storage_u_value
 from oemof.thermal import facades
-
-from oemof.solph import processing, Bus, Flow, Model, EnergySystem
-from oemof.solph.components import Source, Sink
+from oemof.thermal.stratified_thermal_storage import calculate_storage_u_value
 
 
 def invest_independent_facade_example():

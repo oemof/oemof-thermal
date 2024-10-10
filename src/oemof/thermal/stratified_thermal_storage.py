@@ -1,11 +1,12 @@
 # -*- coding: utf-8
 
 """
-This module is designed to hold functions for calculating stratified thermal storages.
+This module is designed to hold functions for calculating stratified thermal
+storages.
 
-This file is part of project oemof (github.com/oemof/oemof-thermal). It's copyrighted
-by the contributors recorded in the version control history of the file,
-available from its original location:
+This file is part of project oemof (github.com/oemof/oemof-thermal). It's
+copyrighted by the contributors recorded in the version control history of the
+file, available from its original location:
 oemof-thermal/src/oemof/thermal/stratified_thermal_storage.py
 
 SPDX-License-Identifier: MIT
@@ -32,10 +33,12 @@ def calculate_storage_u_value(s_iso, lamb_iso, alpha_inside, alpha_outside):
         Thermal conductivity of isolation layer [W/(m*K)]
 
     alpha_inside : numeric
-        Heat transfer coefficient at the inner surface of the storage [W/(m2*K)]
+        Heat transfer coefficient at the inner surface of the storage
+        [W/(m2*K)]
 
     alpha_outside : numeric
-        Heat transfer coefficient at the outer surface of the storage [W/(m2*K)]
+        Heat transfer coefficient at the outer surface of the storage
+        [W/(m2*K)]
 
     Returns
     -------

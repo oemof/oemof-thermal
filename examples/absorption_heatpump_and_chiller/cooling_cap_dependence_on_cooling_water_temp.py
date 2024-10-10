@@ -1,7 +1,9 @@
-import oemof.thermal.absorption_heatpumps_and_chillers as abs_hp_chiller
-import matplotlib.pyplot as plt
 import os
+
+import matplotlib.pyplot as plt
 import pandas as pd
+
+import oemof.thermal.absorption_heatpumps_and_chillers as abs_hp_chiller
 
 
 def cooling_cap_example():

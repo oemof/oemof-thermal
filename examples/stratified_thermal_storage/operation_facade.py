@@ -4,11 +4,16 @@ that optimizes operation with oemof.solph.
 """
 
 import os
-import pandas as pd
-import numpy as np
 
-from oemof.solph import Bus, Flow, Model, EnergySystem  # noqa
-from oemof.solph.components import Sink, Source
+import numpy as np
+import pandas as pd
+from oemof.solph import Bus  # noqa
+from oemof.solph import EnergySystem
+from oemof.solph import Flow
+from oemof.solph import Model
+from oemof.solph.components import Sink
+from oemof.solph.components import Source
+
 from oemof.thermal import facades
 from oemof.thermal.stratified_thermal_storage import (  # noqa
     calculate_storage_u_value,

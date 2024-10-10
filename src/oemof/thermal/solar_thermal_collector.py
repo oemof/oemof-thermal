@@ -1,11 +1,12 @@
 # -*- coding: utf-8
 
 """
-This module is designed to hold functions for calculating a solar thermal collector.
+This module is designed to hold functions for calculating a solar thermal
+collector.
 
-This file is part of project oemof (github.com/oemof/oemof-thermal). It's copyrighted
-by the contributors recorded in the version control history of the file,
-available from its original location:
+This file is part of project oemof (github.com/oemof/oemof-thermal). It's
+copyrighted by the contributors recorded in the version control history of the
+file, available from its original location:
 oemof-thermal/src/oemof/thermal/solar_thermal_collector.py
 
 SPDX-License-Identifier: MIT
@@ -50,7 +51,8 @@ def flat_plate_precalc(
         The tilt of the collector.
 
     collector_azimuth: numeric
-        The azimuth of the collector. Azimuth according to pvlib in decimal degrees East of North.
+        The azimuth of the collector. Azimuth according to pvlib in decimal
+        degrees East of North.
 
     eta_0: numeric
         Optical efficiency of the collector.

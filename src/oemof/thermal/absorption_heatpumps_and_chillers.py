@@ -3,9 +3,9 @@
 """
 This module is designed to hold functions for calculating absorption chillers.
 
-This file is part of project oemof (github.com/oemof/oemof-thermal). It's copyrighted
-by the contributors recorded in the version control history of the file,
-available from its original location:
+This file is part of project oemof (github.com/oemof/oemof-thermal). It's
+copyrighted by the contributors recorded in the version control history of the
+file, available from its original location:
 oemof-thermal/src/oemof/thermal/absorption_heatpumps_and_chillers.py
 
 SPDX-License-Identifier: MIT
@@ -23,7 +23,8 @@ def calc_characteristic_temp(t_hot, t_cool, t_chill, coef_a, coef_e, method):
     Parameters
     ----------
     t_hot : numeric
-        External arithmetic mean fluid temperature of hot water at heat exchanger (generator) [K]
+        External arithmetic mean fluid temperature of hot water at heat
+        exchanger (generator) [K]
 
     t_cool : numeric
         External arithmetic mean fluid temperature of cooling water at

@@ -7,15 +7,21 @@ GenericStorage.
 """
 
 import os
-import pandas as pd
-import numpy as np
 
-from oemof.thermal.stratified_thermal_storage import (
-    calculate_storage_u_value,
-    calculate_losses,
-)
-from oemof.solph import processing, Bus, Flow, Investment, Model, EnergySystem
-from oemof.solph.components import GenericStorage, Source, Sink
+import numpy as np
+import pandas as pd
+from oemof.solph import Bus
+from oemof.solph import EnergySystem
+from oemof.solph import Flow
+from oemof.solph import Investment
+from oemof.solph import Model
+from oemof.solph import processing
+from oemof.solph.components import GenericStorage
+from oemof.solph.components import Sink
+from oemof.solph.components import Source
+
+from oemof.thermal.stratified_thermal_storage import calculate_losses
+from oemof.thermal.stratified_thermal_storage import calculate_storage_u_value
 
 
 def invest_independent_example():
