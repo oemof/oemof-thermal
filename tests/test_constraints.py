@@ -14,11 +14,10 @@ import logging
 import os
 import re
 
-from pyomo.repn.tests.lp_diff import lp_diff
-
 import oemof.solph as solph
 import pandas as pd
 from oemof.solph import helpers
+from pyomo.repn.tests.lp_diff import lp_diff
 
 from oemof.thermal import facades
 
