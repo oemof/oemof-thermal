@@ -32,7 +32,7 @@ In addition to that, the example provides a manual on using the 'calc_cops' func
 to get the COPs of a heat pump, by plotting the temperature dependency of the COP, and COPs of an exemplary
 ground-source heat pump (GSHP) using the soil temperature as low temperature heat reservoir.
 
-The Examples can be found `at compression_heatpumps_and_chiller <https://github.com/oemof/oemof-thermal/tree/master/examples/compression_heatpumps_and_chiller>`_.
+The Examples can be found `at compression_heatpumps_and_chiller <https://github.com/oemof/oemof-thermal/tree/master/examples/compression_heatpump_and_chiller>`_.
 
 **Absorption Chiller**
 
@@ -40,7 +40,7 @@ The first example shows the behaviour of the coefficient of performance and heat
 for different cooling water temperatures based on the characteristic equation method.
 The second example underlines the dependence of the temperature of the cooling water on the cooling capacity.
 
-The Examples can be found `at absorption_heatpumps_and_chiller <https://github.com/oemof/oemof-thermal/tree/master/examples/absorption_heatpumps_and_chiller>`_.
+The Examples can be found `at absorption_heatpumps_and_chiller <https://github.com/oemof/oemof-thermal/tree/master/examples/absorption_heatpump_and_chiller>`_.
 
 **Concentrating solar power (CSP)**
 

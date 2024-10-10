@@ -2,7 +2,7 @@
 
 """
 Adapted from `oemof.tabular's facades
-<https://github.com/oemof/oemof-tabular/blob/master/src/oemof/tabular/facades.py>`_
+<https://github.com/oemof/oemof-tabular/blob/v0.0.3/src/oemof/tabular/facades.py>`_
 
 Facade's are classes providing a simplified view on more complex classes.
 More specifically, the :class:`Facade` s in this module inherit from
