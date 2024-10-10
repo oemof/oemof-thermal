@@ -100,11 +100,6 @@ def airource_hp_const_example():
     energysystem = solph.EnergySystem()
     energysystem.restore(dpath=None, filename=None)
 
-    results = energysystem.results["main"]
-
-    electricity_bus = solph.views.node(results, "electricity")
-    heat_bus = solph.views.node(results, "heat")
-
     string_results = solph.views.convert_keys_to_strings(
         energysystem.results["main"]
     )

@@ -10,7 +10,6 @@ import pandas as pd
 from oemof.solph import Bus  # noqa
 from oemof.solph import EnergySystem
 from oemof.solph import Flow
-from oemof.solph import Model
 from oemof.solph.components import Sink
 from oemof.solph.components import Source
 
@@ -58,7 +57,6 @@ def operation_facade_example():
     print_parameters()
 
     # Set up an energy system model
-    solver = "cbc"
     periods = 100
     datetimeindex = pd.date_range("1/1/2019", periods=periods, freq="H")
     demand_timeseries = np.zeros(periods)

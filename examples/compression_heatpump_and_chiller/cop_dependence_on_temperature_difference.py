@@ -58,9 +58,6 @@ def cop_temperature_example():
         temp_high - temp_diff_q for temp_diff_q in temperature_diff_q_grade
     ]
     for q in quality_grades:
-        list_temp_low = [
-            temp_high - temp_diff_q for temp_diff_q in temperature_diff_q_grade
-        ]
         cops_q_grade[q] = cmpr_hp_chiller.calc_cops(
             temp_high=[temp_high],
             temp_low=list_temp_low_q_grade,
