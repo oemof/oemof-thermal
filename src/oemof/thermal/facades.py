@@ -34,9 +34,9 @@ from oemof.network.network import Node
 from oemof.solph import Flow
 from oemof.solph import Investment
 from oemof.solph import sequence
+from oemof.solph.components import Converter
 from oemof.solph.components import GenericStorage
 from oemof.solph.components import Source
-from oemof.solph.components import Converter
 from oemof.tools.debugging import SuspiciousUsageWarning
 
 from oemof.thermal.concentrating_solar_power import csp_precalc
