@@ -120,8 +120,8 @@ def csp_facade_example():
 
     excess = solph.components.Sink(label="excess", inputs={bth: solph.Flow()})
 
-    # Transformer and storages
-    turbine = solph.components.Transformer(
+    # Converter and storages
+    turbine = solph.components.Converter(
         label="turbine",
         inputs={bth: solph.Flow()},
         outputs={bel: solph.Flow()},

@@ -1,7 +1,7 @@
 """
 Example on how to use the 'calc_cops' function to get the
 COPs of an exemplary air-source heat pump (ASHP) and use the
-pre-calculated COPs in a solph.Transformer.
+pre-calculated COPs in a solph.Converter.
 Furthermore, the maximal possible heat output of the heat pump is
 pre-calculated and varies with the temperature levels of the heat reservoirs.
 
@@ -87,7 +87,7 @@ def airource_hp_variable_example():
 
     # Air-Source Heat Pump
     energysystem.add(
-        solph.components.Transformer(
+        solph.components.Converter(
             label="ASHP",
             inputs={b_el: solph.Flow()},
             outputs={

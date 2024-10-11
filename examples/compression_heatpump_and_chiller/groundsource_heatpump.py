@@ -82,7 +82,7 @@ def groundsource_hp_example():
 
     # Ground-Source Heat Pump
     energysystem.add(
-        solph.components.Transformer(
+        solph.components.Converter(
             label="GSHP",
             inputs={b_el: solph.Flow(), b_th_low: solph.Flow()},
             outputs={

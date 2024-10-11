@@ -90,7 +90,7 @@ def absorption_chiller_example():
 
     # Absorption Chiller
     energysystem.add(
-        solph.components.Transformer(
+        solph.components.Converter(
             label="AC",
             inputs={b_th_high: solph.Flow()},
             outputs={

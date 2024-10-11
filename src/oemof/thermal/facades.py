@@ -36,7 +36,7 @@ from oemof.solph import Investment
 from oemof.solph import sequence
 from oemof.solph.components import GenericStorage
 from oemof.solph.components import Source
-from oemof.solph.components import Transformer
+from oemof.solph.components import Converter
 from oemof.tools.debugging import SuspiciousUsageWarning
 
 from oemof.thermal.concentrating_solar_power import csp_precalc
@@ -411,7 +411,7 @@ class StratifiedThermalStorage(GenericStorage, Facade):
         self._set_flows()
 
 
-class ParabolicTroughCollector(Transformer, Facade):
+class ParabolicTroughCollector(Converter, Facade):
     r"""Parabolic trough collector unit
 
     Parameters
@@ -470,7 +470,7 @@ class ParabolicTroughCollector(Transformer, Facade):
 
         kwargs.update({"_facade_requires_": ["longitude"]})
         Facade.__init__(self, **kwargs)
-        Transformer.__init__(self, label=kwargs.get("label"))
+        Converter.__init__(self, label=kwargs.get("label"))
 
         self.heat_bus = kwargs.get("heat_bus")
 
@@ -608,7 +608,7 @@ class ParabolicTroughCollector(Transformer, Facade):
         self.subnodes = (inflow,)
 
 
-class SolarThermalCollector(Transformer, Facade):
+class SolarThermalCollector(Converter, Facade):
     r"""Solar thermal collector unit
 
     Parameters:
@@ -662,7 +662,7 @@ class SolarThermalCollector(Transformer, Facade):
 
         kwargs.update({"_facade_requires_": ["longitude"]})
         Facade.__init__(self, **kwargs)
-        Transformer.__init__(self, label=kwargs.get("label"))
+        Converter.__init__(self, label=kwargs.get("label"))
 
         self.heat_out_bus = kwargs.get("heat_out_bus")
 

@@ -17,8 +17,8 @@ In
 https://github.com/oemof/oemof-thermal/tree/dev/examples
 you can find an example, how to use the modul to calculate a system
 with flat plate collector, storage and backup to provide a given heat demand.
-The time series of the pre-calculated heat is output of a source (an oemof.solph
-component) representing the collector, and a transformer (an oemof.solph component)
+The time series of the pre-calculated heat is output of a Source (an oemof.solph
+component) representing the collector, and a Converter (an oemof.solph component)
 is used to hold electrical power consumption and further thermal losses of the
 collector in an energy system optimization. In addition, you will find a plot,
 which compares this precalculation with a calculation with a constant efficiency.
@@ -138,7 +138,7 @@ function in comparison to the heat calculated with a fix efficiency.
 
 The results of this precalculation can be used in an oemof energy system model
 as output of a source component. To model the behaviour of a collector, it can be
-complemented with a transformer, which holds the electrical consumption of pumps
+complemented with a Converter, which holds the electrical consumption of pumps
 and peripheral heat losses (see the the examples flat_plate_collector_example.py
 and flat_plate_collector_example_investment.py).
 
@@ -157,7 +157,7 @@ class of the facade module for all parameters which have to be provided.
 
 See flat_plate_collector_example_facade.py for an application example. It models the same
 system as the flat_plate_collector_example.py, but uses the SolarThermalCollector facade
-instead of separate source and transformer.
+instead of separate Source and Converter.
 
 .. code-block:: python
 

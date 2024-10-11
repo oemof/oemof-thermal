@@ -23,7 +23,7 @@ __________________________
 
 An example provides an "how to" on the use of the 'calc_cops' function to get the
 coefficients of performance (COP) of an exemplary air-source heat pump (ASHP). It also shows how to use the
-pre-calculated COPs in a solph.Transformer.
+pre-calculated COPs in a solph.Converter.
 Furthermore, the maximal possible heat output of the heat pump is
 pre-calculated and varies with the temperature levels of the heat reservoirs.
 In the example the ambient air is used as low temperature heat reservoir.

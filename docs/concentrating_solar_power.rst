@@ -16,8 +16,8 @@ system optimizations with oemof.solph.
 In
 https://github.com/oemof/oemof-thermal/tree/dev/examples
 you can find an example on how to use the modul to calculate a CSP power plant.
-A time series of pre-calculated heat flows can be used as input for a source
-(an oemof.solph component), and a transformer (an oemof.solph component) can be
+A time series of pre-calculated heat flows can be used as input for a Source
+(an oemof.solph component), and a Converter (an oemof.solph component) can be
 used to hold electrical power consumption and further thermal losses of the
 collector in an energy system optimization.
 In addition, you will find an example which compares this precalculation with
@@ -175,7 +175,7 @@ calculated with a fix efficiency.
 
 The results of this precalculation can be used in an oemof energy system model
 as output of a source component. To model the behaviour of a collector, it can be
-complemented with a transformer, which holds the electrical consumption of pumps
+complemented with a Converter, which holds the electrical consumption of pumps
 and peripheral heat losses (see the the example csp_plant_collector.py).
 
 ParabolicTroughCollector facade
@@ -193,7 +193,7 @@ class of the facade module for all parameters which have to be provided.
 
 See example_csp_facade.py for an application example. It models the same
 system as the csp_plant_example.py, but uses the ParabolicTroughCollector facade
-instead of separate source and transformer.
+instead of separate Source and Converter.
 
 
 .. code-block:: python

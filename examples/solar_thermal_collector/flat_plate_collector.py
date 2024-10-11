@@ -124,8 +124,8 @@ def flat_plate_collector_example():
         label="collector_excess_heat", inputs={bcol: solph.Flow()}
     )
 
-    # transformer and storage
-    collector = solph.components.Transformer(
+    # converter and storage
+    collector = solph.components.Converter(
         label="collector",
         inputs={bcol: solph.Flow(), bel: solph.Flow()},
         outputs={bth: solph.Flow()},

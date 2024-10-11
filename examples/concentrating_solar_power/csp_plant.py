@@ -135,8 +135,8 @@ def csp_plant_example():
         label="ambience_sol", inputs={bcol: solph.Flow()}
     )
 
-    # Transformer and storages
-    collector = solph.components.Transformer(
+    # Converter and storages
+    collector = solph.components.Converter(
         label="collector",
         inputs={bcol: solph.Flow(), bel: solph.Flow()},
         outputs={bth: solph.Flow()},
@@ -147,7 +147,7 @@ def csp_plant_example():
         },
     )
 
-    turbine = solph.components.Transformer(
+    turbine = solph.components.Converter(
         label="turbine",
         inputs={bth: solph.Flow()},
         outputs={bel: solph.Flow()},

@@ -4,8 +4,8 @@ COPs of a compression chiller using pd.Time-Series as input.
 
 We use the ambient air as heat sink (high temperature reservoir). The input is
 a list to show how the function can be applied on several time steps. The
-output is a list as well and may serve as input (conversion_factor) for a
-oemof.solph.transformer.
+output is a list as well and may serve as input (conversion_factor) for an
+oemof.solph.Converter.
 """
 
 import pandas as pd
