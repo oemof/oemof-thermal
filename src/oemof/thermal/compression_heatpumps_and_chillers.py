@@ -4,9 +4,9 @@
 This module provides functions to calculate compression heat pumps and
 compression chillers.
 
-This file is part of project oemof (github.com/oemof/oemof-thermal). It's copyrighted
-by the contributors recorded in the version control history of the file,
-available from its original location:
+This file is part of project oemof (github.com/oemof/oemof-thermal). It's
+copyrighted by the contributors recorded in the version control history of the
+file, available from its original location:
 oemof-thermal/src/oemof/thermal/compression_heatpumps_and_chillers.py
 
 SPDX-License-Identifier: MIT
@@ -14,9 +14,14 @@ SPDX-License-Identifier: MIT
 import pandas as pd
 
 
-def calc_cops(mode, temp_high, temp_low, quality_grade, temp_threshold_icing=2,
-              factor_icing=None):
-
+def calc_cops(
+    mode,
+    temp_high,
+    temp_low,
+    quality_grade,
+    temp_threshold_icing=2,
+    factor_icing=None,
+):
     r"""
     Calculates the Coefficient of Performance (COP) of heat pumps and chillers
     based on the Carnot efficiency (ideal process) and a scale-down factor.
@@ -51,7 +56,7 @@ def calc_cops(mode, temp_high, temp_low, quality_grade, temp_threshold_icing=2,
     quality_grade : numerical value
         Factor that scales down the efficiency of the real heat pump
         (or chiller) process from the ideal process (Carnot efficiency), where
-         a factor of 1 means teh real process is equal to the ideal one.
+        a factor of 1 means teh real process is equal to the ideal one.
     factor_icing: numerical value
         Sets the relative COP drop caused by icing, where 1 stands for no
         efficiency-drop.
@@ -70,17 +75,22 @@ def calc_cops(mode, temp_high, temp_low, quality_grade, temp_threshold_icing=2,
     """
     # Check if input arguments have proper type and length
     if not isinstance(temp_low, (list, pd.Series)):
-        raise TypeError("Argument 'temp_low' is not of type list or pd.Series!")
+        raise TypeError(
+            "Argument 'temp_low' is not of type list or pd.Series!"
+        )
 
     if not isinstance(temp_high, (list, pd.Series)):
-        raise TypeError("Argument 'temp_high' is not of "
-                        "type list or pd.Series!")
+        raise TypeError(
+            "Argument 'temp_high' is not of " "type list or pd.Series!"
+        )
 
     if len(temp_high) != len(temp_low):
         if (len(temp_high) != 1) and ((len(temp_low) != 1)):
-            raise IndexError("Arguments 'temp_low' and 'temp_high' "
-                             "have to be of same length or one has "
-                             "to be of length 1 !")
+            raise IndexError(
+                "Arguments 'temp_low' and 'temp_high' "
+                "have to be of same length or one has "
+                "to be of length 1 !"
+            )
 
     # if factor_icing is not None and consider_icing is False:
     #     raise ValueError('Argument factor_icing can not be used without '
@@ -95,21 +105,25 @@ def calc_cops(mode, temp_high, temp_low, quality_grade, temp_threshold_icing=2,
     length = max([len(temp_high), len(temp_low)])
     if len(temp_high) == 1:
         list_temp_high_K = [temp_high[0] + 273.15] * length
-    elif len(temp_high) == length:
+    else:  # len(temp_high) == length:
         list_temp_high_K = [t + 273.15 for t in temp_high]
     if len(temp_low) == 1:
         list_temp_low_K = [temp_low[0] + 273.15] * length
-    elif len(temp_low) == length:
+    else:  # len(temp_low) == length:
         list_temp_low_K = [t + 273.15 for t in temp_low]
 
     # Calculate COPs depending on selected mode (without icing).
     if factor_icing is None:
         if mode == "heat_pump":
-            cops = [quality_grade * t_h / (t_h - t_l) for
-                    t_h, t_l in zip(list_temp_high_K, list_temp_low_K)]
+            cops = [
+                quality_grade * t_h / (t_h - t_l)
+                for t_h, t_l in zip(list_temp_high_K, list_temp_low_K)
+            ]
         elif mode == "chiller":
-            cops = [quality_grade * t_l / (t_h - t_l) for
-                    t_h, t_l in zip(list_temp_high_K, list_temp_low_K)]
+            cops = [
+                quality_grade * t_l / (t_h - t_l)
+                for t_h, t_l in zip(list_temp_high_K, list_temp_low_K)
+            ]
 
     # Calculate COPs of a heat pump and lower COP when icing occurs.
     elif factor_icing is not None:
@@ -122,8 +136,9 @@ def calc_cops(mode, temp_high, temp_low, quality_grade, temp_threshold_icing=2,
                 if t_l >= temp_threshold_icing + 273.15:
                     cops = cops + [quality_grade * t_h / (t_h - t_l)]
         elif mode == "chiller":
-            raise ValueError("Argument 'factor_icing' has "
-                             "to be None for mode='chiller'!")
+            raise ValueError(
+                "Argument 'factor_icing' has " "to be None for mode='chiller'!"
+            )
     return cops
 
 
@@ -165,50 +180,54 @@ def calc_max_Q_dot_chill(nominal_conditions, cops):
     if not isinstance(cops, list):
         raise TypeError("Argument 'cops' is not of type list!")
 
-    nominal_cop = (nominal_conditions['nominal_Q_chill'] / nominal_conditions[
-        'nominal_el_consumption'])
+    nominal_cop = (
+        nominal_conditions["nominal_Q_chill"]
+        / nominal_conditions["nominal_el_consumption"]
+    )
     max_Q_chill = [actual_cop / nominal_cop for actual_cop in cops]
     return max_Q_chill
 
 
 def calc_max_Q_dot_heat(nominal_conditions, cops):
     r"""
-        Calculates the maximal heating capacity (relative value) of a
-        heat pump.
+    Calculates the maximal heating capacity (relative value) of a
+    heat pump.
 
-        Note
-        ----
-        This function assumes the heating capacity of a heat pump can exceed
-        the rated nominal capacity (e.g., from the technical specification
-        sheet). That means: The value of :py:obj:`max_Q_hot` can be greater
-        than 1.
-        Make sure your actual heat pump is capable of doing so.
-        If not, use 1 for the maximal heating capacity.
+    Note
+    ----
+    This function assumes the heating capacity of a heat pump can exceed
+    the rated nominal capacity (e.g., from the technical specification
+    sheet). That means: The value of :py:obj:`max_Q_hot` can be greater
+    than 1.
+    Make sure your actual heat pump is capable of doing so.
+    If not, use 1 for the maximal heating capacity.
 
     .. calc_max_Q_dot_heat-equations:
 
         :math:`\dot{Q}_\mathrm{hot, max}
         = \frac{COP_\mathrm{actual}}{COP_\mathrm{nominal}}`
 
-        Parameters
-        ----------
-        nominal_conditions : dict
-            Dictionary describing one operating point (e.g., operation
-            under STC) of the heat pump by its
-            heating capacity, its electricity consumption and its COP
-            ('nominal_Q_hot', 'nominal_el_consumption' and 'nominal_cop')
-        cops : list of numerical values
-            Actual COP
+    Parameters
+    ----------
+    nominal_conditions : dict
+        Dictionary describing one operating point (e.g., operation
+        under STC) of the heat pump by its
+        heating capacity, its electricity consumption and its COP
+        ('nominal_Q_hot', 'nominal_el_consumption' and 'nominal_cop')
+    cops : list of numerical values
+        Actual COP
 
-        Returns
-        -------
-        max_Q_hot : list of numerical values
-            Maximal heating capacity (relative value). Value is equal or
-            greater than 0 and can be greater than 1.
+    Returns
+    -------
+    max_Q_hot : list of numerical values
+        Maximal heating capacity (relative value). Value is equal or
+        greater than 0 and can be greater than 1.
 
-        """
-    nominal_cop = (nominal_conditions['nominal_Q_hot'] / nominal_conditions[
-        'nominal_el_consumption'])
+    """
+    nominal_cop = (
+        nominal_conditions["nominal_Q_hot"]
+        / nominal_conditions["nominal_el_consumption"]
+    )
     max_Q_hot = [actual_cop / nominal_cop for actual_cop in cops]
     return max_Q_hot
 
@@ -244,9 +263,11 @@ def calc_chiller_quality_grade(nominal_conditions):
         Quality grade
 
     """
-    t_h = nominal_conditions['t_high_nominal'] + 273.15
-    t_l = nominal_conditions['t_low_nominal'] + 273.15
-    nominal_cop = (nominal_conditions['nominal_Q_chill'] / nominal_conditions[
-        'nominal_el_consumption'])
+    t_h = nominal_conditions["t_high_nominal"] + 273.15
+    t_l = nominal_conditions["t_low_nominal"] + 273.15
+    nominal_cop = (
+        nominal_conditions["nominal_Q_chill"]
+        / nominal_conditions["nominal_el_consumption"]
+    )
     q_grade = nominal_cop / (t_l / (t_h - t_l))
     return q_grade

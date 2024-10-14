@@ -87,5 +87,5 @@ enhancements. Or you can contribute a new approach that helps to model thermal e
 systems. If you want to contribute, fork the project at github, develop your features on a new
 branch and finally open a pull request to merge your contribution to oemof.thermal.
 
-As oemof.thermal is part of the oemof developer group we use the same developer rules, described
-`here <http://oemof.readthedocs.io/en/stable/developing_oemof.html>`_.
+As oemof.thermal is part of the oemof developer group we use the same developer rules,
+described in the `oemof documentation <https://oemof.readthedocs.io/en/latest/>`_.

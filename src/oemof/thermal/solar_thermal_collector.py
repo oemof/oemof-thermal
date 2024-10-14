@@ -1,19 +1,20 @@
 # -*- coding: utf-8
 
 """
-This module is designed to hold functions for calculating a solar thermal collector.
+This module is designed to hold functions for calculating a solar thermal
+collector.
 
-This file is part of project oemof (github.com/oemof/oemof-thermal). It's copyrighted
-by the contributors recorded in the version control history of the file,
-available from its original location:
+This file is part of project oemof (github.com/oemof/oemof-thermal). It's
+copyrighted by the contributors recorded in the version control history of the
+file, available from its original location:
 oemof-thermal/src/oemof/thermal/solar_thermal_collector.py
 
 SPDX-License-Identifier: MIT
 """
 
 
-import pvlib
 import pandas as pd
+import pvlib
 
 
 def flat_plate_precalc(
@@ -28,7 +29,7 @@ def flat_plate_precalc(
     delta_temp_n,
     irradiance_global,
     irradiance_diffuse,
-    temp_amb
+    temp_amb,
 ):
     r"""
     Calculates collectors heat, efficiency and irradiance
@@ -50,7 +51,8 @@ def flat_plate_precalc(
         The tilt of the collector.
 
     collector_azimuth: numeric
-        The azimuth of the collector. Azimuth according to pvlib in decimal degrees East of North.
+        The azimuth of the collector. Azimuth according to pvlib in decimal
+        degrees East of North.
 
     eta_0: numeric
         Optical efficiency of the collector.
@@ -86,9 +88,9 @@ def flat_plate_precalc(
     # Creation of a df with 3 columns
     data = pd.DataFrame(
         {
-            'ghi': irradiance_global,
-            'dhi': irradiance_diffuse,
-            'temp_amb': temp_amb
+            "ghi": irradiance_global,
+            "dhi": irradiance_diffuse,
+            "temp_amb": temp_amb,
         }
     )
 
@@ -105,20 +107,20 @@ def flat_plate_precalc(
     )
 
     dni = pvlib.irradiance.dni(
-        ghi=data['ghi'], dhi=data['dhi'], zenith=solposition['apparent_zenith']
+        ghi=data["ghi"], dhi=data["dhi"], zenith=solposition["apparent_zenith"]
     )
 
     total_irradiation = pvlib.irradiance.get_total_irradiance(
         surface_tilt=collector_tilt,
         surface_azimuth=collector_azimuth,
-        solar_zenith=solposition['apparent_zenith'],
-        solar_azimuth=solposition['azimuth'],
+        solar_zenith=solposition["apparent_zenith"],
+        solar_azimuth=solposition["azimuth"],
         dni=dni.fillna(0),  # fill NaN values with '0'
-        ghi=data['ghi'],
-        dhi=data['dhi'],
+        ghi=data["ghi"],
+        dhi=data["dhi"],
     )
 
-    data['col_ira'] = total_irradiation['poa_global']
+    data["col_ira"] = total_irradiation["poa_global"]
 
     eta_c = calc_eta_c_flate_plate(
         eta_0,
@@ -126,11 +128,11 @@ def flat_plate_precalc(
         a_2,
         temp_collector_inlet,
         delta_temp_n,
-        data['temp_amb'],
-        total_irradiation['poa_global'],
+        data["temp_amb"],
+        total_irradiation["poa_global"],
     )
-    data['eta_c'] = eta_c
-    collectors_heat = eta_c * total_irradiation['poa_global']
+    data["eta_c"] = eta_c
+    collectors_heat = eta_c * total_irradiation["poa_global"]
     data["collectors_heat"] = collectors_heat
 
     return data

@@ -12,7 +12,7 @@ _____
 This module was developed to provide COP calculations
 based on temperatures for energy system optimizations with oemof.solph.
 
-A time series of pre-calculated COPs can be used as input for a transformer
+A time series of pre-calculated COPs can be used as input for a Converter
 (an oemof.solph component) in an energy system optimization.
 Discover more possibilities to use this module with our examples:
 https://github.com/oemof/oemof-thermal/tree/dev/examples
@@ -166,7 +166,7 @@ Do NOT use this function to determine the input for `calc_cops()`!
 References
 __________
 
-.. [1] VDE ETG Energietechnik, VDE-Studie "Potenziale für Strom im Wärmemarkt bis 2050 - Wärmeversorgung in flexiblen Energieversorgungssystemen mit hohen Anteilen an erneuerbaren Energien". 2015. (http://www.energiedialog2050.de/BASE/DOWNLOADS/VDE_ST_ETG_Warmemarkt_RZ-web.pdf)
+.. [1] VDE ETG Energietechnik, VDE-Studie "Potenziale für Strom im Wärmemarkt bis 2050 - Wärmeversorgung in flexiblen Energieversorgungssystemen mit hohen Anteilen an erneuerbaren Energien". 2015.
 
 .. [2] C. Arpagaus, Hochtemperatur-Wärmepumpen - Marktübersicht, Stand der Technik und Anwendungsbeispiele. Berlin, Offenbach: VDE-Verlag, 2019.
 
