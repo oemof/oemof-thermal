@@ -547,7 +547,7 @@ class ParabolicTroughCollector(Converter, Facade):
                 irradiance_method=self.irradiance_method,
                 E_dir_hor=self.irradiance,
             )
-        if self.irradiance_method == "normal":
+        elif self.irradiance_method == "normal":
             heat = csp_precalc(
                 self.latitude,
                 self.longitude,
@@ -569,6 +569,10 @@ class ParabolicTroughCollector(Converter, Facade):
                 loss_method=self.loss_method,
                 irradiance_method=self.irradiance_method,
                 dni=self.irradiance,
+            )
+        else:
+            raise NotImplementedError(
+                f"Unknown irradiance_method: {self.irradiance_method}"
             )
 
         self.collectors_heat = heat["collector_heat"]
