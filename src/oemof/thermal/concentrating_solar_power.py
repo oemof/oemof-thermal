@@ -3,28 +3,44 @@
 """
 This module is designed to hold functions which are necessary for the CSP.
 
-This file is part of project oemof (github.com/oemof/oemof-thermal). It's copyrighted
-by the contributors recorded in the version control history of the file,
-available from its original location:
+This file is part of project oemof (github.com/oemof/oemof-thermal). It's
+copyrighted by the contributors recorded in the version control history of the
+file, available from its original location:
 oemof-thermal/src/oemof/thermal/concentrating_solar_power.py
 
 SPDX-License-Identifier: MIT
 """
 
 
-import pvlib
-import pandas as pd
-import numpy as np
 import warnings
 
+import numpy as np
+import pandas as pd
+import pvlib
 
-def csp_precalc(lat, long, collector_tilt, collector_azimuth, cleanliness,
-                eta_0, c_1, c_2,
-                temp_collector_inlet, temp_collector_outlet, temp_amb,
-                a_1, a_2, a_3=0, a_4=0, a_5=0, a_6=0,
-                loss_method='Janotte',
-                irradiance_method='horizontal',
-                **kwargs):
+
+def csp_precalc(
+    lat,
+    long,
+    collector_tilt,
+    collector_azimuth,
+    cleanliness,
+    eta_0,
+    c_1,
+    c_2,
+    temp_collector_inlet,
+    temp_collector_outlet,
+    temp_amb,
+    a_1,
+    a_2,
+    a_3=0,
+    a_4=0,
+    a_5=0,
+    a_6=0,
+    loss_method="Janotte",
+    irradiance_method="horizontal",
+    **kwargs,
+):
     r"""
     Calculates collectors efficiency and irradiance according to [1] and the
     heat of the thermal collector. For the calculation of irradiance pvlib [2]
@@ -133,84 +149,109 @@ def csp_precalc(lat, long, collector_tilt, collector_azimuth, cleanliness,
     https://doi.org/10.21105/joss.00884
     """
 
-    if loss_method not in ['Janotte', 'Andasol']:
-        raise ValueError(
-            "loss_method should be 'Janotte' or 'Andasol'")
+    if loss_method not in ["Janotte", "Andasol"]:
+        raise ValueError("loss_method should be 'Janotte' or 'Andasol'")
 
-    if irradiance_method not in ['normal', 'horizontal']:
+    if irradiance_method not in ["normal", "horizontal"]:
         raise ValueError(
-            "irradiance_method should be 'normal' or 'horizontal'")
+            "irradiance_method should be 'normal' or 'horizontal'"
+        )
 
-    required_dict = {'horizontal': 'E_dir_hor', 'normal': 'dni'}
+    required_dict = {"horizontal": "E_dir_hor", "normal": "dni"}
 
     irradiance_required = required_dict[irradiance_method]
 
     if irradiance_required not in kwargs:
         raise AttributeError(
-            f"'{irradiance_required}' necessary for {irradiance_method} is not provided")
+            f"'{irradiance_required}' necessary for {irradiance_method} is not provided"
+        )
 
-    if loss_method == 'Andasol' and (c_2 != 0):
-        warnings.warn(
-            "Parameter c_2 is not used for loss method 'Andasol'")
+    if loss_method == "Andasol" and (c_2 != 0):
+        warnings.warn("Parameter c_2 is not used for loss method 'Andasol'")
 
-    if loss_method == 'Andasol' and (a_3 == 0 or a_4 == 0 or a_5 == 0 or a_6 == 0):
+    if loss_method == "Andasol" and (
+        a_3 == 0 or a_4 == 0 or a_5 == 0 or a_6 == 0
+    ):
         warnings.warn(
-            "Parameters a_3 to a_6 are required for loss method 'Andasol'")
+            "Parameters a_3 to a_6 are required for loss method 'Andasol'"
+        )
 
     irradiance = kwargs.get(irradiance_required)
 
     if not temp_amb.index.equals(irradiance.index):
-        raise IndexError(f"Index of temp_amb and {irradiance_required} have to be the same.")
+        raise IndexError(
+            f"Index of temp_amb and {irradiance_required} have to be the same."
+        )
 
     # Creation of a df with 2 columns
-    data = pd.DataFrame({'irradiance': irradiance,
-                         't_amb': temp_amb})
+    data = pd.DataFrame({"irradiance": irradiance, "t_amb": temp_amb})
 
     # Calculation of geometrical position of collector with the pvlib
     solarposition = pvlib.solarposition.get_solarposition(
-        time=data.index,
-        latitude=lat,
-        longitude=long)
+        time=data.index, latitude=lat, longitude=long
+    )
 
     # Calculation of the tracking data with the pvlib
     tracking_data = pvlib.tracking.singleaxis(
-        solarposition['apparent_zenith'], solarposition['azimuth'],
-        axis_tilt=collector_tilt, axis_azimuth=collector_azimuth)
+        solarposition["apparent_zenith"],
+        solarposition["azimuth"],
+        axis_tilt=collector_tilt,
+        axis_azimuth=collector_azimuth,
+    )
 
     # Calculation of the irradiance which hits the collectors surface
     irradiance_on_collector = calc_irradiance(
-        tracking_data['surface_tilt'], tracking_data['surface_azimuth'],
-        solarposition['apparent_zenith'], solarposition['azimuth'],
-        data['irradiance'], irradiance_method)
+        tracking_data["surface_tilt"],
+        tracking_data["surface_azimuth"],
+        solarposition["apparent_zenith"],
+        solarposition["azimuth"],
+        data["irradiance"],
+        irradiance_method,
+    )
 
     # Calculation of the irradiance which reaches the collector after all
     # losses (cleanliness)
     collector_irradiance = calc_collector_irradiance(
-        irradiance_on_collector, cleanliness)
+        irradiance_on_collector, cleanliness
+    )
 
     # Calculation of the incidence angle modifier
     iam = calc_iam(
-        a_1, a_2, a_3, a_4, a_5, a_6, tracking_data['aoi'], loss_method)
+        a_1, a_2, a_3, a_4, a_5, a_6, tracking_data["aoi"], loss_method
+    )
 
     # Calculation of the collectors efficiency
     eta_c = calc_eta_c(
-        eta_0, c_1, c_2, iam, temp_collector_inlet, temp_collector_outlet,
-        data['t_amb'], collector_irradiance, loss_method)
+        eta_0,
+        c_1,
+        c_2,
+        iam,
+        temp_collector_inlet,
+        temp_collector_outlet,
+        data["t_amb"],
+        collector_irradiance,
+        loss_method,
+    )
 
     # Calculation of the collectors heat
-    collector_heat = calc_heat_coll(
-        eta_c, collector_irradiance)
+    collector_heat = calc_heat_coll(eta_c, collector_irradiance)
 
     # Writing the results in the output df
-    data['collector_irradiance'] = collector_irradiance
-    data['eta_c'] = eta_c
-    data['collector_heat'] = collector_heat
+    data["collector_irradiance"] = collector_irradiance
+    data["eta_c"] = eta_c
+    data["collector_heat"] = collector_heat
 
     return data
 
 
-def calc_irradiance(surface_tilt, surface_azimuth, apparent_zenith, azimuth,
-                    irradiance, irradiance_method):
+def calc_irradiance(
+    surface_tilt,
+    surface_azimuth,
+    apparent_zenith,
+    azimuth,
+    irradiance,
+    irradiance_method,
+):
     r"""
 
     Parameters
@@ -240,16 +281,17 @@ def calc_irradiance(surface_tilt, surface_azimuth, apparent_zenith, azimuth,
         Irradiance which hits collectors surface.
 
     """
-    if irradiance_method == 'horizontal':
+    if irradiance_method == "horizontal":
         poa_horizontal_ratio = pvlib.irradiance.poa_horizontal_ratio(
-            surface_tilt, surface_azimuth, apparent_zenith, azimuth)
+            surface_tilt, surface_azimuth, apparent_zenith, azimuth
+        )
         poa_horizontal_ratio[poa_horizontal_ratio < 0] = 0
         irradiance_on_collector = irradiance * poa_horizontal_ratio
 
-    elif irradiance_method == 'normal':
+    elif irradiance_method == "normal":
         irradiance_on_collector = pvlib.irradiance.beam_component(
-            surface_tilt, surface_azimuth, apparent_zenith, azimuth,
-            irradiance)
+            surface_tilt, surface_azimuth, apparent_zenith, azimuth, irradiance
+        )
 
     return irradiance_on_collector
 
@@ -318,18 +360,33 @@ def calc_iam(a_1, a_2, a_3, a_4, a_5, a_6, aoi, loss_method):
     Incidence angle modifier: series of numeric
 
     """
-    if loss_method == 'Janotte':
+    if loss_method == "Janotte":
         iam = 1 - a_1 * abs(aoi) - a_2 * aoi**2
 
-    if loss_method == 'Andasol':
-        iam = (1 - a_1 * abs(aoi) - a_2 * aoi**2 - a_3 * aoi**3 - a_4 * aoi**4
-               - a_5 * aoi**5 - a_6 * aoi**6)
+    if loss_method == "Andasol":
+        iam = (
+            1
+            - a_1 * abs(aoi)
+            - a_2 * aoi**2
+            - a_3 * aoi**3
+            - a_4 * aoi**4
+            - a_5 * aoi**5
+            - a_6 * aoi**6
+        )
     return iam
 
 
-def calc_eta_c(eta_0, c_1, c_2, iam,
-               temp_collector_inlet, temp_collector_outlet, temp_amb,
-               collector_irradiance, loss_method):
+def calc_eta_c(
+    eta_0,
+    c_1,
+    c_2,
+    iam,
+    temp_collector_inlet,
+    temp_collector_outlet,
+    temp_amb,
+    collector_irradiance,
+    loss_method,
+):
     r"""
     Calculates collectors efficiency depending on the loss method
 
@@ -380,12 +437,17 @@ def calc_eta_c(eta_0, c_1, c_2, iam,
 
     """
 
-    if loss_method == 'Janotte':
-        delta_temp = (temp_collector_inlet + temp_collector_outlet) / 2 - temp_amb
-        eta_c = eta_0 * iam - c_1 * delta_temp / collector_irradiance - c_2\
-            * delta_temp ** 2 / collector_irradiance
+    if loss_method == "Janotte":
+        delta_temp = (
+            temp_collector_inlet + temp_collector_outlet
+        ) / 2 - temp_amb
+        eta_c = (
+            eta_0 * iam
+            - c_1 * delta_temp / collector_irradiance
+            - c_2 * delta_temp**2 / collector_irradiance
+        )
 
-    if loss_method == 'Andasol':
+    if loss_method == "Andasol":
         eta_c = eta_0 * iam - c_1 / collector_irradiance
 
     eta_c[eta_c < 0] = 0

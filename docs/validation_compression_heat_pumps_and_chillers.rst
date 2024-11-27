@@ -11,7 +11,7 @@ The validation of the compression heat pump and chiller has been conducted withi
 <https://github.com/oemof-heat>`_.
 Monitored data of the two components in combination with PV without storage has been provided by Universidad
 Politécnica de Madrid (UPM). An open access publication containing further description of the data and experiments done
-in [2] is planned for November 2020.
+in [2]_ is planned for November 2020.
 Both, heat pump and chiller, are working with air to air technology.
 The set of data contains amongst others external and internal temperatures of the components and a calculated
 Coefficient of performance (COP) / Energy Efficiency Ratio (EER) value. The code used for the validation can
@@ -54,7 +54,7 @@ temperature hub as well as the relation between residuals and monitored coeffici
 Results of the chiller
 ______________________
 
-Typical EER of chillers used for cooling are around 4 to 5 [1]. By adhering to these reference values we conclude
+Typical EER of chillers used for cooling are around 4 to 5 [1]_. By adhering to these reference values we conclude
 that EERs with quality grades ranging from 0.25 to 0.4 give fitting results.
 
 The RMSE for the validated quality grades presents the standard deviation of the residuals. Among the range of quality

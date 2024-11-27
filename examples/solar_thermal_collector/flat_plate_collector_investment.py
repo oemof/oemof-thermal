@@ -11,18 +11,19 @@ SPDX-License-Identifier: GPL-3.0-or-later
 import os
 
 import pandas as pd
+from oemof.tools import economics
 
 from oemof import solph
-from oemof.tools import economics
 from oemof.thermal.solar_thermal_collector import flat_plate_precalc
 
 from ._plots import plot_collector_heat
 
+
 def flat_plate_collector_investment_example():
     # Set paths
     base_path = os.path.dirname(os.path.abspath(os.path.join(__file__)))
-    data_path = os.path.join(base_path, 'data')
-    results_path = os.path.join(base_path, 'results')
+    data_path = os.path.join(base_path, "data")
+    results_path = os.path.join(base_path, "results")
     if not os.path.exists(results_path):
         os.mkdir(results_path)
 
@@ -39,17 +40,18 @@ def flat_plate_collector_investment_example():
     delta_temp_n = 10
 
     # Read input data
-    input_data = pd.read_csv(os.path.join(data_path, 'data_flat_collector.csv')).head(periods)
-    input_data['Datum'] = pd.to_datetime(input_data['Datum'])
-    input_data.set_index('Datum', inplace=True)
-    input_data.index = input_data.index.tz_localize(tz='Europe/Berlin')
-    input_data = input_data.asfreq('H')
+    input_data = pd.read_csv(
+        os.path.join(data_path, "data_flat_collector.csv")
+    ).head(periods)
+    input_data["Datum"] = pd.to_datetime(input_data["Datum"])
+    input_data.set_index("Datum", inplace=True)
+    input_data.index = input_data.index.tz_localize(tz="Europe/Berlin")
+    input_data = input_data.asfreq("H")
 
     demand_df = pd.read_csv(
-        os.path.join(data_path, 'heat_demand.csv'),
-        sep=','
+        os.path.join(data_path, "heat_demand.csv"), sep=","
     )
-    demand = list(demand_df['heat_demand'].iloc[:periods])
+    demand = list(demand_df["heat_demand"].iloc[:periods])
 
     # Precalculation
     # - calculate global irradiance on the collector area
@@ -65,16 +67,14 @@ def flat_plate_collector_investment_example():
         a_2,
         temp_collector_inlet,
         delta_temp_n,
-        irradiance_global=input_data['global_horizontal_W_m2'],
-        irradiance_diffuse=input_data['diffuse_horizontal_W_m2'],
-        temp_amb=input_data['temp_amb'],
+        irradiance_global=input_data["global_horizontal_W_m2"],
+        irradiance_diffuse=input_data["diffuse_horizontal_W_m2"],
+        temp_amb=input_data["temp_amb"],
     )
 
     precalc_data.to_csv(
-        os.path.join(results_path, 'flate_plate_precalcs.csv'),
-        sep=';'
+        os.path.join(results_path, "flate_plate_precalcs.csv"), sep=";"
     )
-
 
     # Regular oemof system
 
@@ -89,17 +89,17 @@ def flat_plate_collector_investment_example():
     conversion_storage = 0.98
 
     # Busses
-    bth = solph.Bus(label='thermal')
-    bel = solph.Bus(label='electricity')
-    bcol = solph.Bus(label='solar')
+    bth = solph.Bus(label="thermal")
+    bel = solph.Bus(label="electricity")
+    bcol = solph.Bus(label="solar")
 
     # Source for collector heat.
     # - actual_value is the precalculated collector heat -
     collector_heat = solph.components.Source(
-        label='collector_heat',
+        label="collector_heat",
         outputs={
             bcol: solph.Flow(
-                fix=precalc_data['collectors_heat'],
+                fix=precalc_data["collectors_heat"],
                 investment=solph.Investment(ep_costs=costs_collector),
             )
         },
@@ -107,36 +107,37 @@ def flat_plate_collector_investment_example():
 
     # Sources and sinks
     el_grid = solph.components.Source(
-        label='grid', outputs={bel: solph.Flow(variable_costs=costs_electricity)}
+        label="grid",
+        outputs={bel: solph.Flow(variable_costs=costs_electricity)},
     )
 
     backup = solph.components.Source(
-        label='backup', outputs={bth: solph.Flow(variable_costs=backup_costs)}
+        label="backup", outputs={bth: solph.Flow(variable_costs=backup_costs)}
     )
 
     consumer = solph.components.Sink(
-        label='demand',
+        label="demand",
         inputs={bth: solph.Flow(fix=demand, nominal_value=1)},
     )
 
     collector_excess_heat = solph.components.Sink(
-        label='collector_excess_heat', inputs={bcol: solph.Flow()}
+        label="collector_excess_heat", inputs={bcol: solph.Flow()}
     )
 
-    # Transformer and storage
-    collector = solph.components.Transformer(
-        label='collector',
+    # Converter and storage
+    collector = solph.components.Converter(
+        label="collector",
         inputs={bcol: solph.Flow(), bel: solph.Flow()},
         outputs={bth: solph.Flow()},
         conversion_factors={
             bcol: 1,
             bel: elec_consumption * (1 - peripheral_losses),
-            bth: 1 - peripheral_losses
+            bth: 1 - peripheral_losses,
         },
     )
 
     storage = solph.components.GenericStorage(
-        label='storage',
+        label="storage",
         inputs={bth: solph.Flow()},
         outputs={bth: solph.Flow()},
         loss_rate=storage_loss_rate,
@@ -164,18 +165,23 @@ def flat_plate_collector_investment_example():
 
     # Create and solve the optimization model
     model = solph.Model(energysystem)
-    model.solve(solver='cbc', solve_kwargs={'tee': True})
+    model.solve(solver="cbc", solve_kwargs={"tee": True})
 
     # Get results
     results = solph.processing.results(model)
 
-    electricity_bus = solph.views.node(results, 'electricity')['sequences']
-    thermal_bus = solph.views.node(results, 'thermal')['sequences']
-    solar_bus = solph.views.node(results, 'solar')['sequences']
+    electricity_bus = solph.views.node(results, "electricity")["sequences"]
+    thermal_bus = solph.views.node(results, "thermal")["sequences"]
+    solar_bus = solph.views.node(results, "solar")["sequences"]
     df = pd.merge(
-        pd.merge(electricity_bus, thermal_bus, left_index=True, right_index=True),
-        solar_bus, left_index=True, right_index=True)
-    df.to_csv(os.path.join(results_path, 'flat_plate_results.csv'))
+        pd.merge(
+            electricity_bus, thermal_bus, left_index=True, right_index=True
+        ),
+        solar_bus,
+        left_index=True,
+        right_index=True,
+    )
+    df.to_csv(os.path.join(results_path, "flat_plate_results.csv"))
 
     # Example plot
     plot_collector_heat(precalc_data, periods, eta_0)

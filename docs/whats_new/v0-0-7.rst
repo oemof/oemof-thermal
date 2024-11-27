@@ -1,0 +1,14 @@
+v0.0.7 (November 27, 2024)
+==========================
+
+Bug fixes
+---------
+
+* Improve quality of pip package
+* Make compatible to oemof.network v0.5
+
+Contributors
+------------
+
+* Patrik Schönfeldt
+
