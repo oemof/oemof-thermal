@@ -17,6 +17,7 @@ Bug fixes
 ---------
 
 * Improve quality of pip package
+* Make compatible to oemof.network v0.5
 
 
 Known issues
