@@ -42,7 +42,7 @@ def chiller_cop_timeseries_example():
         23,
     ]
 
-    timestamps = pd.date_range("20200101", periods=24, freq="H")
+    timestamps = pd.date_range("20200101", periods=24, freq="h")
 
     # Convert temp_ambient to pandas DataFrame
     df_temp_ambient = pd.DataFrame(temp_ambient, timestamps)

@@ -1,0 +1,13 @@
+v0.0.8 (December 13, 2024)
+==========================
+
+Other changes
+-------------
+
+* Make compatible to Pandas 2
+* Make compatible to PVLib 0.11
+
+Contributors
+------------
+
+* Patrik Schönfeldt

@@ -87,7 +87,7 @@ def operation_example():
     # Set up an energy system model
     solver = "cbc"
     periods = 100
-    datetimeindex = pd.date_range("1/1/2019", periods=periods, freq="H")
+    datetimeindex = pd.date_range("1/1/2019", periods=periods, freq="h")
     demand_timeseries = np.zeros(periods)
     demand_timeseries[-5:] = 1
     heat_feedin_timeseries = np.zeros(periods)
