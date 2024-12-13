@@ -134,7 +134,9 @@ def csp_andasol_example():
             E_dir_hor=df_temp_amb_series["E_dir_hor"],
         )
 
-        df_result = df_result.append(data_precalc_temp_amb, ignore_index=True)
+        df_result = pd.concat(
+            [df_result, data_precalc_temp_amb], ignore_index=True
+        )
 
     _, ax = plt.subplots()
     ax.plot(

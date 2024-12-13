@@ -83,7 +83,7 @@ class TestConstraints:
             r"^objective.*(?=s\.t\.)", re.DOTALL | re.MULTILINE
         )
 
-        cls.date_time_index = pd.date_range("1/1/2012", periods=3, freq="H")
+        cls.date_time_index = pd.date_range("1/1/2012", periods=3, freq="h")
 
         cls.tmpdir = helpers.extend_basic_path("tmp")
         logging.info(cls.tmpdir)

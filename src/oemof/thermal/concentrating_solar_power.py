@@ -282,9 +282,15 @@ def calc_irradiance(
 
     """
     if irradiance_method == "horizontal":
-        poa_horizontal_ratio = pvlib.irradiance.poa_horizontal_ratio(
+        cos_poa_zen = pvlib.irradiance.aoi_projection(
             surface_tilt, surface_azimuth, apparent_zenith, azimuth
         )
+
+        cos_solar_zenith = pvlib.tools.cosd(apparent_zenith)
+
+        # ratio of tilted and horizontal beam irradiance
+        poa_horizontal_ratio = cos_poa_zen / cos_solar_zenith
+
         poa_horizontal_ratio[poa_horizontal_ratio < 0] = 0
         irradiance_on_collector = irradiance * poa_horizontal_ratio
 

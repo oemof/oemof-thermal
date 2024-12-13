@@ -85,7 +85,7 @@ def plots():
     # Set up an energy system model
     solver = "cbc"
     periods = 800
-    datetimeindex = pd.date_range("1/1/2019", periods=periods, freq="H")
+    datetimeindex = pd.date_range("1/1/2019", periods=periods, freq="h")
 
     energysystem = EnergySystem(timeindex=datetimeindex)
 

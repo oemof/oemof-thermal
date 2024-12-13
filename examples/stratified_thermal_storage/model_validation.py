@@ -46,7 +46,7 @@ def model_validation():
 
         # Set up an energy system model
         periods = 10
-        datetimeindex = pd.date_range("1/1/2019", periods=periods, freq="H")
+        datetimeindex = pd.date_range("1/1/2019", periods=periods, freq="h")
         demand_timeseries = np.zeros(periods)
         heat_feedin_timeseries = np.zeros(periods)
 
