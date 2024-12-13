@@ -1,29 +1,11 @@
-v0.0.7.dev (???)
-================
-
-API Changes
------------
-
-New features
-------------
-
-New components/constraints
---------------------------
-
-Documentation
--------------
+v0.0.7 (November 27, 2024)
+==========================
 
 Bug fixes
 ---------
 
 * Improve quality of pip package
 
-
-Known issues
-------------
-
-Other changes
--------------
 
 Contributors
 ------------
