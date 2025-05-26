@@ -220,7 +220,6 @@ class StratifiedThermalStorage(GenericStorage, Facade):
         outputs=None,
         nominal_storage_capacity=None,
         initial_storage_level=None,
-        investment=None,
         invest_relation_input_output=None,
         invest_relation_input_capacity=None,
         invest_relation_output_capacity=None,
@@ -262,7 +261,6 @@ class StratifiedThermalStorage(GenericStorage, Facade):
                 outputs=outputs,
                 nominal_storage_capacity=nominal_storage_capacity,
                 initial_storage_level=initial_storage_level,
-                investment=investment,
                 invest_relation_input_output=invest_relation_input_output,
                 invest_relation_input_capacity=invest_relation_input_capacity,
                 invest_relation_output_capacity=invest_relation_output_capacity,
@@ -364,7 +362,7 @@ class StratifiedThermalStorage(GenericStorage, Facade):
 
             # set capacity costs at one of the flows
             fi = Flow(
-                investment=Investment(
+                nominal_value=Investment(
                     ep_costs=self.capacity_cost,
                     maximum=self.capacity_potential,
                     existing=self.capacity,
@@ -373,7 +371,7 @@ class StratifiedThermalStorage(GenericStorage, Facade):
             )
             # set investment, but no costs (as relation input / output = 1)
             fo = Flow(
-                investment=Investment(),
+                nominal_value=Investment(),
                 variable_costs=self.marginal_cost,
                 **self.output_parameters,
             )

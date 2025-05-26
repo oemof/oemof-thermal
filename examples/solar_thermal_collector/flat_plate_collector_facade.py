@@ -116,7 +116,7 @@ def flat_plate_collector_facade_example():
         loss_rate=storage_loss_rate,
         inflow_conversion_factor=conversion_storage,
         outflow_conversion_factor=conversion_storage,
-        investment=solph.Investment(ep_costs=costs_storage),
+        nominal_storage_capacity=solph.Investment(ep_costs=costs_storage),
     )
 
     # Build the system and solve the problem

@@ -16,6 +16,7 @@ Documentation
 Bug fixes
 ---------
 
+* Make installable with recent pandas, numpy, and solph
  
 Known issues
 ------------
@@ -25,3 +26,5 @@ Other changes
 
 Contributors
 ------------
+
+* Patrik Schönfeldt

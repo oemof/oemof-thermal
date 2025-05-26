@@ -135,7 +135,7 @@ def csp_facade_example():
         loss_rate=cap_loss,
         inflow_conversion_factor=conversion_storage,
         outflow_conversion_factor=conversion_storage,
-        investment=solph.Investment(ep_costs=costs_storage),
+        nominal_storage_capacity=solph.Investment(ep_costs=costs_storage),
     )
 
     # Build the system and solve the problem

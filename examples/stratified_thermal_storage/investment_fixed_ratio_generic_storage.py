@@ -102,9 +102,9 @@ def fixed_ratio_invest_example():
 
     thermal_storage = GenericStorage(
         label="thermal_storage",
-        inputs={bus_heat: Flow(investment=Investment())},
+        inputs={bus_heat: Flow(nominal_value=Investment())},
         outputs={
-            bus_heat: Flow(investment=Investment(), variable_costs=0.0001)
+            bus_heat: Flow(nominal_value=Investment(), variable_costs=0.0001)
         },
         min_storage_level=input_data["min_storage_level"],
         max_storage_level=input_data["max_storage_level"],
@@ -115,7 +115,7 @@ def fixed_ratio_invest_example():
         outflow_conversion_factor=input_data["outflow_conversion_factor"],
         invest_relation_input_output=1,
         invest_relation_input_capacity=1 / 6,
-        investment=Investment(ep_costs=400, minimum=1),
+        nominal_storage_capacity=Investment(ep_costs=400, minimum=1),
     )
 
     energysystem.add(
