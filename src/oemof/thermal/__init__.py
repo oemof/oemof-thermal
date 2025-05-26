@@ -1,4 +1,4 @@
-__version__ = "0.0.9a1"
+__version__ = "0.0.9a2"
 __project__ = "oemof.thermal"
 
 from . import absorption_heatpumps_and_chillers
